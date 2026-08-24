@@ -3159,4 +3159,157 @@ html, body {
   }
 }
 
+/* ======================================================== */
+/* TIME-TRAVEL TRANSACTION SCRUBBER BAR                    */
+/* ======================================================== */
+
+.time-scrubber-container {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(0, 192, 255, 0.25);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.scrubber-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-scrub {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-scrub:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.scrubber-track-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+}
+
+.scrubber-time-badge {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+.flow-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #1e293b;
+  accent-color: #00c0ff;
+  cursor: pointer;
+}
+
+/* ======================================================== */
+/* CROSS-CHAIN BRIDGE TRACKER (TRM LABS STYLE)             */
+/* ======================================================== */
+
+.cross-chain-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
+
+.chain-hops-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chain-hop-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.chain-hop-box.chain-eth { border-left: 4px solid #6366f1; }
+.chain-hop-box.chain-tron { border-left: 4px solid #ef4444; }
+.chain-hop-box.chain-bsc { border-left: 4px solid #f59e0b; }
+
+.chain-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 2px;
+}
+
+.chain-bridge-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: -4px 0;
+}
+
+.bridge-pill {
+  background: #0f172a;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  padding: 2px 12px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.bridge-arrow {
+  color: #38bdf8;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* ======================================================== */
+/* ENTITY DIRECTORY (ARKHAM STYLE)                          */
+/* ======================================================== */
+
+.entity-search-card {
+  background: rgba(15, 23, 42, 0.9);
+  padding: 14px;
+}
+
+.btn-trace-entity {
+  background: rgba(0, 192, 255, 0.12);
+  border: 1px solid rgba(0, 192, 255, 0.3);
+  color: #38bdf8;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.btn-trace-entity:hover {
+  background: #00c0ff;
+  color: #060d1f;
+}
+
+@media (max-width: 900px) {
+  .cross-chain-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 

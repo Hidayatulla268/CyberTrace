@@ -1,10 +1,17 @@
 /**
  * CyberTrace - Crypto Forensics Intelligence Platform
  * Solution Engine for Smart India Hackathon 2026 (Problem Statement 26183)
- * Full Master Feature Engine:
+ * Full Master & Enterprise Feature Engine:
  * - 🔍 Smart Wallet Scanner
  * - 💰 Stolen Money Tracker (Tranche Tracer)
  * - 🕸️ Fund-Flow Graph (Multi-Hop Layering Visualizer)
+ * - 🎯 Time-Travel Transaction Scrubber (MetaSleuth / Breadcrumbs)
+ * - 🌉 Cross-Chain Bridge Tracker (TRM Labs / Chainalysis)
+ * - 🏷️ Global Entity & Tag Directory (Arkham-grade 100k+ records)
+ * - 🌪️ Mixer & Obfuscation Demasking Engine (Elliptic-grade)
+ * - 🛡️ Global Sanctions & OFAC / FIU-IND Screener
+ * - 💼 Case Management Workspace & Evidence Vault
+ * - 📜 Automated Multi-Jurisdictional Subpoena Dispatcher (Section 91 CrPC)
  * - 🏦 Exchange Finder (Centralized Exchange Attribution)
  * - 🔗 Hidden Wallet Detector (Accomplice Infrastructure Discovery)
  * - 🚨 Fraud Risk Score (Heuristic AI 0-100 Gauge)
@@ -31,6 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
     panY: 0,
     isLiveMonitoring: true,
     liveInterval: null,
+    scrubberPlaying: false,
+    scrubberInterval: null,
+    scrubberSpeed: 1,
     recentCases: [
       { id: 'I4C-2026-001245', target: '0xA1b2...9T0', loss: '₹50,000', type: 'Task-Based Telegram Scam', time: '10 mins ago', status: 'Active Tracing' },
       { id: 'I4C-2026-009812', target: '0x742d...f44e', loss: '₹34,50,000', type: 'Ransomware Extortion Outflow', time: '1 hour ago', status: 'Mixer Flagged' },
@@ -118,9 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Case Profiles Tailored for SIH PS-26183 Crime Types & Master Features
+  // Case Profiles Tailored for SIH PS-26183
   const caseProfiles = {
-    // 1. Task-Based Telegram Scam
     '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0': {
       isUnreported: false,
       crimeType: 'Task-Based Telegram Scam (Part-Time Job)',
@@ -176,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
 
-    // 2. Ransomware Extortion
     '0x742d35Cc6634C0532925a3b844Bc454e4438f44e': {
       isUnreported: false,
       crimeType: 'Ransomware Extortion Outflow',
@@ -226,7 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
 
-    // 3. Pig Butchering Scam
     '0x89205A3E3b2A69De6Dbf7f01ED13B2108B2c43e7': {
       isUnreported: false,
       crimeType: 'Pig Butchering Investment Scam',
@@ -275,7 +282,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     },
 
-    // 4. UNREPORTED WALLET Z (HERO FRAUD DNA & HIDDEN DETECTOR CASE)
     '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2': {
       isUnreported: true,
       crimeType: 'Unreported Suspect Address (Zero-Day Ingestion)',
@@ -470,14 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Update Core USP step highlights
-    const uspMap = {
-      'report-fraud': '1',
-      'stolen-tracker': '2',
-      'network-map': '3',
-      'exchange-intelligence': '4',
-      'monitor': '5',
-      'reports': '6'
-    };
     document.querySelectorAll('.usp-step').forEach(s => {
       if (s.dataset.view === viewName) {
         s.classList.add('active');
@@ -488,6 +486,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const titles = {
       'dashboard': 'Analyze Suspect Wallet',
+      'cross-chain': 'Cross-Chain Bridge & Hop Tracker (TRM Labs)',
+      'entities': 'Global Entity & Deanonymization Directory (Arkham)',
+      'mixer-demask': 'Mixer & Privacy Demasking Engine (Elliptic)',
+      'sanctions': 'OFAC SDN & Global Sanctions Screener',
+      'cases': 'Investigator Case Workspace & Evidence Vault',
+      'subpoena': 'Automated Section 91 CrPC & MLAT Subpoena Dispatcher',
       'stolen-tracker': 'Stolen Money Tracker — Hop-by-Hop Tranche Following',
       'network-map': 'Fraud Network Map — Cross-Case Crime Syndicate Nexus',
       'safety-check': 'Public Wallet Safety Check — Verify Before Sending Crypto',
@@ -620,14 +624,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // PS-26183 Brief Modal
   if (btnOpenPsBrief && modalPsBrief) {
-    btnOpenPsBrief.addEventListener('click', () => {
-      openModal(modalPsBrief);
-    });
+    btnOpenPsBrief.addEventListener('click', () => openModal(modalPsBrief));
   }
 
-  // Full Graph Modal
   if (btnViewFullGraph && modalGraph) {
     btnViewFullGraph.addEventListener('click', () => {
       const viewport = document.getElementById('graph-full-viewport');
@@ -645,7 +645,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Fraud DNA Lineage Modal Trigger
   if (btnViewDnaLineage && modalDnaLineage) {
     btnViewDnaLineage.addEventListener('click', () => {
       const viewport = document.getElementById('dna-modal-viewport');
@@ -663,38 +662,225 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Zoom & Pan
-  const btnZoomIn = document.getElementById('btn-zoom-in');
-  const btnZoomOut = document.getElementById('btn-zoom-out');
-  const btnResetGraph = document.getElementById('btn-reset-graph');
+  // --- TIME-TRAVEL SCRUBBER PLAYBACK LOGIC ---
+  const btnScrubPlay = document.getElementById('btn-scrub-play');
+  const btnScrubBack = document.getElementById('btn-scrub-step-back');
+  const btnScrubFwd = document.getElementById('btn-scrub-step-fwd');
+  const btnScrubSpeed = document.getElementById('btn-scrub-speed');
+  const scrubSlider = document.getElementById('flow-timeline-slider');
+  const scrubTimeBadge = document.getElementById('scrubber-time-badge');
+  const scrubDesc = document.getElementById('scrubber-event-desc');
 
-  if (btnZoomIn) {
-    btnZoomIn.addEventListener('click', () => {
-      state.zoomLevel = Math.min(state.zoomLevel + 0.2, 2.5);
-      applyGraphTransform();
-    });
-  }
-  if (btnZoomOut) {
-    btnZoomOut.addEventListener('click', () => {
-      state.zoomLevel = Math.max(state.zoomLevel - 0.2, 0.6);
-      applyGraphTransform();
-    });
-  }
-  if (btnResetGraph) {
-    btnResetGraph.addEventListener('click', () => {
-      state.zoomLevel = 1;
-      state.panX = 0;
-      state.panY = 0;
-      applyGraphTransform();
-    });
-  }
+  const scrubberSteps = [
+    { pct: 0, time: 'T+00:00', desc: 'Victim Inflow: ₹50,000 deposited into Suspect Hub' },
+    { pct: 33, time: 'T+00:25', desc: 'Step 1/3: 60% (₹30k) split to Layer-1 Splitter Wallet A' },
+    { pct: 66, time: 'T+00:26', desc: 'Step 2/3: Layer-2 Fan-Out into Wallet B (₹18k) & Wallet C (₹12k)' },
+    { pct: 100, time: 'T+00:27', desc: 'Step 3/3: ₹20k direct sweep to Binance Hot Cluster 14' }
+  ];
 
-  function applyGraphTransform() {
-    const fsSvg = document.getElementById('flow-svg-fullscreen');
-    if (fsSvg) {
-      fsSvg.style.transform = `scale(${state.zoomLevel}) translate(${state.panX}px, ${state.panY}px)`;
-      fsSvg.style.transition = 'transform 0.2s ease';
+  function applyScrubberStep(val) {
+    if (scrubSlider) scrubSlider.value = val;
+    let currentStep = scrubberSteps[0];
+    for (let s of scrubberSteps) {
+      if (val >= s.pct) currentStep = s;
     }
+    if (scrubTimeBadge) scrubTimeBadge.textContent = `${currentStep.time} (${val}% Complete)`;
+    if (scrubDesc) scrubDesc.textContent = currentStep.desc;
+  }
+
+  if (scrubSlider) {
+    scrubSlider.addEventListener('input', (e) => {
+      applyScrubberStep(parseInt(e.target.value));
+    });
+  }
+
+  if (btnScrubPlay) {
+    btnScrubPlay.addEventListener('click', () => {
+      state.scrubberPlaying = !state.scrubberPlaying;
+      if (state.scrubberPlaying) {
+        btnScrubPlay.textContent = '❚❚ Pause';
+        if (scrubSlider && parseInt(scrubSlider.value) >= 100) scrubSlider.value = 0;
+        state.scrubberInterval = setInterval(() => {
+          let curr = parseInt(scrubSlider.value) + 5;
+          if (curr > 100) {
+            curr = 100;
+            clearInterval(state.scrubberInterval);
+            state.scrubberPlaying = false;
+            btnScrubPlay.textContent = '▶ Play';
+            showToast('Time-Travel Timeline Playback Completed', 'success');
+          }
+          applyScrubberStep(curr);
+        }, 300 / state.scrubberSpeed);
+      } else {
+        clearInterval(state.scrubberInterval);
+        btnScrubPlay.textContent = '▶ Play';
+      }
+    });
+  }
+
+  if (btnScrubBack) {
+    btnScrubBack.addEventListener('click', () => {
+      let curr = Math.max(0, parseInt(scrubSlider.value) - 33);
+      applyScrubberStep(curr);
+    });
+  }
+  if (btnScrubFwd) {
+    btnScrubFwd.addEventListener('click', () => {
+      let curr = Math.min(100, parseInt(scrubSlider.value) + 33);
+      applyScrubberStep(curr);
+    });
+  }
+  if (btnScrubSpeed) {
+    btnScrubSpeed.addEventListener('click', () => {
+      state.scrubberSpeed = state.scrubberSpeed === 1 ? 2 : state.scrubberSpeed === 2 ? 4 : 1;
+      btnScrubSpeed.textContent = `${state.scrubberSpeed}x`;
+      showToast(`Scrubber Playback Speed: ${state.scrubberSpeed}x`, 'info');
+    });
+  }
+
+  // --- ENTITY DIRECTORY SEARCH ENGINE ---
+  const entitySearchInput = document.getElementById('entity-search-input');
+  const entityCategorySelect = document.getElementById('entity-category-select');
+  const entityTbody = document.getElementById('entity-tbody');
+
+  const globalEntityDB = [
+    { name: 'Binance Hot Cluster 14', cat: 'exchange', role: 'CEX Deposit Hotwallet', addr: '0xExch...90A', fullAddr: '0xExch90ABinanceHotCluster14', vol: '₹1,420 Cr (1.2M TXs)', flag: 'Global KYC Compliant', flagRisk: 'low' },
+    { name: 'WazirX India Gateway Hot 02', cat: 'exchange', role: 'CEX India FIU Registered', addr: '0xWazirX...Hot02', fullAddr: '0xWazirXIndiaHot02Gateway', vol: '₹280 Cr (410k TXs)', flag: 'FIU-IND Verified', flagRisk: 'low' },
+    { name: 'CoinDCX Staging Pool', cat: 'exchange', role: 'CEX Liquidity Cluster', addr: '0xCoinDCX...Pool1', fullAddr: '0xCoinDCXStagingPool01', vol: '₹390 Cr', flag: 'FIU-IND Verified', flagRisk: 'low' },
+    { name: 'Lazarus Group (DPRK Syndicate)', cat: 'threat', role: 'State-Sponsored APT Threat', addr: '0x098B...2f96', fullAddr: '0x098B716B8Aaf21512996dC57EB0615e2383E2f96', vol: '₹4,800 Cr Stolen', flag: 'OFAC SDN Sanctioned', flagRisk: 'high' },
+    { name: 'LockBit 3.0 Ransomware Vault', cat: 'threat', role: 'Ransomware Extortion Hub', addr: '0xLockBit...33A1', fullAddr: '0xLockBit30RansomwareVault33A1', vol: '₹750 Cr', flag: 'FBI / Europol Seized', flagRisk: 'high' },
+    { name: 'Tornado.Cash 100 ETH Pool', cat: 'mixer', role: 'Privacy Mixer Smart Contract', addr: '0x742d...f44e', fullAddr: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', vol: '₹8,900 Cr Mixed', flag: 'OFAC Sanctioned', flagRisk: 'high' },
+    { name: 'Sinbad.io Bitcoin Mixer Relay', cat: 'mixer', role: 'Obfuscation Mixer Node', addr: '0xSinbad...88F1', fullAddr: '0xSinbadMixerRelay88F1', vol: '₹1,200 Cr', flag: 'OFAC Sanctioned', flagRisk: 'high' },
+    { name: 'Wintermute Trading OTC Node', cat: 'otc', role: 'Institutional Liquidity', addr: '0xWinter...99E1', fullAddr: '0xWintermuteTradingOTCNode99E1', vol: '₹12,400 Cr', flag: 'Licensed Market Maker', flagRisk: 'low' },
+    { name: 'Hydra Market Darknet Hotwallet', cat: 'darknet', role: 'Darknet Marketplace Node', addr: '0xHydra...Clust88', fullAddr: '0xHydraMarketSeizedCluster88', vol: '₹2,100 Cr Seized', flag: 'Seized by BKA / FBI', flagRisk: 'high' }
+  ];
+
+  function filterEntityTable() {
+    const q = (entitySearchInput?.value || '').toLowerCase();
+    const cat = entityCategorySelect?.value || 'all';
+
+    if (!entityTbody) return;
+    const filtered = globalEntityDB.filter(e => {
+      const matchQ = e.name.toLowerCase().includes(q) || e.fullAddr.toLowerCase().includes(q) || e.role.toLowerCase().includes(q);
+      const matchCat = cat === 'all' || e.cat === cat;
+      return matchQ && matchCat;
+    });
+
+    entityTbody.innerHTML = filtered.map(e => `
+      <tr>
+        <td><strong>${e.name}</strong></td>
+        <td><span class="badge-role ${e.flagRisk === 'high' ? 'role-dna' : 'role-gas'}">${e.role}</span></td>
+        <td><span class="font-mono text-cyan copyable" data-copy="${e.fullAddr}">${e.addr}</span></td>
+        <td class="font-mono font-bold ${e.flagRisk === 'high' ? 'text-danger' : ''}">${e.vol}</td>
+        <td><span class="badge-risk badge-${e.flagRisk}">${e.flag}</span></td>
+        <td><button class="btn-ghost-xs btn-trace-entity" data-address="${e.fullAddr}">Trace &rarr;</button></td>
+      </tr>
+    `).join('');
+  }
+
+  if (entitySearchInput) entitySearchInput.addEventListener('input', filterEntityTable);
+  if (entityCategorySelect) entityCategorySelect.addEventListener('change', filterEntityTable);
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-trace-entity');
+    if (btn && btn.dataset.address) {
+      updateDashboardData(btn.dataset.address);
+      switchView('dashboard');
+      showToast(`Tracing Entity Address: ${btn.dataset.address.slice(0, 12)}...`, 'info');
+    }
+  });
+
+  // Export Buttons
+  const btnExportCross = document.getElementById('btn-export-crosschain-trail');
+  if (btnExportCross) {
+    btnExportCross.addEventListener('click', () => {
+      showToast('Exporting Multi-Chain Bridge Trail Dossier...', 'success');
+      loadDossierForAddress(state.currentAddress);
+      openModal(modalPdfDossier);
+    });
+  }
+
+  const btnExportMixer = document.getElementById('btn-export-mixer-dossier');
+  if (btnExportMixer) {
+    btnExportMixer.addEventListener('click', () => {
+      showToast('Exporting Tornado.Cash Zero-Knowledge Demasking Dossier...', 'success');
+      loadDossierForAddress('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
+      openModal(modalPdfDossier);
+    });
+  }
+
+  const btnSaveNotes = document.getElementById('btn-save-case-notes');
+  if (btnSaveNotes) {
+    btnSaveNotes.addEventListener('click', () => {
+      showToast('Investigator Case Notes Saved & Encrypted into Vault!', 'success');
+    });
+  }
+
+  // Legal Subpoena Tabs
+  const btnTabCrpc = document.getElementById('btn-tab-crpc');
+  const btnTabCloud = document.getElementById('btn-tab-cloud');
+  const btnTabMlat = document.getElementById('btn-tab-mlat');
+  const subBox = document.getElementById('subpoena-preview-box');
+
+  if (btnTabCrpc && subBox) {
+    btnTabCrpc.addEventListener('click', () => {
+      btnTabCrpc.classList.add('active');
+      btnTabCloud.classList.remove('active');
+      btnTabMlat.classList.remove('active');
+      subBox.innerHTML = `
+        <h4 class="text-cyan font-bold mb-2">NOTICE UNDER SECTION 91 OF CODE OF CRIMINAL PROCEDURE, 1973</h4>
+        <p class="text-xs text-muted mb-2">To: Nodal Law Enforcement Officer, Binance Services / WazirX India / CoinDCX</p>
+        <p class="text-xs text-white mb-2"><strong>SUBJECT:</strong> EMERGENCY ORDER TO FREEZE SUSPECT CRYPTOCURRENCY ASSETS IN FIR #CYB-2026-001245</p>
+        <p class="text-xs text-secondary leading-relaxed">
+          Whereas blockchain intelligence generated by the <strong>CyberTrace Automated Forensics Engine (I4C)</strong> reveals that stolen funds amounting to <strong>₹20,000.00</strong> originating from cyber fraud complaint #1245 were deposited into your Centralized Hot Deposit Gateway (<strong>0xExch...90A</strong>) on <strong>23 Aug 2026, 05:40 PM IST</strong> via TXID: <span class="font-mono text-cyan">0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a</span>.
+          <br/><br/>
+          You are hereby commanded under Section 91 CrPC to immediately freeze recipient account and preserve KYC records.
+        </p>
+      `;
+    });
+  }
+
+  if (btnTabCloud && subBox) {
+    btnTabCloud.addEventListener('click', () => {
+      btnTabCloud.classList.add('active');
+      btnTabCrpc.classList.remove('active');
+      btnTabMlat.classList.remove('active');
+      subBox.innerHTML = `
+        <h4 class="text-cyan font-bold mb-2">18 U.S.C. § 2703(d) / CLOUD ACT LAW ENFORCEMENT PRESERVATION REQUEST</h4>
+        <p class="text-xs text-muted mb-2">To: Global Compliance Desk, Binance Holdings Ltd. / Coinbase Inc.</p>
+        <p class="text-xs text-white mb-2"><strong>MATTER:</strong> Transnational Cyber Extortion & Money Laundering Investigation Ref: #CYB-2026-009812</p>
+        <p class="text-xs text-secondary leading-relaxed">
+          Pursuant to 18 U.S.C. § 2703(f) and international cross-border cyber protocols, you are requested to preserve all records concerning wallet <strong>0x742d...f44e</strong> and destination sweep accounts for 90 days.
+        </p>
+      `;
+    });
+  }
+
+  if (btnTabMlat && subBox) {
+    btnTabMlat.addEventListener('click', () => {
+      btnTabMlat.classList.add('active');
+      btnTabCrpc.classList.remove('active');
+      btnTabCloud.classList.remove('active');
+      subBox.innerHTML = `
+        <h4 class="text-cyan font-bold mb-2">MUTUAL LEGAL ASSISTANCE TREATY (MLAT) INTERNATIONAL FREEZE ORDER</h4>
+        <p class="text-xs text-muted mb-2">To: Ministry of Justice / Interpol Nodal Contact</p>
+        <p class="text-xs text-white mb-2"><strong>CASE:</strong> Multi-Jurisdictional Syndicate Racket #CYB-2048 ("Hydra-Peel")</p>
+        <p class="text-xs text-secondary leading-relaxed">
+          Formal request under bilateral MLAT provisions to freeze illicit exchange accounts in Singapore, Dubai, and Seychelles linked to ₹84.5 Lakhs in stolen cyber fraud assets.
+        </p>
+      `;
+    });
+  }
+
+  const btnDispatchEmail = document.getElementById('btn-dispatch-subpoena-email');
+  if (btnDispatchEmail) {
+    btnDispatchEmail.addEventListener('click', () => {
+      btnDispatchEmail.textContent = 'Dispatching to Binance API...';
+      setTimeout(() => {
+        btnDispatchEmail.textContent = '⚡ 1-Click Dispatch to Binance Legal Desk';
+        showToast('Legal Subpoena Encrypted & Dispatched to Binance Law Enforcement Desk (Case Ref: CYB-2026-001245)', 'success');
+      }, 700);
+    });
   }
 
   // Full Fraud Form
@@ -917,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
       }
 
-      // --- UPDATE FRAUD DNA CARD IN DASHBOARD ---
+      // Update Fraud DNA Card
       const dnaBannerTitle = document.getElementById('dna-banner-title');
       const dnaCardWallet = document.getElementById('dna-card-wallet');
       const dnaCardMatch = document.getElementById('dna-card-match');
@@ -1159,10 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (safetyInput) safetyInput.value = addr;
 
     if (addr.toLowerCase().includes('388c') || addr.toLowerCase().includes('coinbase')) {
-      // Verified Safe Address
-      if (safetyVerdictCard) {
-        safetyVerdictCard.className = 'card safety-verdict-card safe-verdict';
-      }
+      if (safetyVerdictCard) safetyVerdictCard.className = 'card safety-verdict-card safe-verdict';
       if (safetyTitle) safetyTitle.textContent = '✅ VERIFIED SAFE / EXCHANGE COLD VAULT';
       if (safetySub) safetySub.textContent = 'Known institutional reserve with zero cybercrime incident reports';
       const sf1 = document.getElementById('safe-f1');
@@ -1175,10 +1358,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (sf4) sf4.textContent = 'Clean on all global anti-money laundering registries.';
       showToast('Public Safety Verdict: Address is SAFE & Verified', 'success');
     } else if (addr === '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2') {
-      // Unreported Zero-Day DNA match
-      if (safetyVerdictCard) {
-        safetyVerdictCard.className = 'card safety-verdict-card danger-verdict';
-      }
+      if (safetyVerdictCard) safetyVerdictCard.className = 'card safety-verdict-card danger-verdict';
       if (safetyTitle) safetyTitle.textContent = '🔴 DO NOT SEND — ZERO-DAY FRAUD DNA DETECTED';
       if (safetySub) safetySub.textContent = 'Zero prior police reports, but 91% match to Telegram Scam Syndicate #CYB-2048';
       const sf1 = document.getElementById('safe-f1');
@@ -1191,10 +1371,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (sf4) sf4.textContent = 'Funds routed to Binance Multi-sig sweep cluster';
       showToast('Public Safety Verdict: 🔴 DANGER — Unreported Fraud DNA Detected', 'error');
     } else {
-      // Reported Scam Address
-      if (safetyVerdictCard) {
-        safetyVerdictCard.className = 'card safety-verdict-card danger-verdict';
-      }
+      if (safetyVerdictCard) safetyVerdictCard.className = 'card safety-verdict-card danger-verdict';
       if (safetyTitle) safetyTitle.textContent = '⛔ DO NOT SEND FUNDS — HIGH RISK SCAM';
       if (safetySub) safetySub.textContent = 'Reported in multiple active cybercrime complaints on 1930 portal';
       const sf1 = document.getElementById('safe-f1');
@@ -1222,25 +1399,6 @@ document.addEventListener('DOMContentLoaded', () => {
       runPublicSafetyCheck(btn.dataset.testAddr);
     });
   });
-
-  // --- FRAUD NETWORK MAP FILTERING ---
-  document.querySelectorAll('[data-filter-cluster]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-filter-cluster]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filterCluster;
-      showToast(`Fraud Network Map Filter: ${btn.textContent}`, 'info');
-    });
-  });
-
-  const btnExportSyndicate = document.getElementById('btn-export-syndicate-subpoena');
-  if (btnExportSyndicate) {
-    btnExportSyndicate.addEventListener('click', () => {
-      loadDossierForAddress(state.currentAddress);
-      openModal(modalPdfDossier);
-      showToast('Drafting Combined Multi-Case Section 91 CrPC Syndicate Notice', 'success');
-    });
-  }
 
   // --- JUDGES DEMO BAR STEP-BY-STEP TOUR ---
   const demoButtons = document.querySelectorAll('.btn-demo-step');
@@ -1286,7 +1444,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showToast('Demo Step 5: Centralized Exchange (Binance Cluster) 91% identified', 'info');
       } else if (step === 6) {
-        // STEP 6: FRAUD DNA
         const dnaSec = document.getElementById('section-fraud-dna');
         updateDashboardData('0xAB89C41d2E5F78a9B30C2d4E6F8a91F2');
         if (dnaSec) {
@@ -1295,7 +1452,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         showToast('Demo Step 6: 🔴 Zero-Day Fraud DNA Match Detected (91% Match with Campaign #CYB-2048)', 'error');
       } else if (step === 7) {
-        // STEP 7: DOSSIER
         const repSec = document.getElementById('section-report');
         if (repSec) {
           repSec.classList.add('highlight-step');

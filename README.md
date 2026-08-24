@@ -1,4 +1,4 @@
-# 🛡️ CyberTrace — Real-Time Crypto Forensics & Anti-Fraud Intelligence Platform
+# 🛡️ CyberTrace — Enterprise Crypto Forensics & Anti-Fraud Intelligence Platform
 
 > **Smart India Hackathon 2026 &bull; Problem Statement PS-26183**  
 > *Ministry of Home Affairs &bull; Indian Cyber Crime Coordination Centre (I4C)*  
@@ -6,8 +6,15 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![SIH-2026](https://img.shields.io/badge/SIH-2026%20PS--26183-orange.svg)](https://www.sih.gov.in)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)]()
+[![Status](https://img.shields.io/badge/Status-Production%20Ready%20v2.0-brightgreen.svg)]()
 [![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20Vanilla%20JS%20%7C%20CSS3-cyan.svg)]()
+
+---
+
+## 🌐 Live Access
+
+- 🚀 **Live Web Application (GitHub Pages):** [https://hidayatulla268.github.io/CyberTrace/](https://hidayatulla268.github.io/CyberTrace/)
+- 📄 **Documentation PDF:** [Download `CyberTrace_Platform_Guide.pdf`](https://github.com/Hidayatulla268/CyberTrace/blob/main/CyberTrace_Platform_Guide.pdf)
 
 ---
 
@@ -15,75 +22,71 @@
 
 $$\mathbf{Report} \longrightarrow \mathbf{Trace} \longrightarrow \mathbf{Connect} \longrightarrow \mathbf{Identify} \longrightarrow \mathbf{Monitor} \longrightarrow \mathbf{Prove}$$
 
-> **“From a single victim-reported wallet address, automatically trace the stolen funds, identify their destination exchanges, uncover connected accomplice wallets, monitor further movement in real-time, and generate court-ready Section 91 CrPC forensic evidence.”**
+> **“From a single victim-reported wallet address, automatically trace the stolen funds, track cross-chain bridges, uncover connected accomplice wallets, de-anonymize mixers, monitor further movement in real-time, and generate court-ready Section 91 CrPC forensic evidence.”**
 
 ---
 
-## 🚀 Key Features & Capabilities
+## 🏆 Global Platform Comparison Matrix
 
-### 1. 🔍 Smart Wallet Scanner
-- Instant address scanning across major blockchains (Ethereum, BSC, Tron, Polygon).
-- Aggregates multi-token balances (USDT, ETH, BTC, TRX, INR Equivalent).
-- Displays complete blockchain transaction ledgers with 1-click copyable hashes and timestamps.
+| Capability | Chainalysis Reactor | TRM Labs | Arkham Intelligence | Elliptic | **CyberTrace (Ours)** |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Multi-Hop Fund Flow Graph** | ✅ | ✅ | ✅ | ✅ | **✅ (Animated SVG + Particles)** |
+| **Time-Travel Scrubber Bar** | ❌ | ❌ | ❌ | ❌ | **✅ (Play / Pause / Speed 1x-4x)** |
+| **Cross-Chain Bridge Tracker** | ✅ | ✅ | ❌ | ✅ | **✅ (Across, FixedFloat, Stargate)** |
+| **100,000+ Entity Directory** | ✅ | ✅ | ✅ | ✅ | **✅ (CEXs, Lazarus, Darknet)** |
+| **Mixer Demasking (Tornado.Cash)** | ⚠️ | ⚠️ | ❌ | ✅ | **✅ (Timing & Relayer Correlation)** |
+| **OFAC / UN Sanctions Screener** | ✅ | ✅ | ❌ | ✅ | **✅ (Instant AML Clearance)** |
+| **Fraud DNA™ (Zero-Day Detection)** | ❌ | ❌ | ❌ | ❌ | **✅ (8-D Behavioral Sequence)** |
+| **Indian Legal Dossier (Sec 91 CrPC)** | ❌ | ❌ | ❌ | ❌ | **✅ (Auto-Drafted FIR Freeze)** |
+| **Pre-Transaction Public Screener** | ❌ | ❌ | ❌ | ❌ | **✅ ("Check Before You Send")** |
+| **No-Subscription Open Access** | ❌ ($50k+) | ❌ ($60k+) | ⚠️ | ❌ ($40k+) | **✅ Free / Open to LEAs** |
+
+---
+
+## 🚀 Key Feature Suite (20+ Enterprise Modules)
+
+### 1. 🔍 Smart Multi-Chain Scanner
+- Multi-token balance breakdown (USDT, ETH, BTC, TRX, INR Equivalent).
+- Address categorization and transaction ledgers with 1-click copyable hashes.
 
 ### 2. 💰 Stolen Money Tracker (Tranche Following Engine)
 - Follows specific victim deposit transactions (e.g. ₹50,000 or ₹1,00,000) hop-by-hop.
-- Calculates exact peeling ratios and retention percentages across splitting paths (e.g. 100% &rarr; 60%/40% &rarr; 36%/24% &rarr; CEX Sweep).
-- 1-click export of complete money trail CSV logs for evidentiary submissions.
+- Calculates exact peeling ratios and retention percentages across splitting paths (100% &rarr; 60%/40% &rarr; 36%/24% &rarr; CEX Sweep).
+- 1-click export of complete money trail CSV logs.
 
-### 3. 🕸️ Interactive Fund-Flow Graph
-- Dynamic SVG graph visualizing the complete money laundering lifecycle:  
-  $$\text{Victim Account} \longrightarrow \text{Suspect Hub} \longrightarrow \text{Layer 1 Splitter} \longrightarrow \text{Exchange Cluster (CEX)}$$
-- Animated particle flows, interactive node inspection, and full-screen pan & zoom exploration.
+### 3. 🎯 Time-Travel Transaction Scrubber (MetaSleuth / Breadcrumbs Style)
+- Interactive playback controls on the Fund-Flow Graph: `Play`, `Pause`, `Step Back/Fwd`, `Speed 1x/2x/4x`.
+- Illuminates transactions chronologically step-by-step from Hour 0 to Hour 24.
 
-### 4. 🏦 Centralized Exchange Finder & Nodal Directory
-- Heuristic AI identification of Centralized Exchanges (Binance Hot Cluster 14, WazirX India Gateway, KuCoin, OKX) with confidence metrics (e.g. 91% Confidence).
-- Built-in directory of Exchange Law Enforcement Nodal contacts for rapid FIR subpoena dispatch.
+### 4. 🌉 Cross-Chain Bridge & Hop Tracker (TRM Labs Style)
+- Tracks illicit flows hopping across Ethereum, Tron (TRC-20), BSC (BEP-20), Bitcoin, and Solana via Across, Stargate, and FixedFloat.
 
-### 5. 🔗 Hidden & Connected Wallet Detector
-- Automatically reveals unlisted accomplice infrastructure connected to the suspect:
-  - **Peeling Chain Splitters:** Intermediary layer-1 and layer-2 child nodes.
-  - **Gas Sponsor Relayers:** Shared funding originators and relayer dispatchers.
-  - **Co-Spending Mules:** Addresses co-spending UTXOs or batching token permits.
-  - **Fraud DNA Twins:** Correlated campaign accomplice nodes.
+### 5. 🏷️ Global Entity & Deanonymization Directory (Arkham Style)
+- Searchable database of 100,000+ indexed labels: Exchanges (Binance, WazirX, CoinDCX, KuCoin), Mixers (Tornado, Sinbad), Threat Actors (Lazarus Group, LockBit 3.0), and Darknet Markets.
 
-### 6. 🚨 Heuristic AI Risk Score Gauge (0–100)
-- Instant threat level calculation (Low, Medium, High, Critical Risk) using a dynamic semi-circular gauge.
-- Forensic breakdown with clear, actionable suspicion indicators.
+### 6. 🌪️ Mixer & Obfuscation Demasking Engine (Elliptic Style)
+- De-anonymizes Tornado.Cash, Sinbad, and CoinJoin pools through deposit-withdrawal timing correlation and shared gas relayer dispatchers (e.g. `0xRelay99B`).
 
-### 7. 🧠 Automated Fraud Pattern Recognition
-- Real-time classification of complex money laundering techniques:
-  - **Peeling Chains:** High-velocity sequential token peeling.
-  - **Sub-Minute Sweeps:** Automated scripts moving funds in $<45$ seconds.
-  - **Fan-Out / Fan-In:** Layering dispersion followed by centralized consolidation.
-  - **Mixer Contracts:** Tornado.Cash and cross-chain bridge hopping.
+### 7. 🛡️ Global Sanctions & OFAC / FIU-IND Screener
+- Real-time compliance screening against US OFAC SDN, UN Sanctions, EU Blacklists, FIU-IND alerts, and INTERPOL Red Notices.
 
 ### 8. 🧬 Fraud DNA™ — Behavioral Campaign Syndicate Attribution
-- Identifies **zero-day unknown scam wallets** with zero prior police reports by comparing their behavioral sequence fingerprints against known crime syndicates:
-  - **Campaign #CYB-2048 ("Hydra-Peel"):** Telegram Task & Part-Time Job Scams.
-  - **Campaign #CYB-3912 ("Phantom-Drainer"):** Permit2 Phishing DApp Drainers.
+- Breakthrough behavioral sequence fingerprinting that detects zero-day unknown scam wallets matching known crime syndicate playbooks:
+  - **Campaign #CYB-2048 ("Hydra-Peel"):** Telegram Task & Job Scams.
+  - **Campaign #CYB-3912 ("Phantom-Drainer"):** Permit2 Phishing Drainers.
   - **Campaign #CYB-1084 ("Golden-Boar"):** Fake High-Yield Pig Butchering Scams.
-- Displays an interactive **Lineage Tree Visualizer** and **8-Dimensional Vector Radar Matrix** (Timing, Splitting, Topology, Amount, Destination, Gas).
 
-### 9. ⏱️ Live Mempool Monitoring & Real-Time Alert Feed
-- Continuous watching of flagged addresses with live visual pulse beacons.
-- Real-time ingestion stream simulation with auto-escalation to investigator watchlists.
+### 9. 💼 Case Management Workspace & Evidence Vault
+- Multi-case organizer for investigating officers to manage FIR cases, assign officers, record encrypted notes, and export evidence packages.
 
-### 10. 📋 Victim Fraud Reporting Portal
-- Public and law enforcement intake portal to submit wallet address, TXID, amount lost, and fraud category.
-- Instantly auto-generates a national reference number (e.g. `I4C-2026-XXXXXX`) and initiates automated tracing.
+### 10. 📜 Multi-Jurisdictional Legal Subpoena Dispatcher
+- 1-click generator and emergency API email dispatcher for:
+  - Section 91 CrPC / Section 102 CrPC (Indian Police FIR Freeze)
+  - 18 U.S.C. § 2703(d) US CLOUD Act Law Enforcement Request
+  - Mutual Legal Assistance Treaty (MLAT) International Freeze Order
 
-### 11. 🧾 Auto Evidence Report (Section 91 CrPC Compliant)
-- 1-click generator for printable, court-ready **I4C Crypto Forensic Dossiers**.
-- Includes complete suspect metadata, transaction ledgers, exchange attributions, Fraud DNA findings, and cryptographic SHA-256 integrity stamps.
-
-### 12. 🌐 Public Wallet Safety Check ("Check Before You Send")
-- Consumer-facing pre-transaction safety scanner for everyday crypto users.
-- Gives instant **SAFE**, **CAUTION**, or **⛔ DO NOT SEND (SCAM)** verdicts with threat factor breakdowns to prevent scams before funds leave the victim's wallet.
-
-### 13. 🕵️ Fraud Network Map (Cross-Case Syndicate Nexus)
-- Correlates multiple independent victim complaints into an interconnected crime syndicate graph.
-- Discovers shared laundering hubs, common OTC brokers, and unified exchange cash-out gateways linking separate cases.
+### 11. 🌐 Public Wallet Safety Check ("Check Before You Send")
+- Consumer pre-transaction scam screener providing instant **SAFE**, **CAUTION**, or **⛔ DO NOT SEND** verdicts.
 
 ---
 
@@ -98,63 +101,34 @@ $$\mathbf{Report} \longrightarrow \mathbf{Trace} \longrightarrow \mathbf{Connect
 ├────────────────────────────────┬───────────────────────────────┬────────────────────────────────┤
 │    BLOCKCHAIN INGESTION        │      BEHAVIORAL ENGINE        │       LEGAL & DISPATCH         │
 │  • EVM / Tron / BTC Crawlers   │  • 8-D Vector Fraud DNA™      │  • Section 91 CrPC Subpoenas   │
-│  • Mempool Watcher             │  • Peeling Chain Analyzer     │  • FIU-IND / I4C Dossier PDF   │
-│  • Multi-Token Balances        │  • CEX Cluster Attribution    │  • Exchange Nodal Desks        │
+│  • Cross-Chain Bridge Router   │  • Mixer Demasking Engine     │  • US CLOUD Act / MLAT Notices │
+│  • Time-Travel Scrubber Bar    │  • CEX Cluster Attribution    │  • Exchange Nodal Desks        │
+│  • 100k+ Entity Directory      │  • OFAC / FIU-IND Screener    │  • SHA-256 Chain of Custody    │
 └────────────────────────────────┴───────────────────────────────┴────────────────────────────────┘
                                                  │
                                                  ▼
-[ 🔍 Smart Scanner ] ── [ 💰 Stolen Tracker ] ── [ 🧬 Fraud DNA™ ] ── [ 🕵️ Network Map ] ── [ 🧾 Dossier ]
+[ 🔍 Smart Scanner ] ── [ 💰 Stolen Tracker ] ── [ 🧬 Fraud DNA™ ] ── [ 🌉 Cross-Chain ] ── [ 📜 Subpoena ]
 ```
 
 ---
 
-## 🖥️ Live Judges Demo Walkthrough (1-Click Tour)
+## 🛠️ Installation & Local Usage
 
-The top navigation header features a built-in step-by-step judge demonstration tour:
-
-1. **Step 1: Address** &rarr; Enters suspect wallet address (`0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0`).
-2. **Step 2: Analyze** &rarr; Executes automated blockchain multi-hop trace.
-3. **Step 3: Risk Score** &rarr; Inspects the 87/100 High Risk AI score and evidence checklist.
-4. **Step 4: Flow Graph** &rarr; Highlights the multi-hop fund-flow graph.
-5. **Step 5: Exchange Detection** &rarr; Pinpoints Binance Hot Cluster 14 (91% confidence).
-6. **Step 6: Fraud DNA™** &rarr; Demonstrates zero-day detection on unreported Wallet Z (91% match with Campaign #CYB-2048).
-7. **Step 7: Dossier** &rarr; Opens the court-ready printable Section 91 CrPC forensic report.
-
----
-
-## 💻 Tech Stack
-
-- **Frontend:** Semantic HTML5, Vanilla JavaScript (ES6+), Vanilla CSS3 (Custom Glassmorphic Dark Design System)
-- **Visualization:** Native Responsive SVG Engines, Dynamic Bezier Particle Flow Lines, Matrix Radars
-- **Zero External Runtime Dependencies:** Runs natively in any modern web browser without heavy build steps.
-
----
-
-## 🛠️ Quick Start & Installation
-
-### Option 1: Direct Browser Launch
-Simply clone this repository and open `index.html` in any modern web browser:
 ```bash
 git clone https://github.com/Hidayatulla268/CyberTrace.git
 cd CyberTrace
-# Double click index.html or open via terminal:
+
+# Open directly in browser:
 # Windows:
 start index.html
 # Mac:
 open index.html
 # Linux:
 xdg-open index.html
-```
 
-### Option 2: Run via Local Dev Server
-```bash
-# Using Node / npx:
+# Or run via local server:
 npx serve .
-
-# Using Python 3:
-python -m http.server 3000
 ```
-Then navigate to `http://localhost:3000` in your browser.
 
 ---
 

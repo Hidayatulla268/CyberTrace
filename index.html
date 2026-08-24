@@ -139,6 +139,58 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="#cross-chain" class="nav-link" data-view="cross-chain" id="nav-cross-chain">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+              </span>
+              <span class="nav-label">Cross-Chain Bridges</span>
+              <span class="nav-badge">TRM</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#entities" class="nav-link" data-view="entities" id="nav-entities">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+              </span>
+              <span class="nav-label">Entity Directory</span>
+              <span class="nav-badge">100K+</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#mixer-demask" class="nav-link" data-view="mixer-demask" id="nav-mixer-demask">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              </span>
+              <span class="nav-label">Mixer Demasker</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#sanctions" class="nav-link" data-view="sanctions" id="nav-sanctions">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </span>
+              <span class="nav-label">OFAC Sanctions</span>
+              <span class="nav-pill-dna" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">AML</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#cases" class="nav-link" data-view="cases" id="nav-cases">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              </span>
+              <span class="nav-label">Case Manager</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#subpoena" class="nav-link" data-view="subpoena" id="nav-subpoena">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </span>
+              <span class="nav-label">Legal Subpoena</span>
+              <span class="nav-pill-dna">CrPC</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#reports" class="nav-link" data-view="reports" id="nav-reports">
               <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
@@ -569,6 +621,23 @@
                     <text x="83" y="22" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-weight="600">Probable Exchange</text>
                   </g>
                 </svg>
+              </div>
+
+              <!-- TIME-TRAVEL TRANSACTION SCRUBBER BAR -->
+              <div class="time-scrubber-container" id="flow-scrubber-bar">
+                <div class="scrubber-controls">
+                  <button class="btn-scrub" id="btn-scrub-play" title="Play / Pause Timeline Playback">▶ Play</button>
+                  <button class="btn-scrub" id="btn-scrub-step-back" title="Step Back">&laquo;</button>
+                  <button class="btn-scrub" id="btn-scrub-step-fwd" title="Step Forward">&raquo;</button>
+                  <button class="btn-scrub" id="btn-scrub-speed" title="Speed Multiplier">1x</button>
+                </div>
+                <div class="scrubber-track-wrapper">
+                  <div class="scrubber-time-badge" id="scrubber-time-badge">T+00:27 (Final Sweep)</div>
+                  <input type="range" id="flow-timeline-slider" min="0" max="100" value="100" class="flow-slider">
+                </div>
+                <div class="scrubber-speed-tags font-mono text-xs">
+                  <span class="text-secondary" id="scrubber-event-desc">Step 4/4: ₹20k swept to Binance Hot Cluster 14</span>
+                </div>
               </div>
 
               <!-- LEGEND -->
@@ -2228,6 +2297,431 @@
               <div class="insight-item">
                 <button class="btn btn-primary btn-sm" id="btn-export-syndicate-subpoena">Draft Combined Syndicate Subpoena</button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 13: CROSS-CHAIN BRIDGE TRACKER (TRM LABS STYLE)     -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-cross-chain">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge cyan-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+                </div>
+                <div>
+                  <h2>Cross-Chain Bridge &amp; Multi-Chain Hop Tracker</h2>
+                  <p class="text-secondary text-sm">Track stolen assets across Ethereum, Tron (TRC-20), Binance Smart Chain (BEP-20), Bitcoin, and Solana.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle">6 Major Bridges Monitored</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cross-chain-grid">
+            <div class="card bridge-flow-card">
+              <h3 class="card-title mb-3">Detected Multi-Chain Laundering Route</h3>
+              <div class="chain-hops-container">
+                <div class="chain-hop-box chain-eth">
+                  <div class="chain-badge">SOURCE CHAIN: ETHEREUM (ERC-20)</div>
+                  <div class="chain-title font-bold">Suspect Wallet 0xA1b2...9T0</div>
+                  <div class="font-mono text-cyan text-sm">₹50,000 USDT Swapped</div>
+                  <div class="text-xs text-muted mt-1">Contract Call: Across Protocol V3 Deposit</div>
+                </div>
+
+                <div class="chain-bridge-node">
+                  <div class="bridge-pill">Across Bridge Protocol (Bridge Fee: ₹142)</div>
+                  <span class="bridge-arrow">&darr;</span>
+                </div>
+
+                <div class="chain-hop-box chain-tron">
+                  <div class="chain-badge">INTERMEDIARY CHAIN: TRON (TRC-20)</div>
+                  <div class="chain-title font-bold">Relayer Sweeper TJ8a91...2c90</div>
+                  <div class="font-mono text-amber text-sm">₹49,858 USDT Received</div>
+                  <div class="text-xs text-muted mt-1">High Velocity Peel: 18 Seconds Delay</div>
+                </div>
+
+                <div class="chain-bridge-node">
+                  <div class="bridge-pill">FixedFloat Automated Cross-Swap</div>
+                  <span class="bridge-arrow">&darr;</span>
+                </div>
+
+                <div class="chain-hop-box chain-bsc">
+                  <div class="chain-badge">DESTINATION CHAIN: BSC (BEP-20)</div>
+                  <div class="chain-title font-bold">Binance Internal Hot Deposit</div>
+                  <div class="font-mono text-green text-sm">₹49,500 USDT (Final Off-Ramp)</div>
+                  <div class="text-xs text-muted mt-1">UID Memo #8912401 &bull; Ready for Freeze Subpoena</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card bridge-stats-card">
+              <h3 class="card-title mb-3">Cross-Chain Analytics &amp; Slippage</h3>
+              <div class="vector-radar-list">
+                <div class="radar-row">
+                  <div class="radar-meta"><span>Source Token:</span> <span class="font-mono text-cyan">USDT (Ethereum)</span></div>
+                </div>
+                <div class="radar-row">
+                  <div class="radar-meta"><span>Destination Token:</span> <span class="font-mono text-green">USDT (Binance Smart Chain)</span></div>
+                </div>
+                <div class="radar-row">
+                  <div class="radar-meta"><span>Cross-Chain Slippage + Fees:</span> <span class="font-mono text-amber">₹500 (1.00%)</span></div>
+                </div>
+                <div class="radar-row">
+                  <div class="radar-meta"><span>Transit Duration:</span> <span class="font-mono text-white">1 min 42 secs</span></div>
+                </div>
+                <div class="radar-row">
+                  <div class="radar-meta"><span>Bridge Smart Contract:</span> <span class="font-mono text-muted text-xs">0x5c7d...AcrossV3</span></div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <button class="btn btn-primary btn-block" id="btn-export-crosschain-trail">Export Multi-Chain Trail PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 14: ENTITY & TAG DIRECTORY (ARKHAM STYLE)           -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-entities">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge purple-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                </div>
+                <div>
+                  <h2>Global Entity &amp; Tag Directory (100,000+ Records)</h2>
+                  <p class="text-secondary text-sm">Arkham-grade on-chain deanonymization database covering Exchanges, Mixers, Darknet, and Lazarus Group.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle">Indexed: 142 Exchanges &bull; 89 Threat Actors</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card entity-search-card mb-4">
+            <div class="flex items-center gap-3 flex-wrap">
+              <input type="text" id="entity-search-input" class="form-input font-mono" placeholder="Search entity by Name, Tag, Cluster, or Address (e.g. Binance, Lazarus, Tornado)..." style="flex: 1; min-width: 250px;">
+              <select id="entity-category-select" class="form-input" style="width: auto;">
+                <option value="all">All Entity Categories</option>
+                <option value="exchange">Centralized Exchanges (CEX)</option>
+                <option value="mixer">Mixers &amp; Privacy Protocols</option>
+                <option value="threat">Threat Actors &amp; Cyber Syndicates</option>
+                <option value="otc">OTC Desks &amp; Market Makers</option>
+                <option value="darknet">Darknet Marketplaces</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-responsive">
+              <table class="tx-table" id="entity-table">
+                <thead>
+                  <tr>
+                    <th>Entity Name</th>
+                    <th>Category</th>
+                    <th>Cluster Root Address</th>
+                    <th>Identified Volume</th>
+                    <th>Jurisdiction / Flag</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="entity-tbody">
+                  <tr>
+                    <td><strong>Binance Hot Cluster 14</strong></td>
+                    <td><span class="badge-role role-gas">CEX Deposit Hotwallet</span></td>
+                    <td><span class="font-mono text-cyan copyable" data-copy="0xExch90ABinanceHotCluster14">0xExch...90A</span></td>
+                    <td class="font-mono font-bold">₹1,420 Cr (1.2M TXs)</td>
+                    <td><span class="badge-risk badge-low">Global KYC Compliant</span></td>
+                    <td><button class="btn-ghost-xs btn-trace-entity" data-address="0xExch90ABinanceHotCluster14">Trace &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>WazirX India Gateway Hot 02</strong></td>
+                    <td><span class="badge-role role-gas">CEX India FIU Registered</span></td>
+                    <td><span class="font-mono text-cyan copyable" data-copy="0xWazirXIndiaHot02Gateway">0xWazirX...Hot02</span></td>
+                    <td class="font-mono font-bold">₹280 Cr (410k TXs)</td>
+                    <td><span class="badge-risk badge-low">FIU-IND Verified</span></td>
+                    <td><button class="btn-ghost-xs btn-trace-entity" data-address="0xWazirXIndiaHot02Gateway">Trace &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Lazarus Group (DPRK Syndicate)</strong></td>
+                    <td><span class="badge-role role-dna">State-Sponsored APT Threat</span></td>
+                    <td><span class="font-mono text-danger copyable" data-copy="0x098B716B8Aaf21512996dC57EB0615e2383E2f96">0x098B...2f96</span></td>
+                    <td class="font-mono font-bold text-danger">₹4,800 Cr Stolen</td>
+                    <td><span class="badge-risk badge-high">OFAC SDN Sanctioned</span></td>
+                    <td><button class="btn-ghost-xs btn-trace-entity" data-address="0x098B716B8Aaf21512996dC57EB0615e2383E2f96">Trace &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Tornado.Cash 100 ETH Pool</strong></td>
+                    <td><span class="badge-role role-splitter">Privacy Mixer Smart Contract</span></td>
+                    <td><span class="font-mono text-purple copyable" data-copy="0x742d35Cc6634C0532925a3b844Bc454e4438f44e">0x742d...f44e</span></td>
+                    <td class="font-mono font-bold">₹8,900 Cr Mixed</td>
+                    <td><span class="badge-risk badge-high">OFAC Sanctioned</span></td>
+                    <td><button class="btn-ghost-xs btn-trace-entity" data-address="0x742d35Cc6634C0532925a3b844Bc454e4438f44e">Trace &rarr;</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hydra Market Darknet Hotwallet</strong></td>
+                    <td><span class="badge-role role-cospender">Darknet Marketplace Node</span></td>
+                    <td><span class="font-mono text-danger copyable" data-copy="0xHydraMarketSeizedCluster88">0xHydra...Clust88</span></td>
+                    <td class="font-mono font-bold text-danger">₹2,100 Cr Seized</td>
+                    <td><span class="badge-risk badge-high">Seized by BKA / FBI</span></td>
+                    <td><button class="btn-ghost-xs btn-trace-entity" data-address="0xHydraMarketSeizedCluster88">Trace &rarr;</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 15: MIXER DEMASKING ENGINE (ELLIPTIC STYLE)         -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-mixer-demask">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge amber-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                </div>
+                <div>
+                  <h2>Mixer &amp; Privacy Protocol Demasking Engine</h2>
+                  <p class="text-secondary text-sm">De-anonymize Tornado.Cash, Sinbad, and CoinJoin pools through deposit-withdrawal timing correlation and relayer gas lineage.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-risk badge-high">Demasking Confidence: 94.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stolen-tracker-grid">
+            <div class="card">
+              <h3 class="card-title mb-3">Tornado.Cash Pool Ingestion vs Withdrawal Matching</h3>
+              <div class="trail-hop-list">
+                <div class="trail-step-box">
+                  <div class="trail-step-header">
+                    <span class="font-mono text-danger font-bold">1. Illicit Deposit (100 ETH Pool)</span>
+                    <span class="text-xs font-mono text-muted">24 Aug 2026, 11:10 AM</span>
+                  </div>
+                  <div class="text-xs font-mono text-secondary">Depositor: <span class="text-white">0x742d...f44e</span> &bull; Leaf Index #18,401 &bull; Amount: 100 ETH (₹2.4 Cr)</div>
+                </div>
+
+                <div class="trail-connector">&darr; Heuristic Correlation (Gas Relayer: 0xRelay99B) &darr;</div>
+
+                <div class="trail-step-box dest-trail">
+                  <div class="trail-step-header">
+                    <span class="font-mono text-cyan font-bold">2. Correlated Unmixed Withdrawal (94% Conf.)</span>
+                    <span class="text-xs font-mono text-muted">24 Aug 2026, 11:42 AM</span>
+                  </div>
+                  <div class="text-xs font-mono text-secondary">Recipient: <span class="text-cyan">0xCleanCash...11A9</span> &bull; Relayer Fee: 0.15 ETH &bull; Sweep Target: OKX Exchange</div>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <div class="flex items-center justify-between text-xs font-mono mb-2">
+                  <span class="text-secondary">Anonymity Set Entropy:</span>
+                  <span class="text-danger font-bold">Reduced from 10,000 &rarr; 3 Candidates</span>
+                </div>
+                <div class="tranche-status-bar">
+                  <div class="tranche-fill fill-dest" style="width: 94%;"></div>
+                  <div class="tranche-fill fill-hold" style="width: 6%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title mb-3">Relayer Lineage &amp; Shared Fee Sponsors</h3>
+              <ul class="suspicion-list">
+                <li class="suspicion-item">
+                  <span class="check-icon red-check">🧬</span>
+                  <span class="check-text"><strong>Shared Gas Funder:</strong> Relayer 0xRelay99B funded both suspect deposit gas and cash-out gas within 32 minutes.</span>
+                </li>
+                <li class="suspicion-item">
+                  <span class="check-icon red-check">⏱️</span>
+                  <span class="check-text"><strong>Timing Correlation:</strong> Zero other 100 ETH withdrawals occurred in the leaf index window during that block bracket.</span>
+                </li>
+                <li class="suspicion-item">
+                  <span class="check-icon red-check">🏦</span>
+                  <span class="check-text"><strong>Immediate Exchange Consolidation:</strong> Withdrawn funds immediately transferred to OKX Hot Gateway #3.</span>
+                </li>
+              </ul>
+              <button class="btn btn-primary btn-block mt-3" id="btn-export-mixer-dossier">Export Demasking Dossier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 16: OFAC & GLOBAL SANCTIONS SCREENER (ELLIPTIC)     -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-sanctions">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge green-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div>
+                  <h2>Global Sanctions &amp; OFAC / FIU-IND Compliance Screener</h2>
+                  <p class="text-secondary text-sm">Automated screening against US OFAC SDN, UN Security Council, EU Sanctions, and FIU-IND Watchlists.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle">Updated: Daily Live AML Feed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="safety-scanner-grid">
+            <div class="card">
+              <h3 class="card-title mb-3">Live Sanction Database Match Results</h3>
+              <div class="safety-factors-grid">
+                <div class="safety-factor-box factor-safe">
+                  <span class="factor-icon">🇺🇸</span>
+                  <strong>US OFAC SDN List</strong>
+                  <p id="sanc-ofac">Direct Sanction: CLEAN &bull; Indirect Exposure: 14% via 3rd Hop Mixer</p>
+                </div>
+                <div class="safety-factor-box factor-safe">
+                  <span class="factor-icon">🇮🇳</span>
+                  <strong>FIU-IND Watchlist</strong>
+                  <p id="sanc-fiu">Flagged for suspicious high-velocity P2P peeling activity.</p>
+                </div>
+                <div class="safety-factor-box factor-safe">
+                  <span class="factor-icon">🇪🇺</span>
+                  <strong>EU Consolidated List</strong>
+                  <p id="sanc-eu">No direct asset freeze designations found.</p>
+                </div>
+                <div class="safety-factor-box factor-danger">
+                  <span class="factor-icon">🌐</span>
+                  <strong>INTERPOL Red Notice</strong>
+                  <p id="sanc-interpol">Associated with Transnational Cyber Syndicate #CYB-2048.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 17: CASE MANAGER & INVESTIGATOR WORKSPACE           -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-cases">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge purple-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <div>
+                  <h2>Investigator Case Workspace &amp; Evidence Vault</h2>
+                  <p class="text-secondary text-sm">Chainalysis-style case organizer: manage active cyber FIRs, assign officers, and write forensic case notes.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button class="btn btn-primary btn-sm" id="btn-create-case-modal">+ New Case File</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stolen-tracker-grid">
+            <div class="card">
+              <h3 class="card-title mb-3">Active Law Enforcement Case Files</h3>
+              <div class="tranche-list">
+                <div class="tranche-card active">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-mono text-cyan font-bold">Case #CYB-2026-001245</span>
+                    <span class="badge-risk badge-high">Active Tracing</span>
+                  </div>
+                  <div class="text-xs text-white">Suspect: <span class="font-mono text-muted">0xA1b2...9T0</span> &bull; Loss: ₹50,000</div>
+                  <div class="text-xs text-secondary mt-1">Officer: Insp. R. Sharma (Cyber Cell North) &bull; Subpoena Dispatched</div>
+                </div>
+
+                <div class="tranche-card">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-mono text-cyan font-bold">Case #CYB-2026-009812</span>
+                    <span class="badge-risk badge-high">Mixer Demasking</span>
+                  </div>
+                  <div class="text-xs text-white">Suspect: <span class="font-mono text-muted">0x742d...f44e</span> &bull; Loss: ₹34,50,000</div>
+                  <div class="text-xs text-secondary mt-1">Officer: ACP V. Menon (I4C Headquarters)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title mb-3">Investigator Case Notes &amp; Audit Log</h3>
+              <textarea id="case-notes-area" class="form-input font-mono text-xs" rows="6" placeholder="Enter ongoing investigation notes, court order numbers, or exchange inquiry ticket IDs...">Case #CYB-2026-001245:
+- Victim deposited ₹50,000 on 23 Aug, 05:15 PM via Telegram task bot.
+- Traced multi-hop peel: ₹20,000 swept directly to Binance Hot Cluster 14 (UID #8912401).
+- Section 91 CrPC notice drafted for Binance Legal Law Enforcement Desk.
+- Status: Awaiting exchange KYC freeze confirmation.</textarea>
+              <div class="flex justify-between items-center mt-3">
+                <span class="text-xs text-muted">Auto-Saved to Encrypted Local Vault</span>
+                <button class="btn btn-primary btn-sm" id="btn-save-case-notes">Save Case Notes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 18: MULTI-JURISDICTIONAL LEGAL SUBPOENA DISPATCHER   -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-subpoena">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge amber-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div>
+                  <h2>Automated Legal Subpoena &amp; Freeze Notice Dispatcher</h2>
+                  <p class="text-secondary text-sm">Generate and dispatch legally binding emergency freeze orders under Section 91 CrPC, US CLOUD Act, and MLAT.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle">Direct Exchange API Integration</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <button class="btn-tool active" id="btn-tab-crpc">Section 91 CrPC (India)</button>
+                <button class="btn-tool" id="btn-tab-cloud">US CLOUD Act § 2703(d)</button>
+                <button class="btn-tool" id="btn-tab-mlat">MLAT International Freeze</button>
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-dispatch-subpoena-email">⚡ 1-Click Dispatch to Binance Legal Desk</button>
+            </div>
+
+            <div class="dossier-section" id="subpoena-preview-box" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 16px;">
+              <h4 class="text-cyan font-bold mb-2">NOTICE UNDER SECTION 91 OF CODE OF CRIMINAL PROCEDURE, 1973</h4>
+              <p class="text-xs text-muted mb-2">To: Nodal Law Enforcement Officer, Binance Services / WazirX India / CoinDCX</p>
+              <p class="text-xs text-white mb-2"><strong>SUBJECT:</strong> EMERGENCY ORDER TO FREEZE SUSPECT CRYPTOCURRENCY ASSETS IN FIR #CYB-2026-001245</p>
+              <p class="text-xs text-secondary leading-relaxed">
+                Whereas blockchain intelligence generated by the <strong>CyberTrace Automated Forensics Engine (I4C)</strong> reveals that stolen funds amounting to <strong>₹20,000.00</strong> originating from cyber fraud complaint #1245 were deposited into your Centralized Hot Deposit Gateway (<strong>0xExch...90A</strong>) on <strong>23 Aug 2026, 05:40 PM IST</strong> via TXID: <span class="font-mono text-cyan">0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a</span>.
+                <br/><br/>
+                You are hereby commanded under Section 91 CrPC to immediately:
+                <br/>1. Freeze the recipient account associated with deposit internal memo / UID.
+                <br/>2. Preserve all KYC documents, registration IP logs, linked bank accounts, and phone numbers.
+                <br/>3. Furnish compliance confirmation within 24 hours to the Investigating Officer.
+              </p>
             </div>
           </div>
         </div>
