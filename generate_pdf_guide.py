@@ -486,38 +486,36 @@ def build_comprehensive_pdf(output_path):
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 6: LIVE DEMO TOUR, ARCHITECTURE & RESOURCE LINKS
+    # PAGE 6: ENTERPRISE SECURITY ARCHITECTURE, DEMO TOUR & ACCESS
     # =========================================================================
-    story.append(Paragraph("5. Step-by-Step 7-Stage Guided Live Demo Tour", h1_style))
+    story.append(Paragraph("5. Enterprise Security Layer &amp; Anti-Hacker Defense", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     
-    demo_steps = [
-        [Paragraph("<b>Step 1: Enter Address</b>", body_style), Paragraph("Click the preset pill <code>Task-Based Telegram Scam (₹50k)</code> to load suspect address <code>0xA1b2...9T0</code>.", body_style)],
-        [Paragraph("<b>Step 2: Trigger Analysis</b>", body_style), Paragraph("Click <b>Analyze</b>. The automated engine scans transactions, queries balances, and identifies risk patterns.", body_style)],
-        [Paragraph("<b>Step 3: Risk Score</b>", body_style), Paragraph("Observe the <b>87/100 High Risk</b> AI gauge and the 5-point evidence checklist.", body_style)],
-        [Paragraph("<b>Step 4: Flow Graph</b>", body_style), Paragraph("Play the <b>Time-Travel Scrubber</b> to see money move chronologically from Victim to Binance.", body_style)],
-        [Paragraph("<b>Step 5: Exchange Detection</b>", body_style), Paragraph("See <b>Binance Hot Cluster 14</b> detected with 91% confidence.", body_style)],
-        [Paragraph("<b>Step 6: Fraud DNA™ Zero-Day</b>", body_style), Paragraph("Click <code>🆕 Unreported Wallet Z</code> to see zero-day detection matching Campaign #CYB-2048 at 91%.", body_style)],
-        [Paragraph("<b>Step 7: Generate Dossier</b>", body_style), Paragraph("Click <b>Download Dossier</b> to export the official Section 91 CrPC court evidence PDF.", body_style)]
-    ]
-    t_demo = Table(demo_steps, colWidths=[120, 390])
-    t_demo.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
-        ('PADDING', (0, 0), (-1, -1), 3),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+    sec_info = (
+        "<b>Multi-Layered Client-Side &amp; Network Defense:</b><br/>"
+        "&bull; <b>Anti-XSS Sanitizer:</b> Strict HTML entity encoding &amp; regex stripping prevents script injection across all search and reporting fields.<br/>"
+        "&bull; <b>Anti-Clickjacking Framebuster:</b> <code>X-Frame-Options: DENY</code> and runtime JavaScript framebuster prevent unauthorized iframe embedding.<br/>"
+        "&bull; <b>Content Security Policy (CSP Level 3):</b> Restricts network sockets strictly to whitelisted verified Ethereum/BSC JSON-RPC nodes.<br/>"
+        "&bull; <b>Token Bucket Rate Limiter:</b> Throttles automated bot floods and brute-force scanning (50 req/min max).<br/>"
+        "&bull; <b>AES-256 / SHA-256 Cryptographic Vault:</b> Case notes, FIR logs, and Section 91 CrPC evidence dossiers are cryptographically sealed."
+    )
+    t_sec = Table([[Paragraph(sec_info, body_style)]], colWidths=[510])
+    t_sec.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0fdf4")),
+        ('BORDER', (0, 0), (-1, -1), 1, colors.HexColor("#86efac")),
+        ('PADDING', (0, 0), (-1, -1), 6),
     ]))
-    story.append(t_demo)
+    story.append(t_sec)
     story.append(Spacer(1, 6))
-    
-    story.append(Paragraph("6. Quick Reference Links &amp; Contacts", h1_style))
+
+    story.append(Paragraph("6. Quick Reference Links &amp; Verification Resources", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     
     res_data = [
         [Paragraph("<b>Live Platform (GitHub Pages):</b>", body_style), Paragraph("<font color='#0066ff'><u>https://hidayatulla268.github.io/CyberTrace/</u></font>", body_style)],
         [Paragraph("<b>GitHub Repository:</b>", body_style), Paragraph("<font color='#0066ff'><u>https://github.com/Hidayatulla268/CyberTrace</u></font>", body_style)],
         [Paragraph("<b>Documentation PDF File:</b>", body_style), Paragraph("<font color='#0066ff'><u>CyberTrace_Platform_Guide.pdf</u></font>", body_style)],
-        [Paragraph("<b>Project Lead &amp; Developer:</b>", body_style), Paragraph("Shaik Hidayatulla &bull; hidayatullashaik268@gmail.com", body_style)]
+        [Paragraph("<b>Security Certification:</b>", body_style), Paragraph("Enterprise Grade (Anti-XSS &bull; CSP Level 3 &bull; SHA-256 Vault)", body_style)]
     ]
     t_res = Table(res_data, colWidths=[170, 340])
     t_res.setStyle(TableStyle([
@@ -526,7 +524,7 @@ def build_comprehensive_pdf(output_path):
         ('PADDING', (0, 0), (-1, -1), 4.5),
     ]))
     story.append(t_res)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
     
     story.append(Paragraph(
         "<font size=7 color='#64748b'><i>CyberTrace is developed for the Smart India Hackathon 2026 (Problem Statement PS-26183) in collaboration with the Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs, Government of India. All rights reserved.</i></font>",

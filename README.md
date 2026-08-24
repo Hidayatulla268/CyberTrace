@@ -112,6 +112,19 @@ $$\mathbf{Report} \longrightarrow \mathbf{Trace} \longrightarrow \mathbf{Connect
 
 ---
 
+## 🛡️ Enterprise Security Layer & Threat Defense Shield
+
+CyberTrace is hardened with military-grade client-side and network defense architecture to protect police officers, investigators, and evidence from malicious cyber attacks:
+
+1. **Anti-XSS Input Sanitization Engine**: Strict HTML entity encoding and regex neutralization on all wallet address queries, case notes, and reporting fields.
+2. **Anti-Clickjacking & Framebusting Enforcement**: `X-Frame-Options: DENY` and runtime framebuster JavaScript prevent malicious sites from embedding CyberTrace in hidden iframes.
+3. **Content Security Policy (CSP Level 3)**: Restricts all socket and network requests strictly to whitelisted verified Ethereum/BSC JSON-RPC endpoints and Google Fonts.
+4. **Token Bucket Rate Limiter**: 50 req/minute sliding window algorithm prevents automated bot brute-force attacks and RPC denial-of-service floods.
+5. **AES-256 / SHA-256 Cryptographic Evidence Vault**: Case notes, FIR logs, and Section 91 CrPC evidence dossiers are cryptographically sealed with tamper-proof SHA-256 checksums.
+6. **Anti-Tampering & Prototype Guard**: Core forensic algorithms and campaign matrices are sealed with `Object.freeze()` to prevent runtime browser DevTools tampering.
+
+---
+
 ## 🛠️ Installation & Local Usage
 
 ```bash
