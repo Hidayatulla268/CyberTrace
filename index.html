@@ -1,0 +1,2487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTrace | Real-Time Identification of Fraud-Linked Crypto Exchanges (SIH PS-26183 / I4C, MHA)</title>
+  <meta name="description" content="AI-Powered Automated Blockchain Analytics for Real-Time Identification of Fraud-Linked Cryptocurrency Exchanges from Victim-Reported Suspect Wallets. Built for I4C, Ministry of Home Affairs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- SIH 2026 TOP BANNER -->
+  <div class="sih-top-strip">
+    <div class="sih-strip-content">
+      <div class="sih-tag-group">
+        <span class="sih-pill">SMART INDIA HACKATHON 2026</span>
+        <span class="sih-id-pill">Problem Statement ID: 26183</span>
+        <span class="mha-pill">Ministry of Home Affairs &bull; Indian Cyber Crime Coordination Centre (I4C), CIS Division</span>
+      </div>
+      <div class="sih-right-links">
+        <button class="btn-sih-doc" id="btn-open-ps-brief">&#128220; View PS-26183 Architecture Brief</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-container" id="brand-logo-trigger">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 6V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V6L12 2Z" fill="url(#blue-grad)" />
+              <path d="M12 4.18L18.82 7.22V11C18.82 15.28 15.93 19.34 12 20.72C8.07 19.34 5.18 15.28 5.18 11V7.22L12 4.18Z" fill="#0c1938" opacity="0.6"/>
+              <path d="M12 8V12L15 14" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="6" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="2 2"/>
+              <defs>
+                <linearGradient id="blue-grad" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0066ff"/>
+                  <stop offset="1" stop-color="#00c0ff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="brand-title">CyberTrace</span>
+            <span class="brand-subtitle">Crypto Investigation</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION MENU -->
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#dashboard" class="nav-link active" data-view="dashboard" id="nav-dashboard">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#analyze" class="nav-link" data-view="dashboard" id="nav-analyze">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+              <span class="nav-label">Analyze Wallet</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#report-fraud" class="nav-link" data-view="report-fraud" id="nav-report-fraud">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </span>
+              <span class="nav-label">Report Fraud</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#stolen-tracker" class="nav-link" data-view="stolen-tracker" id="nav-stolen-tracker">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg>
+              </span>
+              <span class="nav-label">Stolen Money Tracker</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#network-map" class="nav-link" data-view="network-map" id="nav-network-map">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              </span>
+              <span class="nav-label">Fraud Network Map</span>
+              <span class="nav-badge">NEXUS</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#safety-check" class="nav-link" data-view="safety-check" id="nav-safety-check">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+              </span>
+              <span class="nav-label">Public Safety Check</span>
+              <span class="nav-pill-dna" style="background: linear-gradient(135deg, #10b981, #00c0ff);">FREE</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#monitor" class="nav-link" data-view="monitor" id="nav-monitor">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line></svg>
+              </span>
+              <span class="nav-label">Monitor Wallets</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#exchange-intelligence" class="nav-link" data-view="exchange-intelligence" id="nav-exchange-intel">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+              </span>
+              <span class="nav-label">Exchange Clusters</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#fraud-dna" class="nav-link" data-view="fraud-dna" id="nav-fraud-dna">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 15c6.667-6 13.333 0 20-6"></path><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"></path><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"></path><path d="M17 6l-2.5-2.5"></path><path d="M7 18l2.5 2.5"></path><path d="M3.5 14.5l.5.5"></path><path d="M20 9.5l.5.5"></path><path d="M6.5 12.5l1 1"></path><path d="M16.5 10.5l1 1"></path><path d="M10 16l-1-1"></path></svg>
+              </span>
+              <span class="nav-label">Fraud DNA™</span>
+              <span class="nav-pill-dna">AI</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#alerts" class="nav-link" data-view="alerts" id="nav-alerts">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </span>
+              <span class="nav-label">Alerts</span>
+              <span class="nav-badge" id="sidebar-alert-badge">3</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#reports" class="nav-link" data-view="reports" id="nav-reports">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </span>
+              <span class="nav-label">Reports</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#about" class="nav-link" data-view="about" id="nav-about">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </span>
+              <span class="nav-label">About Us</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link" data-view="contact" id="nav-contact">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </span>
+              <span class="nav-label">Contact</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- SIDEBAR HELP CARD -->
+      <div class="sidebar-footer">
+        <div class="help-card">
+          <div class="help-header">
+            <span class="help-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </span>
+            <span class="help-title">Need Help?</span>
+          </div>
+          <p class="help-text">If you are a victim of crypto fraud, report it immediately.</p>
+          <button class="btn btn-primary btn-block" id="btn-sidebar-report">Report Fraud</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="main-wrapper">
+      <!-- TOP HEADER -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <h1 class="page-title" id="page-title">Analyze Wallet</h1>
+        </div>
+
+        <!-- JUDGES LIVE DEMO WALKTHROUGH -->
+        <div class="judge-demo-bar">
+          <span class="demo-tag">SIH PS-26183 Demo:</span>
+          <div class="demo-steps">
+            <button class="btn-demo-step" data-step="1" title="1. Enter Address">1. Address</button>
+            <button class="btn-demo-step" data-step="2" title="2. Analyze">2. Analyze</button>
+            <button class="btn-demo-step" data-step="3" title="3. Risk Score">3. Risk Score</button>
+            <button class="btn-demo-step" data-step="4" title="4. Flow Graph">4. Flow Graph</button>
+            <button class="btn-demo-step" data-step="5" title="5. Exchange Detection">5. Exchange Detection</button>
+            <button class="btn-demo-step" data-step="6" title="6. Fraud DNA Campaign Match">6. Fraud DNA™</button>
+            <button class="btn-demo-step" data-step="7" title="7. Generate Dossier">7. Dossier</button>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <div class="notification-wrapper">
+            <button class="icon-btn" id="notification-btn" aria-label="View notifications">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span class="badge-count" id="header-alert-count">3</span>
+            </button>
+            <!-- Dropdown -->
+            <div class="notification-dropdown" id="notification-dropdown">
+              <div class="dropdown-header">
+                <h3>I4C Emergency Alerts</h3>
+                <span class="badge-subtle">Real-Time Sync</span>
+              </div>
+              <div class="dropdown-list" id="dropdown-alerts-list">
+                <div class="alert-item high-alert">
+                  <span class="alert-dot red"></span>
+                  <div class="alert-info">
+                    <p class="alert-msg">Rapid outflow of ₹20,000 to Binance Exchange Cluster detected</p>
+                    <span class="alert-time">2 mins ago</span>
+                  </div>
+                </div>
+                <div class="alert-item">
+                  <span class="alert-dot orange"></span>
+                  <div class="alert-info">
+                    <p class="alert-msg">Task-based scam splitter wallet moved ₹18k to WazirX Gateway</p>
+                    <span class="alert-time">12 mins ago</span>
+                  </div>
+                </div>
+                <div class="alert-item">
+                  <span class="alert-dot blue"></span>
+                  <div class="alert-info">
+                    <p class="alert-msg">Automated Section 91 CrPC Freeze Subpoena drafted for Case #1245</p>
+                    <span class="alert-time">1 hour ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Profile -->
+          <div class="profile-wrapper">
+            <button class="profile-chip" id="profile-chip">
+              <div class="profile-avatar">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              </div>
+              <span class="profile-name">Investigator (I4C)</span>
+              <svg class="profile-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="profile-dropdown" id="profile-dropdown">
+              <div class="user-meta">
+                <span class="user-role">Cyber Crime Officer</span>
+                <span class="user-unit">I4C / Ministry of Home Affairs</span>
+              </div>
+              <hr class="dropdown-divider">
+              <a href="#dashboard" class="dropdown-item nav-trigger" data-view="dashboard">Investigation Console</a>
+              <a href="#monitor" class="dropdown-item nav-trigger" data-view="monitor">Live Mempool Watch</a>
+              <a href="#exchange-intelligence" class="dropdown-item nav-trigger" data-view="exchange-intelligence">Exchange Clusters</a>
+              <a href="#reports" class="dropdown-item nav-trigger" data-view="reports">Generated Case Dossiers</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ============================================== -->
+      <!-- VIEW 1: DASHBOARD & ANALYZE WALLET (DEFAULT) -->
+      <!-- ============================================== -->
+      <div class="view-content active" id="view-dashboard">
+        <!-- CORE USP WORKFLOW PIPELINE BAR -->
+        <div class="core-usp-strip" id="core-usp-strip">
+          <div class="usp-header-row">
+            <div class="usp-title-badge">
+              <span class="usp-star">⭐</span>
+              <strong>CORE FORENSIC WORKFLOW PIPELINE</strong>
+            </div>
+            <p class="usp-tagline">“From a single victim-reported wallet address, automatically trace stolen funds, identify destination exchanges, uncover connected wallets, monitor further movement, and generate court-ready evidence.”</p>
+          </div>
+          <div class="usp-pipeline-steps">
+            <button class="usp-step active nav-trigger" data-view="report-fraud" title="Step 1: Victim Complaint Intake">
+              <span class="usp-step-num">1</span>
+              <span class="usp-step-label">REPORT</span>
+              <span class="usp-step-sub">Victim Intake</span>
+            </button>
+            <span class="usp-arrow">&rarr;</span>
+            <button class="usp-step nav-trigger" data-view="stolen-tracker" title="Step 2: Trace Specific Stolen Tranches">
+              <span class="usp-step-num">2</span>
+              <span class="usp-step-label">TRACE</span>
+              <span class="usp-step-sub">Stolen Money</span>
+            </button>
+            <span class="usp-arrow">&rarr;</span>
+            <button class="usp-step nav-trigger" data-view="network-map" title="Step 3: Uncover Hidden Accomplicing Wallets">
+              <span class="usp-step-num">3</span>
+              <span class="usp-step-label">CONNECT</span>
+              <span class="usp-step-sub">Hidden Wallets</span>
+            </button>
+            <span class="usp-arrow">&rarr;</span>
+            <button class="usp-step nav-trigger" data-view="exchange-intelligence" title="Step 4: Identify Centralized Exchange Clusters">
+              <span class="usp-step-num">4</span>
+              <span class="usp-step-label">IDENTIFY</span>
+              <span class="usp-step-sub">Exchange CEX</span>
+            </button>
+            <span class="usp-arrow">&rarr;</span>
+            <button class="usp-step nav-trigger" data-view="monitor" title="Step 5: Live Mempool & Address Watchlist">
+              <span class="usp-step-num">5</span>
+              <span class="usp-step-label">MONITOR</span>
+              <span class="usp-step-sub">Live Mempool</span>
+            </button>
+            <span class="usp-arrow">&rarr;</span>
+            <button class="usp-step nav-trigger" data-view="reports" title="Step 6: Generate Court-Ready Section 91 CrPC Dossier">
+              <span class="usp-step-num">6</span>
+              <span class="usp-step-label">PROVE</span>
+              <span class="usp-step-sub">I4C Dossier</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- LEFT WORKSPACE -->
+          <div class="workspace-col">
+            <!-- 1. SEARCH SECTION -->
+            <section class="search-section card" id="section-search">
+              <div class="flex items-center justify-between mb-2">
+                <label for="wallet-input" class="input-label">Enter Victim-Reported Suspect Wallet Address</label>
+                <span class="ps-sub-badge">PS-26183 Automated Pipeline</span>
+              </div>
+              <div class="search-bar-row">
+                <div class="input-container">
+                  <input 
+                    type="text" 
+                    id="wallet-input" 
+                    class="wallet-input font-mono" 
+                    value="0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0" 
+                    placeholder="Enter suspect 0x, Tron or Solana address..."
+                    spellcheck="false"
+                  >
+                  <button class="btn-copy-input" id="btn-copy-main-address" title="Copy Address">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                </div>
+                <button class="btn btn-primary btn-analyze" id="btn-analyze">Analyze</button>
+              </div>
+
+              <!-- SIH Problem Statement Scam Categories Presets -->
+              <div class="preset-pills">
+                <span class="preset-label">Crime Categories (PS-26183):</span>
+                <button class="preset-btn active" data-address="0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0">Task-Based Telegram Scam (₹50k)</button>
+                <button class="preset-btn" data-address="0x742d35Cc6634C0532925a3b844Bc454e4438f44e">Ransomware Mixer Outflow (₹34.5L)</button>
+                <button class="preset-btn" data-address="0x89205A3E3b2A69De6Dbf7f01ED13B2108B2c43e7">Investment/Pig Butchering (₹4.15L)</button>
+                <button class="preset-btn preset-dna-pill" data-address="0xAB89C41d2E5F78a9B30C2d4E6F8a91F2" title="New Unreported Wallet with 91% Match to Campaign #CYB-2048">
+                  <span class="dna-icon-sparkle">🧬</span> 🆕 Unreported Wallet Z (91% Fraud DNA Match)
+                </button>
+              </div>
+            </section>
+
+            <!-- 2. KPI METRICS ROW -->
+            <section class="metrics-grid" id="section-metrics">
+              <!-- Metric 1: Total Received -->
+              <div class="metric-card card">
+                <div class="metric-icon-wrap icon-purple">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Total Received</span>
+                  <div class="metric-value font-mono" id="metric-received">₹8,42,000</div>
+                  <span class="metric-subtext" id="metric-received-sub">128 Transactions</span>
+                </div>
+              </div>
+
+              <!-- Metric 2: Total Sent -->
+              <div class="metric-card card">
+                <div class="metric-icon-wrap icon-cyan">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Total Sent</span>
+                  <div class="metric-value font-mono" id="metric-sent">₹7,95,000</div>
+                  <span class="metric-subtext" id="metric-sent-sub">96 Transactions</span>
+                </div>
+              </div>
+
+              <!-- Metric 3: First Activity -->
+              <div class="metric-card card">
+                <div class="metric-icon-wrap icon-green">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">First Activity</span>
+                  <div class="metric-value font-mono" id="metric-first-date">12 Aug 2026</div>
+                  <span class="metric-subtext font-mono" id="metric-first-time">10:24 AM</span>
+                </div>
+              </div>
+
+              <!-- Metric 4: Last Activity -->
+              <div class="metric-card card">
+                <div class="metric-icon-wrap icon-amber">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Last Activity</span>
+                  <div class="metric-value font-mono" id="metric-last-date">23 Aug 2026</div>
+                  <span class="metric-subtext font-mono" id="metric-last-time">05:42 PM</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- 3. TRANSACTION FLOW VISUALIZATION -->
+            <section class="flow-card card" id="section-flow">
+              <div class="flow-card-header">
+                <div>
+                  <h2 class="card-title">Transaction Flow</h2>
+                  <span class="text-xs text-muted">Automated Multi-Hop Graph Tracing (Victim &rarr; Suspect Hub &rarr; Layering &rarr; Exchange)</span>
+                </div>
+                <button class="btn-ghost-sm" id="btn-view-full-graph">
+                  <span>View Full Graph</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="icon-expand"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                </button>
+              </div>
+
+              <!-- Interactive Graph SVG Container -->
+              <div class="flow-canvas-container" id="graph-container">
+                <svg id="flow-svg" class="flow-svg" viewBox="0 0 740 320" preserveAspectRatio="xMidYMid meet">
+                  <defs>
+                    <pattern id="graph-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <circle cx="1" cy="1" r="0.7" fill="rgba(255,255,255,0.06)" />
+                    </pattern>
+
+                    <filter id="glow-green" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                    <filter id="glow-red" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="6" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                    <filter id="glow-amber" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="4" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                    <filter id="glow-blue" x="-30%" y="-30%" width="160%" height="160%">
+                      <feGaussianBlur stdDeviation="5" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+
+                    <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b" />
+                    </marker>
+                  </defs>
+
+                  <rect width="100%" height="100%" fill="url(#graph-grid)" opacity="0.4" />
+
+                  <!-- CONNECTIONS -->
+                  <g class="flow-connections">
+                    <path id="path-victim-suspect" d="M 120 140 L 225 140" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
+                    <path id="path-suspect-walletA" d="M 285 140 C 330 140, 360 85, 420 85" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
+                    <path id="path-walletA-walletB" d="M 480 85 L 565 92" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
+                    <path id="path-walletA-walletC" d="M 450 115 L 450 170" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
+                    <path id="path-suspect-exchange" d="M 285 145 C 330 150, 360 250, 435 250" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
+                  </g>
+
+                  <!-- PARTICLES -->
+                  <g class="flow-particles">
+                    <circle r="3" fill="#10b981">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 120 140 L 225 140" />
+                    </circle>
+                    <circle r="3" fill="#ef4444">
+                      <animateMotion dur="3s" repeatCount="indefinite" path="M 285 140 C 330 140, 360 85, 420 85" />
+                    </circle>
+                    <circle r="2.5" fill="#f59e0b">
+                      <animateMotion dur="2.8s" repeatCount="indefinite" path="M 480 85 L 565 92" />
+                    </circle>
+                    <circle r="2.5" fill="#f59e0b">
+                      <animateMotion dur="2.2s" repeatCount="indefinite" path="M 450 115 L 450 170" />
+                    </circle>
+                    <circle r="3" fill="#38bdf8">
+                      <animateMotion dur="3.2s" repeatCount="indefinite" path="M 285 145 C 330 150, 360 250, 435 250" />
+                    </circle>
+                  </g>
+
+                  <!-- LABELS -->
+                  <g class="flow-labels font-mono">
+                    <rect x="330" y="88" width="56" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
+                    <text x="358" y="102" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">₹30,000</text>
+
+                    <rect x="500" y="65" width="56" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
+                    <text x="528" y="79" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">₹18,000</text>
+
+                    <rect x="456" y="132" width="56" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
+                    <text x="484" y="146" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">₹12,000</text>
+
+                    <rect x="330" y="210" width="56" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
+                    <text x="358" y="224" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">₹20,000</text>
+                  </g>
+
+                  <!-- NODES -->
+                  <!-- 1. Victim -->
+                  <g class="graph-node node-victim" id="node-victim" transform="translate(90, 140)">
+                    <circle r="30" fill="#064e3b" fill-opacity="0.25" stroke="#10b981" stroke-width="2" filter="url(#glow-green)" class="node-halo"/>
+                    <circle r="22" fill="#065f46" stroke="#34d399" stroke-width="1.5" />
+                    <path d="M-6 -2 C-6 -5.3 6 -5.3 6 -2 C6 1.3 -6 1.3 -6 -2 M-9 8 C-9 4.5 9 4.5 9 8" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                    <text y="42" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="600" class="node-title">Victim Wallet</text>
+                    <text y="58" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="500" class="font-mono">₹50,000</text>
+                  </g>
+
+                  <!-- 2. Suspect -->
+                  <g class="graph-node node-suspect" id="node-suspect" transform="translate(255, 140)">
+                    <circle r="32" fill="#7f1d1d" fill-opacity="0.3" stroke="#ef4444" stroke-width="2.5" filter="url(#glow-red)" class="node-halo-pulse"/>
+                    <circle r="23" fill="#991b1b" stroke="#f87171" stroke-width="1.5" />
+                    <path d="M-9 -3 C-7 -7, 7 -7, 9 -3 C10 3, -10 3, -9 -3 Z" fill="#ffffff"/>
+                    <circle cx="-4" cy="-2" r="1.5" fill="#991b1b"/>
+                    <circle cx="4" cy="-2" r="1.5" fill="#991b1b"/>
+                    <path d="M-6 4 C-3 6, 3 6, 6 4" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+                    <text y="44" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="600" class="node-title">Suspect Wallet</text>
+                    <text y="58" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="JetBrains Mono, monospace">0xA1b2...9T0</text>
+                    <text y="72" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600" class="font-mono">₹50,000</text>
+                  </g>
+
+                  <!-- 3. Wallet A -->
+                  <g class="graph-node node-wallet-a" id="node-wallet-a" transform="translate(450, 85)">
+                    <circle r="24" fill="#78350f" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2" filter="url(#glow-amber)" class="node-halo"/>
+                    <circle r="18" fill="#b45309" stroke="#fbbf24" stroke-width="1.2" />
+                    <rect x="-7" y="-5" width="14" height="10" rx="2" fill="none" stroke="#ffffff" stroke-width="1.4" />
+                    <circle cx="2" cy="0" r="1" fill="#ffffff"/>
+                    <text x="32" y="-2" text-anchor="start" fill="#f8fafc" font-size="11" font-weight="600">Wallet A</text>
+                    <text x="32" y="11" text-anchor="start" fill="#64748b" font-size="9" font-family="JetBrains Mono, monospace">0xB3c4...5D6</text>
+                  </g>
+
+                  <!-- 4. Wallet B -->
+                  <g class="graph-node node-wallet-b" id="node-wallet-b" transform="translate(595, 95)">
+                    <circle r="22" fill="#78350f" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2" filter="url(#glow-amber)" class="node-halo"/>
+                    <circle r="16" fill="#b45309" stroke="#fbbf24" stroke-width="1.2" />
+                    <rect x="-6" y="-5" width="12" height="9" rx="2" fill="none" stroke="#ffffff" stroke-width="1.4" />
+                    <circle cx="2" cy="-0.5" r="1" fill="#ffffff"/>
+                    <text x="28" y="-2" text-anchor="start" fill="#f8fafc" font-size="11" font-weight="600">Wallet B</text>
+                    <text x="28" y="11" text-anchor="start" fill="#64748b" font-size="9" font-family="JetBrains Mono, monospace">0xC7d8...8E9</text>
+                  </g>
+
+                  <!-- 5. Wallet C -->
+                  <g class="graph-node node-wallet-c" id="node-wallet-c" transform="translate(450, 195)">
+                    <circle r="22" fill="#78350f" fill-opacity="0.3" stroke="#f59e0b" stroke-width="2" filter="url(#glow-amber)" class="node-halo"/>
+                    <circle r="16" fill="#b45309" stroke="#fbbf24" stroke-width="1.2" />
+                    <rect x="-6" y="-5" width="12" height="9" rx="2" fill="none" stroke="#ffffff" stroke-width="1.4" />
+                    <circle cx="2" cy="-0.5" r="1" fill="#ffffff"/>
+                    <text x="28" y="-2" text-anchor="start" fill="#f8fafc" font-size="11" font-weight="600">Wallet C</text>
+                    <text x="28" y="11" text-anchor="start" fill="#64748b" font-size="9" font-family="JetBrains Mono, monospace">0xD4e5...2F3</text>
+                  </g>
+
+                  <!-- 6. Exchange / Service (Core PS-26183 Output) -->
+                  <g class="graph-node node-exchange" id="node-exchange" transform="translate(465, 250)">
+                    <circle r="25" fill="#0c4a6e" fill-opacity="0.3" stroke="#0ea5e9" stroke-width="2" filter="url(#glow-blue)" class="node-halo"/>
+                    <circle r="18" fill="#0284c7" stroke="#38bdf8" stroke-width="1.4" />
+                    <path d="M-8 -2 L0 -8 L8 -2 M-6 -2 L-6 5 M-2 -2 L-2 5 M2 -2 L2 5 M6 -2 L6 5 M-8 5 L8 5" fill="none" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round"/>
+                    <text x="32" y="-10" text-anchor="start" fill="#f8fafc" font-size="11" font-weight="600">Exchange / Service</text>
+                    <text x="32" y="3" text-anchor="start" fill="#64748b" font-size="9" font-family="JetBrains Mono, monospace">0xExch...90A</text>
+                    <rect x="32" y="10" width="102" height="18" rx="4" fill="#0369a1" fill-opacity="0.5" stroke="#0284c7" stroke-width="1"/>
+                    <text x="83" y="22" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-weight="600">Probable Exchange</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- LEGEND -->
+              <div class="flow-legend">
+                <div class="legend-item">
+                  <span class="legend-dot dot-victim"></span>
+                  <span class="legend-text">Victim</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot dot-suspect"></span>
+                  <span class="legend-text">Suspect</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot dot-intermediary"></span>
+                  <span class="legend-text">Intermediary</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot dot-exchange"></span>
+                  <span class="legend-text">Exchange/Service</span>
+                </div>
+              </div>
+            </section>
+
+            <!-- 4. STOLEN MONEY TRACKER (SPECIFIC TRANCHE TRACER) -->
+            <section class="card stolen-tracker-widget" id="section-stolen-tracker-preview">
+              <div class="flow-card-header">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="feature-icon-badge yellow-badge">💰</span>
+                    <h2 class="card-title">Stolen Money Tracker</h2>
+                    <span class="badge-subtle">Tranche Following Engine</span>
+                  </div>
+                  <span class="text-xs text-muted">Select victim inflow transaction and follow that specific stolen money hop-by-hop.</span>
+                </div>
+                <button class="btn-ghost-sm nav-trigger" data-view="stolen-tracker">
+                  <span>Open Full Tracker</span> &rarr;
+                </button>
+              </div>
+
+              <!-- Victim Inflow Selector -->
+              <div class="tracker-selector-bar">
+                <span class="text-xs text-secondary">Tracing Victim Inflow:</span>
+                <div class="inflow-chip active font-mono">
+                  <span class="text-white font-bold">TX #1: ₹50,000</span> (23 Aug, 05:15 PM &bull; 0x3b2a...3a4b)
+                </div>
+              </div>
+
+              <!-- Hop-by-Hop Tranche Progression Timeline -->
+              <div class="stolen-hops-timeline" id="stolen-hops-timeline">
+                <div class="hop-card hop-origin">
+                  <div class="hop-badge">HOP 0 &bull; INFLOW</div>
+                  <div class="hop-amount font-mono">₹50,000 (100%)</div>
+                  <div class="hop-addr font-mono text-muted">Victim Wallet &rarr; Suspect 0xA1b2...9T0</div>
+                  <div class="hop-time text-xs text-secondary">05:15 PM &bull; Initial Collection</div>
+                </div>
+
+                <div class="hop-connector-line">
+                  <span class="hop-split-tag">Peeling Split 60% / 40%</span>
+                </div>
+
+                <div class="hop-row-split">
+                  <div class="hop-card hop-split">
+                    <div class="hop-badge text-amber">HOP 1A &bull; LAYER 1</div>
+                    <div class="hop-amount font-mono text-amber">₹30,000 (60%)</div>
+                    <div class="hop-addr font-mono text-muted">To Wallet A (0xB3c4...5D6)</div>
+                    <div class="hop-time text-xs text-secondary">05:42 PM &bull; Peeling Splitter</div>
+                  </div>
+                  <div class="hop-card hop-dest">
+                    <div class="hop-badge text-cyan">HOP 1B &bull; OFF-RAMP</div>
+                    <div class="hop-amount font-mono text-cyan">₹20,000 (40%)</div>
+                    <div class="hop-addr font-mono text-muted">To Binance Cluster (0xExch...90A)</div>
+                    <div class="hop-time text-xs text-secondary">05:40 PM &bull; Direct CEX Deposit</div>
+                  </div>
+                </div>
+
+                <div class="hop-connector-line">
+                  <span class="hop-split-tag">Layer 2 Fan-Out 36% / 24%</span>
+                </div>
+
+                <div class="hop-row-split">
+                  <div class="hop-card hop-split">
+                    <div class="hop-badge text-green">HOP 2A &bull; LAYER 2</div>
+                    <div class="hop-amount font-mono">₹18,000 (36%)</div>
+                    <div class="hop-addr font-mono text-muted">To Wallet B &bull; WazirX Gateway</div>
+                  </div>
+                  <div class="hop-card hop-split">
+                    <div class="hop-badge text-green">HOP 2B &bull; LAYER 2</div>
+                    <div class="hop-amount font-mono">₹12,000 (24%)</div>
+                    <div class="hop-addr font-mono text-muted">To Wallet C &bull; Intermediate Hold</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 5. HIDDEN WALLET DETECTOR (ACCOMPLICE INFRASTRUCTURE) -->
+            <section class="card hidden-wallets-widget" id="section-hidden-wallets">
+              <div class="flow-card-header">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="feature-icon-badge purple-badge">🔗</span>
+                    <h2 class="card-title">Hidden & Connected Wallet Detector</h2>
+                    <span class="badge-risk badge-high" id="hidden-wallet-count-badge">4 Accomplices Found</span>
+                  </div>
+                  <span class="text-xs text-muted">Discovered unlisted accomplice wallets, gas sponsor nodes, and co-spending sweepers.</span>
+                </div>
+                <button class="btn-ghost-sm nav-trigger" data-view="network-map">
+                  <span>View in Network Map</span> &rarr;
+                </button>
+              </div>
+
+              <div class="table-responsive">
+                <table class="tx-table" id="hidden-wallets-table">
+                  <thead>
+                    <tr>
+                      <th>Accomplice Address</th>
+                      <th>Relationship / Role</th>
+                      <th>Volume Shared</th>
+                      <th>Topological Distance</th>
+                      <th>Risk Level</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="hidden-wallets-tbody">
+                    <tr>
+                      <td><span class="font-mono text-white copyable" data-copy="0xB3c4D5e6F7a8B9c0D1E2F3A4B5C6D7E8F9A0B1C2">0xB3c4...5D6</span></td>
+                      <td><span class="badge-role role-splitter">Peeling Chain Splitter</span></td>
+                      <td class="font-mono font-semibold">₹30,000</td>
+                      <td class="text-xs text-secondary">1st Degree (Direct Child)</td>
+                      <td><span class="badge-risk badge-high">High (82)</span></td>
+                      <td><button class="btn-ghost-xs btn-trace-hidden" data-address="0xB3c4D5e6F7a8B9c0D1E2F3A4B5C6D7E8F9A0B1C2">Trace &rarr;</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="font-mono text-white copyable" data-copy="0x9920FeeF119Ab3408a8c19920199182301938210">0xFeef...119A</span></td>
+                      <td><span class="badge-role role-gas">Gas Sponsor Relayer</span></td>
+                      <td class="font-mono font-semibold">₹15,000 Gas</td>
+                      <td class="text-xs text-secondary">Shared Funder (FixedFloat)</td>
+                      <td><span class="badge-risk badge-high">High (89)</span></td>
+                      <td><button class="btn-ghost-xs btn-trace-hidden" data-address="0x9920FeeF119Ab3408a8c19920199182301938210">Trace &rarr;</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="font-mono text-white copyable" data-copy="0xC7d8E9F0A1B2C3D4E5F678901234567890ABCDEF">0xC7d8...8E9</span></td>
+                      <td><span class="badge-role role-cospender">Co-Spending Mule</span></td>
+                      <td class="font-mono font-semibold">₹18,000</td>
+                      <td class="text-xs text-secondary">2nd Degree Hop</td>
+                      <td><span class="badge-risk badge-medium">Medium (65)</span></td>
+                      <td><button class="btn-ghost-xs btn-trace-hidden" data-address="0xC7d8E9F0A1B2C3D4E5F678901234567890ABCDEF">Trace &rarr;</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="font-mono text-white copyable" data-copy="0xAB89C41d2E5F78a9B30C2d4E6F8a91F2">0xAB89...91F2</span></td>
+                      <td><span class="badge-role role-dna">Fraud DNA Twin (Zero-Day)</span></td>
+                      <td class="font-mono font-semibold">₹1,25,000</td>
+                      <td class="text-xs text-danger font-semibold">91% DNA Syndicate Link</td>
+                      <td><span class="badge-risk badge-high">Critical (92)</span></td>
+                      <td><button class="btn-ghost-xs btn-trace-hidden" data-address="0xAB89C41d2E5F78a9B30C2d4E6F8a91F2">Trace &rarr;</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <!-- 6. RECENT TRANSACTIONS TABLE -->
+            <section class="transactions-card card" id="section-transactions">
+              <div class="transactions-header">
+                <h2 class="card-title">Recent Transactions</h2>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="tx-table" id="tx-table">
+                  <thead>
+                    <tr>
+                      <th>Hash</th>
+                      <th>From</th>
+                      <th>To</th>
+                      <th>Amount</th>
+                      <th>Time</th>
+                      <th>Risk</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tx-tbody">
+                    <!-- Dynamic rows loaded via JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-footer">
+                <button class="link-btn" id="btn-view-all-tx">
+                  View All Transactions &rarr;
+                </button>
+              </div>
+            </section>
+          </div>
+
+          <!-- RIGHT COLUMN WIDGETS -->
+          <div class="sidebar-col">
+            <!-- 1. RISK SCORE CARD -->
+            <section class="card risk-card" id="section-risk">
+              <div class="widget-header">
+                <span class="widget-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </span>
+                <h3 class="widget-title">Risk Score</h3>
+              </div>
+
+              <!-- Circular Gauge -->
+              <div class="gauge-container">
+                <svg class="risk-gauge" viewBox="0 0 160 110">
+                  <defs>
+                    <linearGradient id="gauge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#10b981" />
+                      <stop offset="50%" stop-color="#f59e0b" />
+                      <stop offset="85%" stop-color="#ef4444" />
+                      <stop offset="100%" stop-color="#dc2626" />
+                    </linearGradient>
+                    <filter id="gauge-glow">
+                      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ef4444" flood-opacity="0.6"/>
+                    </filter>
+                  </defs>
+                  <path d="M 20 95 A 60 60 0 0 1 140 95" fill="none" stroke="#1e293b" stroke-width="12" stroke-linecap="round" />
+                  <path id="gauge-progress" d="M 20 95 A 60 60 0 0 1 140 95" fill="none" stroke="url(#gauge-grad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="24.5" filter="url(#gauge-glow)"/>
+                </svg>
+                <div class="gauge-center-content">
+                  <div class="score-number font-mono" id="risk-score-val">87</div>
+                  <div class="score-max">/100</div>
+                </div>
+                <div class="risk-badge-text font-bold" id="risk-level-tag">HIGH RISK</div>
+              </div>
+
+              <!-- Checklist -->
+              <div class="suspicion-section">
+                <h4 class="suspicion-title">Why is this wallet suspicious?</h4>
+                <ul class="suspicion-list" id="suspicion-list">
+                  <li class="suspicion-item">
+                    <span class="check-icon red-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444"/><polyline points="8 12 11 15 16 9" stroke="#ef4444"></polyline></svg>
+                    </span>
+                    <span class="check-text">Reported by multiple users</span>
+                  </li>
+                  <li class="suspicion-item">
+                    <span class="check-icon red-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444"/><polyline points="8 12 11 15 16 9" stroke="#ef4444"></polyline></svg>
+                    </span>
+                    <span class="check-text">High number of rapid transfers</span>
+                  </li>
+                  <li class="suspicion-item">
+                    <span class="check-icon red-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444"/><polyline points="8 12 11 15 16 9" stroke="#ef4444"></polyline></svg>
+                    </span>
+                    <span class="check-text">Funds transferred to multiple wallets</span>
+                  </li>
+                  <li class="suspicion-item">
+                    <span class="check-icon red-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444"/><polyline points="8 12 11 15 16 9" stroke="#ef4444"></polyline></svg>
+                    </span>
+                    <span class="check-text">Connected to previously flagged address</span>
+                  </li>
+                  <li class="suspicion-item">
+                    <span class="check-icon red-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444"/><polyline points="8 12 11 15 16 9" stroke="#ef4444"></polyline></svg>
+                    </span>
+                    <span class="check-text">Funds moved to exchange</span>
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 2. FRAUD DNA™ CAMPAIGN ATTRIBUTION CARD -->
+            <section class="card fraud-dna-card" id="section-fraud-dna">
+              <div class="widget-header">
+                <div class="flex items-center gap-2">
+                  <span class="widget-icon dna-glow-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M2 15c6.667-6 13.333 0 20-6"></path>
+                      <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"></path>
+                      <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"></path>
+                      <path d="M17 6l-2.5-2.5"></path>
+                      <path d="M7 18l2.5 2.5"></path>
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 class="widget-title">Fraud DNA™ Detection</h3>
+                    <span class="dna-subtext">Behavioral Campaign Fingerprint</span>
+                  </div>
+                </div>
+                <span class="badge-dna-live" id="dna-status-badge">CAMPAIGN MATCHED</span>
+              </div>
+
+              <!-- Unreported Alert Banner -->
+              <div class="unreported-alert-banner" id="unreported-dna-banner">
+                <div class="alert-banner-header">
+                  <span class="pulse-indicator-red"></span>
+                  <strong class="text-white text-xs" id="dna-banner-title">🔴 Potential Unreported Fraud Wallet Detected</strong>
+                </div>
+                <div class="banner-details">
+                  <div class="banner-row">
+                    <span class="b-label">Wallet:</span>
+                    <span class="b-val font-mono" id="dna-card-wallet">0xAB89...91F2</span>
+                  </div>
+                  <div class="banner-row">
+                    <span class="b-label">Fraud DNA Match:</span>
+                    <span class="b-val font-mono text-cyan font-bold" id="dna-card-match">91% Pattern Match</span>
+                  </div>
+                  <div class="banner-row">
+                    <span class="b-label">Related Campaign:</span>
+                    <span class="b-val text-amber font-semibold" id="dna-card-campaign">Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Why? Behavioral Fingerprint Evidence -->
+              <div class="dna-breakdown-section">
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="dna-breakdown-title">Why? (Behavioral Evidence)</h4>
+                  <button class="btn-ghost-xs" id="btn-view-dna-lineage" title="View Graph Lineage">
+                    <span>View Lineage</span> &rarr;
+                  </button>
+                </div>
+                <ul class="dna-indicators-list" id="dna-indicators-list">
+                  <li class="dna-item">
+                    <span class="dna-bullet-icon">🧬</span>
+                    <div class="dna-item-content">
+                      <strong>Similar Transaction Structure</strong>
+                      <p id="dna-reason-1">3-hop peel chain with fan-out into intermediary splitting nodes.</p>
+                    </div>
+                  </li>
+                  <li class="dna-item">
+                    <span class="dna-bullet-icon">🧬</span>
+                    <div class="dna-item-content">
+                      <strong>Similar Fund-Splitting Pattern</strong>
+                      <p id="dna-reason-2">80/20 tranche split matching Campaign #CYB-2048 syndicate structure.</p>
+                    </div>
+                  </li>
+                  <li class="dna-item">
+                    <span class="dna-bullet-icon">🧬</span>
+                    <div class="dna-item-content">
+                      <strong>Similar Transfer Timing & Cadence</strong>
+                      <p id="dna-reason-3">Automated script execution with &lt;45s delay per hop.</p>
+                    </div>
+                  </li>
+                  <li class="dna-item">
+                    <span class="dna-bullet-icon">🧬</span>
+                    <div class="dna-item-content">
+                      <strong>Similar Destination Behavior</strong>
+                      <p id="dna-reason-4">Consolidation into Binance Hot Cluster 14 gateway.</p>
+                    </div>
+                  </li>
+                  <li class="dna-item">
+                    <span class="dna-bullet-icon">🧬</span>
+                    <div class="dna-item-content">
+                      <strong>Connected to Existing Syndicate Wallets</strong>
+                      <p id="dna-reason-5">2nd-degree graph proximity to Wallet A (0xB3c4...5D6) from Case #1245.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Vector Similarity Score Bars -->
+              <div class="dna-vector-bars">
+                <div class="vector-bar-row">
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-secondary">Timing & Velocity Similarity</span>
+                    <span class="font-mono text-cyan font-semibold" id="vec-timing">94%</span>
+                  </div>
+                  <div class="mini-progress-track">
+                    <div class="mini-progress-fill" id="vec-timing-bar" style="width: 94%;"></div>
+                  </div>
+                </div>
+                <div class="vector-bar-row">
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-secondary">Splitting & Layering Structure</span>
+                    <span class="font-mono text-cyan font-semibold" id="vec-split">92%</span>
+                  </div>
+                  <div class="mini-progress-track">
+                    <div class="mini-progress-fill" id="vec-split-bar" style="width: 92%;"></div>
+                  </div>
+                </div>
+                <div class="vector-bar-row">
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-secondary">Destination & Off-Ramp Match</span>
+                    <span class="font-mono text-cyan font-semibold" id="vec-dest">89%</span>
+                  </div>
+                  <div class="mini-progress-track">
+                    <div class="mini-progress-fill" id="vec-dest-bar" style="width: 89%;"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 2. POSSIBLE DESTINATION CARD (PRIMARY PS-26183 REQUIREMENT) -->
+            <section class="card destination-card" id="section-destination">
+              <div class="widget-header">
+                <span class="widget-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                </span>
+                <h3 class="widget-title">Possible Destination</h3>
+              </div>
+
+              <div class="destination-body">
+                <div class="destination-subhead">Probable Exchange / Service</div>
+                
+                <div class="exchange-stats-row">
+                  <div class="exchange-col">
+                    <span class="meta-label">Exchange Name</span>
+                    <div class="exchange-name" id="exchange-name">Binance (Cluster)</div>
+                  </div>
+                  <div class="confidence-col">
+                    <span class="meta-label">Confidence</span>
+                    <div class="confidence-score font-mono" id="confidence-val">91%</div>
+                  </div>
+                </div>
+
+                <div class="reason-block">
+                  <span class="reason-label">Reason:</span>
+                  <ul class="bullet-list" id="exchange-reasons-list">
+                    <li>Address matches known exchange patterns</li>
+                    <li>Multiple deposits from different wallets</li>
+                    <li>Transaction behavior matches exchange activity</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- 3. GENERATE INVESTIGATION REPORT CARD -->
+            <section class="card report-card" id="section-report">
+              <div class="widget-header">
+                <span class="widget-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </span>
+                <h3 class="widget-title">Generate Investigation Report</h3>
+              </div>
+
+              <div class="report-content-grid">
+                <div class="report-meta-col">
+                  <div class="case-id font-mono" id="card-case-id">Case ID: CYB-2026-001245</div>
+                  <div class="includes-label">Includes:</div>
+                  <ul class="report-checklist">
+                    <li>
+                      <span class="check-icon green-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#10b981" fill-opacity="0.15"/><polyline points="8 12 11 15 16 9"></polyline></svg>
+                      </span>
+                      <span>Wallet Summary</span>
+                    </li>
+                    <li>
+                      <span class="check-icon green-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#10b981" fill-opacity="0.15"/><polyline points="8 12 11 15 16 9"></polyline></svg>
+                      </span>
+                      <span>Transaction Flow Graph</span>
+                    </li>
+                    <li>
+                      <span class="check-icon green-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#10b981" fill-opacity="0.15"/><polyline points="8 12 11 15 16 9"></polyline></svg>
+                      </span>
+                      <span>Risk Assessment</span>
+                    </li>
+                    <li>
+                      <span class="check-icon green-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#10b981" fill-opacity="0.15"/><polyline points="8 12 11 15 16 9"></polyline></svg>
+                      </span>
+                      <span>Connected Wallets</span>
+                    </li>
+                    <li>
+                      <span class="check-icon green-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#10b981" fill-opacity="0.15"/><polyline points="8 12 11 15 16 9"></polyline></svg>
+                      </span>
+                      <span>Possible Destination</span>
+                    </li>
+                    <li>
+                      <span class="check-icon green-check">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="9" fill="#10b981" fill-opacity="0.15"/><polyline points="8 12 11 15 16 9"></polyline></svg>
+                      </span>
+                      <span>Evidence Summary</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- PDF Document Graphic -->
+                <div class="report-pdf-graphic">
+                  <div class="pdf-card-preview" id="pdf-preview-trigger" title="Click to open Dossier Preview">
+                    <div class="pdf-sheet">
+                      <div class="pdf-lines">
+                        <div class="pdf-line-title"></div>
+                        <div class="pdf-line-sm"></div>
+                        <div class="pdf-line-sm"></div>
+                        <div class="pdf-line-sm short"></div>
+                      </div>
+                      <div class="pdf-badge">PDF</div>
+                    </div>
+                    <div class="pdf-download-bubble">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-block btn-download" id="btn-download-report">
+                Download Report
+              </button>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================================================== -->
+      <!-- VIEW 2: EXCHANGE ATTRIBUTION INTELLIGENCE MATRIX -->
+      <!-- =================================================== -->
+      <div class="view-content" id="view-exchange-intelligence">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge blue-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <h2>Centralized Exchange (CEX) Attribution Directory</h2>
+                  <p class="text-secondary text-sm">Automated clustering & heuristic signature mapping for PS-26183 law enforcement compliance.</p>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-sync-exchange-heuristics">&#8635; Refresh Heuristics Engine</button>
+            </div>
+          </div>
+
+          <div class="exchange-grid">
+            <div class="card cex-cluster-card">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-white text-md">Binance Global & Hot Clusters</span>
+                <span class="badge-risk badge-high">94% Confidence</span>
+              </div>
+              <p class="text-xs text-muted mb-3">Recognizes Binance multi-signature consolidation sweep scripts, sweep timers, and internal memo routing.</p>
+              <div class="cex-meta-tag">Known Hot Clusters: 1,420+ Wallets</div>
+            </div>
+
+            <div class="card cex-cluster-card">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-white text-md">WazirX / CoinDCX (Indian Gateways)</span>
+                <span class="badge-risk badge-high">96% Confidence</span>
+              </div>
+              <p class="text-xs text-muted mb-3">High-priority Indian exchange deposit gateways for immediate FIU-IND and Section 91 CrPC freeze requests.</p>
+              <div class="cex-meta-tag">Indian FIU-IND Registered Gateway</div>
+            </div>
+
+            <div class="card cex-cluster-card">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-white text-md">KuCoin / OKX Gateways</span>
+                <span class="badge-risk badge-medium">88% Confidence</span>
+              </div>
+              <p class="text-xs text-muted mb-3">Automated detection of rapid offloading tranches and high-velocity deposit aggregation sweeps.</p>
+              <div class="cex-meta-tag">International Compliance Portal Active</div>
+            </div>
+
+            <div class="card cex-cluster-card">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-white text-md">Tornado Cash / Mixer Pools</span>
+                <span class="badge-risk badge-high">99% Confidence</span>
+              </div>
+              <p class="text-xs text-muted mb-3">Direct smart contract ABI decompilation and relayer fee destination tracing.</p>
+              <div class="cex-meta-tag">Sanctioned Mixer Flagged</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 3: REPORT FRAUD (FULL I4C INTAKE PORTAL) -->
+      <!-- ============================================== -->
+      <div class="view-content" id="view-report-fraud">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center gap-3">
+              <div class="view-icon-badge red-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div>
+                <h2>Victim Complaint Intake (PS-26183 / I4C Portal)</h2>
+                <p class="text-secondary text-sm">Automatic instant tracing from victim-reported suspect wallet to destination exchange cluster.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="portal-grid">
+            <div class="card form-panel">
+              <form id="full-fraud-form" class="form-grid">
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="f-victim-name">Victim Full Name</label>
+                    <input type="text" id="f-victim-name" class="form-input" placeholder="e.g., Rajesh Sharma" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="f-victim-email">Contact Email / Phone</label>
+                    <input type="text" id="f-victim-email" class="form-input" placeholder="rajesh@domain.com or +91 9876543210" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="f-fraud-type">Incident Category (PS-26183 Classifications)</label>
+                  <select id="f-fraud-type" class="form-input" required>
+                    <option value="">Select Specific Crime Type...</option>
+                    <option value="task-based">Task-Based Fraud (Telegram / Part-Time Job Scam)</option>
+                    <option value="investment">Investment Scam / Fake High-Return Platform</option>
+                    <option value="sextortion">Sextortion / Video Call Extortion</option>
+                    <option value="ransomware">Ransomware Extortion</option>
+                    <option value="phishing">Phishing / Malicious DApp Drain</option>
+                    <option value="darknet">Darknet / Organized Financial Syndicate</option>
+                  </select>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="f-victim-addr">Victim's Wallet Address (Source)</label>
+                    <input type="text" id="f-victim-addr" class="form-input font-mono" placeholder="0x... from where you sent" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="f-suspect-addr">Suspect's Wallet Address (Fraudster)</label>
+                    <input type="text" id="f-suspect-addr" class="form-input font-mono" placeholder="0x... recipient fraud address" required>
+                  </div>
+                </div>
+
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="f-amount">Defrauded Amount (INR / Crypto)</label>
+                    <input type="text" id="f-amount" class="form-input font-mono" placeholder="₹50,000 / 0.65 ETH / 600 USDT" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="f-txhash">Transaction Hash (TXID)</label>
+                    <input type="text" id="f-txhash" class="form-input font-mono" placeholder="0x9d8f...7a1b">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="f-description">Modus Operandi & Evidence Notes</label>
+                  <textarea id="f-description" rows="3" class="form-input" placeholder="Detail Telegram handles, fake exchange URL, WhatsApp numbers, payment proofs..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="reset" class="btn btn-ghost">Clear</button>
+                  <button type="submit" class="btn btn-primary" id="btn-submit-full-report">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"></path><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    Submit Report & Trigger Automated Exchange Trace
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Side Info -->
+            <div class="portal-info-col">
+              <div class="card info-step-card">
+                <h3 class="font-bold mb-3 text-white">I4C Forensic Pipeline</h3>
+                <div class="timeline-steps">
+                  <div class="timeline-step">
+                    <div class="step-num">1</div>
+                    <div class="step-desc">
+                      <strong>Instant I4C FIR Dossier</strong>
+                      <p class="text-xs text-muted">Generates official case reference aligned with Ministry of Home Affairs guidelines.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="step-num">2</div>
+                    <div class="step-desc">
+                      <strong>Automated Exchange Tracing</strong>
+                      <p class="text-xs text-muted">Identifies recipient CEX (Binance, WazirX, KuCoin) with confidence metrics.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-step">
+                    <div class="step-num">3</div>
+                    <div class="step-desc">
+                      <strong>Emergency Freeze Notice</strong>
+                      <p class="text-xs text-muted">Direct Section 91 CrPC notice dispatch to exchange legal nodal officers.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card recent-cases-card">
+                <h4 class="font-bold text-sm text-white mb-2">Recently Registered Cases</h4>
+                <div class="case-feed" id="portal-recent-cases">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 4: REAL-TIME MONITORING DASHBOARD -->
+      <!-- ============================================== -->
+      <div class="view-content" id="view-monitor">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge cyan-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <h2>Live Blockchain Mempool & Wallet Monitoring</h2>
+                  <p class="text-secondary text-sm">Real-time surveillance across suspect addresses, peel chains, and exchange gateways.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button class="btn btn-ghost-sm" id="btn-toggle-live-feed">
+                  <span class="live-pulse"></span>
+                  <span id="live-feed-status">Live Stream Active</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="monitor-grid">
+            <div class="card monitor-feed-card">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="card-title">Real-Time Ingestion Stream</h3>
+                <span class="text-xs font-mono text-muted">Ethereum, BSC, Tron Mainnets</span>
+              </div>
+              <div class="table-responsive max-h-500">
+                <table class="tx-table">
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Hash</th>
+                      <th>Cluster / Monitored Target</th>
+                      <th>Destination Exchange / Service</th>
+                      <th>Value</th>
+                      <th>Time</th>
+                      <th>Threat Score</th>
+                    </tr>
+                  </thead>
+                  <tbody id="live-monitor-tbody">
+                    <!-- Events populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card watchlist-card">
+              <h3 class="card-title mb-3">Active Watchlist Targets</h3>
+              <div class="watchlist-items" id="watchlist-items-list">
+                <div class="watch-item">
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-sm text-white font-bold">0xA1b2...9T0</span>
+                    <span class="badge-risk badge-high">87 Risk</span>
+                  </div>
+                  <div class="text-xs text-muted mt-1">Task-Based Scam Hub &bull; Case #1245</div>
+                </div>
+                <div class="watch-item">
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-sm text-white font-bold">0xB3c4...5D6</span>
+                    <span class="badge-risk badge-medium">65 Risk</span>
+                  </div>
+                  <div class="text-xs text-muted mt-1">Layer-1 Splitter Wallet</div>
+                </div>
+                <div class="watch-item">
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-sm text-white font-bold">0x742d...f44e</span>
+                    <span class="badge-risk badge-high">98 Risk</span>
+                  </div>
+                  <div class="text-xs text-muted mt-1">Ransomware Mixer Node</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 5: ABOUT PROJECT & PROBLEM STATEMENT 26183 -->
+      <!-- ============================================== -->
+      <div class="view-content" id="view-about">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center gap-3">
+              <div class="view-icon-badge purple-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </div>
+              <div>
+                <h2>Smart India Hackathon 2026 &mdash; Problem Statement 26183</h2>
+                <p class="text-secondary text-sm">Real-Time Identification of Fraud-Linked Cryptocurrency Exchanges from Victim-Reported Suspect Wallet Addresses.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-grid">
+            <div class="card about-feature-card">
+              <div class="feature-icon-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00c0ff" stroke-width="2"><path d="M12 2L3 6V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V6L12 2Z"></path></svg>
+              </div>
+              <h3>1. Automated Real-Time Exchange Attribution</h3>
+              <p class="text-secondary text-sm">Analyzes blockchain transaction graphs multi-hop from victim-reported suspect addresses to identify centralized exchanges (Binance, WazirX, KuCoin, OKX) with confidence scoring.</p>
+            </div>
+
+            <div class="card about-feature-card">
+              <div class="feature-icon-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line></svg>
+              </div>
+              <h3>2. Multi-Hop Transaction Graph Engine</h3>
+              <p class="text-secondary text-sm">Visualizes complex peeling chains and automated layering scripts where fraudsters divide funds into multiple intermediary wallets before exchange ingestion.</p>
+            </div>
+
+            <div class="card about-feature-card">
+              <div class="feature-icon-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle></svg>
+              </div>
+              <h3>3. Tailored to Priority Cyber Crime Types</h3>
+              <p class="text-secondary text-sm">Engine trained specifically for task-based job scams, fake investment platforms (pig butchering), ransomware, sextortion, and phishing drains.</p>
+            </div>
+
+            <div class="card about-feature-card">
+              <div class="feature-icon-top">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <h3>4. I4C Court-Ready FIR & Freeze Dossiers</h3>
+              <p class="text-secondary text-sm">Instant PDF report generator creating Section 91 CrPC compliant documents ready for police officers and exchange nodal liaison desks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 6: REPORTS ARCHIVE & GENERATOR -->
+      <!-- ============================================== -->
+      <div class="view-content" id="view-reports">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge amber-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                </div>
+                <div>
+                  <h2>I4C Forensic Intelligence Dossier Archive</h2>
+                  <p class="text-secondary text-sm">Official investigation dossiers with cryptographic timestamp verification.</p>
+                </div>
+              </div>
+              <button class="btn btn-primary" id="btn-generate-custom-dossier">
+                Generate Active Dossier
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title mb-3">Generated Case Dossiers (Ready for Download)</h3>
+            <div class="table-responsive">
+              <table class="tx-table">
+                <thead>
+                  <tr>
+                    <th>Case ID</th>
+                    <th>Target Suspect Wallet</th>
+                    <th>Crime Category</th>
+                    <th>Risk Grade</th>
+                    <th>Traced Volume</th>
+                    <th>Attributed Exchange</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="font-mono text-cyan font-bold">CYB-2026-001245</span></td>
+                    <td class="font-mono">0xA1b2...9T0</td>
+                    <td>Task-Based Fraud</td>
+                    <td><span class="badge-risk badge-high">87 HIGH</span></td>
+                    <td class="font-mono font-semibold">₹8,42,000</td>
+                    <td>Binance (Cluster) &bull; 91%</td>
+                    <td><button class="btn-ghost-sm btn-open-dossier" data-case="CYB-2026-001245">Download Dossier PDF</button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="font-mono text-cyan font-bold">CYB-2026-009812</span></td>
+                    <td class="font-mono">0x742d...f44e</td>
+                    <td>Ransomware Extortion</td>
+                    <td><span class="badge-risk badge-high">98 CRITICAL</span></td>
+                    <td class="font-mono font-semibold">₹34,50,000</td>
+                    <td>Tornado Cash Mixer &bull; 99%</td>
+                    <td><button class="btn-ghost-sm btn-open-dossier" data-case="CYB-2026-009812">Download Dossier PDF</button></td>
+                  </tr>
+                  <tr>
+                    <td><span class="font-mono text-cyan font-bold">CYB-2026-003410</span></td>
+                    <td class="font-mono">0x8920...43e7</td>
+                    <td>Investment Scam</td>
+                    <td><span class="badge-risk badge-high">74 HIGH</span></td>
+                    <td class="font-mono font-semibold">₹4,15,000</td>
+                    <td>KuCoin Gateway &bull; 84%</td>
+                    <td><button class="btn-ghost-sm btn-open-dossier" data-case="CYB-2026-003410">Download Dossier PDF</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 7: CONTACT & EMERGENCY SUPPORT -->
+      <!-- ============================================== -->
+      <div class="view-content" id="view-contact">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center gap-3">
+              <div class="view-icon-badge blue-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div>
+                <h2>Cybercrime Emergency Contact & Support</h2>
+                <p class="text-secondary text-sm">24/7 blockchain forensic escalation desk for state cyber police & victims.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="portal-grid">
+            <div class="card">
+              <h3 class="card-title mb-3">Send Urgent Forensics Inquiry</h3>
+              <form id="contact-form" class="form-grid">
+                <div class="form-group">
+                  <label for="c-name">Investigator / Complainant Name</label>
+                  <input type="text" id="c-name" class="form-input" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                  <label for="c-email">Official / Contact Email</label>
+                  <input type="email" id="c-email" class="form-input" placeholder="investigator@agency.gov or personal email" required>
+                </div>
+                <div class="form-group">
+                  <label for="c-subject">Case Reference or Subject</label>
+                  <input type="text" id="c-subject" class="form-input" placeholder="e.g. Urgent Exchange Subpoena for Case #1245">
+                </div>
+                <div class="form-group">
+                  <label for="c-message">Message Details</label>
+                  <textarea id="c-message" rows="4" class="form-input" placeholder="Detail the wallet address, timestamp, loss amount and urgent requirements..."></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Transmit Urgent Inquiry</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title mb-3">Emergency Helplines & Desks</h3>
+              <div class="contact-cards-list">
+                <div class="help-box">
+                  <strong>National Cybercrime Reporting Portal</strong>
+                  <p class="text-xs text-muted">Dial: 1930 &bull; Web: cybercrime.gov.in</p>
+                </div>
+                <div class="help-box">
+                  <strong>I4C Cyber Intelligence Center</strong>
+                  <p class="text-xs text-muted">Ministry of Home Affairs &bull; CIS Division</p>
+                </div>
+                <div class="help-box">
+                  <strong>Exchange Legal Process Liaison</strong>
+                  <p class="text-xs text-muted">Direct nodal contact for Binance, CoinDCX, WazirX, OKX law enforcement desks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 8: FRAUD DNA™ CAMPAIGN INTELLIGENCE LAB (DEDICATED) -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-fraud-dna">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge purple-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 15c6.667-6 13.333 0 20-6"></path>
+                    <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"></path>
+                    <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"></path>
+                    <path d="M17 6l-2.5-2.5"></path>
+                    <path d="M7 18l2.5 2.5"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2>Fraud DNA™ &mdash; Behavioral Syndicate Intelligence</h2>
+                  <p class="text-secondary text-sm">Detect zero-day unknown scam wallets before victim reporting through behavioral sequence matching.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-dna-live">3 ACTIVE SYNDICATES INDEXED</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Campaign Summary Cards Grid -->
+          <div class="campaign-cards-grid">
+            <div class="card campaign-card active" data-campaign="CYB-2048">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono font-bold text-cyan text-sm">Campaign #CYB-2048</span>
+                <span class="badge-risk badge-high">91% Avg Match</span>
+              </div>
+              <h4 class="text-white font-bold text-md mb-1">"Hydra-Peel" Telegram Job Scam</h4>
+              <p class="text-xs text-muted mb-3">Automated 3-hop peeling chain, 80/20 tranche splits, sub-minute execution, Binance off-ramp sweep.</p>
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-secondary">Known Nodes: 18 Wallets</span>
+                <span class="text-amber font-semibold">Loss: ₹84,50,000+</span>
+              </div>
+            </div>
+
+            <div class="card campaign-card" data-campaign="CYB-3912">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono font-bold text-cyan text-sm">Campaign #CYB-3912</span>
+                <span class="badge-risk badge-high">96% Avg Match</span>
+              </div>
+              <h4 class="text-white font-bold text-md mb-1">"Phantom-Drainer" Phishing DApp</h4>
+              <p class="text-xs text-muted mb-3">High-velocity permit token sweep (&lt;12s), direct cross-chain bridge hopping, relayer gas sponsor.</p>
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-secondary">Known Nodes: 42 Wallets</span>
+                <span class="text-danger font-semibold">Loss: ₹2,10,00,000+</span>
+              </div>
+            </div>
+
+            <div class="card campaign-card" data-campaign="CYB-1084">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono font-bold text-cyan text-sm">Campaign #CYB-1084</span>
+                <span class="badge-risk badge-high">88% Avg Match</span>
+              </div>
+              <h4 class="text-white font-bold text-md mb-1">"Golden-Boar" Pig Butchering</h4>
+              <p class="text-xs text-muted mb-3">Staged deposit accumulation, 4-tier intermediary fan-out, OTC KuCoin/OKX deposit memo routing.</p>
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-secondary">Known Nodes: 29 Wallets</span>
+                <span class="text-amber font-semibold">Loss: ₹1,45,00,000+</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Fraud DNA Lineage & Detection Lab -->
+          <div class="dna-lab-grid">
+            <!-- Left: Interactive Fraud DNA Lineage Tree -->
+            <div class="card dna-tree-card">
+              <div class="dna-tree-header">
+                <div>
+                  <h3 class="card-title">Fraud DNA Lineage & Attribution Topology</h3>
+                  <span class="text-xs text-muted">How Unknown Wallet Z is mathematically linked to Campaign #CYB-2048</span>
+                </div>
+                <button class="btn-ghost-sm" id="btn-refresh-dna-tree">&#8635; Re-run Vector Model</button>
+              </div>
+
+              <!-- SVG LINEAGE TREE -->
+              <div class="dna-tree-container">
+                <svg id="dna-lineage-svg" class="dna-svg" viewBox="0 0 760 420" preserveAspectRatio="xMidYMid meet">
+                  <defs>
+                    <linearGradient id="dna-grad-line" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#8b5cf6" />
+                      <stop offset="50%" stop-color="#00c0ff" />
+                      <stop offset="100%" stop-color="#ef4444" />
+                    </linearGradient>
+                    <filter id="glow-purple">
+                      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#8b5cf6" flood-opacity="0.7"/>
+                    </filter>
+                    <filter id="glow-cyan">
+                      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.7"/>
+                    </filter>
+                    <filter id="glow-red-dna">
+                      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#ef4444" flood-opacity="0.9"/>
+                    </filter>
+                  </defs>
+
+                  <!-- Background Grid -->
+                  <rect width="100%" height="100%" fill="none" />
+
+                  <!-- Tree Connectors -->
+                  <!-- Root to Wallet A & B -->
+                  <path d="M 380 65 L 380 95 L 200 95 L 200 135" stroke="#8b5cf6" stroke-width="2.5" fill="none" stroke-dasharray="4 4" class="animated-edge"/>
+                  <path d="M 380 65 L 380 95 L 560 95 L 560 135" stroke="#8b5cf6" stroke-width="2.5" fill="none" stroke-dasharray="4 4" class="animated-edge"/>
+
+                  <!-- Wallet A & B to Fraud Pattern Hub -->
+                  <path d="M 200 195 L 200 235 L 380 235 L 380 260" stroke="#00c0ff" stroke-width="2.5" fill="none" stroke-dasharray="4 4" class="animated-edge"/>
+                  <path d="M 560 195 L 560 235 L 380 235 L 380 260" stroke="#00c0ff" stroke-width="2.5" fill="none" stroke-dasharray="4 4" class="animated-edge"/>
+
+                  <!-- Fraud Pattern Hub to Wallet Z -->
+                  <path d="M 380 300 L 380 340" stroke="#ef4444" stroke-width="3" fill="none" class="animated-edge-glow"/>
+
+                  <!-- Flowing Energy Particles -->
+                  <circle r="3.5" fill="#8b5cf6">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 380 65 L 380 95 L 200 95 L 200 135" />
+                  </circle>
+                  <circle r="3.5" fill="#8b5cf6">
+                    <animateMotion dur="2.5s" repeatCount="indefinite" path="M 380 65 L 380 95 L 560 95 L 560 135" />
+                  </circle>
+                  <circle r="3.5" fill="#00c0ff">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" path="M 200 195 L 200 235 L 380 235 L 380 260" />
+                  </circle>
+                  <circle r="3.5" fill="#00c0ff">
+                    <animateMotion dur="2.8s" repeatCount="indefinite" path="M 560 195 L 560 235 L 380 235 L 380 260" />
+                  </circle>
+                  <circle r="4" fill="#ef4444">
+                    <animateMotion dur="1.8s" repeatCount="indefinite" path="M 380 300 L 380 340" />
+                  </circle>
+
+                  <!-- 1. ROOT NODE: KNOWN FRAUD DNA -->
+                  <g class="dna-node" transform="translate(380, 45)" id="node-root-dna">
+                    <rect x="-140" y="-22" width="280" height="44" rx="10" fill="#1e113b" stroke="#8b5cf6" stroke-width="2" filter="url(#glow-purple)" />
+                    <text y="-2" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">🧬 KNOWN FRAUD DNA</text>
+                    <text y="14" text-anchor="middle" fill="#c084fc" font-size="10" font-family="JetBrains Mono, monospace">Campaign #CYB-2048 (Hydra-Peel)</text>
+                  </g>
+
+                  <!-- 2. WALLET A (Victim 1 link) -->
+                  <g class="dna-node" transform="translate(200, 165)" id="node-wallet-a-dna">
+                    <rect x="-85" y="-30" width="170" height="60" rx="8" fill="#0c1d3b" stroke="#0066ff" stroke-width="1.8" />
+                    <text y="-10" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="600">Wallet A</text>
+                    <text y="6" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="JetBrains Mono, monospace">0xA1b2...9T0</text>
+                    <text y="20" text-anchor="middle" fill="#94a3b8" font-size="9.5">Victim 1 &rarr; Exch.</text>
+                  </g>
+
+                  <!-- 3. WALLET B (Victim 2 link) -->
+                  <g class="dna-node" transform="translate(560, 165)" id="node-wallet-b-dna">
+                    <rect x="-85" y="-30" width="170" height="60" rx="8" fill="#0c1d3b" stroke="#0066ff" stroke-width="1.8" />
+                    <text y="-10" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="600">Wallet B</text>
+                    <text y="6" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="JetBrains Mono, monospace">0xB3c4...5D6</text>
+                    <text y="20" text-anchor="middle" fill="#94a3b8" font-size="9.5">Victim 2 &rarr; Exch.</text>
+                  </g>
+
+                  <!-- 4. FRAUD PATTERN CONVERGENCE NODE -->
+                  <g class="dna-node" transform="translate(380, 280)" id="node-pattern-hub">
+                    <rect x="-110" y="-18" width="220" height="36" rx="8" fill="#0a2540" stroke="#00c0ff" stroke-width="1.8" filter="url(#glow-cyan)" />
+                    <text y="4" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">&bull; Synthesized Fraud Pattern &bull;</text>
+                  </g>
+
+                  <!-- 5. CANDIDATE UNREPORTED WALLET Z NODE -->
+                  <g class="dna-node node-wallet-z" transform="translate(380, 375)" id="node-wallet-z-dna">
+                    <rect x="-145" y="-32" width="290" height="64" rx="12" fill="#3b0c16" stroke="#ef4444" stroke-width="2.5" filter="url(#glow-red-dna)" class="pulse-border-red" />
+                    <text y="-12" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="800">🆕 Candidate: Wallet Z</text>
+                    <text y="6" text-anchor="middle" fill="#fca5a5" font-size="11" font-family="JetBrains Mono, monospace">0xAB89C41d2E5F78a9...91F2</text>
+                    <rect x="-65" y="14" width="130" height="18" rx="4" fill="#ef4444" />
+                    <text y="26" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">91% PATTERN MATCH</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Lineage Legend & Explanations -->
+              <div class="dna-tree-footer">
+                <div class="tree-metric-box">
+                  <span class="label">Behavioral Vector Overlap:</span>
+                  <span class="val text-cyan font-mono font-bold">91.4% Cosine Match</span>
+                </div>
+                <div class="tree-metric-box">
+                  <span class="label">Campaign Attribution:</span>
+                  <span class="val text-amber font-semibold">Campaign #CYB-2048</span>
+                </div>
+                <div class="tree-metric-box">
+                  <span class="label">Confidence Grade:</span>
+                  <span class="badge-risk badge-high">HIGH CONFIDENCE</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Vector Radar & Trait Inspector -->
+            <div class="card dna-inspector-card">
+              <h3 class="card-title mb-3">8-Dimension Behavioral Vector Comparison</h3>
+              <p class="text-xs text-muted mb-4">Comparing Candidate Wallet Z against Known Campaign #CYB-2048 centroid vectors.</p>
+
+              <div class="vector-radar-list">
+                <div class="radar-row">
+                  <div class="radar-meta">
+                    <span class="r-name">1. Transaction Cadence & Velocity</span>
+                    <span class="r-pct font-mono text-cyan">94% Match</span>
+                  </div>
+                  <div class="radar-bar-track">
+                    <div class="radar-bar-fill fill-cyan" style="width: 94%;"></div>
+                  </div>
+                  <span class="r-desc">Automated sweep delay within 30-45s of ingestion.</span>
+                </div>
+
+                <div class="radar-row">
+                  <div class="radar-meta">
+                    <span class="r-name">2. Fund Splitting & Peeling Ratio</span>
+                    <span class="r-pct font-mono text-cyan">92% Match</span>
+                  </div>
+                  <div class="radar-bar-track">
+                    <div class="radar-bar-fill fill-purple" style="width: 92%;"></div>
+                  </div>
+                  <span class="r-desc">Exact 80/20 intermediate split tranches.</span>
+                </div>
+
+                <div class="radar-row">
+                  <div class="radar-meta">
+                    <span class="r-name">3. Intermediary Hop Topology</span>
+                    <span class="r-pct font-mono text-cyan">96% Match</span>
+                  </div>
+                  <div class="radar-bar-track">
+                    <div class="radar-bar-fill fill-green" style="width: 96%;"></div>
+                  </div>
+                  <span class="r-desc">3-tier fan-out followed by single consolidation node.</span>
+                </div>
+
+                <div class="radar-row">
+                  <div class="radar-meta">
+                    <span class="r-name">4. Amount Distribution Size</span>
+                    <span class="r-pct font-mono text-cyan">88% Match</span>
+                  </div>
+                  <div class="radar-bar-track">
+                    <div class="radar-bar-fill fill-amber" style="width: 88%;"></div>
+                  </div>
+                  <span class="r-desc">Victim tranche profile ₹20,000–₹50,000.</span>
+                </div>
+
+                <div class="radar-row">
+                  <div class="radar-meta">
+                    <span class="r-name">5. Destination Exchange Architecture</span>
+                    <span class="r-pct font-mono text-cyan">91% Match</span>
+                  </div>
+                  <div class="radar-bar-track">
+                    <div class="radar-bar-fill fill-blue" style="width: 91%;"></div>
+                  </div>
+                  <span class="r-desc">Sweeps into Binance Hot Multi-sig internal sweepers.</span>
+                </div>
+
+                <div class="radar-row">
+                  <div class="radar-meta">
+                    <span class="r-name">6. Gas Refuel Source Lineage</span>
+                    <span class="r-pct font-mono text-cyan">86% Match</span>
+                  </div>
+                  <div class="radar-bar-track">
+                    <div class="radar-bar-fill fill-red" style="width: 86%;"></div>
+                  </div>
+                  <span class="r-desc">Gas funded from shared FixedFloat/ChangeNOW relay.</span>
+                </div>
+              </div>
+
+              <!-- Action Bar -->
+              <div class="mt-4 pt-3 border-t">
+                <button class="btn btn-primary btn-block" id="btn-dna-apply-dashboard">
+                  Analyze Wallet Z in Dashboard &rarr;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- VIEW 9: LIVE THREAT ALERTS (DEDICATED VIEW) -->
+      <!-- ============================================== -->
+      <div class="view-content" id="view-alerts">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge red-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </div>
+                <div>
+                  <h2>Live Threat Alerts & Fraud DNA Detections</h2>
+                  <p class="text-secondary text-sm">Real-time alerts triggered by heuristic scanners, zero-day Fraud DNA matches, and exchange sweeps.</p>
+                </div>
+              </div>
+              <span class="badge-subtle">Real-Time Ingestion Active</span>
+            </div>
+          </div>
+
+          <div class="alerts-feed-grid">
+            <div class="card alert-card-full critical-alert">
+              <div class="alert-header-row">
+                <div class="flex items-center gap-2">
+                  <span class="alert-dot red"></span>
+                  <strong class="text-white">🔴 Zero-Day Fraud DNA Match Detected (Unreported Wallet)</strong>
+                </div>
+                <span class="badge-risk badge-high">91% MATCH</span>
+              </div>
+              <p class="text-secondary text-sm mt-2">New unknown wallet <span class="font-mono text-cyan">0xAB89C41d...91F2</span> exhibited 91% behavioral DNA alignment with <strong class="text-white">Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)</strong>.</p>
+              <div class="alert-actions-row mt-3">
+                <button class="btn btn-primary btn-sm nav-trigger" data-view="dashboard" data-analyze="0xAB89C41d2E5F78a9B30C2d4E6F8a91F2">Investigate Wallet Z</button>
+                <button class="btn btn-ghost-sm nav-trigger" data-view="fraud-dna">View DNA Lineage</button>
+              </div>
+            </div>
+
+            <div class="card alert-card-full">
+              <div class="alert-header-row">
+                <div class="flex items-center gap-2">
+                  <span class="alert-dot red"></span>
+                  <strong class="text-white">Rapid Outflow to Binance Exchange Gateway</strong>
+                </div>
+                <span class="badge-risk badge-high">Case #CYB-1245</span>
+              </div>
+              <p class="text-secondary text-sm mt-2">Suspect wallet <span class="font-mono text-white">0xA1b2...9T0</span> moved ₹20,000 to Binance Internal Cluster (0xExch...90A). Section 91 CrPC freeze notice ready for dispatch.</p>
+              <div class="alert-actions-row mt-3">
+                <button class="btn btn-ghost-sm btn-open-dossier" data-case="CYB-2026-001245">Download Dossier</button>
+              </div>
+            </div>
+
+            <div class="card alert-card-full">
+              <div class="alert-header-row">
+                <div class="flex items-center gap-2">
+                  <span class="alert-dot orange"></span>
+                  <strong class="text-white">Ransomware Mixer Consolidation</strong>
+                </div>
+                <span class="badge-risk badge-high">Case #CYB-9812</span>
+              </div>
+              <p class="text-secondary text-sm mt-2">Mixer node <span class="font-mono text-white">0x742d...f44e</span> triggered 100 ETH deposit to Tornado.Cash smart contract.</p>
+              <div class="alert-actions-row mt-3">
+                <button class="btn btn-ghost-sm btn-open-dossier" data-case="CYB-2026-009812">Download Dossier</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 10: STOLEN MONEY TRACKER (DEDICATED FULL LAB)       -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-stolen-tracker">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge amber-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg>
+                </div>
+                <div>
+                  <h2>Stolen Money Tracker &mdash; Automated Tranche Tracing</h2>
+                  <p class="text-secondary text-sm">Select any victim deposit transaction to follow that specific money through peeling chains and exchange off-ramps.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle">Tranche Retention: 100% Accounted</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stolen-tracker-grid">
+            <div class="card tranche-selector-card">
+              <h3 class="card-title mb-3">1. Select Stolen Fund Tranche to Follow</h3>
+              <div class="tranche-list" id="stolen-tranches-list">
+                <div class="tranche-card active" data-txid="tx-50k">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-mono text-cyan font-bold">Victim Deposit: ₹50,000</span>
+                    <span class="badge-risk badge-high">Active Trace</span>
+                  </div>
+                  <div class="text-xs text-white">TXID: <span class="font-mono text-muted">0x3b2a...3a4b</span> &bull; Time: 23 Aug, 05:15 PM</div>
+                  <div class="tranche-status-bar mt-2">
+                    <div class="tranche-fill fill-dest" style="width: 40%;" title="₹20k (40%) to Binance"></div>
+                    <div class="tranche-fill fill-split" style="width: 36%;" title="₹18k (36%) to WazirX"></div>
+                    <div class="tranche-fill fill-hold" style="width: 24%;" title="₹12k (24%) in Intermediate Wallet"></div>
+                  </div>
+                  <div class="flex items-center justify-between text-xs text-muted mt-1 font-mono">
+                    <span>40% Binance</span>
+                    <span>36% WazirX</span>
+                    <span>24% Holding</span>
+                  </div>
+                </div>
+
+                <div class="tranche-card" data-txid="tx-100k">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-mono text-cyan font-bold">Victim Deposit: ₹1,00,000 (Wallet Z)</span>
+                    <span class="badge-risk badge-high">Zero-Day Trace</span>
+                  </div>
+                  <div class="text-xs text-white">TXID: <span class="font-mono text-muted">0x3a91...9a0b</span> &bull; Time: 24 Aug, 06:15 PM</div>
+                  <div class="tranche-status-bar mt-2">
+                    <div class="tranche-fill fill-dest" style="width: 80%;" title="₹80k (80%) Split 1"></div>
+                    <div class="tranche-fill fill-hold" style="width: 20%;" title="₹20k (20%) Split 2"></div>
+                  </div>
+                  <div class="flex items-center justify-between text-xs text-muted mt-1 font-mono">
+                    <span>80% Binance Route</span>
+                    <span>20% Split Tranche</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card tranche-path-card">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="card-title">2. Hop-by-Hop Fund Trail Breakdown</h3>
+                <button class="btn btn-primary btn-sm" id="btn-export-stolen-trail">Export Money Trail CSV</button>
+              </div>
+
+              <div class="trail-hop-list">
+                <div class="trail-step-box">
+                  <div class="trail-step-header">
+                    <div class="flex items-center gap-2">
+                      <span class="step-circle">0</span>
+                      <strong>Victim Loss Ingestion (Source)</strong>
+                    </div>
+                    <span class="font-mono text-white font-bold">₹50,000.00 (100%)</span>
+                  </div>
+                  <div class="trail-step-meta font-mono text-xs">
+                    <div>From: <span class="text-muted">Victim Account</span> &rarr; Suspect: <span class="text-cyan">0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0</span></div>
+                    <div class="text-secondary">Timestamp: 23 Aug 2026, 05:15:22 IST &bull; TXID: 0x3b2a...3a4b</div>
+                  </div>
+                </div>
+
+                <div class="trail-connector">&darr; 25 Minutes Delay (Scam Processing) &darr;</div>
+
+                <div class="trail-step-box split-trail">
+                  <div class="trail-step-header">
+                    <div class="flex items-center gap-2">
+                      <span class="step-circle">1</span>
+                      <strong>Hop 1: Peeling Chain Dispersion (Layer-1)</strong>
+                    </div>
+                    <span class="font-mono text-amber font-bold">Split: ₹30k (60%) + ₹20k (40%)</span>
+                  </div>
+                  <div class="trail-sub-hops">
+                    <div class="sub-hop-item">
+                      <div class="flex justify-between font-mono text-xs">
+                        <span>&bull; Tranche 1A &rarr; Intermediary Splitter <strong>0xB3c4...5D6</strong></span>
+                        <span class="text-amber font-bold">₹30,000.00 (60%)</span>
+                      </div>
+                      <span class="text-xs text-muted font-mono">TXID: 0x9d8f...7a1b &bull; 05:42 PM (Peeling intermediate)</span>
+                    </div>
+                    <div class="sub-hop-item">
+                      <div class="flex justify-between font-mono text-xs">
+                        <span>&bull; Tranche 1B &rarr; Binance Hot Cluster 14 (<strong>0xExch...90A</strong>)</span>
+                        <span class="text-cyan font-bold">₹20,000.00 (40%)</span>
+                      </div>
+                      <span class="text-xs text-muted font-mono">TXID: 0x4c2e...6f3a &bull; 05:40 PM (Direct CEX Off-Ramp)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="trail-connector">&darr; 7 Minutes Delay (Layering) &darr;</div>
+
+                <div class="trail-step-box dest-trail">
+                  <div class="trail-step-header">
+                    <div class="flex items-center gap-2">
+                      <span class="step-circle">2</span>
+                      <strong>Hop 2: Final Exchange Consolidation & Off-Ramp</strong>
+                    </div>
+                    <span class="font-mono text-cyan font-bold">₹18,000 (36%) to WazirX Gateway</span>
+                  </div>
+                  <div class="trail-step-meta font-mono text-xs">
+                    <div>From: <span class="text-muted">0xB3c4...5D6</span> &rarr; Destination: <span class="text-cyan">WazirX / CoinDCX Deposit Gateway</span></div>
+                    <div class="text-secondary">Timestamp: 23 Aug 2026, 05:35:10 IST &bull; TXID: 0x1a7b...2c9d</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 11: PUBLIC WALLET SAFETY CHECK (PRE-TX SCANNER)     -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-safety-check">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center gap-3">
+              <div class="view-icon-badge green-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+              </div>
+              <div>
+                <h2>Public Wallet Safety Check &mdash; Verify Before You Send</h2>
+                <p class="text-secondary text-sm">Check any recipient cryptocurrency address before sending funds to prevent romance scams, fake jobs, and phishing drains.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="safety-scanner-grid">
+            <div class="card safety-search-card">
+              <h3 class="card-title mb-3">Enter Recipient Address to Screen</h3>
+              <div class="search-bar-row">
+                <div class="input-container">
+                  <input type="text" id="safety-wallet-input" class="wallet-input font-mono" placeholder="Paste address you are asked to send crypto to..." value="0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0">
+                </div>
+                <button class="btn btn-primary" id="btn-run-safety-check">Screen Wallet</button>
+              </div>
+
+              <div class="preset-pills mt-3">
+                <span class="preset-label">Test Real-Time Presets:</span>
+                <button class="preset-btn active" data-test-addr="0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0">Reported Scam Address</button>
+                <button class="preset-btn" data-test-addr="0x388C818CA8B9251b393131C08a73683246A73132">Verified Safe (Coinbase)</button>
+                <button class="preset-btn" data-test-addr="0xAB89C41d2E5F78a9B30C2d4E6F8a91F2">Unreported Zero-Day</button>
+              </div>
+            </div>
+
+            <!-- Safety Verdict Card -->
+            <div class="card safety-verdict-card danger-verdict" id="safety-verdict-card">
+              <div class="verdict-header">
+                <div class="verdict-badge-box" id="safety-verdict-badge">
+                  <span class="verdict-icon">⛔</span>
+                  <div class="verdict-text-group">
+                    <h3 class="verdict-title" id="safety-verdict-title">DO NOT SEND FUNDS — HIGH RISK SCAM</h3>
+                    <span class="verdict-sub" id="safety-verdict-sub">Reported in multiple active cybercrime complaints on 1930 portal</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="safety-factors-grid mt-4">
+                <div class="safety-factor-box factor-danger">
+                  <span class="factor-icon">🚨</span>
+                  <strong>1930 Portal Reports</strong>
+                  <p id="safe-f1">Reported by 14 victims in Telegram task fraud cases.</p>
+                </div>
+                <div class="safety-factor-box factor-danger">
+                  <span class="factor-icon">🧬</span>
+                  <strong>Fraud DNA Campaign Match</strong>
+                  <p id="safe-f2">91% match to Campaign #CYB-2048 ("Hydra-Peel" syndicate).</p>
+                </div>
+                <div class="safety-factor-box factor-caution">
+                  <span class="factor-icon">⚡</span>
+                  <strong>Rapid Peeling Velocity</strong>
+                  <p id="safe-f3">Funds swept to intermediary wallets within 45 seconds of receipt.</p>
+                </div>
+                <div class="safety-factor-box factor-safe">
+                  <span class="factor-icon">🛡️</span>
+                  <strong>Blacklist Status</strong>
+                  <p id="safe-f4">Flagged in Chainalysis, TRM Labs, and FIU-IND alerts.</p>
+                </div>
+              </div>
+
+              <div class="safety-advice-banner mt-4">
+                <strong>💡 Investigator Advice for Public Users:</strong>
+                <p class="text-xs text-secondary mt-1">If someone on Telegram, WhatsApp, or a dating app told you to send crypto to this address for high daily returns or task commissions, it is 100% a fraudulent scheme. Stop communication immediately and report on cybercrime.gov.in.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 12: FRAUD NETWORK MAP (CROSS-CASE SYNDICATE NEXUS)  -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-network-map">
+        <div class="view-page-container">
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge purple-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                </div>
+                <div>
+                  <h2>Fraud Network Map &mdash; Cross-Case Syndicate Nexus</h2>
+                  <p class="text-secondary text-sm">Correlates multiple independent victim FIRs to uncover shared laundering infrastructure and syndicate rings.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle">Correlating 4 Cases &bull; 24 Linked Wallets</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card network-map-canvas-card">
+            <div class="network-toolbar">
+              <div class="flex items-center gap-3 flex-wrap">
+                <span class="text-xs text-secondary font-bold">Filter Syndicate Clusters:</span>
+                <button class="btn-tool active" data-filter-cluster="all">All Linked Cases</button>
+                <button class="btn-tool" data-filter-cluster="telegram">Telegram Task Scams</button>
+                <button class="btn-tool" data-filter-cluster="ransomware">Ransomware Outflow</button>
+                <button class="btn-tool" data-filter-cluster="investment">Pig Butchering</button>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="legend-dot dot-victim"></span> Case 1245
+                <span class="legend-dot dot-intermediary"></span> Case 9812
+                <span class="legend-dot dot-exchange"></span> Shared CEX
+              </div>
+            </div>
+
+            <div class="network-svg-container">
+              <svg id="network-map-svg" class="network-svg" viewBox="0 0 860 480" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <filter id="net-glow-red">
+                    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" flood-opacity="0.8"/>
+                  </filter>
+                  <filter id="net-glow-blue">
+                    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.8"/>
+                  </filter>
+                  <filter id="net-glow-purple">
+                    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#8b5cf6" flood-opacity="0.8"/>
+                  </filter>
+                </defs>
+
+                <!-- Connecting Edges across cases -->
+                <!-- Case 1 (Task) to Shared Splitter -->
+                <line x1="160" y1="120" x2="360" y2="180" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" />
+                <!-- Case 2 (Ransomware) to Shared Splitter -->
+                <line x1="160" y1="280" x2="360" y2="180" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" />
+                <!-- Case 3 (Pig Butchering) to Shared Splitter -->
+                <line x1="160" y1="400" x2="360" y2="340" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" />
+                <!-- Unreported Wallet Z to Shared Splitter -->
+                <line x1="360" y1="80" x2="360" y2="180" stroke="#ef4444" stroke-width="2.5" class="animated-edge-glow" />
+
+                <!-- Splitters to Shared Exchange Hubs -->
+                <line x1="360" y1="180" x2="620" y2="140" stroke="#00c0ff" stroke-width="2.5" />
+                <line x1="360" y1="180" x2="620" y2="280" stroke="#00c0ff" stroke-width="2" stroke-dasharray="4 4" />
+                <line x1="360" y1="340" x2="620" y2="280" stroke="#00c0ff" stroke-width="2" />
+                <line x1="360" y1="340" x2="620" y2="400" stroke="#00c0ff" stroke-width="2" />
+
+                <!-- Particles -->
+                <circle r="3.5" fill="#ef4444"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 120 L 360 180" /></circle>
+                <circle r="3.5" fill="#8b5cf6"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 280 L 360 180" /></circle>
+                <circle r="3.5" fill="#00c0ff"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 360 180 L 620 140" /></circle>
+
+                <!-- NODES: CASE 1 -->
+                <g class="net-node" transform="translate(160, 120)" id="net-case-1">
+                  <circle r="28" fill="#1e1b4b" stroke="#ef4444" stroke-width="2" filter="url(#net-glow-red)"/>
+                  <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #1245</text>
+                  <text y="10" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">0xA1b2...9T0</text>
+                  <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Task Scam</text>
+                </g>
+
+                <!-- NODES: CASE 2 -->
+                <g class="net-node" transform="translate(160, 280)" id="net-case-2">
+                  <circle r="28" fill="#1e1b4b" stroke="#8b5cf6" stroke-width="2" filter="url(#net-glow-purple)"/>
+                  <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #9812</text>
+                  <text y="10" text-anchor="middle" fill="#c084fc" font-size="8.5" font-family="JetBrains Mono">0x742d...f44e</text>
+                  <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Ransomware</text>
+                </g>
+
+                <!-- NODES: CASE 3 -->
+                <g class="net-node" transform="translate(160, 400)" id="net-case-3">
+                  <circle r="28" fill="#1e1b4b" stroke="#f59e0b" stroke-width="2"/>
+                  <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #3410</text>
+                  <text y="10" text-anchor="middle" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">0x8920...43e7</text>
+                  <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Pig Butchering</text>
+                </g>
+
+                <!-- UNREPORTED ZERO-DAY NODE -->
+                <g class="net-node" transform="translate(360, 80)" id="net-case-z">
+                  <rect x="-80" y="-18" width="160" height="36" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="2" filter="url(#net-glow-red)"/>
+                  <text y="-2" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">🆕 UNREPORTED WALLET Z</text>
+                  <text y="11" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">0xAB89...91F2 (91% DNA)</text>
+                </g>
+
+                <!-- SHARED LAUNDERING HUB 1 (INTERMEDIARY NEXUS) -->
+                <g class="net-node" transform="translate(360, 180)" id="net-shared-hub-1">
+                  <rect x="-95" y="-24" width="190" height="48" rx="10" fill="#0f172a" stroke="#00c0ff" stroke-width="2.5" filter="url(#net-glow-blue)"/>
+                  <text y="-6" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="800">⚡ SHARED LAUNDERING HUB</text>
+                  <text y="8" text-anchor="middle" fill="#ffffff" font-size="9" font-family="JetBrains Mono">Wallet A (0xB3c4...5D6)</text>
+                  <text y="18" text-anchor="middle" fill="#94a3b8" font-size="8">Used in Case #1245, #9812 &amp; Wallet Z</text>
+                </g>
+
+                <!-- SHARED LAUNDERING HUB 2 -->
+                <g class="net-node" transform="translate(360, 340)" id="net-shared-hub-2">
+                  <rect x="-90" y="-20" width="180" height="40" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+                  <text y="-4" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">SHARED OTC BROKER</text>
+                  <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">0xOTC_Sweep...88B</text>
+                </g>
+
+                <!-- OFF-RAMP 1: BINANCE CONSOLIDATION CLUSTER -->
+                <g class="net-node" transform="translate(640, 140)" id="net-cex-binance">
+                  <rect x="-100" y="-22" width="200" height="44" rx="10" fill="#0c2d48" stroke="#00c0ff" stroke-width="2" filter="url(#net-glow-blue)"/>
+                  <text y="-4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">🏦 BINANCE DEPOSIT CLUSTER</text>
+                  <text y="10" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">Hot Cluster 14 (0xExch...90A)</text>
+                </g>
+
+                <!-- OFF-RAMP 2: WAZIRX GATEWAY -->
+                <g class="net-node" transform="translate(640, 280)" id="net-cex-wazirx">
+                  <rect x="-90" y="-20" width="180" height="40" rx="8" fill="#0c2d48" stroke="#00c0ff" stroke-width="1.8"/>
+                  <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="700">🏦 WAZIRX INDIA GATEWAY</text>
+                  <text y="10" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">Hot Wallet 02</text>
+                </g>
+
+                <!-- OFF-RAMP 3: TORNADO MIXER POOL -->
+                <g class="net-node" transform="translate(640, 400)" id="net-cex-mixer">
+                  <rect x="-90" y="-20" width="180" height="40" rx="8" fill="#1e113b" stroke="#8b5cf6" stroke-width="1.8"/>
+                  <text y="-4" text-anchor="middle" fill="#c084fc" font-size="10.5" font-weight="700">🌪️ TORNADO CASH MIXER</text>
+                  <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">100 ETH Pool Contract</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="network-insights-bar mt-3">
+              <div class="insight-item">
+                <span class="insight-label">Discovered Syndicate Nexus:</span>
+                <span class="insight-val text-cyan font-bold">1 Master Laundering Hub Links 3 Separate Cases</span>
+              </div>
+              <div class="insight-item">
+                <span class="insight-label">Primary Cash-Out Route:</span>
+                <span class="insight-val text-amber font-semibold">Binance Cluster 14 &bull; ₹1.24 Cr Total Outflow</span>
+              </div>
+              <div class="insight-item">
+                <button class="btn btn-primary btn-sm" id="btn-export-syndicate-subpoena">Draft Combined Syndicate Subpoena</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: FULL GRAPH EXPLORER -->
+  <div class="modal-backdrop" id="modal-graph">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Interactive Transaction Flow Visualizer</h3>
+          <span class="font-mono text-muted" id="modal-graph-subhead">Case CYB-2026-001245 &bull; Suspect: 0xA1b2...9T0</span>
+        </div>
+        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="graph-modal-toolbar">
+          <div class="tool-group">
+            <button class="btn-tool" id="btn-zoom-in" title="Zoom In">+</button>
+            <button class="btn-tool" id="btn-zoom-out" title="Zoom Out">&minus;</button>
+            <button class="btn-tool" id="btn-reset-graph" title="Reset View">&#x21bb;</button>
+          </div>
+          <div class="legend-inline">
+            <span class="legend-dot dot-victim"></span> Victim (₹50k)
+            <span class="legend-dot dot-suspect"></span> Suspect Hub
+            <span class="legend-dot dot-intermediary"></span> Intermediary Split
+            <span class="legend-dot dot-exchange"></span> Exchange Cluster
+          </div>
+        </div>
+        <div class="graph-full-viewport" id="graph-full-viewport"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PS-26183 BRIEF MODAL -->
+  <div class="modal-backdrop" id="modal-ps-brief">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Smart India Hackathon 2026 &mdash; Problem Statement 26183</h3>
+          <span class="badge-subtle">Ministry of Home Affairs &bull; I4C</span>
+        </div>
+        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="dossier-section">
+          <h4>Problem Statement Title</h4>
+          <p class="text-white font-bold mb-2">Real-Time Identification of Fraud-Linked Cryptocurrency Exchanges from Victim-Reported Suspect Wallet Addresses through Automated Blockchain Analytics</p>
+          <p class="text-secondary text-sm mb-3">Cyber fraud victims increasingly report suspect cryptocurrency wallet addresses used by fraudsters for collection of funds in cases involving: <strong>investment scams, task-based frauds, sextortion, ransomware, phishing, darknet transactions, and organized cyber-enabled financial crimes.</strong></p>
+        </div>
+
+        <div class="dossier-section">
+          <h4>How CyberTrace Solves PS-26183:</h4>
+          <ul class="dossier-bullets">
+            <li><strong>Automated Real-Time Ingestion:</strong> Victim or investigator enters suspect address &rarr; automated blockchain crawlers trace multi-hop transactions across Ethereum, BSC, Tron.</li>
+            <li><strong>Heuristic AI Risk Scoring (0–100):</strong> Instant categorization into High/Critical risk with explanation checklist.</li>
+            <li><strong>Exchange Cluster Identification:</strong> Heuristic models attribute transactions to Centralized Exchanges (Binance, WazirX, KuCoin) with confidence metrics (e.g., 91%).</li>
+            <li><strong>Law Enforcement Dossier Generator:</strong> 1-click printable Section 91 CrPC compliant forensic dossier ready for police FIRs and exchange freeze notices.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PDF REPORT PREVIEW / PRINT -->
+  <div class="modal-backdrop" id="modal-pdf-dossier">
+    <div class="modal-dialog modal-lg printable-dossier">
+      <div class="modal-header no-print">
+        <div class="modal-title-group">
+          <h3>CyberTrace &bull; I4C Crypto Forensic Dossier</h3>
+          <span class="badge-subtle" id="dossier-modal-case-tag">Case #CYB-2026-001245</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-primary btn-sm" id="btn-print-dossier">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print / Save as PDF
+          </button>
+          <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body dossier-sheet" id="dossier-print-area">
+        <div class="dossier-header-banner">
+          <div class="dossier-brand">
+            <h2>INDIAN CYBER CRIME COORDINATION CENTRE (I4C)</h2>
+            <p>Ministry of Home Affairs, Government of India &bull; Crypto Forensic Intelligence Dossier</p>
+          </div>
+          <div class="dossier-meta-block">
+            <div><strong id="dos-ref-id">Case Ref:</strong> CYB-2026-001245</div>
+            <div><strong>Generated:</strong> 24 Aug 2026, 17:15 IST</div>
+            <div><strong>Classification:</strong> LAW ENFORCEMENT SENSITIVE</div>
+          </div>
+        </div>
+
+        <div class="dossier-section">
+          <h4>1. Executive Summary & Suspect Wallet Profile</h4>
+          <table class="dossier-table">
+            <tr>
+              <td><strong>Primary Suspect:</strong></td>
+              <td class="font-mono" id="dos-target-addr">0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0</td>
+              <td><strong>Assigned Threat:</strong></td>
+              <td id="dos-risk-td"><span class="badge-risk badge-high">87 / 100 HIGH RISK</span></td>
+            </tr>
+            <tr>
+              <td><strong>Total Inflow:</strong></td>
+              <td class="font-mono" id="dos-inflow">₹8,42,000 (128 TXs)</td>
+              <td><strong>Total Outflow:</strong></td>
+              <td class="font-mono" id="dos-outflow">₹7,95,000 (96 TXs)</td>
+            </tr>
+            <tr>
+              <td><strong>Activity Period:</strong></td>
+              <td id="dos-period">12 Aug 2026 &mdash; 23 Aug 2026</td>
+              <td><strong>Attributed Destination:</strong></td>
+              <td id="dos-attr">Binance Deposit Cluster (91% Conf.)</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="dossier-section">
+          <h4>2. Suspicious Indicators & Crime Pattern</h4>
+          <ul class="dossier-bullets" id="dos-bullets">
+            <li>Immediate multi-hop dispersion of victim funds (₹50,000 split across 3 intermediary layers within 12 minutes).</li>
+            <li>Layering behavior consistent with automated laundering scripts (equal tranche splits of ₹18k and ₹12k).</li>
+            <li>High-velocity consolidation into known exchange hot-wallet cluster (0xExch...90A).</li>
+          </ul>
+        </div>
+
+        <div class="dossier-section">
+          <h4>2.1 Fraud DNA™ Syndicate Fingerprint Attribution</h4>
+          <table class="dossier-table">
+            <tr>
+              <td><strong>Matched Campaign:</strong></td>
+              <td id="dos-dna-campaign" class="font-semibold text-amber">Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)</td>
+              <td><strong>Fraud DNA Match:</strong></td>
+              <td id="dos-dna-match" class="font-mono font-bold text-cyan">91% High Confidence</td>
+            </tr>
+            <tr>
+              <td><strong>Behavioral Signature:</strong></td>
+              <td colspan="3" id="dos-dna-sig">3-hop automated peeling chain, 80/20 tranche split, sub-minute execution, Binance off-ramp sweep.</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="dossier-section">
+          <h4>3. Key Identified Addresses & Recommended LEA Actions</h4>
+          <table class="dossier-table">
+            <thead>
+              <tr>
+                <th>Address</th>
+                <th>Role in Flow</th>
+                <th>Traced Volume</th>
+                <th>Action Recommended</th>
+              </tr>
+            </thead>
+            <tbody id="dos-roles-tbody">
+              <tr>
+                <td class="font-mono">0xA1b2...9T0</td>
+                <td>Suspect Collection Hub</td>
+                <td>₹50,000.00</td>
+                <td>Emergency Freeze Request</td>
+              </tr>
+              <tr>
+                <td class="font-mono">0xB3c4...5D6</td>
+                <td>Layer-1 Intermediary Splitter</td>
+                <td>₹30,000.00</td>
+                <td>Subpoena Cluster Records</td>
+              </tr>
+              <tr>
+                <td class="font-mono">0xExch...90A</td>
+                <td>Binance Deposit Gateway</td>
+                <td>₹20,000.00</td>
+                <td>Section 91 CrPC Subpoena / KYC Freeze</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dossier-footer">
+          <div class="dossier-stamp">VERIFIED BY CYBERTRACE AUTOMATED ENGINE (PS-26183) &bull; SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ALL TRANSACTIONS VIEWER -->
+  <div class="modal-backdrop" id="modal-all-tx">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Full Blockchain Ledger (128 Records)</h3>
+          <span class="text-muted text-xs font-mono">Address: 0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0</span>
+        </div>
+        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="tx-modal-filters">
+          <input type="text" id="tx-search-input" class="form-input font-mono" placeholder="Search by Hash, Wallet or Exchange...">
+          <select id="tx-risk-filter" class="form-input">
+            <option value="all">All Risk Levels</option>
+            <option value="high">High Risk Only</option>
+            <option value="medium">Medium Risk</option>
+            <option value="low">Low Risk</option>
+          </select>
+        </div>
+        <div class="table-responsive max-h-400">
+          <table class="tx-table" id="all-tx-table">
+            <thead>
+              <tr>
+                <th>Hash</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Timestamp</th>
+                <th>Risk</th>
+              </tr>
+            </thead>
+            <tbody id="all-tx-tbody">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: FRAUD DNA LINEAGE TREE EXPLORER -->
+  <div class="modal-backdrop" id="modal-dna-lineage">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>Fraud DNA™ &mdash; Campaign Lineage Visualizer</h3>
+          <span class="font-mono text-muted" id="modal-dna-subhead">Campaign #CYB-2048 &bull; Candidate: 0xAB...91F2 (91% Match)</span>
+        </div>
+        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="dna-modal-banner">
+          <div class="flex items-center gap-2">
+            <span class="pulse-indicator-red"></span>
+            <strong>🔴 Potential Unreported Fraud Wallet Detected via Behavioral DNA</strong>
+          </div>
+          <p class="text-xs text-secondary mt-1">This wallet has zero victim reports on 1930 portal, yet exhibits a 91% structural, timing, and fund-splitting match to Campaign #CYB-2048.</p>
+        </div>
+        <div class="graph-full-viewport" id="dna-modal-viewport">
+          <!-- Cloned SVG lineage tree -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
