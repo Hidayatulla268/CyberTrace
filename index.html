@@ -379,7 +379,10 @@
             <section class="search-section card" id="section-search">
               <div class="flex items-center justify-between mb-2">
                 <label for="wallet-input" class="input-label">Enter Victim-Reported Suspect Wallet Address</label>
-                <span class="ps-sub-badge">PS-26183 Automated Pipeline</span>
+                <div class="flex items-center gap-2">
+                  <span class="badge-subtle text-cyan font-mono" id="rpc-live-indicator" style="background: rgba(0, 192, 255, 0.1); border: 1px solid rgba(0, 192, 255, 0.3); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem;">🟢 Live On-Chain RPC Active</span>
+                  <span class="ps-sub-badge">PS-26183 Automated Pipeline</span>
+                </div>
               </div>
               <div class="search-bar-row">
                 <div class="input-container">
@@ -388,7 +391,7 @@
                     id="wallet-input" 
                     class="wallet-input font-mono" 
                     value="0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0" 
-                    placeholder="Enter suspect 0x, Tron or Solana address..."
+                    placeholder="Enter ANY live 0x, Tron, Solana, or Bitcoin address..."
                     spellcheck="false"
                   >
                   <button class="btn-copy-input" id="btn-copy-main-address" title="Copy Address">
@@ -406,6 +409,9 @@
                 <button class="preset-btn" data-address="0x89205A3E3b2A69De6Dbf7f01ED13B2108B2c43e7">Investment/Pig Butchering (₹4.15L)</button>
                 <button class="preset-btn preset-dna-pill" data-address="0xAB89C41d2E5F78a9B30C2d4E6F8a91F2" title="New Unreported Wallet with 91% Match to Campaign #CYB-2048">
                   <span class="dna-icon-sparkle">🧬</span> 🆕 Unreported Wallet Z (91% Fraud DNA Match)
+                </button>
+                <button class="preset-btn font-mono" data-address="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" style="border-color: rgba(56, 189, 248, 0.5); color: #38bdf8;" title="Query real live Ethereum mainnet on-chain balance & transactions">
+                  ⚡ Live On-Chain: 0xd8dA...6045
                 </button>
               </div>
             </section>
