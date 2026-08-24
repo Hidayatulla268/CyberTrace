@@ -1,6 +1,6 @@
 """
-CyberTrace - Complete Master Documentation & Feature Manual PDF Generator
-Creates an exhaustive, comprehensive, beginner-friendly yet forensic-grade manual with real-world examples for every feature.
+CyberTrace - Master Documentation & Comprehensive Platform Comparison PDF Generator
+Generates an exhaustive, publication-grade manual featuring an in-depth Difference Table comparing CyberTrace with all major global forensic platforms.
 """
 
 import os
@@ -38,41 +38,40 @@ class NumberedCanvas(canvas.Canvas):
         self.setFillColor(colors.HexColor("#475569"))
         
         # Header
-        self.drawString(54, 11 * 72 - 36, "CYBERTRACE &bull; COMPREHENSIVE PLATFORM &amp; FEATURE GUIDE WITH EXAMPLES")
+        self.drawString(50, 11 * 72 - 36, "CYBERTRACE &bull; COMPREHENSIVE PLATFORM GUIDE &amp; GLOBAL DIFFERENCE MATRIX")
         self.setStrokeColor(colors.HexColor("#cbd5e1"))
         self.setLineWidth(0.5)
-        self.line(54, 11 * 72 - 42, 8.5 * 72 - 54, 11 * 72 - 42)
+        self.line(50, 11 * 72 - 42, 8.5 * 72 - 50, 11 * 72 - 42)
         
         # Footer
         self.setFont("Helvetica", 8)
-        self.drawString(54, 36, "Smart India Hackathon 2026 &bull; Problem Statement PS-26183 &bull; I4C / MHA")
+        self.drawString(50, 34, "Smart India Hackathon 2026 &bull; Problem Statement PS-26183 &bull; I4C / MHA")
         page_text = f"Page {self._pageNumber} of {page_count}"
-        self.drawRightString(8.5 * 72 - 54, 36, page_text)
-        self.line(54, 46, 8.5 * 72 - 54, 46)
+        self.drawRightString(8.5 * 72 - 50, 34, page_text)
+        self.line(50, 44, 8.5 * 72 - 50, 44)
         self.restoreState()
 
 def build_comprehensive_pdf(output_path):
     doc = SimpleDocTemplate(
         output_path,
         pagesize=letter,
-        leftMargin=50,
-        rightMargin=50,
-        topMargin=50,
-        bottomMargin=50
+        leftMargin=48,
+        rightMargin=48,
+        topMargin=48,
+        bottomMargin=48
     )
     
     styles = getSampleStyleSheet()
     
     c_primary = colors.HexColor("#0066ff")
     c_dark = colors.HexColor("#0f172a")
-    c_cyan = colors.HexColor("#0284c7")
     
     title_style = ParagraphStyle(
         'CoverTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=23,
-        leading=28,
+        fontSize=22,
+        leading=27,
         textColor=c_dark
     )
     
@@ -80,8 +79,8 @@ def build_comprehensive_pdf(output_path):
         'CoverSubtitle',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=11,
-        leading=15,
+        fontSize=10.5,
+        leading=14.5,
         textColor=colors.HexColor("#475569")
     )
     
@@ -89,10 +88,10 @@ def build_comprehensive_pdf(output_path):
         'Heading1_Custom',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=13.5,
-        leading=17,
+        fontSize=13,
+        leading=16.5,
         textColor=c_dark,
-        spaceBefore=9,
+        spaceBefore=8,
         spaceAfter=3
     )
     
@@ -100,10 +99,10 @@ def build_comprehensive_pdf(output_path):
         'Heading2_Custom',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=10.5,
-        leading=14,
+        fontSize=10,
+        leading=13.5,
         textColor=c_primary,
-        spaceBefore=6,
+        spaceBefore=5,
         spaceAfter=2
     )
     
@@ -111,29 +110,48 @@ def build_comprehensive_pdf(output_path):
         'Body_Custom',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=8.5,
-        leading=12.5,
+        fontSize=8.2,
+        leading=11.8,
         textColor=colors.HexColor("#334155"),
         spaceAfter=3
     )
-    
-    example_style = ParagraphStyle(
-        'Example_Custom',
+
+    tbl_hdr_style = ParagraphStyle(
+        'TblHdr',
         parent=styles['Normal'],
-        fontName='Helvetica-Oblique',
-        fontSize=8.2,
-        leading=12,
-        textColor=colors.HexColor("#1e293b")
+        fontName='Helvetica-Bold',
+        fontSize=7.8,
+        leading=10,
+        textColor=colors.HexColor("#0f172a"),
+        alignment=1
+    )
+
+    tbl_cell_style = ParagraphStyle(
+        'TblCell',
+        parent=styles['Normal'],
+        fontName='Helvetica',
+        fontSize=7.4,
+        leading=9.8,
+        textColor=colors.HexColor("#334155")
+    )
+
+    tbl_bold_cell = ParagraphStyle(
+        'TblBoldCell',
+        parent=styles['Normal'],
+        fontName='Helvetica-Bold',
+        fontSize=7.4,
+        leading=9.8,
+        textColor=colors.HexColor("#0066ff")
     )
     
     story = []
     
     # =========================================================================
-    # PAGE 1: COVER & EXECUTIVE PRESENTATION
+    # PAGE 1: COVER & EXECUTIVE OVERVIEW
     # =========================================================================
     story.append(Spacer(1, 10))
     story.append(Paragraph("🛡️ <b>CYBERTRACE</b>", ParagraphStyle('LogoText', fontName='Helvetica-Bold', fontSize=22, textColor=c_primary, leading=26)))
-    story.append(Paragraph("The Complete Platform Guide: What CyberTrace Is, How It Works, and Every Feature Explained With Real-World Examples", title_style))
+    story.append(Paragraph("Enterprise Crypto Forensics &amp; Comparative Platform Intelligence Manual", title_style))
     story.append(Spacer(1, 6))
     story.append(Paragraph("<b>Smart India Hackathon 2026 &bull; Problem Statement PS-26183</b><br/>Indian Cyber Crime Coordination Centre (I4C) &bull; Ministry of Home Affairs, Government of India", subtitle_style))
     story.append(Spacer(1, 8))
@@ -156,12 +174,11 @@ def build_comprehensive_pdf(output_path):
     
     what_is_text = (
         "<b>What is CyberTrace in Simple Words?</b><br/>"
-        "Think of CyberTrace as the <b>'Google Maps + Digital Sherlock Holmes' for Cryptocurrency Crime</b>. "
-        "When an ordinary person is scammed online (e.g. a fake Telegram part-time job, investment fraud, or ransomware), "
-        "the victims transfer money into a crypto wallet address given by the scammer. "
-        "Because cryptocurrency transactions are public but anonymous, police officers previously had to spend weeks manually looking at blockchain explorers. "
-        "<b>CyberTrace automates this entire investigation in 1 second:</b> it follows where the money went, identifies the scam syndicate, "
-        "locates which exchange the money was deposited into, and writes the police legal notice to freeze the scammer's bank account."
+        "CyberTrace is an <b>Automated Crypto Forensics &amp; Anti-Fraud Intelligence Platform</b> built specifically for Law Enforcement Agencies (I4C, State Cyber Cells, 1930 Helpline). "
+        "When a citizen reports losing money to a crypto scam (such as fake Telegram job scams, investment frauds, or ransomware), "
+        "CyberTrace takes the suspect wallet address and in under 1 second: (1) Traces where the stolen money went hop-by-hop, "
+        "(2) Discovers accomplice mule infrastructure, (3) Identifies which Centralized Exchange received the funds, "
+        "(4) Matches the criminal syndicate's behavioral Fraud DNA™, and (5) Automatically generates court-admissible Section 91 CrPC freeze orders."
     )
     t_what = Table([[Paragraph(what_is_text, body_style)]], colWidths=[510])
     t_what.setStyle(TableStyle([
@@ -172,7 +189,7 @@ def build_comprehensive_pdf(output_path):
     story.append(t_what)
     story.append(Spacer(1, 10))
     
-    # Core USP Workflow
+    # Core USP Workflow Banner
     story.append(Paragraph("⭐ <b>THE 6-STEP MASTER FORENSIC WORKFLOW (USP)</b>", h2_style))
     usp_steps = [
         [
@@ -201,9 +218,136 @@ def build_comprehensive_pdf(output_path):
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 2: DETAILED FEATURES 1 TO 6 WITH EXAMPLES
+    # PAGE 2: THE COMPREHENSIVE DIFFERENCE TABLE
     # =========================================================================
-    story.append(Paragraph("1. Detailed Feature Guide with Practical Examples (Part 1)", h1_style))
+    story.append(Paragraph("1. Comprehensive Platform Difference Matrix", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
+    story.append(Paragraph(
+        "The following table provides a rigorous side-by-side technical and operational comparison between <b>CyberTrace</b> and the leading global blockchain analytics tools in the industry.",
+        body_style
+    ))
+    story.append(Spacer(1, 4))
+    
+    diff_table_data = [
+        [
+            Paragraph("<b>Capability / Feature</b>", tbl_hdr_style),
+            Paragraph("<b>Chainalysis Reactor</b>", tbl_hdr_style),
+            Paragraph("<b>TRM Labs Forensics</b>", tbl_hdr_style),
+            Paragraph("<b>Arkham Intelligence</b>", tbl_hdr_style),
+            Paragraph("<b>Elliptic Investigator</b>", tbl_hdr_style),
+            Paragraph("<b>CyberTrace (Our Platform)</b>", tbl_hdr_style)
+        ],
+        [
+            Paragraph("<b>Multi-Hop Fund Flow Graph</b>", tbl_cell_style),
+            Paragraph("Static nodes, manual layout", tbl_cell_style),
+            Paragraph("Interactive 2D graph", tbl_cell_style),
+            Paragraph("Entity link graph", tbl_cell_style),
+            Paragraph("Node tree visualizer", tbl_cell_style),
+            Paragraph("<b>Interactive SVG + Animated Particle Speed Flow</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Time-Travel Scrubber Bar</b>", tbl_cell_style),
+            Paragraph("Not Available (Static history)", tbl_cell_style),
+            Paragraph("Not Available", tbl_cell_style),
+            Paragraph("Not Available", tbl_cell_style),
+            Paragraph("Not Available", tbl_cell_style),
+            Paragraph("<b>Full Playback Bar (Play, Pause, Speed 1x-4x, Step)</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Stolen Money Tranche Follower</b>", tbl_cell_style),
+            Paragraph("Volume-based clustering", tbl_cell_style),
+            Paragraph("Wallet-level tracking", tbl_cell_style),
+            Paragraph("Entity portfolio balances", tbl_cell_style),
+            Paragraph("UTXO &amp; account traces", tbl_cell_style),
+            Paragraph("<b>Hop-by-hop tranche splitting (60/40, 36/24) + CSV export</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Cross-Chain Bridge Routing</b>", tbl_cell_style),
+            Paragraph("Supported across top L1s", tbl_cell_style),
+            Paragraph("Supported across 25+ bridges", tbl_cell_style),
+            Paragraph("Not Supported", tbl_cell_style),
+            Paragraph("Supported via Holistic", tbl_cell_style),
+            Paragraph("<b>Unified flow: ETH &rarr; Across &rarr; Tron &rarr; Binance BSC</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Entity &amp; Tag Directory</b>", tbl_cell_style),
+            Paragraph("Proprietary indexed labels", tbl_cell_style),
+            Paragraph("Proprietary entity database", tbl_cell_style),
+            Paragraph("100,000+ public entity labels", tbl_cell_style),
+            Paragraph("Proprietary AML database", tbl_cell_style),
+            Paragraph("<b>100,000+ Indexed (CEX, Lazarus, Tornado, Darknet)</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Privacy Mixer Demasking</b>", tbl_cell_style),
+            Paragraph("Heuristic probability", tbl_cell_style),
+            Paragraph("Probabilistic cluster match", tbl_cell_style),
+            Paragraph("Not Supported", tbl_cell_style),
+            Paragraph("Deposit-withdrawal match", tbl_cell_style),
+            Paragraph("<b>Relayer Gas Linkage (0xRelay99B) + Leaf Timing (94% Conf.)</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Zero-Day Fraud Detection</b>", tbl_cell_style),
+            Paragraph("Requires prior blacklist report", tbl_cell_style),
+            Paragraph("Requires prior incident report", tbl_cell_style),
+            Paragraph("Crowdsourced bounties", tbl_cell_style),
+            Paragraph("Risk rule heuristics", tbl_cell_style),
+            Paragraph("<b>Fraud DNA™: 8-D sequence vector match for UNREPORTED wallets</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Indian Court Admissibility</b>", tbl_cell_style),
+            Paragraph("Generic CSV / PDF exports", tbl_cell_style),
+            Paragraph("Generic incident export", tbl_cell_style),
+            Paragraph("None", tbl_cell_style),
+            Paragraph("Generic compliance export", tbl_cell_style),
+            Paragraph("<b>Automated Section 91 CrPC Police Notice + 65B Dossier</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Citizen Safety Screener</b>", tbl_cell_style),
+            Paragraph("No (Enterprise access only)", tbl_cell_style),
+            Paragraph("No (Enterprise access only)", tbl_cell_style),
+            Paragraph("No pre-tx safety verdict", tbl_cell_style),
+            Paragraph("No (Enterprise access only)", tbl_cell_style),
+            Paragraph("<b>Free 'Check Before You Send' Citizen Protection Tool</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Live Blockchain Web3 Mode</b>", tbl_cell_style),
+            Paragraph("Proprietary API", tbl_cell_style),
+            Paragraph("Proprietary API", tbl_cell_style),
+            Paragraph("Proprietary API", tbl_cell_style),
+            Paragraph("Proprietary API", tbl_cell_style),
+            Paragraph("<b>Direct JSON-RPC Mainnet Queries (Real Balance &amp; Nonces)</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Cost &amp; Accessibility</b>", tbl_cell_style),
+            Paragraph("$50,000+ per year", tbl_cell_style),
+            Paragraph("$60,000+ per year", tbl_cell_style),
+            Paragraph("Freemium API subscription", tbl_cell_style),
+            Paragraph("$40,000+ per year", tbl_cell_style),
+            Paragraph("<b>100% Free &amp; Open for Indian Police &amp; LEAs</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Deployment Barrier</b>", tbl_cell_style),
+            Paragraph("Cloud enterprise login", tbl_cell_style),
+            Paragraph("Cloud enterprise login", tbl_cell_style),
+            Paragraph("Web account creation", tbl_cell_style),
+            Paragraph("Cloud enterprise login", tbl_cell_style),
+            Paragraph("<b>Zero dependency: runs in any browser, zero build setup</b>", tbl_bold_cell)
+        ]
+    ]
+    t_diff = Table(diff_table_data, colWidths=[95, 83, 83, 83, 83, 83])
+    t_diff.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#f1f5f9")),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
+        ('PADDING', (0, 0), (-1, -1), 2.8),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+    ]))
+    story.append(t_diff)
+    story.append(PageBreak())
+    
+    # =========================================================================
+    # PAGE 3: DETAILED FEATURES 1 TO 6 WITH PRACTICAL EXAMPLES
+    # =========================================================================
+    story.append(Paragraph("2. Detailed Feature Guide with Practical Examples (Part 1)", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
     
     f1_6 = [
@@ -242,15 +386,15 @@ def build_comprehensive_pdf(output_path):
     t_f1_6.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 4.5),
+        ('PADDING', (0, 0), (-1, -1), 4.2),
     ]))
     story.append(t_f1_6)
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 3: DETAILED FEATURES 7 TO 12 WITH EXAMPLES
+    # PAGE 4: DETAILED FEATURES 7 TO 12 WITH PRACTICAL EXAMPLES
     # =========================================================================
-    story.append(Paragraph("2. Detailed Feature Guide with Practical Examples (Part 2)", h1_style))
+    story.append(Paragraph("3. Detailed Feature Guide with Practical Examples (Part 2)", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
     
     f7_12 = [
@@ -289,15 +433,15 @@ def build_comprehensive_pdf(output_path):
     t_f7_12.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 4.5),
+        ('PADDING', (0, 0), (-1, -1), 4.2),
     ]))
     story.append(t_f7_12)
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 4: DETAILED FEATURES 13 TO 18 WITH EXAMPLES
+    # PAGE 5: DETAILED FEATURES 13 TO 18 WITH PRACTICAL EXAMPLES
     # =========================================================================
-    story.append(Paragraph("3. Detailed Feature Guide with Practical Examples (Part 3)", h1_style))
+    story.append(Paragraph("4. Detailed Feature Guide with Practical Examples (Part 3)", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
     
     f13_18 = [
@@ -336,41 +480,16 @@ def build_comprehensive_pdf(output_path):
     t_f13_18.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 4.5),
+        ('PADDING', (0, 0), (-1, -1), 4.2),
     ]))
     story.append(t_f13_18)
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 5: COMPARISON TABLE & STEP-BY-STEP LIVE DEMO TOUR
+    # PAGE 6: LIVE DEMO TOUR, ARCHITECTURE & RESOURCE LINKS
     # =========================================================================
-    story.append(Paragraph("4. Global Benchmark Comparison (Chainalysis vs. CyberTrace)", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
-    
-    comp_data = [
-        [Paragraph("<b>Capability / Feature</b>", body_style), Paragraph("<b>Chainalysis</b>", body_style), Paragraph("<b>TRM Labs</b>", body_style), Paragraph("<b>Arkham</b>", body_style), Paragraph("<b>CyberTrace (Ours)</b>", body_style)],
-        [Paragraph("Fund-Flow Graph", body_style), Paragraph("Yes", body_style), Paragraph("Yes", body_style), Paragraph("Yes", body_style), Paragraph("<b>Yes (Interactive SVG)</b>", body_style)],
-        [Paragraph("Time-Travel Scrubber", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("<b>Yes (Play/Pause/Speed)</b>", body_style)],
-        [Paragraph("Cross-Chain Bridges", body_style), Paragraph("Yes", body_style), Paragraph("Yes", body_style), Paragraph("No", body_style), Paragraph("<b>Yes (Across/FixedFloat)</b>", body_style)],
-        [Paragraph("Entity Directory", body_style), Paragraph("Yes", body_style), Paragraph("Yes", body_style), Paragraph("Yes", body_style), Paragraph("<b>Yes (100k+ Indexed)</b>", body_style)],
-        [Paragraph("Mixer Demasking", body_style), Paragraph("Partial", body_style), Paragraph("Partial", body_style), Paragraph("No", body_style), Paragraph("<b>Yes (Relayer Analysis)</b>", body_style)],
-        [Paragraph("Fraud DNA™ (Zero-Day)", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("<b>Yes (8-D Vector Match)</b>", body_style)],
-        [Paragraph("Section 91 CrPC Notice", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("<b>Yes (Auto-Drafted)</b>", body_style)],
-        [Paragraph("Citizen Safety Screener", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("No", body_style), Paragraph("<b>Yes (Free Consumer Tool)</b>", body_style)],
-        [Paragraph("Price / License", body_style), Paragraph("$50k+/year", body_style), Paragraph("$60k+/year", body_style), Paragraph("Freemium", body_style), Paragraph("<b>Free for Police/LEAs</b>", body_style)]
-    ]
-    t_comp = Table(comp_data, colWidths=[140, 85, 80, 80, 125])
-    t_comp.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#f1f5f9")),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 3.5),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-    ]))
-    story.append(t_comp)
-    story.append(Spacer(1, 8))
-    
     story.append(Paragraph("5. Step-by-Step 7-Stage Guided Live Demo Tour", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
+    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     
     demo_steps = [
         [Paragraph("<b>Step 1: Enter Address</b>", body_style), Paragraph("Click the preset pill <code>Task-Based Telegram Scam (₹50k)</code> to load suspect address <code>0xA1b2...9T0</code>.", body_style)],
@@ -381,35 +500,18 @@ def build_comprehensive_pdf(output_path):
         [Paragraph("<b>Step 6: Fraud DNA™ Zero-Day</b>", body_style), Paragraph("Click <code>🆕 Unreported Wallet Z</code> to see zero-day detection matching Campaign #CYB-2048 at 91%.", body_style)],
         [Paragraph("<b>Step 7: Generate Dossier</b>", body_style), Paragraph("Click <b>Download Dossier</b> to export the official Section 91 CrPC court evidence PDF.", body_style)]
     ]
-    t_demo = Table(demo_steps, colWidths=[130, 380])
+    t_demo = Table(demo_steps, colWidths=[120, 390])
     t_demo.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
-        ('PADDING', (0, 0), (-1, -1), 3.5),
+        ('PADDING', (0, 0), (-1, -1), 3),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
     ]))
     story.append(t_demo)
-    story.append(PageBreak())
+    story.append(Spacer(1, 6))
     
-    # =========================================================================
-    # PAGE 6: ARCHITECTURE, ACCESS LINKS & SUMMARY
-    # =========================================================================
-    story.append(Paragraph("6. Technology Architecture &amp; System Design", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
-    
-    story.append(Paragraph(
-        "<b>Zero-Dependency Client-Side Engine:</b><br/>"
-        "Built using pure semantic HTML5, Vanilla JavaScript (ES6+), and responsive CSS3. "
-        "Requires zero npm builds or server installs, allowing it to run instantly on any police department workstation, "
-        "tablet, or forensic laptop even in air-gapped or restricted intranet environments.<br/><br/>"
-        "<b>Live Web3 RPC Layer:</b><br/>"
-        "Connects to decentralized public JSON-RPC nodes on Ethereum, BSC, and Polygon to query real balances and nonces dynamically.",
-        body_style
-    ))
-    story.append(Spacer(1, 8))
-    
-    story.append(Paragraph("7. Quick Reference Links &amp; Contacts", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
+    story.append(Paragraph("6. Quick Reference Links &amp; Contacts", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     
     res_data = [
         [Paragraph("<b>Live Platform (GitHub Pages):</b>", body_style), Paragraph("<font color='#0066ff'><u>https://hidayatulla268.github.io/CyberTrace/</u></font>", body_style)],
@@ -421,18 +523,18 @@ def build_comprehensive_pdf(output_path):
     t_res.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#cbd5e1")),
-        ('PADDING', (0, 0), (-1, -1), 6),
+        ('PADDING', (0, 0), (-1, -1), 4.5),
     ]))
     story.append(t_res)
-    story.append(Spacer(1, 15))
+    story.append(Spacer(1, 10))
     
     story.append(Paragraph(
-        "<font size=7.5 color='#64748b'><i>CyberTrace is developed for the Smart India Hackathon 2026 (Problem Statement PS-26183) in collaboration with the Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs, Government of India. All rights reserved.</i></font>",
+        "<font size=7 color='#64748b'><i>CyberTrace is developed for the Smart India Hackathon 2026 (Problem Statement PS-26183) in collaboration with the Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs, Government of India. All rights reserved.</i></font>",
         ParagraphStyle('EndNote', alignment=1)
     ))
     
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"Master Comprehensive PDF Guide generated: {output_path}")
+    print(f"Master Comprehensive PDF Guide with Difference Table generated: {output_path}")
 
 if __name__ == '__main__':
     out_file = os.path.join(r"c:\Users\HP\OneDrive\Desktop\crypto", "CyberTrace_Platform_Guide.pdf")
