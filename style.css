@@ -3637,6 +3637,222 @@ p, li, .text-secondary, .text-muted, .text-xs, .text-sm {
   }
 }
 
+/* ======================================================== */
+/* DUAL ENGINE SWITCHER (CRYPTO VS UPI & BANKING)           */
+/* ======================================================== */
 
+.engine-mode-switcher {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: #060d1d !important;
+  border: 1px solid rgba(0, 192, 255, 0.35) !important;
+  border-radius: 999px !important;
+  padding: 4px !important;
+  gap: 6px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+}
 
+.btn-engine-mode {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: #94a3b8 !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  font-family: var(--font-sans) !important;
+  padding: 7px 16px !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  outline: none !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
 
+.btn-engine-mode:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.btn-engine-mode.active[data-mode="crypto"] {
+  background: linear-gradient(135deg, #0066ff 0%, #00c0ff 100%) !important;
+  color: #ffffff !important;
+  border-color: rgba(0, 192, 255, 0.6) !important;
+  box-shadow: 0 0 16px rgba(0, 192, 255, 0.55) !important;
+}
+
+.btn-engine-mode.active[data-mode="banking"] {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+  color: #ffffff !important;
+  border-color: rgba(16, 185, 129, 0.6) !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.55) !important;
+}
+
+.btn-citizen-screener-top {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  color: #fbbf24 !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.25s ease !important;
+}
+
+.btn-citizen-screener-top:hover {
+  background: rgba(245, 158, 11, 0.25) !important;
+  border-color: #f59e0b !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+/* ======================================================== */
+/* MODE 2: UPI & BANKING RAILS FORENSICS STYLING           */
+/* ======================================================== */
+
+.banking-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.banking-kpi-card {
+  background: #091224;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banking-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #10b981, #059669);
+}
+
+.banking-svg-container {
+  width: 100%;
+  min-height: 420px;
+  background: #030712;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  margin: 14px 0;
+}
+
+.bank-nodal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.bank-nodal-card {
+  background: #091224;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  transition: all 0.2s ease;
+}
+
+.bank-nodal-card:hover {
+  border-color: #10b981;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
+  transform: translateY(-2px);
+}
+
+.ncrp-match-box {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.freeze-notice-box {
+  background: #020617;
+  border: 1px solid rgba(0, 192, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  max-height: 380px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+/* CITIZEN SCREENER MODAL */
+.screener-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.screener-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.screener-tab.active {
+  background: rgba(0, 192, 255, 0.15);
+  border-color: #00c0ff;
+  color: #ffffff;
+}
+
+.screener-tab.active[data-target="upi"] {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #ffffff;
+}
+
+.verdict-card {
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-top: 18px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.verdict-safe {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1.5px solid #10b981;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.verdict-caution {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1.5px solid #f59e0b;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.verdict-danger {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1.5px solid #ef4444;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.35);
+}

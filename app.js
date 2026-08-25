@@ -1020,6 +1020,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const titles = {
       'dashboard': 'Analyze Suspect Wallet',
+      'banking-engine': 'UPI & Banking Rails Forensics Engine (NPCI / Core Banking)',
       'cross-chain': 'Cross-Chain Bridge & Hop Tracker (TRM Labs)',
       'entities': 'Global Entity & Deanonymization Directory (Arkham)',
       'mixer-demask': 'Mixer & Privacy Demasking Engine (Elliptic)',
@@ -1043,7 +1044,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sidebar) sidebar.classList.remove('open');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (viewName === 'fraud-dna') {
+    if (viewName === 'banking-engine') {
+      updateBankingData(state.currentUpi || 'daily.payout@oksbi');
+    } else if (viewName === 'fraud-dna') {
       renderDnaTree(state.currentCampaignId);
     } else if (viewName === 'network-map') {
       const prof = state.currentProfile || generateForensicProfile(state.currentAddress);
@@ -2280,4 +2283,575 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 800);
     });
   }
+
+  // ========================================================
+  // MODE 2: UPI & BANKING RAILS FORENSICS ENGINE
+  // ========================================================
+  const btnModeCrypto = document.getElementById('btn-mode-crypto');
+  const btnModeBanking = document.getElementById('btn-mode-banking');
+  const upiInput = document.getElementById('upi-input');
+  const btnAnalyzeUpi = document.getElementById('btn-analyze-upi');
+  const btnCopyUpiInput = document.getElementById('btn-copy-upi-input');
+
+  function switchEngineMode(mode) {
+    state.currentEngineMode = mode;
+    if (mode === 'crypto') {
+      if (btnModeCrypto) btnModeCrypto.classList.add('active');
+      if (btnModeBanking) btnModeBanking.classList.remove('active');
+      switchView('dashboard');
+      showToast('Switched to Mode 1: Crypto Blockchain Engine', 'info');
+    } else {
+      if (btnModeBanking) btnModeBanking.classList.add('active');
+      if (btnModeCrypto) btnModeCrypto.classList.remove('active');
+      switchView('banking-engine');
+      updateBankingData(state.currentUpi || 'daily.payout@oksbi');
+      showToast('Switched to Mode 2: UPI & Banking Rails Engine (NPCI / Core Banking)', 'success');
+    }
+  }
+
+  if (btnModeCrypto) btnModeCrypto.addEventListener('click', () => switchEngineMode('crypto'));
+  if (btnModeBanking) btnModeBanking.addEventListener('click', () => switchEngineMode('banking'));
+
+  // Banking Profile Generator
+  function generateBankingProfile(upiOrUtr) {
+    const input = (upiOrUtr || 'daily.payout@oksbi').trim();
+    let hashVal = 0;
+    for (let i = 0; i < input.length; i++) {
+      hashVal = (hashVal << 5) - hashVal + input.charCodeAt(i);
+      hashVal |= 0;
+    }
+    const absHash = Math.abs(hashVal);
+
+    const isQrScam = input.includes('quick.pay') || input.includes('25k');
+    const isJobScam = input.includes('daily.payout') || input.includes('oksbi');
+    const isDigitalArrest = input.includes('cbi') || input.includes('arrest') || input.includes('okaxis');
+    const isElectricity = input.includes('UTR') || input.includes('991240');
+    const isBetting = input.includes('gaming') || input.includes('paytm');
+
+    let bankName = "State Bank of India";
+    let ifsc = "SBIN0001245";
+    let branch = "Andheri East Branch, Mumbai";
+    let accMasked = `3819****${(absHash % 8999 + 1000)}`;
+    let accFull = `38192019${(absHash % 8999 + 1000)}`;
+    let alias = "RAKESH MULE ENTERPRISES";
+    let moType = "Task-Based Telegram Part-Time Job Scam";
+    let totalInflow = 84500;
+    let txCount = "18 Instant UPI Debits (Last 2h)";
+    let simStatus = "🚨 High Risk (SIM Swapped in Surat, Gujarat)";
+    let ipLocation = "Surat, Gujarat (IP: 103.21.144.92)";
+    let complaintsCount = 14;
+    let totalLoss = "₹24,80,000";
+
+    if (isQrScam) {
+      bankName = "Yes Bank Limited";
+      ifsc = "YESB0000412";
+      branch = "Indiranagar Branch, Bengaluru";
+      alias = "QUICK COMMERCE REFUND DESK";
+      moType = "Phishing QR Code Dynamic Overlay Scam";
+      totalInflow = 25000;
+      complaintsCount = 8;
+      totalLoss = "₹6,40,000";
+    } else if (isDigitalArrest) {
+      bankName = "Axis Bank";
+      ifsc = "UTIB0000188";
+      branch = "Connaught Place, New Delhi";
+      alias = "CLEARANCE ESCROW MULE-01";
+      moType = "Digital Arrest / Fake Law Enforcement Video Extortion";
+      totalInflow = 150000;
+      complaintsCount = 22;
+      totalLoss = "₹88,50,000";
+      simStatus = "🚨 International Roaming (Cambodia Proxy)";
+      ipLocation = "Phnom Penh (Routed via Delhi Gateway)";
+    } else if (isElectricity) {
+      bankName = "Punjab National Bank";
+      ifsc = "PUNB0142800";
+      branch = "Sector 17 Branch, Chandigarh";
+      alias = "STATE POWER DISCOM BILLING HUB";
+      moType = "Malicious APK Remote Access SMS Bill Scam";
+      totalInflow = 42000;
+      complaintsCount = 6;
+      totalLoss = "₹12,80,000";
+    } else if (isBetting) {
+      bankName = "Paytm Payments Bank";
+      ifsc = "PYTM0123456";
+      branch = "Noida Sector 62 Virtual Branch";
+      alias = "VIP GAMING AGENT RECHARGE-99";
+      moType = "Illegal Offshore Betting & Crypto P2P Fiat Routing";
+      totalInflow = 210000;
+      complaintsCount = 31;
+      totalLoss = "₹1,45,00,000";
+    }
+
+    const split1Val = Math.round(totalInflow * 0.60);
+    const split2Val = Math.round(totalInflow * 0.40);
+    const atmCashVal = Math.round(split1Val * 0.40);
+    const retrievableVal = split1Val - atmCashVal;
+
+    const mule1Acc = `6291****${(absHash + 11) % 8999 + 1000}`;
+    const mule1Bank = "HDFC Bank (Surat Branch)";
+    const mule2Acc = `4018****${(absHash + 22) % 8999 + 1000}`;
+    const mule2Bank = "ICICI Bank (Jaipur Branch)";
+
+    return {
+      input: input,
+      bankName: bankName,
+      ifsc: ifsc,
+      branch: branch,
+      accMasked: accMasked,
+      accFull: accFull,
+      alias: alias,
+      moType: moType,
+      totalInflow: `₹${totalInflow.toLocaleString('en-IN')}`,
+      totalInflowNum: totalInflow,
+      txCount: txCount,
+      simStatus: simStatus,
+      ipLocation: ipLocation,
+      complaintsCount: complaintsCount,
+      totalLoss: totalLoss,
+      split1: `₹${split1Val.toLocaleString('en-IN')}`,
+      split2: `₹${split2Val.toLocaleString('en-IN')}`,
+      atmCash: `₹${atmCashVal.toLocaleString('en-IN')}`,
+      retrievable: `₹${retrievableVal.toLocaleString('en-IN')}`,
+      mule1Acc: mule1Acc,
+      mule1Bank: mule1Bank,
+      mule2Acc: mule2Acc,
+      mule2Bank: mule2Bank
+    };
+  }
+
+  function updateBankingData(upiOrUtr) {
+    const p = generateBankingProfile(upiOrUtr);
+    state.currentBankingProfile = p;
+    state.currentUpi = p.input;
+
+    const vpaTargetDisplay = document.getElementById('vpa-target-display');
+    const vpaAliasName = document.getElementById('vpa-alias-name');
+    const vpaBranchDisplay = document.getElementById('vpa-branch-display');
+    const vpaIfscDisplay = document.getElementById('vpa-ifsc-display');
+    const vpaInflowDisplay = document.getElementById('vpa-inflow-display');
+    const vpaInflowCount = document.getElementById('vpa-inflow-count');
+    const vpaSimStatus = document.getElementById('vpa-sim-status');
+    const vpaIpLocation = document.getElementById('vpa-ip-location');
+    const vpaBankBadge = document.getElementById('vpa-bank-name-badge');
+
+    if (vpaTargetDisplay) vpaTargetDisplay.textContent = p.input;
+    if (vpaAliasName) vpaAliasName.textContent = `Account Holder: ${p.alias}`;
+    if (vpaBranchDisplay) vpaBranchDisplay.textContent = p.branch;
+    if (vpaIfscDisplay) vpaIfscDisplay.textContent = `IFSC: ${p.ifsc} • A/C: ${p.accMasked}`;
+    if (vpaInflowDisplay) vpaInflowDisplay.textContent = p.totalInflow;
+    if (vpaInflowCount) vpaInflowCount.textContent = p.txCount;
+    if (vpaSimStatus) vpaSimStatus.textContent = p.simStatus;
+    if (vpaIpLocation) vpaIpLocation.textContent = `IP Location: ${p.ipLocation}`;
+    if (vpaBankBadge) vpaBankBadge.textContent = p.bankName;
+
+    // NCRP Match Card
+    const ncrpBadge = document.getElementById('ncrp-complaints-badge');
+    const ncrpMo = document.getElementById('ncrp-mo-type');
+    const ncrpLoss = document.getElementById('ncrp-total-loss');
+    if (ncrpBadge) ncrpBadge.textContent = `${p.complaintsCount} Complaints Linked`;
+    if (ncrpMo) ncrpMo.textContent = p.moType;
+    if (ncrpLoss) ncrpLoss.textContent = p.totalLoss;
+
+    const actionWin = document.getElementById('banking-action-window');
+    if (actionWin) actionWin.textContent = `${p.retrievable} Retrievable in Layer 2 Account (Freeze Before Next ATM Sweep)`;
+
+    // Renders
+    renderBankingLayeringGraph(p);
+    renderBankingHopsTimeline(p);
+    renderBankNodalDirectory(p);
+    renderBankingFreezeNotice(p);
+
+    showToast(`🟢 NPCI & Core Banking Trace Complete: ${p.bankName} (${p.ifsc})`, 'success');
+  }
+
+  function renderBankingLayeringGraph(p) {
+    const svg = document.getElementById('banking-layering-svg');
+    if (!svg) return;
+
+    svg.innerHTML = `
+      <defs>
+        <pattern id="bank-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.8" fill="rgba(16, 185, 129, 0.15)" />
+        </pattern>
+        <filter id="glow-victim-bank"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#10b981" flood-opacity="0.8"/></filter>
+        <filter id="glow-mule-bank"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f59e0b" flood-opacity="0.8"/></filter>
+        <filter id="glow-cash-out"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" flood-opacity="0.8"/></filter>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#030712" />
+      <rect width="100%" height="100%" fill="url(#bank-grid)" />
+
+      <!-- Layering Lines -->
+      <!-- Tier 1 to Tier 2 Mules -->
+      <path d="M 140 210 Q 260 110, 380 130" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" class="animated-edge" />
+      <path d="M 140 210 Q 260 310, 380 290" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" class="animated-edge" />
+
+      <!-- Tier 2 Mules to Tier 3 Cash Out -->
+      <path d="M 380 130 Q 520 80, 660 100" fill="none" stroke="#ef4444" stroke-width="2.5" />
+      <path d="M 380 130 Q 520 180, 660 210" fill="none" stroke="#00c0ff" stroke-width="2.5" />
+      <path d="M 380 290 Q 520 320, 660 320" fill="none" stroke="#8b5cf6" stroke-width="2.5" />
+
+      <!-- Moving Particles -->
+      <circle r="4" fill="#10b981"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 140 210 Q 260 110, 380 130" /></circle>
+      <circle r="4" fill="#f59e0b"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 140 210 Q 260 310, 380 290" /></circle>
+      <circle r="4" fill="#ef4444"><animateMotion dur="2s" repeatCount="indefinite" path="M 380 130 Q 520 80, 660 100" /></circle>
+
+      <!-- TIER 1: VICTIM ACCOUNT -->
+      <g class="net-node" transform="translate(140, 210)">
+        <circle r="34" fill="#04271d" stroke="#10b981" stroke-width="2.5" filter="url(#glow-victim-bank)"/>
+        <text y="-5" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">TIER 1 ORIGIN</text>
+        <text y="10" text-anchor="middle" fill="#6ee7b7" font-size="9" font-family="JetBrains Mono">${p.totalInflow}</text>
+        <!-- Card box -->
+        <rect x="-85" y="42" width="170" height="40" rx="8" fill="#091224" stroke="#10b981" stroke-width="1.2"/>
+        <text y="58" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Victim Bank Inflow</text>
+        <text y="72" text-anchor="middle" fill="#94a3b8" font-size="8.5">UPI Immediate Transfer</text>
+      </g>
+
+      <!-- TIER 2: MULE ACCOUNT 1 (SBI/HDFC) -->
+      <g class="net-node" transform="translate(380, 130)">
+        <circle r="32" fill="#291a03" stroke="#f59e0b" stroke-width="2.5" filter="url(#glow-mule-bank)"/>
+        <text y="-5" text-anchor="middle" fill="#ffffff" font-size="9.5" font-weight="700">MULE A (60%)</text>
+        <text y="10" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="JetBrains Mono">${p.split1}</text>
+        <!-- Card box -->
+        <rect x="-95" y="40" width="190" height="42" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="1.2"/>
+        <text y="56" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">${p.mule1Bank}</text>
+        <text y="70" text-anchor="middle" fill="#94a3b8" font-size="8.5">A/C: ${p.mule1Acc}</text>
+      </g>
+
+      <!-- TIER 2: MULE ACCOUNT 2 (ICICI) -->
+      <g class="net-node" transform="translate(380, 290)">
+        <circle r="32" fill="#291a03" stroke="#f59e0b" stroke-width="2.5" filter="url(#glow-mule-bank)"/>
+        <text y="-5" text-anchor="middle" fill="#ffffff" font-size="9.5" font-weight="700">MULE B (40%)</text>
+        <text y="10" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="JetBrains Mono">${p.split2}</text>
+        <!-- Card box -->
+        <rect x="-95" y="40" width="190" height="42" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="1.2"/>
+        <text y="56" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">${p.mule2Bank}</text>
+        <text y="70" text-anchor="middle" fill="#94a3b8" font-size="8.5">A/C: ${p.mule2Acc}</text>
+      </g>
+
+      <!-- TIER 3: ATM CASH WITHDRAWAL -->
+      <g class="net-node" transform="translate(660, 100)">
+        <rect x="-100" y="-22" width="200" height="44" rx="8" fill="#3b0a0a" stroke="#ef4444" stroke-width="2" filter="url(#glow-cash-out)"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">🏧 ATM MICRO-WITHDRAWAL</text>
+        <text y="11" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">${p.atmCash} &bull; ATM SBI-Surat-04</text>
+      </g>
+
+      <!-- TIER 3: P2P USDT CRYPTO OFF-RAMP -->
+      <g class="net-node" transform="translate(660, 210)">
+        <rect x="-105" y="-22" width="210" height="44" rx="8" fill="#042038" stroke="#00c0ff" stroke-width="2"/>
+        <text y="-4" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="800">💱 CRYPTO P2P ESCROW</text>
+        <text y="11" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">${p.split2} &bull; Binance / WazirX P2P</text>
+      </g>
+
+      <!-- TIER 3: REMAINDER ACTIONABLE FOR FREEZE -->
+      <g class="net-node" transform="translate(660, 320)">
+        <rect x="-110" y="-22" width="220" height="44" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2.5"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">🔒 ACTIONABLE BALANCE: ${p.retrievable}</text>
+        <text y="11" text-anchor="middle" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">IMMEDIATE FREEZE TARGET</text>
+      </g>
+    `;
+  }
+
+  function renderBankingHopsTimeline(p) {
+    const timeline = document.getElementById('banking-hops-timeline');
+    if (!timeline) return;
+
+    timeline.innerHTML = `
+      <div class="hop-card hop-origin">
+        <div class="hop-badge">TIER 1 &bull; VICTIM INFLOW</div>
+        <div class="hop-amount font-mono">${p.totalInflow} (100%)</div>
+        <div class="hop-addr font-mono text-muted">Victim Bank &rarr; ${p.input} (${p.bankName})</div>
+        <div class="hop-time text-xs text-secondary">T+00:00 &bull; Initial Cyber Inflow</div>
+      </div>
+
+      <div class="hop-connector-line">
+        <span class="hop-split-tag">Layer 1 Split 60% / 40%</span>
+      </div>
+
+      <div class="hop-row-split">
+        <div class="hop-card hop-split">
+          <div class="hop-badge text-amber">TIER 2A &bull; LAYER 1</div>
+          <div class="hop-amount font-mono text-amber">${p.split1} (60%)</div>
+          <div class="hop-addr font-mono text-muted">To ${p.mule1Bank} &bull; ${p.mule1Acc}</div>
+          <div class="hop-time text-xs text-secondary">T+00:04 min &bull; Peeling Split</div>
+        </div>
+        <div class="hop-card hop-dest">
+          <div class="hop-badge text-cyan">TIER 2B &bull; LAYER 1</div>
+          <div class="hop-amount font-mono text-cyan">${p.split2} (40%)</div>
+          <div class="hop-addr font-mono text-muted">To ${p.mule2Bank} &bull; ${p.mule2Acc}</div>
+          <div class="hop-time text-xs text-secondary">T+00:06 min &bull; Secondary Dispersion</div>
+        </div>
+      </div>
+
+      <div class="hop-connector-line">
+        <span class="hop-split-tag">Tier 3 Terminal Actions &bull; Cash-Out &amp; Retrievable Balance</span>
+      </div>
+
+      <div class="hop-row-split">
+        <div class="hop-card" style="border-color: #ef4444; background: rgba(239, 68, 68, 0.08);">
+          <div class="hop-badge text-red">ATM CASH OUT</div>
+          <div class="hop-amount font-mono text-red">${p.atmCash} (Withdrawn)</div>
+          <div class="hop-addr font-mono text-muted">ATM SBI-Surat-0442 &bull; Immediate Cash</div>
+        </div>
+        <div class="hop-card" style="border-color: #10b981; background: rgba(16, 185, 129, 0.1);">
+          <div class="hop-badge text-green">AVAILABLE TO FREEZE</div>
+          <div class="hop-amount font-mono text-green font-bold">${p.retrievable} (Active)</div>
+          <div class="hop-addr font-mono text-white">Target Account ${p.mule1Acc} &bull; READY FOR SEC 91</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderBankNodalDirectory(p) {
+    const container = document.getElementById('bank-nodal-results');
+    if (!container) return;
+
+    const banks = [
+      { name: "State Bank of India (SBI)", officer: "Shri A. K. Sharma (DGM Fraud Monitoring)", email: "nodalofficer.fraud@sbi.co.in", phone: "022-22740841", status: "🟢 Active (4.2m latency)" },
+      { name: "HDFC Bank Limited", officer: "Ms. Priya Nair (AVP LEA Liaison)", email: "nodal.lea@hdfcbank.com", phone: "022-67546000", status: "🟢 Active (3.8m latency)" },
+      { name: "ICICI Bank Limited", officer: "Shri R. V. Deshmukh (Head Cyber Liaison)", email: "cybercell.liaison@icicibank.com", phone: "022-26531414", status: "🟢 Active (5.1m latency)" },
+      { name: "Paytm Payments Bank", officer: "Shri Manoj Verma (Nodal Officer)", email: "nodalofficer@paytmbank.com", phone: "0120-4770770", status: "🟢 Active (2.9m latency)" }
+    ];
+
+    container.innerHTML = banks.map(b => `
+      <div class="bank-nodal-card">
+        <div class="flex items-center justify-between mb-1">
+          <strong class="text-white text-xs">${b.name}</strong>
+          <span class="text-xs text-green font-mono">${b.status}</span>
+        </div>
+        <div class="text-xs text-cyan font-semibold mb-1">${b.officer}</div>
+        <div class="text-xs text-secondary font-mono mb-1">✉️ ${b.email}</div>
+        <div class="text-xs text-muted font-mono mb-2">📞 ${b.phone}</div>
+        <button class="btn btn-ghost-xs text-green btn-dispatch-bank-nodal" data-bank="${b.name}" data-email="${b.email}">⚡ Direct Nodal Dispatch &rarr;</button>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('.btn-dispatch-bank-nodal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showToast(`Section 91 CrPC Freeze Requisition dispatched to ${btn.dataset.bank} Nodal Desk (${btn.dataset.email})`, 'success');
+      });
+    });
+  }
+
+  function renderBankingFreezeNotice(p) {
+    const pre = document.getElementById('banking-freeze-notice-pre');
+    if (!pre) return;
+
+    pre.textContent = 
+`================================================================================
+FORMAL LEGAL NOTICE UNDER SECTION 91 CrPC & SECTION 94 BNSS, 2023
+================================================================================
+TO:
+The Nodal Officer / Law Enforcement Liaison Cell,
+${p.bankName}, ${p.branch}
+IFSC Code: ${p.ifsc}
+
+SUBJECT: MANDATORY REQUISITION TO IMMEDIATELY FREEZE / DEBIT-BLOCK MULE
+         BANK ACCOUNT IN CYBER FRAUD CASE (FIR NO: CYB-2026-${p.complaintsCount}42)
+
+Sir/Madam,
+Whereas investigation by the Cyber Crime Police Station / I4C CIS Division
+reveals that proceeds of crime amounting to ${p.totalInflow} originating from
+cyber crime victims were routed via UPI ID ${p.input} into the beneficiary account:
+
+1. TARGET BENEFICIARY ACCOUNT: ${p.accFull} (Holder: ${p.alias})
+2. BENEFICIARY BANK & BRANCH : ${p.bankName}, ${p.branch}
+3. IFSC CODE                 : ${p.ifsc}
+4. MODUS OPERANDI            : ${p.moType}
+5. NATIONAL NCRP TOKEN ID    : NCRP-1930-${p.complaintsCount}812-2026
+
+YOU ARE HEREBY DIRECTED UNDER SECTION 91 OF CODE OF CRIMINAL PROCEDURE:
+1. Immediately place a TOTAL DEBIT FREEZE on Account ${p.accFull} and linked
+   accounts sharing same PAN/Aadhaar/Mobile.
+2. Furnish complete Account Opening Form (AOF), KYC Documents, ATM Withdrawal
+   CCTV Footage, and IP Logs within 24 hours.
+3. Confirm lien-marking of retrievable balance: ${p.retrievable}.
+
+Investigating Officer,
+Cyber Crime Police Station, Crime Branch,
+Indian Cyber Crime Coordination Centre (I4C), MHA
+================================================================================`;
+  }
+
+  // Banking Search & Preset Listeners
+  if (btnAnalyzeUpi && upiInput) {
+    btnAnalyzeUpi.addEventListener('click', () => {
+      const val = upiInput.value.trim();
+      if (val) updateBankingData(val);
+    });
+
+    upiInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = upiInput.value.trim();
+        if (val) updateBankingData(val);
+      }
+    });
+  }
+
+  if (btnCopyUpiInput && upiInput) {
+    btnCopyUpiInput.addEventListener('click', () => {
+      navigator.clipboard.writeText(upiInput.value.trim());
+      showToast(`Copied UPI ID: ${upiInput.value.trim()}`, 'info');
+    });
+  }
+
+  document.querySelectorAll('[data-upi]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-upi]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const val = btn.dataset.upi;
+      if (upiInput) upiInput.value = val;
+      updateBankingData(val);
+    });
+  });
+
+  // Copy Banking Freeze Notice
+  const btnCopyBankingFreeze = document.getElementById('btn-copy-banking-freeze');
+  const btnPrintBankingFreeze = document.getElementById('btn-print-banking-freeze');
+  const btnEmailNodalDirect = document.getElementById('btn-email-nodal-direct');
+
+  if (btnCopyBankingFreeze) {
+    btnCopyBankingFreeze.addEventListener('click', () => {
+      const pre = document.getElementById('banking-freeze-notice-pre');
+      if (pre) {
+        navigator.clipboard.writeText(pre.textContent);
+        showToast('Section 91 CrPC Bank Freeze Notice copied to clipboard!', 'success');
+      }
+    });
+  }
+
+  if (btnPrintBankingFreeze) {
+    btnPrintBankingFreeze.addEventListener('click', () => {
+      window.print();
+    });
+  }
+
+  if (btnEmailNodalDirect) {
+    btnEmailNodalDirect.addEventListener('click', () => {
+      const p = state.currentBankingProfile || generateBankingProfile('daily.payout@oksbi');
+      showToast(`⚡ Direct Section 91 CrPC Notice dispatched to ${p.bankName} Nodal Desk!`, 'success');
+    });
+  }
+
+  // ========================================================
+  // PUBLIC CITIZEN SCREENER MODAL ("CHECK BEFORE YOU SEND")
+  // ========================================================
+  const btnOpenCitizenScreener = document.getElementById('btn-open-citizen-screener');
+  const modalCitizenScreener = document.getElementById('modal-citizen-screener');
+  const btnCloseCitizenScreener = document.getElementById('btn-close-citizen-screener');
+  const tabScreenerUpi = document.getElementById('tab-screener-upi');
+  const tabScreenerCrypto = document.getElementById('tab-screener-crypto');
+  const screenerInput = document.getElementById('citizen-screener-input');
+  const lblScreenerInput = document.getElementById('lbl-screener-input');
+  const btnRunCitizenScreener = document.getElementById('btn-run-citizen-screener');
+  const screenerVerdictBox = document.getElementById('screener-verdict-box');
+  const verdictIcon = document.getElementById('verdict-icon');
+  const verdictTitle = document.getElementById('verdict-title');
+  const verdictSubtitle = document.getElementById('verdict-subtitle');
+  const verdictBullets = document.getElementById('verdict-bullets');
+
+  let currentScreenerType = 'upi';
+
+  if (btnOpenCitizenScreener && modalCitizenScreener) {
+    btnOpenCitizenScreener.addEventListener('click', () => {
+      openModal(modalCitizenScreener);
+      evaluateCitizenRisk(screenerInput ? screenerInput.value : 'daily.payout@oksbi');
+    });
+  }
+
+  if (btnCloseCitizenScreener && modalCitizenScreener) {
+    btnCloseCitizenScreener.addEventListener('click', () => closeModal(modalCitizenScreener));
+  }
+
+  if (tabScreenerUpi && tabScreenerCrypto) {
+    tabScreenerUpi.addEventListener('click', () => {
+      currentScreenerType = 'upi';
+      tabScreenerUpi.classList.add('active');
+      tabScreenerCrypto.classList.remove('active');
+      if (lblScreenerInput) lblScreenerInput.textContent = 'Enter UPI VPA or Phone Number to Screen:';
+      if (screenerInput) screenerInput.value = 'daily.payout@oksbi';
+      evaluateCitizenRisk('daily.payout@oksbi');
+    });
+
+    tabScreenerCrypto.addEventListener('click', () => {
+      currentScreenerType = 'crypto';
+      tabScreenerCrypto.classList.add('active');
+      tabScreenerUpi.classList.remove('active');
+      if (lblScreenerInput) lblScreenerInput.textContent = 'Enter Crypto Wallet Address (ETH, BTC, TRON) to Screen:';
+      if (screenerInput) screenerInput.value = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+      evaluateCitizenRisk('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
+    });
+  }
+
+  function evaluateCitizenRisk(val) {
+    const input = (val || '').trim();
+    if (!screenerVerdictBox) return;
+
+    screenerVerdictBox.className = 'verdict-card';
+
+    const isSafeOfficial = input.includes('support@icici') || input.includes('merchant@sbi') || input.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045');
+    const isCaution = input.includes('newuser') || input.includes('test') || input.length < 6;
+    const isDanger = !isSafeOfficial && !isCaution;
+
+    if (isSafeOfficial) {
+      screenerVerdictBox.classList.add('verdict-safe');
+      if (verdictIcon) verdictIcon.textContent = '✅';
+      if (verdictTitle) {
+        verdictTitle.textContent = 'VERIFIED SAFE — APPROVED RECIPIENT';
+        verdictTitle.style.color = '#10b981';
+      }
+      if (verdictSubtitle) verdictSubtitle.textContent = 'Zero fraud complaints found in NCRP 1930 and global AML registries.';
+      if (verdictBullets) {
+        verdictBullets.innerHTML = `
+          <div class="text-xs text-white mb-1.5">• <strong>Entity Status:</strong> Official Verified Institutional Account</div>
+          <div class="text-xs text-white mb-1.5">• <strong>NCRP Complaints:</strong> 0 Reported Incidents</div>
+          <div class="text-xs text-white mb-1.5">• <strong>Safety Advisory:</strong> Safe for standard transaction processing.</div>
+        `;
+      }
+    } else if (isCaution) {
+      screenerVerdictBox.classList.add('verdict-caution');
+      if (verdictIcon) verdictIcon.textContent = '⚠️';
+      if (verdictTitle) {
+        verdictTitle.textContent = 'CAUTION — UNVERIFIED NEW DESTINATION';
+        verdictTitle.style.color = '#f59e0b';
+      }
+      if (verdictSubtitle) verdictSubtitle.textContent = 'Recently activated account with insufficient transaction history.';
+      if (verdictBullets) {
+        verdictBullets.innerHTML = `
+          <div class="text-xs text-white mb-1.5">• <strong>Risk Level:</strong> Moderate / Unverified Identity</div>
+          <div class="text-xs text-white mb-1.5">• <strong>Verification Advice:</strong> Confirm receiver identity via secondary channel before sending funds.</div>
+        `;
+      }
+    } else {
+      screenerVerdictBox.classList.add('verdict-danger');
+      if (verdictIcon) verdictIcon.textContent = '🚨';
+      if (verdictTitle) {
+        verdictTitle.textContent = 'DO NOT SEND — CRITICAL FRAUD RISK';
+        verdictTitle.style.color = '#ef4444';
+      }
+      if (verdictSubtitle) verdictSubtitle.textContent = 'Flagged in multiple active NCRP 1930 cyber crime complaints.';
+      if (verdictBullets) {
+        verdictBullets.innerHTML = `
+          <div class="text-xs text-white mb-1.5">• <strong>Crime Category:</strong> Syndicate Mule / Part-Time Job Scam</div>
+          <div class="text-xs text-white mb-1.5">• <strong>NCRP Complaint Count:</strong> 14+ Reported Police FIRs</div>
+          <div class="text-xs text-white mb-1.5">• <strong>Action:</strong> Abort transaction immediately. Never share OTP or enter UPI PIN.</div>
+        `;
+      }
+    }
+  }
+
+  if (btnRunCitizenScreener && screenerInput) {
+    btnRunCitizenScreener.addEventListener('click', () => {
+      evaluateCitizenRisk(screenerInput.value.trim());
+      showToast('🛡️ Risk Screener Intelligence Query Completed', 'info');
+    });
+  }
+
+  document.querySelectorAll('.screener-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.dataset.val;
+      if (screenerInput) screenerInput.value = val;
+      evaluateCitizenRisk(val);
+    });
+  });
 });
