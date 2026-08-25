@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5.1">
+  <link rel="stylesheet" href="style.css?v=5.2">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -361,20 +361,20 @@
         <div class="header-center">
           <!-- DUAL FORENSICS ENGINE SWITCHER -->
           <div class="engine-mode-switcher" id="engine-mode-switcher">
-            <button class="btn-engine-mode active" id="btn-mode-crypto" data-mode="crypto">
+            <button class="btn-engine-mode active" id="btn-mode-crypto" data-mode="crypto" title="Mode 1: Crypto Blockchain Engine">
               <span class="engine-icon">₿</span>
-              <span>Mode 1: Crypto Blockchain Engine</span>
+              <span>₿ Crypto Engine</span>
             </button>
-            <button class="btn-engine-mode" id="btn-mode-banking" data-mode="banking">
+            <button class="btn-engine-mode" id="btn-mode-banking" data-mode="banking" title="Mode 2: UPI & Banking Rail Engine (NPCI / CBS)">
               <span class="engine-icon">📱</span>
-              <span>Mode 2: UPI &amp; Banking Rail Engine</span>
+              <span>📱 UPI &amp; Banking</span>
             </button>
           </div>
 
           <!-- CITIZEN RISK SCREENER MODAL TRIGGER -->
           <button class="btn-citizen-screener-top" id="btn-open-citizen-screener" title="Check Crypto Wallet or UPI ID before sending money">
             <span>🛡️</span>
-            <span>Check Before You Send</span>
+            <span>Check Before Sending</span>
           </button>
         </div>
 
@@ -382,7 +382,7 @@
           <!-- LIVE SECURITY SHIELD PILL -->
           <button class="security-status-badge" id="btn-open-security-modal" title="Click to view Active Security Layer & Anti-Hacker Shield">
             <span class="sec-dot green"></span>
-            <span class="sec-label">🛡️ Security Shield: ACTIVE</span>
+            <span class="sec-label">🛡️ Shield: ACTIVE</span>
           </button>
 
           <!-- Notification Bell -->
@@ -3399,6 +3399,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=5.1"></script>
+  <script src="app.js?v=5.2"></script>
 </body>
 </html>

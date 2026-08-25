@@ -969,6 +969,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- TOAST NOTIFICATIONS ---
   function showToast(message, type = 'info') {
+    if (!toastContainer) return;
+    while (toastContainer.children.length >= 2) {
+      toastContainer.removeChild(toastContainer.firstChild);
+    }
+
     const toast = document.createElement('div');
     toast.className = `toast ${type === 'success' ? 'toast-success' : type === 'error' ? 'toast-error' : ''}`;
     
@@ -983,9 +988,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       toast.style.opacity = '0';
       toast.style.transform = 'translateX(100%)';
-      toast.style.transition = 'all 0.3s ease';
-      setTimeout(() => toast.remove(), 300);
-    }, 3200);
+      toast.style.transition = 'all 0.25s ease';
+      setTimeout(() => toast.remove(), 250);
+    }, 2200);
   }
 
   // --- VIEW ROUTING SYSTEM ---
