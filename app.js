@@ -2289,6 +2289,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ========================================================
   const btnModeCrypto = document.getElementById('btn-mode-crypto');
   const btnModeBanking = document.getElementById('btn-mode-banking');
+  const navListCrypto = document.getElementById('nav-list-crypto');
+  const navListBanking = document.getElementById('nav-list-banking');
+  const brandSubtitle = document.getElementById('brand-subtitle');
+  const sidebarHelpText = document.getElementById('sidebar-help-text');
   const upiInput = document.getElementById('upi-input');
   const btnAnalyzeUpi = document.getElementById('btn-analyze-upi');
   const btnCopyUpiInput = document.getElementById('btn-copy-upi-input');
@@ -2298,19 +2302,61 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mode === 'crypto') {
       if (btnModeCrypto) btnModeCrypto.classList.add('active');
       if (btnModeBanking) btnModeBanking.classList.remove('active');
+      if (navListCrypto) navListCrypto.style.display = 'flex';
+      if (navListBanking) navListBanking.style.display = 'none';
+      if (brandSubtitle) brandSubtitle.textContent = '₿ Crypto Blockchain Engine';
+      if (sidebarHelpText) sidebarHelpText.textContent = 'If you are a victim of crypto fraud, report it immediately.';
       switchView('dashboard');
-      showToast('Switched to Mode 1: Crypto Blockchain Engine', 'info');
+      showToast('Switched Interface to Mode 1: ₿ Crypto Blockchain Engine', 'info');
     } else {
       if (btnModeBanking) btnModeBanking.classList.add('active');
       if (btnModeCrypto) btnModeCrypto.classList.remove('active');
+      if (navListCrypto) navListCrypto.style.display = 'none';
+      if (navListBanking) navListBanking.style.display = 'flex';
+      if (brandSubtitle) brandSubtitle.textContent = '📱 UPI & Banking Rail Engine';
+      if (sidebarHelpText) sidebarHelpText.textContent = 'Need help tracing a suspect UPI ID or Bank UTR? Generate an emergency freeze notice.';
       switchView('banking-engine');
       updateBankingData(state.currentUpi || 'daily.payout@oksbi');
-      showToast('Switched to Mode 2: UPI & Banking Rails Engine (NPCI / Core Banking)', 'success');
+      showToast('Switched Interface to Mode 2: 📱 UPI & Banking Rails Engine (NPCI / CBS)', 'success');
     }
   }
 
   if (btnModeCrypto) btnModeCrypto.addEventListener('click', () => switchEngineMode('crypto'));
   if (btnModeBanking) btnModeBanking.addEventListener('click', () => switchEngineMode('banking'));
+
+  // Banking Sidebar Link Listeners
+  if (navListBanking) {
+    navListBanking.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navListBanking.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        if (link.id === 'nav-bank-screener') {
+          const modalScreener = document.getElementById('modal-citizen-screener');
+          const tabUpi = document.getElementById('tab-screener-upi');
+          if (modalScreener) openModal(modalScreener);
+          if (tabUpi) tabUpi.click();
+          return;
+        }
+
+        const view = link.dataset.view || 'banking-engine';
+        switchView(view);
+
+        const subTargetId = link.dataset.sub;
+        if (subTargetId) {
+          setTimeout(() => {
+            const targetElem = document.getElementById(subTargetId);
+            if (targetElem) {
+              targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              targetElem.classList.add('pulse-highlight');
+              setTimeout(() => targetElem.classList.remove('pulse-highlight'), 1600);
+            }
+          }, 100);
+        }
+      });
+    });
+  }
 
   // Banking Profile Generator
   function generateBankingProfile(upiOrUtr) {

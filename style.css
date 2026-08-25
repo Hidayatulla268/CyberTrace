@@ -3856,3 +3856,14 @@ p, li, .text-secondary, .text-muted, .text-xs, .text-sm {
   border: 1.5px solid #ef4444;
   box-shadow: 0 0 24px rgba(239, 68, 68, 0.35);
 }
+
+@keyframes pulseHighlight {
+  0% { box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
+  50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.6); }
+  100% { box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pulse-highlight {
+  animation: pulseHighlight 1.5s ease;
+}
+
