@@ -479,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
       symbol: liveData ? liveData.symbol : 'ETH',
       isLiveRpc: !!liveData,
       isContract: liveData ? liveData.isContract : false,
-      isUnreported: isWalletZ || (!isCase1245 && !isTornado && !isKuCoin && !isVitalik && !isBinanceCluster),
+      isUnreported: isWalletZ || (!isLazarus && !isTaskScam && !isDigitalArrest && !isPigButchering && !isBinanceSafe && !isVitalik),
       caseId: `CYB-2026-I4C-${absHash.toString().slice(-4)}`,
       crimeType: crimeType,
       received: liveData ? `${liveData.balanceStr} (${liveData.inrBalance})` : `₹${totalVal.toLocaleString('en-IN')}`,
@@ -1120,8 +1120,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- TOAST NOTIFICATIONS ---
   function showToast(message, type = 'info') {
     if (!toastContainer) return;
-    while (toastContainer.children.length >= 2) {
-      toastContainer.removeChild(toastContainer.firstChild);
+    if (toastContainer.children && toastContainer.children.length >= 2) {
+      try {
+        while (toastContainer.children.length >= 2 && toastContainer.firstChild) {
+          toastContainer.removeChild(toastContainer.firstChild);
+        }
+      } catch (e) {}
     }
 
     const toast = document.createElement('div');
