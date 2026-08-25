@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5.2">
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -43,6 +43,7 @@
       </div>
 
       <div class="sih-right-links">
+        <button class="btn-sih-doc" id="btn-open-network-modal" style="background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #10b981;">🟢 Live RPC (18ms)</button>
         <button class="btn-sih-doc" id="btn-open-ps-brief">&#128220; Architecture Brief</button>
       </div>
     </div>
@@ -3396,9 +3397,147 @@
     </div>
   </div>
 
+  <!-- MODAL: LIVE MULTI-CHAIN NETWORK CONNECTORS & API MANAGER -->
+  <div class="modal-backdrop" id="modal-network-connectors">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>🌐 Live Multi-Chain Network Connectors &amp; API Manager</h3>
+          <span class="font-mono text-cyan text-xs">Real-Time Mainnet RPC Telemetry &amp; Public Block Ingestion</span>
+        </div>
+        <button class="btn-close-modal" id="btn-close-network-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="security-status-banner" style="background: rgba(0, 192, 255, 0.1); border: 1px solid #00c0ff; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div class="flex items-center gap-3">
+            <span class="live-pulse" style="background-color: #00c0ff; width: 10px; height: 10px;"></span>
+            <div>
+              <strong class="text-white text-sm">Public Multi-Chain Ingestion Status:</strong>
+              <span class="badge-subtle text-green font-mono" id="network-global-status" style="margin-left: 6px; font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981;">6 NETWORKS ONLINE</span>
+              <p class="text-xs text-muted mt-1">Queries public JSON-RPC nodes and REST block explorers (Ethereum, Bitcoin, Tron, Solana, Polygon, BSC) for real on-chain balances.</p>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btn-test-network-ping">⚡ Test Live Latency Ping</button>
+        </div>
+
+        <!-- 6 LIVE NETWORK CARDS -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;">
+          <!-- Ethereum -->
+          <div class="card" style="padding: 12px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🔷 Ethereum Mainnet</strong>
+              <span class="badge-subtle font-mono text-green" id="net-ping-eth" style="font-size: 0.7rem;">18ms</span>
+            </div>
+            <div class="text-xs text-muted font-mono" style="font-size: 0.68rem;">RPC: cloudflare-eth.com</div>
+            <div class="text-xs text-cyan mt-1 font-mono" id="net-block-eth">Block: #21,894,102</div>
+          </div>
+
+          <!-- Bitcoin -->
+          <div class="card" style="padding: 12px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🟠 Bitcoin Network</strong>
+              <span class="badge-subtle font-mono text-green" id="net-ping-btc" style="font-size: 0.7rem;">42ms</span>
+            </div>
+            <div class="text-xs text-muted font-mono" style="font-size: 0.68rem;">API: Blockchair / Blockchain</div>
+            <div class="text-xs text-amber mt-1 font-mono" id="net-block-btc">Block: #884,912</div>
+          </div>
+
+          <!-- Tron -->
+          <div class="card" style="padding: 12px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🔴 Tron TRC-20</strong>
+              <span class="badge-subtle font-mono text-green" id="net-ping-tron" style="font-size: 0.7rem;">28ms</span>
+            </div>
+            <div class="text-xs text-muted font-mono" style="font-size: 0.68rem;">API: TronGrid / TronScan</div>
+            <div class="text-xs text-red mt-1 font-mono" id="net-block-tron">Block: #69,410,210</div>
+          </div>
+
+          <!-- Solana -->
+          <div class="card" style="padding: 12px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🟣 Solana Mainnet</strong>
+              <span class="badge-subtle font-mono text-green" id="net-ping-sol" style="font-size: 0.7rem;">35ms</span>
+            </div>
+            <div class="text-xs text-muted font-mono" style="font-size: 0.68rem;">RPC: mainnet-beta.solana.com</div>
+            <div class="text-xs text-purple mt-1 font-mono" id="net-block-sol">Slot: #318,990,412</div>
+          </div>
+
+          <!-- Polygon -->
+          <div class="card" style="padding: 12px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🟪 Polygon PoS</strong>
+              <span class="badge-subtle font-mono text-green" id="net-ping-poly" style="font-size: 0.7rem;">22ms</span>
+            </div>
+            <div class="text-xs text-muted font-mono" style="font-size: 0.68rem;">RPC: polygon-rpc.com</div>
+            <div class="text-xs text-cyan mt-1 font-mono" id="net-block-poly">Block: #68,102,490</div>
+          </div>
+
+          <!-- BSC -->
+          <div class="card" style="padding: 12px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🟡 BNB Smart Chain</strong>
+              <span class="badge-subtle font-mono text-green" id="net-ping-bsc" style="font-size: 0.7rem;">25ms</span>
+            </div>
+            <div class="text-xs text-muted font-mono" style="font-size: 0.68rem;">RPC: bsc-dataseed.binance.org</div>
+            <div class="text-xs text-amber mt-1 font-mono" id="net-block-bsc">Block: #46,980,114</div>
+          </div>
+        </div>
+
+        <!-- CUSTOM API KEYS CONFIGURATION -->
+        <div class="card" style="padding: 16px; margin-bottom: 14px;">
+          <h4 class="text-sm text-white font-bold mb-2">🔑 Custom Production API Keys (Optional — Extends Rate Limits)</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="text-xs text-secondary mb-1 block">Etherscan / BscScan V2 API Key:</label>
+              <input type="password" id="input-etherscan-key" class="wallet-input font-mono text-xs" placeholder="e.g. 7X8Y...9Z (Free / Pro Key)">
+            </div>
+            <div>
+              <label class="text-xs text-secondary mb-1 block">TronGrid / TronScan API Key:</label>
+              <input type="password" id="input-trongrid-key" class="wallet-input font-mono text-xs" placeholder="e.g. trg_8849... (Free / Pro Key)">
+            </div>
+            <div>
+              <label class="text-xs text-secondary mb-1 block">CoinGecko Live Price Oracle API Key:</label>
+              <input type="password" id="input-coingecko-key" class="wallet-input font-mono text-xs" placeholder="Default: Public Demo Tier (Active)">
+            </div>
+            <div>
+              <label class="text-xs text-secondary mb-1 block">Moralis Web3 Data API Key:</label>
+              <input type="password" id="input-moralis-key" class="wallet-input font-mono text-xs" placeholder="e.g. moralis_sec_...">
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between mt-3 pt-3" style="border-top: 1px solid var(--border-color);">
+            <div class="flex items-center gap-2">
+              <label class="text-xs text-secondary font-bold">Investigation Ingestion Mode:</label>
+              <select id="select-data-mode" class="wallet-input font-mono text-xs" style="width: auto; padding: 4px 10px;">
+                <option value="live">🟢 Live Production Blockchain Ingestion</option>
+                <option value="demo">⚡ High-Speed Forensic Demo Mode</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btn-save-network-config">💾 Save API Configuration</button>
+          </div>
+        </div>
+
+        <!-- REAL-TIME LIVE CRYPTO PRICE TICKER STRIP -->
+        <div class="card" style="padding: 10px 14px; background: rgba(10, 18, 36, 0.95); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div class="flex items-center gap-2">
+            <span class="live-pulse" style="background-color: #10b981; width: 8px; height: 8px;"></span>
+            <span class="text-xs text-secondary font-bold">Live Price Oracle (CoinGecko):</span>
+          </div>
+          <div class="flex items-center gap-3 font-mono text-xs" id="live-price-ticker-strip">
+            <span class="text-white">ETH: <strong class="text-cyan" id="ticker-eth">₹2,84,500</strong></span>
+            <span class="text-white">BTC: <strong class="text-amber" id="ticker-btc">₹78,40,000</strong></span>
+            <span class="text-white">USDT: <strong class="text-green" id="ticker-usdt">₹89.40</strong></span>
+            <span class="text-white">TRX: <strong class="text-red" id="ticker-trx">₹21.20</strong></span>
+            <span class="text-white">SOL: <strong class="text-purple" id="ticker-sol">₹16,850</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=5.2"></script>
+  <script src="app.js?v=6.0"></script>
 </body>
 </html>
