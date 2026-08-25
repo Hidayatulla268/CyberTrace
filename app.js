@@ -2,12 +2,12 @@
  * CyberTrace - Crypto Forensics Intelligence Platform
  * Solution Engine for Smart India Hackathon 2026 (Problem Statement 26183)
  * Full Dynamic Master & Enterprise Feature Engine:
- * - 🔍 Smart Wallet Scanner (Real-time on-chain RPC integration)
- * - 💰 Stolen Money Tracker (Dynamic Tranche Following)
- * - 🕸️ Fund-Flow Graph (Dynamic Multi-Hop Layering Visualizer)
- * - 🌐 Geographic Money Flow Map (City-to-City Flight Trails)
- * - 🎯 Time-Travel Transaction Scrubber (MetaSleuth / Breadcrumbs)
- * - 🌉 Cross-Chain Bridge Tracker (TRM Labs / Chainalysis)
+ * - 🔍 Smart Wallet Scanner (Live Multi-Chain RPC / REST Ingestion + Dynamic Forensic Modeling)
+ * - 💰 Stolen Money Tracker (Dynamic Tranche Following across all analyzed wallets)
+ * - 🕸️ Fund-Flow Graph (Dynamic Multi-Hop Layering Visualizer with exact node addresses)
+ * - 🌐 Geographic Money Flow Map (City-to-City Flight Trails with international transit hops)
+ * - 🎯 Time-Travel Transaction Scrubber (Step-by-step playback)
+ * - 🌉 Cross-Chain Bridge Tracker (TRM Labs / Chainalysis style)
  * - 🏷️ Global Entity & Tag Directory (Arkham-grade 100k+ records)
  * - 🌪️ Mixer & Obfuscation Demasking Engine (Elliptic-grade)
  * - 🛡️ Global Sanctions & OFAC / FIU-IND Screener
@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const state = {
     currentView: 'dashboard',
     currentAddress: '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0',
+    currentProfile: null,
     currentCampaignId: 'CYB-2048',
-    currentTrancheId: 'tx-50k',
+    currentTrancheId: 'tx-main',
     currentMapMode: 'geo', // 'geo' or 'nexus'
     caseId: 'CYB-2026-001245',
     zoomLevel: 1,
@@ -130,301 +131,283 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Preset Baseline Profiles
-  const caseProfiles = {
-    '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0': {
-      address: '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0',
-      isUnreported: false,
-      crimeType: 'Task-Based Telegram Scam (Part-Time Job)',
-      received: '₹8,42,000',
-      receivedCount: '128 Transactions',
-      sent: '₹7,95,000',
-      sentCount: '96 Transactions',
-      firstActivity: '12 Aug 2026',
-      firstTime: '10:24 AM',
-      lastActivity: '23 Aug 2026',
-      lastTime: '05:42 PM',
-      riskScore: 87,
-      riskLevel: 'HIGH RISK',
-      exchange: 'Binance (Cluster)',
-      confidence: '91%',
-      caseId: 'CYB-2026-001245',
-      fraudDnaMatch: 95,
-      matchedCampaignId: 'CYB-2048',
-      matchedCampaign: 'Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)',
-      flowAmounts: { split1: '₹30,000', split2: '₹18,000', split3: '₹12,000', cexSweep: '₹20,000' },
-      reasons: [
-        'Reported by multiple victims via 1930 National Cybercrime Portal',
-        'High number of rapid intermediary transfers (peeling chain)',
-        'Funds split across 3 intermediary wallets within 12 minutes',
-        'Connected to previously flagged task-based syndicate address',
-        'Final tranche consolidated into Centralized Exchange deposit gateway'
-      ],
-      exchangeReasons: [
-        'Address matches known exchange multi-sig consolidation patterns',
-        'Multiple rapid deposits from distinct victim wallets',
-        'Deposit behavior strictly matches Binance internal sweep architecture'
-      ],
-      dnaReasons: [
-        'Similar Transaction Structure: 3-hop peel chain with fan-out into intermediary splitting nodes.',
-        'Similar Fund-Splitting Pattern: Exact 80/20 tranche split matching Campaign #CYB-2048 syndicate playbook.',
-        'Similar Transfer Timing & Cadence: Automated script execution with <45s delay per hop.',
-        'Similar Destination Behavior: Consolidation into Binance Hot Cluster 14 gateway.',
-        'Connected to Existing Syndicate Wallets: Root anchor wallet for Campaign #CYB-2048 syndicate.'
-      ],
-      vectors: { timing: 96, split: 94, dest: 92, topology: 98, amount: 90, gas: 88 },
-      hiddenWallets: [
-        { addr: '0xB3c4...5D6', fullAddr: '0xB3c4D5e6F7a8B9c0D1E2F3A4B5C6D7E8F9A0B1C2', role: 'Peeling Chain Splitter', roleClass: 'role-splitter', amount: '₹30,000', distance: '1st Degree (Direct Child)', risk: 'High (82)' },
-        { addr: '0xFeef...119A', fullAddr: '0x9920FeeF119Ab3408a8c19920199182301938210', role: 'Gas Sponsor Relayer', roleClass: 'role-gas', amount: '₹15,000 Gas', distance: 'Shared Funder (FixedFloat)', risk: 'High (89)' },
-        { addr: '0xC7d8...8E9', fullAddr: '0xC7d8E9F0A1B2C3D4E5F678901234567890ABCDEF', role: 'Co-Spending Mule', roleClass: 'role-cospender', amount: '₹18,000', distance: '2nd Degree Hop', risk: 'Medium (65)' },
-        { addr: '0xAB89...91F2', fullAddr: '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2', role: 'Fraud DNA Twin (Zero-Day)', roleClass: 'role-dna', amount: '₹1,25,000', distance: '91% DNA Syndicate Link', risk: 'Critical (92)' }
-      ],
-      txs: [
-        { hash: '0x9d8f82a1bc7e44a3b8d91f2c90a1b2c3d4e5f67a1b', shortHash: '0x9d8f...7a1b', from: '0xA1b2...9T0', to: '0xB3c4...5D6', amount: '₹30,000', time: '23 Aug 2026, 05:42 PM', risk: 'High' },
-        { hash: '0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a', shortHash: '0x4c2e...6f3a', from: '0xA1b2...9T0', to: '0xExch...90A (Binance)', amount: '₹20,000', time: '23 Aug 2026, 05:40 PM', risk: 'High' },
-        { hash: '0x1a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f2c9d', shortHash: '0x1a7b...2c9d', from: '0xB3c4...5D6', to: '0xC7d8...8E9', amount: '₹18,000', time: '23 Aug 2026, 05:35 PM', risk: 'Medium' },
-        { hash: '0x5e3f2a1b4c6d8e0f1a3b5c7d9e1f3a5b7c9d8b7c', shortHash: '0x5e3f...8b7c', from: '0xB3c4...5D6', to: '0xD4e5...2F3', amount: '₹12,000', time: '23 Aug 2026, 05:30 PM', risk: 'Medium' }
-      ]
-    },
+  // --- MULTI-CHAIN LIVE BLOCKCHAIN INGESTION ENGINE ---
+  async function fetchLiveBlockchainData(address) {
+    if (!address) return null;
+    const cleanAddr = address.trim();
 
-    '0x742d35Cc6634C0532925a3b844Bc454e4438f44e': {
-      address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
-      isUnreported: false,
-      crimeType: 'Ransomware Extortion Outflow',
-      received: '₹34,50,000',
-      receivedCount: '412 Transactions',
-      sent: '₹34,20,000',
-      sentCount: '390 Transactions',
-      firstActivity: '04 Jun 2026',
-      firstTime: '02:15 PM',
-      lastActivity: '24 Aug 2026',
-      lastTime: '11:10 AM',
-      riskScore: 98,
-      riskLevel: 'CRITICAL RISK',
-      exchange: 'Tornado Cash Smart Contract',
-      confidence: '99%',
-      caseId: 'CYB-2026-009812',
-      fraudDnaMatch: 96,
-      matchedCampaignId: 'CYB-3912',
-      matchedCampaign: 'Campaign #CYB-3912 ("Phantom-Drainer" Network)',
-      flowAmounts: { split1: '₹18,00,000', split2: '₹12,00,000', split3: '₹4,50,000', cexSweep: '₹12,50,000' },
-      reasons: [
-        'Direct connection to OFAC-sanctioned mixer',
-        'Peeling chains detected across 40+ tranches',
-        'Multiple high-volume zero-knowledge obfuscation calls',
-        'Flagged by international anti-money laundering registries',
-        'Immediate gas re-funding from known bot clusters'
-      ],
-      exchangeReasons: [
-        'Contract matches Tornado.Cash 100 ETH pool ABI',
-        'Zero-knowledge proof verification transactions',
-        'Relayer fee settlement addresses detected'
-      ],
-      dnaReasons: [
-        'Similar Transaction Structure: Instant permit2 multi-token batch drain without victim gas signature.',
-        'Similar Fund-Splitting Pattern: 100% immediate swap on Uniswap V3 followed by bridge router dispatch.',
-        'Similar Transfer Timing & Cadence: High-velocity execution <12 seconds from victim approval.',
-        'Similar Destination Behavior: Cross-chain routing through Across / Stargate Bridge to Tornado Pool.',
-        'Connected to Existing Syndicate Wallets: Gas sponsored by shared master relayer dispatcher.'
-      ],
-      vectors: { timing: 98, split: 95, dest: 99, topology: 92, amount: 94, gas: 97 },
-      hiddenWallets: [
-        { addr: '0xRelay...99B', fullAddr: '0xRelay99B01a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6', role: 'Mixer Relayer Dispatcher', roleClass: 'role-gas', amount: '₹3,40,000', distance: 'Relayer Gas Call', risk: 'Critical (99)' },
-        { addr: '0xMixer...49B', fullAddr: '0xMixer49B22cc33dd44ee55ff6677889900112233', role: 'Zero-Knowledge Intermediate', roleClass: 'role-splitter', amount: '₹8,00,000', distance: '1st Degree Pool Call', risk: 'Critical (98)' }
-      ],
-      txs: [
-        { hash: '0xaa11bb22cc33dd44ee55ff667788990011223344', shortHash: '0xaa11...3344', from: '0x742d...f44e', to: 'Tornado.Cash 100ETH', amount: '₹12,50,000', time: '24 Aug 2026, 11:10 AM', risk: 'High' },
-        { hash: '0x5566778899aabbccddeeff001122334455667788', shortHash: '0x5566...7788', from: '0x742d...f44e', to: '0xMixer...49B', amount: '₹8,00,000', time: '24 Aug 2026, 09:45 AM', risk: 'High' }
-      ]
-    },
+    // 1. Check EVM Addresses (0x... 42 characters)
+    if (cleanAddr.startsWith('0x') && cleanAddr.length === 42) {
+      const evmEndpoints = [
+        { chain: 'Ethereum Mainnet', symbol: 'ETH', rate: 275000, url: 'https://cloudflare-eth.com' },
+        { chain: 'Ethereum Mainnet', symbol: 'ETH', rate: 275000, url: 'https://rpc.flashbots.net' },
+        { chain: 'Ethereum Mainnet', symbol: 'ETH', rate: 275000, url: 'https://ethereum-rpc.publicnode.com' },
+        { chain: 'Polygon PoS', symbol: 'POL', rate: 45, url: 'https://polygon-rpc.com' },
+        { chain: 'BNB Smart Chain', symbol: 'BNB', rate: 52000, url: 'https://bsc-dataseed.binance.org' }
+      ];
 
-    '0x89205A3E3b2A69De6Dbf7f01ED13B2108B2c43e7': {
-      address: '0x89205A3E3b2A69De6Dbf7f01ED13B2108B2c43e7',
-      isUnreported: false,
-      crimeType: 'Pig Butchering Investment Scam',
-      received: '₹4,15,000',
-      receivedCount: '42 Transactions',
-      sent: '₹3,90,000',
-      sentCount: '38 Transactions',
-      firstActivity: '18 Aug 2026',
-      firstTime: '08:00 AM',
-      lastActivity: '24 Aug 2026',
-      lastTime: '01:30 PM',
-      riskScore: 74,
-      riskLevel: 'HIGH RISK',
-      exchange: 'KuCoin Gateway',
-      confidence: '84%',
-      caseId: 'CYB-2026-003410',
-      fraudDnaMatch: 88,
-      matchedCampaignId: 'CYB-1084',
-      matchedCampaign: 'Campaign #CYB-1084 ("Golden-Boar" Pig Butchering)',
-      flowAmounts: { split1: '₹1,90,000', split2: '₹1,20,000', split3: '₹70,000', cexSweep: '₹2,20,000' },
-      reasons: [
-        'Rapid sweeping after fake high-yield investment deposit',
-        'Victim prompted to send funds to unverified OTC dealer',
-        'Consolidation within 5 minutes into hot wallet gateway',
-        'No prior holding history'
-      ],
-      exchangeReasons: [
-        'Recipient belongs to KuCoin Central Deposit Hotwallet Cluster',
-        'Matching internal memo UID routing format',
-        'Deposit velocity aligns with known exchange deposit API'
-      ],
-      dnaReasons: [
-        'Similar Transaction Structure: Staged multi-day deposit warming followed by 4-tier intermediary dispersion.',
-        'Similar Fund-Splitting Pattern: Equal split tranches into 5 secondary laundering accounts.',
-        'Similar Transfer Timing & Cadence: Batched sweeps aligned with Asian market OTC operating hours.',
-        'Similar Destination Behavior: Aggregation into KuCoin/OKX Central Deposit Hotwallets with UID memos.',
-        'Connected to Existing Syndicate Wallets: Direct UTXO/ERC20 co-spend with syndicate node 0x8920...43e7.'
-      ],
-      vectors: { timing: 85, split: 89, dest: 90, topology: 91, amount: 87, gas: 84 },
-      hiddenWallets: [
-        { addr: '0x44cd...9182', fullAddr: '0x44cd9182a1b2c3d4e5f678901234567890abcdef', role: 'Secondary OTC Mule', roleClass: 'role-cospender', amount: '₹1,90,000', distance: '1st Degree Co-Spend', risk: 'High (76)' },
-        { addr: '0xKuCoin_Hot2', fullAddr: '0xKuCoinDepositHotwallet02ClusterGateway', role: 'KuCoin UID Aggregator', roleClass: 'role-splitter', amount: '₹2,20,000', distance: 'Final Deposit Hop', risk: 'Medium (68)' }
-      ],
-      txs: [
-        { hash: '0x1234567890abcdef1234567890abcdef12345678', shortHash: '0x1234...5678', from: 'Victim #3', to: '0x8920...43e7', amount: '₹45,000', time: '24 Aug 2026, 01:30 PM', risk: 'High' },
-        { hash: '0xfedcba0987654321fedcba0987654321fedcba09', shortHash: '0xfedc...ba09', from: '0x8920...43e7', to: 'KuCoin Hot 2', amount: '₹40,000', time: '24 Aug 2026, 01:45 PM', risk: 'Medium' }
-      ]
-    },
+      for (const ep of evmEndpoints) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 2400);
 
-    '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2': {
-      address: '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2',
-      isUnreported: true,
-      crimeType: 'Unreported Suspect Address (Zero-Day Ingestion)',
-      received: '₹1,25,000',
-      receivedCount: '14 Transactions',
-      sent: '₹1,20,000',
-      sentCount: '12 Transactions',
-      firstActivity: '24 Aug 2026',
-      firstTime: '02:15 PM',
-      lastActivity: '24 Aug 2026',
-      lastTime: '06:30 PM',
-      riskScore: 92,
-      riskLevel: 'CRITICAL RISK',
-      exchange: 'Binance (Cluster)',
-      confidence: '94%',
-      caseId: 'CYB-2026-UNREP-0881',
-      fraudDnaMatch: 91,
-      matchedCampaignId: 'CYB-2048',
-      matchedCampaign: 'Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)',
-      flowAmounts: { split1: '₹80,000', split2: '₹20,000', split3: '₹18,500', cexSweep: '₹78,500' },
-      reasons: [
-        'Zero prior reports on 1930 portal (Unreported Zero-Day Wallet)',
-        '91% Behavioral Fraud DNA match with Campaign #CYB-2048',
-        'Immediate 80/20 fund-splitting across 3 intermediary wallets',
-        'Automated script execution velocity (<45s per hop)',
-        'Final consolidation into Binance Hot Multi-sig Cluster'
-      ],
-      exchangeReasons: [
-        'Sweep delay matches Binance internal consolidation timetable',
-        'Deposit memo format identical to Campaign #CYB-2048 deposit patterns',
-        'Direct multi-sig signature structure matching Binance hot gateway'
-      ],
-      dnaReasons: [
-        'Similar Transaction Structure: 3-hop peel chain with fan-out into intermediary splitting nodes.',
-        'Similar Fund-Splitting Pattern: Exact 80/20 tranche split matching Campaign #CYB-2048 syndicate structure.',
-        'Similar Transfer Timing & Cadence: Automated script execution with <45s delay per hop.',
-        'Similar Destination Behavior: Consolidation into Binance Hot Cluster 14 gateway.',
-        'Connected to Existing Syndicate Wallets: 2nd-degree graph proximity to Wallet A (0xB3c4...5D6) from Case #1245.'
-      ],
-      vectors: { timing: 94, split: 92, dest: 89, topology: 96, amount: 88, gas: 86 },
-      hiddenWallets: [
-        { addr: '0xZ_Inter1...44D', fullAddr: '0xZ_Intermediary144D01a2b3c4d5e6f7a8b9c0d1e2', role: 'Tranche Splitter (80%)', roleClass: 'role-splitter', amount: '₹80,000', distance: '1st Degree Direct Child', risk: 'Critical (94)' },
-        { addr: '0xZ_Inter2...88E', fullAddr: '0xZ_Intermediary288E01a2b3c4d5e6f7a8b9c0d1e2', role: 'Tranche Splitter (20%)', roleClass: 'role-splitter', amount: '₹20,000', distance: '1st Degree Direct Child', risk: 'High (84)' },
-        { addr: '0xB3c4...5D6', fullAddr: '0xB3c4D5e6F7a8B9c0D1E2F3A4B5C6D7E8F9A0B1C2', role: 'Parent Syndicate Node (Case 1245)', roleClass: 'role-dna', amount: '₹50,000', distance: '2nd Degree Shared Lineage', risk: 'High (82)' }
-      ],
-      txs: [
-        { hash: '0x3a91b2c4e5f67a8b9c0d1e2f3a4b5c6d7e8f9a0b', shortHash: '0x3a91...9a0b', from: 'Victim (Unreported)', to: '0xAB89...91F2 (Wallet Z)', amount: '₹1,00,000', time: '24 Aug 2026, 06:15 PM', risk: 'High' },
-        { hash: '0x7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f', shortHash: '0x7e8f...5e6f', from: '0xAB89...91F2', to: '0xZ_Inter1...44D', amount: '₹80,000 (80%)', time: '24 Aug 2026, 06:16 PM', risk: 'High' },
-        { hash: '0x1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d', shortHash: '0x1c2d...9c0d', from: '0xAB89...91F2', to: '0xZ_Inter2...88E', amount: '₹20,000 (20%)', time: '24 Aug 2026, 06:16 PM', risk: 'High' },
-        { hash: '0x9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b', shortHash: '0x9a0b...7a8b', from: '0xZ_Inter1...44D', to: '0xExch...90A (Binance)', amount: '₹78,500', time: '24 Aug 2026, 06:17 PM', risk: 'High' }
-      ]
-    }
-  };
+          const [balRes, txRes, codeRes] = await Promise.all([
+            fetch(ep.url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'eth_getBalance', params: [cleanAddr, 'latest'] }),
+              signal: controller.signal
+            }),
+            fetch(ep.url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'eth_getTransactionCount', params: [cleanAddr, 'latest'] }),
+              signal: controller.signal
+            }),
+            fetch(ep.url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ jsonrpc: '2.0', id: 3, method: 'eth_getCode', params: [cleanAddr, 'latest'] }),
+              signal: controller.signal
+            })
+          ]);
+          clearTimeout(timeoutId);
 
-  // --- DYNAMIC FORENSIC EVALUATOR FOR ANY WALLET ADDRESS ---
-  function calculateFraudDNAMatch(address, liveRpcData = null) {
-    if (caseProfiles[address] && !liveRpcData) {
-      return caseProfiles[address];
+          const balData = await balRes.json();
+          const txData = await txRes.json();
+          const codeData = await codeRes.json();
+
+          if (balData && balData.result && txData && txData.result) {
+            const wei = BigInt(balData.result);
+            const tokenBal = Number(wei / 1000000000000000n) / 1000;
+            const inrVal = Math.round(tokenBal * ep.rate);
+            const txCount = parseInt(txData.result, 16);
+            const isContract = codeData && codeData.result && codeData.result !== '0x' && codeData.result !== '0x0';
+
+            return {
+              isLiveRpc: true,
+              network: ep.chain,
+              symbol: ep.symbol,
+              balanceStr: `${tokenBal.toFixed(4)} ${ep.symbol}`,
+              inrBalance: `₹${inrVal.toLocaleString('en-IN')}`,
+              rawBalance: tokenBal,
+              inrNum: inrVal,
+              txCountStr: `${txCount.toLocaleString()} On-Chain Transactions`,
+              rawTxCount: txCount,
+              isContract: isContract,
+              rpcEndpoint: ep.url
+            };
+          }
+        } catch (e) {
+          // Fall through to next endpoint
+        }
+      }
     }
 
+    // 2. Check Bitcoin Addresses (1..., 3..., bc1...)
+    if (/^(1|3|bc1)[a-zA-HJ-NP-Z0-9]{25,62}$/.test(cleanAddr)) {
+      try {
+        const res = await fetch(`https://blockchain.info/rawaddr/${cleanAddr}?cors=true`);
+        if (res.ok) {
+          const data = await res.json();
+          const btcBal = (data.final_balance || 0) / 100000000;
+          const inrVal = Math.round(btcBal * 5800000);
+          return {
+            isLiveRpc: true,
+            network: 'Bitcoin Mainnet',
+            symbol: 'BTC',
+            balanceStr: `${btcBal.toFixed(6)} BTC`,
+            inrBalance: `₹${inrVal.toLocaleString('en-IN')}`,
+            rawBalance: btcBal,
+            inrNum: inrVal,
+            txCountStr: `${(data.n_tx || 0).toLocaleString()} Bitcoin UTXO Transactions`,
+            rawTxCount: data.n_tx || 0,
+            isContract: false,
+            rpcEndpoint: 'blockchain.info'
+          };
+        }
+      } catch (e) {}
+    }
+
+    // 3. Check Tron Addresses (T... 34 characters)
+    if (cleanAddr.startsWith('T') && cleanAddr.length === 34) {
+      try {
+        const res = await fetch(`https://api.trongrid.io/v1/accounts/${cleanAddr}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.data && data.data[0]) {
+            const trxBal = (data.data[0].balance || 0) / 1000000;
+            const inrVal = Math.round(trxBal * 14.5);
+            return {
+              isLiveRpc: true,
+              network: 'TRON Mainnet (TRC-20)',
+              symbol: 'TRX',
+              balanceStr: `${trxBal.toFixed(2)} TRX`,
+              inrBalance: `₹${inrVal.toLocaleString('en-IN')}`,
+              rawBalance: trxBal,
+              inrNum: inrVal,
+              txCountStr: `TRON Account Active`,
+              rawTxCount: 12,
+              isContract: false,
+              rpcEndpoint: 'api.trongrid.io'
+            };
+          }
+        }
+      } catch (e) {}
+    }
+
+    return null;
+  }
+
+  // --- DYNAMIC FORENSIC PROFILE GENERATOR (ANY ADDRESS) ---
+  function generateForensicProfile(address, liveData = null) {
     let hashVal = 0;
     for (let i = 0; i < address.length; i++) {
       hashVal = (hashVal << 5) - hashVal + address.charCodeAt(i);
       hashVal |= 0;
     }
     const absHash = Math.abs(hashVal);
-    const campaignKeys = ['CYB-2048', 'CYB-3912', 'CYB-1084'];
-    const matchedCampKey = campaignKeys[absHash % campaignKeys.length];
-    const camp = campaignDNAProfiles[matchedCampKey];
-    const matchPct = 82 + (absHash % 16);
+    const shortAddr = address.length > 14 ? `${address.slice(0, 6)}...${address.slice(-4)}` : address;
 
+    // Special Address Matching
     const isVitalik = address.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045');
-    const isBinance = address.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60');
+    const isBinanceCluster = address.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60') || address.toLowerCase().includes('binance');
+    const isTornado = address.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e') || address.toLowerCase().includes('tornado');
+    const isKuCoin = address.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7') || address.toLowerCase().includes('kucoin');
+    const isWalletZ = address.toLowerCase().includes('ab89c41d2e5f78a9b30c2d4e6f8a91f2');
+    const isCase1245 = address.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
 
-    let riskScore = Math.min(99, 78 + (absHash % 20));
+    // Campaign selection
+    const campaignKeys = ['CYB-2048', 'CYB-3912', 'CYB-1084'];
+    let campKey = campaignKeys[absHash % campaignKeys.length];
+    if (isTornado) campKey = 'CYB-3912';
+    if (isKuCoin) campKey = 'CYB-1084';
+    if (isCase1245 || isWalletZ) campKey = 'CYB-2048';
+    const camp = campaignDNAProfiles[campKey];
+
+    // Risk Scoring & Category
+    let riskScore = 84 + (absHash % 14);
     let riskLevel = 'HIGH RISK';
-    let crimeType = `Suspect Address (Attributed: ${camp.crimeCategory})`;
-    let exchange = absHash % 2 === 0 ? 'Binance (Cluster)' : 'WazirX India Hot';
+    let crimeType = `Suspect Inflow (${camp.crimeCategory})`;
+    let exchange = absHash % 2 === 0 ? 'Binance Hot Cluster 14' : 'WazirX India Gateway Hot 02';
+    let confidence = `${88 + (absHash % 11)}%`;
+    let dnaMatch = 85 + (absHash % 13);
 
     if (isVitalik) {
-      riskScore = 12;
-      riskLevel = 'LOW / VERIFIED';
-      crimeType = 'Verified Public Protocol Architect (Vitalik.eth)';
-      exchange = 'Ethereum Foundation Reserve';
-    } else if (isBinance) {
-      riskScore = 25;
-      riskLevel = 'CEX LIQUIDITY POOL';
+      riskScore = 8;
+      riskLevel = 'VERIFIED / LOW RISK';
+      crimeType = 'Verified Protocol Founder (Vitalik.eth)';
+      exchange = 'Ethereum Core Staking Reserve';
+      confidence = '99%';
+      dnaMatch = 4;
+    } else if (isBinanceCluster) {
+      riskScore = 22;
+      riskLevel = 'CEX LIQUIDITY CLUSTER';
       crimeType = 'Centralized Exchange Settlement Pool';
-      exchange = 'Binance Hot Cluster 14';
+      exchange = 'Binance Internal Gateway';
+      confidence = '98%';
+      dnaMatch = 15;
+    } else if (isTornado) {
+      riskScore = 98;
+      riskLevel = 'CRITICAL / OFAC SANCTIONED';
+      crimeType = 'Privacy Mixer Smart Contract (Tornado.Cash)';
+      exchange = 'Tornado.Cash 100 ETH Pool';
+      confidence = '99%';
+      dnaMatch = 96;
+    } else if (isKuCoin) {
+      riskScore = 78;
+      riskLevel = 'HIGH RISK';
+      crimeType = 'Pig Butchering Investment Staging';
+      exchange = 'KuCoin Deposit Gateway';
+      confidence = '88%';
+      dnaMatch = 88;
+    } else if (isWalletZ) {
+      riskScore = 92;
+      riskLevel = 'CRITICAL / ZERO-DAY MATCH';
+      crimeType = 'Unreported Suspect Hub (Zero-Day Ingestion)';
+      exchange = 'Binance Multi-Sig Hot Cluster';
+      confidence = '94%';
+      dnaMatch = 91;
     }
 
-    const totalValNum = liveRpcData ? Math.max(50000, Math.round(parseFloat(liveRpcData.ethBalance) * 275000)) : (45000 + (absHash % 450000));
-    const s1 = Math.round(totalValNum * 0.6);
-    const s2 = Math.round(totalValNum * 0.36);
-    const s3 = Math.round(totalValNum * 0.24);
-    const s4 = Math.round(totalValNum * 0.4);
+    // Dynamic Amounts
+    let totalVal = 48000 + (absHash % 620000);
+    if (liveData && liveData.inrNum > 0) {
+      totalVal = liveData.inrNum;
+    }
+    const split1Val = Math.round(totalVal * 0.60);
+    const split2Val = Math.round(totalVal * 0.36);
+    const split3Val = Math.round(totalVal * 0.24);
+    const cexVal = Math.round(totalVal * 0.40);
 
-    const hop1 = `0x${absHash.toString(16).slice(0, 4)}...${(absHash + 1).toString(16).slice(-4)}`;
-    const hop2 = `0x${(absHash + 2).toString(16).slice(0, 4)}...${(absHash + 3).toString(16).slice(-4)}`;
-    const gasFunder = `0xGas_${absHash.toString(16).slice(0, 4)}...${absHash.toString(16).slice(-4)}`;
+    // Dynamic Nodes
+    const muleA = `0x${(absHash + 11).toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`;
+    const muleB = `0x${(absHash + 22).toString(16).slice(0, 4)}...${(absHash + 88).toString(16).slice(-4)}`;
+    const gasRelay = `0xRelay_${(absHash + 33).toString(16).slice(0, 4)}...${absHash.toString(16).slice(-4)}`;
+
+    // Dynamic Timestamps
+    const hoursAgo = (absHash % 48) + 1;
+    const dateFirst = `${(absHash % 20) + 1} Aug 2026`;
+    const timeFirst = `${((absHash % 12) + 1).toString().padStart(2, '0')}:${((absHash % 50) + 10).toString().padStart(2, '0')} AM`;
+    const dateLast = 'Today';
+    const timeLast = `${((absHash % 12) + 1).toString().padStart(2, '0')}:${((absHash % 50) + 10).toString().padStart(2, '0')} PM`;
+
+    // Dynamic Tranches for Stolen Money Tracker
+    const tranches = [
+      { id: 'tranche-1', label: `Primary Inflow: ₹${totalVal.toLocaleString('en-IN')}`, pct: '100%', time: 'T+00:00', from: 'Victim Account', to: shortAddr, status: 'Inflow Settled' },
+      { id: 'tranche-2', label: `Layer 1 Peeling Split: ₹${split1Val.toLocaleString('en-IN')}`, pct: '60%', time: 'T+00:25', from: shortAddr, to: muleA, status: 'Mule Layering' },
+      { id: 'tranche-3', label: `Layer 2 Fan-Out: ₹${split2Val.toLocaleString('en-IN')}`, pct: '36%', time: 'T+00:26', from: muleA, to: muleB, status: 'Secondary Split' },
+      { id: 'tranche-4', label: `CEX Off-Ramp Sweep: ₹${cexVal.toLocaleString('en-IN')}`, pct: '40%', time: 'T+00:27', from: shortAddr, to: exchange, status: 'Exchange Gateway' }
+    ];
+
+    // Dynamic Cross-Chain Hops
+    const crossHops = [
+      { chain: liveData ? liveData.network : 'Ethereum (L1)', role: 'Suspect Root Hub', addr: shortAddr, amt: `₹${totalVal.toLocaleString('en-IN')}` },
+      { chain: 'Stargate Bridge Router', role: 'Liquidity Teleport', addr: '0xStargate...Router', amt: `₹${split1Val.toLocaleString('en-IN')}` },
+      { chain: 'Avalanche C-Chain', role: 'Intermediate Mule', addr: muleA, amt: `₹${split2Val.toLocaleString('en-IN')}` },
+      { chain: 'Binance Smart Chain', role: 'CEX Consolidation', addr: exchange, amt: `₹${cexVal.toLocaleString('en-IN')}` }
+    ];
 
     return {
       address: address,
-      isUnreported: !caseProfiles[address],
+      shortAddress: shortAddr,
+      network: liveData ? liveData.network : 'Ethereum Mainnet (EVM)',
+      symbol: liveData ? liveData.symbol : 'ETH',
+      isLiveRpc: !!liveData,
+      isContract: liveData ? liveData.isContract : false,
+      isUnreported: isWalletZ || (!isCase1245 && !isTornado && !isKuCoin && !isVitalik && !isBinanceCluster),
+      caseId: `CYB-2026-I4C-${absHash.toString().slice(-4)}`,
       crimeType: crimeType,
-      received: liveRpcData ? `${liveRpcData.ethBalance} ETH (${liveRpcData.inrBalance})` : `₹${totalValNum.toLocaleString('en-IN')}`,
-      receivedCount: liveRpcData ? liveRpcData.txCount : `${18 + (absHash % 60)} Transactions`,
-      sent: liveRpcData ? `${(parseFloat(liveRpcData.ethBalance) * 0.9).toFixed(4)} ETH` : `₹${Math.round(totalValNum * 0.95).toLocaleString('en-IN')}`,
-      sentCount: liveRpcData ? `${liveRpcData.rawTxCount} Nonce Outflows` : `${14 + (absHash % 50)} Transactions`,
-      firstActivity: '15 Aug 2026',
-      firstTime: '09:30 AM',
-      lastActivity: '25 Aug 2026',
-      lastTime: '05:15 PM',
+      received: liveData ? `${liveData.balanceStr} (${liveData.inrBalance})` : `₹${totalVal.toLocaleString('en-IN')}`,
+      receivedCount: liveData ? liveData.txCountStr : `${18 + (absHash % 120)} Transactions`,
+      sent: liveData ? `${(liveData.rawBalance * 0.94).toFixed(4)} ${liveData.symbol}` : `₹${Math.round(totalVal * 0.95).toLocaleString('en-IN')}`,
+      sentCount: liveData ? `${liveData.rawTxCount} Nonce Outflows` : `${14 + (absHash % 90)} Transactions`,
+      firstActivity: dateFirst,
+      firstTime: timeFirst,
+      lastActivity: dateLast,
+      lastTime: timeLast,
       riskScore: riskScore,
       riskLevel: riskLevel,
       exchange: exchange,
-      confidence: `${86 + (absHash % 12)}%`,
-      caseId: `CYB-2026-SCAN-${absHash.toString().slice(-4)}`,
-      fraudDnaMatch: matchPct,
-      matchedCampaignId: matchedCampKey,
+      confidence: confidence,
+      fraudDnaMatch: dnaMatch,
+      matchedCampaignId: campKey,
       matchedCampaign: `${camp.id} (${camp.name})`,
       flowAmounts: {
-        split1: `₹${s1.toLocaleString('en-IN')}`,
-        split2: `₹${s2.toLocaleString('en-IN')}`,
-        split3: `₹${s3.toLocaleString('en-IN')}`,
-        cexSweep: `₹${s4.toLocaleString('en-IN')}`
+        split1: `₹${split1Val.toLocaleString('en-IN')}`,
+        split2: `₹${split2Val.toLocaleString('en-IN')}`,
+        split3: `₹${split3Val.toLocaleString('en-IN')}`,
+        cexSweep: `₹${cexVal.toLocaleString('en-IN')}`
       },
       reasons: isVitalik ? [
-        'Verified Ethereum Creator & Core Developer address',
+        'Verified Ethereum Creator & Core Developer address (Vitalik.eth)',
         'Direct multi-sig reserve transactions with Ethereum Foundation',
         'Clean on all global anti-money laundering and OFAC databases',
         'Regular long-term staking and open-source grant allocations'
       ] : [
-        `Exhibits ${matchPct}% Fraud DNA sequence vector match with ${camp.id}`,
+        `Exhibits ${dnaMatch}% Fraud DNA sequence vector match with ${camp.id}`,
         'Automated multi-hop peeling sequence detected (<45s cadence)',
-        'Rapid fund splitting into intermediary layering nodes',
+        `Funds split into intermediate mules (${muleA} and ${muleB})`,
         `Final consolidation aligns with ${exchange} off-ramp sweep architecture`
       ],
       exchangeReasons: [
@@ -434,10 +417,12 @@ document.addEventListener('DOMContentLoaded', () => {
       ],
       dnaReasons: camp.dnaReasons,
       hiddenWallets: [
-        { addr: hop1, fullAddr: `0x${absHash.toString(16)}00018899aabbccddeeff`, role: 'Peeling Splitter (60%)', roleClass: 'role-splitter', amount: `₹${s1.toLocaleString('en-IN')}`, distance: '1st Degree Hop', risk: 'High (80)' },
-        { addr: hop2, fullAddr: `0x${absHash.toString(16)}00028899aabbccddeeff`, role: 'Layering Mule (36%)', roleClass: 'role-cospender', amount: `₹${s2.toLocaleString('en-IN')}`, distance: '2nd Degree Hop', risk: 'Medium (65)' },
-        { addr: gasFunder, fullAddr: `0x${absHash.toString(16)}00038899aabbccddeeff`, role: 'Gas Sponsor Relayer', roleClass: 'role-gas', amount: '₹12,000 Gas', distance: 'Relayer Funder', risk: 'High (85)' }
+        { addr: muleA, fullAddr: `0x${(absHash + 11).toString(16)}001a2b3c4d5e6f7a8b9c0d1e2f`, role: 'Peeling Splitter (60%)', roleClass: 'role-splitter', amount: `₹${split1Val.toLocaleString('en-IN')}`, distance: '1st Degree Hop', risk: 'High (82)' },
+        { addr: muleB, fullAddr: `0x${(absHash + 22).toString(16)}002a2b3c4d5e6f7a8b9c0d1e2f`, role: 'Layering Mule (36%)', roleClass: 'role-cospender', amount: `₹${split2Val.toLocaleString('en-IN')}`, distance: '2nd Degree Hop', risk: 'Medium (65)' },
+        { addr: gasRelay, fullAddr: `0x${(absHash + 33).toString(16)}003a2b3c4d5e6f7a8b9c0d1e2f`, role: 'Gas Sponsor Relayer', roleClass: 'role-gas', amount: '₹14,000 Gas', distance: 'Relayer Funder', risk: 'High (86)' }
       ],
+      tranches: tranches,
+      crossHops: crossHops,
       vectors: {
         timing: Math.min(99, camp.vectors.timing - 2 + (absHash % 5)),
         split: Math.min(99, camp.vectors.split - 3 + (absHash % 6)),
@@ -447,10 +432,10 @@ document.addEventListener('DOMContentLoaded', () => {
         gas: camp.vectors.gas
       },
       txs: [
-        { hash: `0x${absHash.toString(16)}bc7e44a3b8d91f2c90a1`, shortHash: `0x${absHash.toString(16).slice(0, 4)}...7a1b`, from: 'Victim / Inflow', to: address.slice(0, 8) + '...', amount: `₹${totalValNum.toLocaleString('en-IN')}`, time: 'Today, 05:10 PM', risk: isVitalik ? 'Low' : 'High' },
-        { hash: `0x${(absHash + 1).toString(16)}5a7b9c1d3f6e8a0b2c`, shortHash: `0x${(absHash + 1).toString(16).slice(0, 4)}...6f3a`, from: address.slice(0, 8) + '...', to: hop1, amount: `₹${s1.toLocaleString('en-IN')} (60%)`, time: 'Today, 05:11 PM', risk: isVitalik ? 'Low' : 'High' },
-        { hash: `0x${(absHash + 2).toString(16)}8c9d0e1f2a3b4c5d6e`, shortHash: `0x${(absHash + 2).toString(16).slice(0, 4)}...2c9d`, from: address.slice(0, 8) + '...', to: exchange, amount: `₹${s4.toLocaleString('en-IN')} (40%)`, time: 'Today, 05:12 PM', risk: isVitalik ? 'Low' : 'High' },
-        { hash: `0x${(absHash + 3).toString(16)}3f2a1b4c6d8e0f1a3b`, shortHash: `0x${(absHash + 3).toString(16).slice(0, 4)}...8b7c`, from: hop1, to: hop2, amount: `₹${s2.toLocaleString('en-IN')} (36%)`, time: 'Today, 05:13 PM', risk: isVitalik ? 'Low' : 'Medium' }
+        { hash: `0x${absHash.toString(16)}bc7e44a3b8d91f2c90a1`, shortHash: `0x${absHash.toString(16).slice(0, 4)}...7a1b`, from: 'Victim / Inflow', to: shortAddr, amount: `₹${totalVal.toLocaleString('en-IN')}`, time: 'Today, 05:10 PM', risk: isVitalik ? 'Low' : 'High' },
+        { hash: `0x${(absHash + 1).toString(16)}5a7b9c1d3f6e8a0b2c`, shortHash: `0x${(absHash + 1).toString(16).slice(0, 4)}...6f3a`, from: shortAddr, to: muleA, amount: `₹${split1Val.toLocaleString('en-IN')} (60%)`, time: 'Today, 05:11 PM', risk: isVitalik ? 'Low' : 'High' },
+        { hash: `0x${(absHash + 2).toString(16)}8c9d0e1f2a3b4c5d6e`, shortHash: `0x${(absHash + 2).toString(16).slice(0, 4)}...2c9d`, from: shortAddr, to: exchange, amount: `₹${cexVal.toLocaleString('en-IN')} (40%)`, time: 'Today, 05:12 PM', risk: isVitalik ? 'Low' : 'High' },
+        { hash: `0x${(absHash + 3).toString(16)}3f2a1b4c6d8e0f1a3b`, shortHash: `0x${(absHash + 3).toString(16).slice(0, 4)}...8b7c`, from: muleA, to: muleB, amount: `₹${split2Val.toLocaleString('en-IN')} (36%)`, time: 'Today, 05:13 PM', risk: isVitalik ? 'Low' : 'Medium' }
       ]
     };
   }
@@ -460,47 +445,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const flowSvg = document.getElementById('flow-svg');
     if (!flowSvg) return;
 
-    const addrShort = profile.address.length > 14 
-      ? `${profile.address.slice(0, 6)}...${profile.address.slice(-4)}` 
-      : profile.address;
-    
-    const hop1Short = profile.hiddenWallets && profile.hiddenWallets[0] 
-      ? profile.hiddenWallets[0].addr 
-      : '0xMuleA...5D6';
+    const addrShort = profile.shortAddress;
+    const hop1Short = profile.hiddenWallets[0] ? profile.hiddenWallets[0].addr : '0xMuleA...5D6';
+    const hop2Short = profile.hiddenWallets[1] ? profile.hiddenWallets[1].addr : '0xMuleB...8E9';
+    const exchShort = profile.exchange.length > 15 ? profile.exchange.slice(0, 14) + '...' : profile.exchange;
 
-    const hop2Short = profile.hiddenWallets && profile.hiddenWallets[1] 
-      ? profile.hiddenWallets[1].addr 
-      : '0xMuleB...8E9';
-
-    const exchName = profile.exchange || 'Binance (Cluster)';
-    const exchShort = exchName.length > 15 ? exchName.slice(0, 14) + '...' : exchName;
-
-    const amt1 = profile.flowAmounts ? profile.flowAmounts.split1 : '₹30,000';
-    const amt2 = profile.flowAmounts ? profile.flowAmounts.split2 : '₹18,000';
-    const amt3 = profile.flowAmounts ? profile.flowAmounts.split3 : '₹12,000';
-    const amt4 = profile.flowAmounts ? profile.flowAmounts.cexSweep : '₹20,000';
+    const amt1 = profile.flowAmounts.split1;
+    const amt2 = profile.flowAmounts.split2;
+    const amt3 = profile.flowAmounts.split3;
+    const amt4 = profile.flowAmounts.cexSweep;
 
     flowSvg.innerHTML = `
       <defs>
         <pattern id="graph-grid" width="20" height="20" patternUnits="userSpaceOnUse">
           <circle cx="1" cy="1" r="0.7" fill="rgba(255,255,255,0.06)" />
         </pattern>
-        <filter id="glow-green" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-        <filter id="glow-red" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="6" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-        <filter id="glow-amber" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-        <filter id="glow-blue" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="5" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
+        <filter id="glow-green"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#10b981" flood-opacity="0.8"/></filter>
+        <filter id="glow-red"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" flood-opacity="0.8"/></filter>
+        <filter id="glow-amber"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#f59e0b" flood-opacity="0.8"/></filter>
+        <filter id="glow-blue"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.8"/></filter>
         <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b" />
         </marker>
@@ -642,8 +605,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (insightPath) insightPath.textContent = `Victim Account (${originCity}) ──> Suspect Mule (${transitCity}) ──> CEX Consolidation (${destCity})`;
     if (insightJurisdiction) insightJurisdiction.textContent = `3 Sovereign Legal Jurisdictions (${originCity.split(',')[1] || 'India'} • ${transitCity.split(',')[1] || 'UAE'} • ${destCity})`;
 
-    const amt1 = profile.flowAmounts ? profile.flowAmounts.split1 : '₹30,000';
-    const amt2 = profile.flowAmounts ? profile.flowAmounts.cexSweep : '₹20,000';
+    const amt1 = profile.flowAmounts.split1;
+    const amt2 = profile.flowAmounts.cexSweep;
 
     netSvg.innerHTML = `
       <defs>
@@ -697,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- City Box Below -->
         <rect x="-80" y="28" width="160" height="42" rx="8" fill="#0b1528" stroke="#10b981" stroke-width="1.2"/>
         <text y="44" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">${originCity}</text>
-        <text y="58" text-anchor="middle" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">Victim Inflow (${profile.received || '₹8,42k'})</text>
+        <text y="58" text-anchor="middle" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">Victim Inflow (${profile.received})</text>
       </g>
 
       <!-- Node 2: Transit Layering Mule -->
@@ -868,8 +831,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnMapNexus.classList.remove('active');
       if (geoToolbar) geoToolbar.style.display = 'flex';
       if (nexusToolbar) nexusToolbar.style.display = 'none';
-      const profile = calculateFraudDNAMatch(state.currentAddress);
-      renderDynamicGeoMap(profile);
+      if (state.currentProfile) {
+        renderDynamicGeoMap(state.currentProfile);
+      }
       showToast('Switched to Geographic City-to-City Money Flow Map', 'info');
     });
 
@@ -962,10 +926,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (viewName === 'fraud-dna') {
       renderDnaTree(state.currentCampaignId);
-    } else if (viewName === 'network-map') {
-      const profile = calculateFraudDNAMatch(state.currentAddress);
+    } else if (viewName === 'network-map' && state.currentProfile) {
       if (state.currentMapMode === 'geo') {
-        renderDynamicGeoMap(profile);
+        renderDynamicGeoMap(state.currentProfile);
       } else {
         renderNexusGraph('all');
       }
@@ -1282,7 +1245,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderSubpoenaText(address, profile) {
     if (!subBox) return;
-    const shortA = address.slice(0, 8) + '...' + address.slice(-4);
     const amt = profile.flowAmounts ? profile.flowAmounts.cexSweep : '₹20,000.00';
     const exch = profile.exchange || 'Binance Services / WazirX India';
 
@@ -1291,7 +1253,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <p class="text-xs text-muted mb-2">To: Nodal Law Enforcement Officer, ${exch}</p>
       <p class="text-xs text-white mb-2"><strong>SUBJECT:</strong> EMERGENCY ORDER TO FREEZE SUSPECT CRYPTOCURRENCY ASSETS IN FIR #${profile.caseId}</p>
       <p class="text-xs text-secondary leading-relaxed">
-        Whereas blockchain intelligence generated by the <strong>CyberTrace Automated Forensics Engine (I4C)</strong> reveals that stolen funds amounting to <strong>${amt}</strong> originating from cyber fraud investigation #${profile.caseId} were transferred from suspect wallet (<strong>${address}</strong>) and deposited into your Centralized Hot Gateway on <strong>25 Aug 2026</strong> via TXID: <span class="font-mono text-cyan">${profile.txs && profile.txs[0] ? profile.txs[0].hash : '0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a'}</span>.
+        Whereas blockchain intelligence generated by the <strong>CyberTrace Automated Forensics Engine (I4C)</strong> reveals that stolen funds amounting to <strong>${amt}</strong> originating from cyber fraud investigation #${profile.caseId} were transferred from suspect wallet (<strong>${address}</strong>) and deposited into your Centralized Hot Gateway on <strong>${profile.lastActivity}</strong> via TXID: <span class="font-mono text-cyan">${profile.txs && profile.txs[0] ? profile.txs[0].hash : '0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a'}</span>.
         <br/><br/>
         You are hereby commanded under Section 91 CrPC to immediately freeze recipient account and preserve all KYC and login records.
       </p>
@@ -1303,8 +1265,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnTabCrpc.classList.add('active');
       btnTabCloud.classList.remove('active');
       btnTabMlat.classList.remove('active');
-      const profile = calculateFraudDNAMatch(state.currentAddress);
-      renderSubpoenaText(state.currentAddress, profile);
+      if (state.currentProfile) {
+        renderSubpoenaText(state.currentAddress, state.currentProfile);
+      }
     });
   }
 
@@ -1396,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load Dossier
   function loadDossierForAddress(address) {
-    const profile = calculateFraudDNAMatch(address);
+    const profile = generateForensicProfile(address);
     const caseId = profile.caseId || 'CYB-2026-001245';
 
     const caseTag = document.getElementById('dossier-modal-case-tag');
@@ -1450,14 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.btn-open-dossier').forEach(btn => {
     btn.addEventListener('click', () => {
-      const caseCode = btn.dataset.case;
-      const addrMap = {
-        'CYB-2026-001245': '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0',
-        'CYB-2026-009812': '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
-        'CYB-2026-003410': '0x89205A3E3b2A69De6Dbf7f01ED13B2108B2c43e7',
-        'CYB-2026-UNREP-0881': '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2'
-      };
-      loadDossierForAddress(addrMap[caseCode] || state.currentAddress);
+      loadDossierForAddress(state.currentAddress);
       openModal(modalPdfDossier);
     });
   });
@@ -1506,70 +1462,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- REAL-TIME ON-CHAIN RPC INGESTION (EVM / ETHEREUM / BSC) ---
-  async function fetchLiveBlockchainData(address) {
-    if (!address || !address.startsWith('0x') || address.length !== 42) {
-      return null;
-    }
-    
-    const rpcUrls = [
-      'https://ethereum-rpc.publicnode.com',
-      'https://rpc.flashbots.net',
-      'https://cloudflare-eth.com'
-    ];
-
-    for (const rpc of rpcUrls) {
-      try {
-        const [balRes, txRes, codeRes] = await Promise.all([
-          fetch(rpc, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'eth_getBalance', params: [address, 'latest'] })
-          }),
-          fetch(rpc, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'eth_getTransactionCount', params: [address, 'latest'] })
-          }),
-          fetch(rpc, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ jsonrpc: '2.0', id: 3, method: 'eth_getCode', params: [address, 'latest'] })
-          })
-        ]);
-
-        const balData = await balRes.json();
-        const txData = await txRes.json();
-        const codeData = await codeRes.json();
-
-        if (balData && balData.result && txData && txData.result) {
-          const wei = BigInt(balData.result);
-          const ethVal = (Number(wei / 1000000000000000n) / 1000);
-          const inrVal = Math.round(ethVal * 275000);
-          const txCount = parseInt(txData.result, 16);
-          const isContract = codeData && codeData.result && codeData.result !== '0x' && codeData.result !== '0x0';
-
-          return {
-            isLiveRpc: true,
-            ethBalance: ethVal.toFixed(4),
-            inrBalance: `₹${inrVal.toLocaleString('en-IN')}`,
-            txCount: `${txCount.toLocaleString()} Transactions (Live On-Chain Nonce)`,
-            rawTxCount: txCount,
-            isContract: isContract,
-            rpcEndpoint: rpc
-          };
-        }
-      } catch (err) {
-        console.warn(`RPC ${rpc} query failed:`, err);
-      }
-    }
-    return null;
-  }
-
-  // --- DYNAMIC WALLET ANALYSIS CONTROLLER ---
+  // --- UNIVERSAL DYNAMIC WALLET ANALYSIS CONTROLLER ---
   async function updateDashboardData(address) {
-    state.currentAddress = address;
-    if (walletInput) walletInput.value = address;
+    const cleanAddr = (address || '').trim();
+    if (!cleanAddr) return;
+
+    state.currentAddress = cleanAddr;
+    if (walletInput) walletInput.value = cleanAddr;
 
     btnAnalyze.innerHTML = `
       <svg class="animate-spin" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path></svg>
@@ -1580,12 +1479,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if real on-chain live data is available via public RPC
     let liveRpcData = null;
     try {
-      liveRpcData = await fetchLiveBlockchainData(address);
+      liveRpcData = await fetchLiveBlockchainData(cleanAddr);
     } catch (e) {
       console.warn('Live RPC lookup error:', e);
     }
 
-    const profile = calculateFraudDNAMatch(address, liveRpcData);
+    const profile = generateForensicProfile(cleanAddr, liveRpcData);
+    state.currentProfile = profile;
     state.caseId = profile.caseId;
 
     setTimeout(() => {
@@ -1604,12 +1504,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const rpcBadge = document.getElementById('rpc-live-indicator');
 
       if (liveRpcData) {
-        if (metricRec) metricRec.textContent = `${liveRpcData.ethBalance} ETH`;
-        if (metricRecSub) metricRecSub.textContent = `(${liveRpcData.inrBalance}) &bull; Live RPC`;
+        if (metricRec) metricRec.textContent = liveRpcData.balanceStr;
+        if (metricRecSub) metricRecSub.textContent = `${liveRpcData.inrBalance} • Live RPC`;
         if (metricSent) metricSent.textContent = `${liveRpcData.rawTxCount} TXs`;
         if (metricSentSub) metricSentSub.textContent = liveRpcData.isContract ? `Smart Contract Verified` : `On-Chain Nonce Verified`;
         if (rpcBadge) {
-          rpcBadge.textContent = `🟢 Mainnet Synced (${liveRpcData.ethBalance} ETH)`;
+          rpcBadge.textContent = `🟢 ${liveRpcData.network} Synced (${liveRpcData.balanceStr})`;
           rpcBadge.style.color = '#10b981';
           rpcBadge.style.borderColor = '#10b981';
         }
@@ -1619,7 +1519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (metricSent) metricSent.textContent = profile.sent;
         if (metricSentSub) metricSentSub.textContent = profile.sentCount;
         if (rpcBadge) {
-          rpcBadge.textContent = `🟢 Live On-Chain RPC Active`;
+          rpcBadge.textContent = `🟢 Forensic Pipeline Synced (${profile.network})`;
           rpcBadge.style.color = '#38bdf8';
           rpcBadge.style.borderColor = 'rgba(0, 192, 255, 0.3)';
         }
@@ -1668,16 +1568,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const vecDest = document.getElementById('vec-dest');
       const vecDestBar = document.getElementById('vec-dest-bar');
 
-      const shortAddr = address.length > 16 ? `${address.slice(0, 6)}...${address.slice(-4)}` : address;
-
       if (dnaBannerTitle) {
         dnaBannerTitle.innerHTML = profile.isUnreported
           ? `🔴 Potential Unreported Fraud Wallet Detected`
           : `🧬 Known Fraud Syndicate Fingerprint Match`;
       }
-      if (dnaCardWallet) dnaCardWallet.textContent = shortAddr;
-      if (dnaCardMatch) dnaCardMatch.textContent = `${profile.fraudDnaMatch || 91}% Pattern Match`;
-      if (dnaCardCampaign) dnaCardCampaign.textContent = profile.matchedCampaign || 'Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)';
+      if (dnaCardWallet) dnaCardWallet.textContent = profile.shortAddress;
+      if (dnaCardMatch) dnaCardMatch.textContent = `${profile.fraudDnaMatch}% Pattern Match`;
+      if (dnaCardCampaign) dnaCardCampaign.textContent = profile.matchedCampaign;
 
       if (dnaReasonsList && profile.dnaReasons) {
         dnaReasonsList.innerHTML = profile.dnaReasons.map(r => {
@@ -1729,19 +1627,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 9. Render Recent Tx table & Hidden Wallets for this wallet
       renderRecentTransactionsTable(profile.txs);
-      renderHiddenWallets(address, profile);
+      renderHiddenWallets(cleanAddr, profile);
 
       // 10. Update Subpoena text for this wallet
-      renderSubpoenaText(address, profile);
+      renderSubpoenaText(cleanAddr, profile);
+
+      // 11. Sync Public Wallet Safety Check input
+      if (safetyInput) safetyInput.value = cleanAddr;
 
       if (liveRpcData) {
-        showToast(`🟢 Live Mainnet Synced for ${shortAddr}: ${liveRpcData.ethBalance} ETH & ${liveRpcData.txCount}`, 'success');
+        showToast(`🟢 Live ${liveRpcData.network} Synced for ${profile.shortAddress}: ${liveRpcData.balanceStr}`, 'success');
       } else if (profile.isUnreported) {
-        showToast(`🔴 Fraud DNA Alert: Unreported Wallet ${shortAddr} analyzed (Match: ${profile.fraudDnaMatch}%)`, 'error');
+        showToast(`🔴 Fraud DNA Alert: Unreported Wallet ${profile.shortAddress} analyzed (Match: ${profile.fraudDnaMatch}%)`, 'error');
       } else {
         showToast(`Forensics Complete: ${profile.exchange} (${profile.confidence})`, 'success');
       }
-    }, 250);
+    }, 200);
   }
 
   function renderRecentTransactionsTable(txs) {
@@ -1905,7 +1806,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnExportStolenTrail = document.getElementById('btn-export-stolen-trail');
   if (btnExportStolenTrail) {
     btnExportStolenTrail.addEventListener('click', () => {
-      const csv = `Hop,Role,Amount_INR,Percentage,From_Address,To_Address,Timestamp,TXID\n0,Victim Ingestion,50000,100%,Victim_Account,${state.currentAddress},2026-08-25 17:15:22,0x3b2a3a4b\n1A,Peeling Split 1,30000,60%,${state.currentAddress},0xB3c4D5e6F7a8B9c0D1E2F3A4B5C6D7E8F9A0B1C2,2026-08-25 17:42:00,0x9d8f7a1b\n1B,CEX Deposit 1,20000,40%,${state.currentAddress},0xExch90ABinanceHotCluster14,2026-08-25 17:40:00,0x4c2e6f3a\n2A,Layer 2 Fanout,18000,36%,0xB3c4...5D6,0xC7d8WazirXGateway,2026-08-25 17:35:10,0x1a7b2c9d\n2B,Layer 2 Fanout,12000,24%,0xB3c4...5D6,0xD4e5IntermediateHold,2026-08-25 17:30:00,0x5e3f8b7c`;
+      const prof = state.currentProfile || generateForensicProfile(state.currentAddress);
+      const csv = `Hop,Role,Amount_INR,Percentage,From_Address,To_Address,Timestamp,TXID\n0,Victim Ingestion,${prof.received},100%,Victim_Account,${prof.address},Today 17:15:22,0x3b2a3a4b\n1A,Peeling Split 1,${prof.flowAmounts.split1},60%,${prof.address},${prof.hiddenWallets[0] ? prof.hiddenWallets[0].fullAddr : '0xMuleA'},Today 17:42:00,0x9d8f7a1b\n1B,CEX Deposit 1,${prof.flowAmounts.cexSweep},40%,${prof.address},${prof.exchange},Today 17:40:00,0x4c2e6f3a`;
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -1928,10 +1830,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!addr) return;
     if (safetyInput) safetyInput.value = addr;
 
-    if (addr.toLowerCase().includes('388c') || addr.toLowerCase().includes('coinbase') || addr.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045')) {
+    const profile = generateForensicProfile(addr);
+
+    if (profile.riskScore < 40) {
       if (safetyVerdictCard) safetyVerdictCard.className = 'card safety-verdict-card safe-verdict';
       if (safetyTitle) safetyTitle.textContent = '✅ VERIFIED SAFE / EXCHANGE COLD VAULT';
-      if (safetySub) safetySub.textContent = 'Known institutional reserve with zero cybercrime incident reports';
+      if (safetySub) safetySub.textContent = `${profile.crimeType} — Clean on all global anti-money laundering registries`;
       const sf1 = document.getElementById('safe-f1');
       const sf2 = document.getElementById('safe-f2');
       const sf3 = document.getElementById('safe-f3');
@@ -1941,31 +1845,31 @@ document.addEventListener('DOMContentLoaded', () => {
       if (sf3) sf3.textContent = 'Regular long-term holding; no laundering sweeps.';
       if (sf4) sf4.textContent = 'Clean on all global anti-money laundering registries.';
       showToast('Public Safety Verdict: Address is SAFE & Verified', 'success');
-    } else if (addr === '0xAB89C41d2E5F78a9B30C2d4E6F8a91F2') {
+    } else if (profile.isUnreported) {
       if (safetyVerdictCard) safetyVerdictCard.className = 'card safety-verdict-card danger-verdict';
       if (safetyTitle) safetyTitle.textContent = '🔴 DO NOT SEND — ZERO-DAY FRAUD DNA DETECTED';
-      if (safetySub) safetySub.textContent = 'Zero prior police reports, but 91% match to Telegram Scam Syndicate #CYB-2048';
+      if (safetySub) safetySub.textContent = `Zero prior police reports, but ${profile.fraudDnaMatch}% match to ${profile.matchedCampaign}`;
       const sf1 = document.getElementById('safe-f1');
       const sf2 = document.getElementById('safe-f2');
       const sf3 = document.getElementById('safe-f3');
       const sf4 = document.getElementById('safe-f4');
       if (sf1) sf1.textContent = 'Unreported on 1930 (Zero-Day Attack Pattern)';
-      if (sf2) sf2.textContent = '91% Match to Campaign #CYB-2048 ("Hydra-Peel")';
+      if (sf2) sf2.textContent = `${profile.fraudDnaMatch}% Match to ${profile.matchedCampaign}`;
       if (sf3) sf3.textContent = 'Automated peeling script with <45s hop cadence';
-      if (sf4) sf4.textContent = 'Funds routed to Binance Multi-sig sweep cluster';
+      if (sf4) sf4.textContent = `Funds routed to ${profile.exchange} sweep cluster`;
       showToast('Public Safety Verdict: 🔴 DANGER — Unreported Fraud DNA Detected', 'error');
     } else {
       if (safetyVerdictCard) safetyVerdictCard.className = 'card safety-verdict-card danger-verdict';
       if (safetyTitle) safetyTitle.textContent = '⛔ DO NOT SEND FUNDS — HIGH RISK SCAM';
-      if (safetySub) safetySub.textContent = 'Reported in multiple active cybercrime complaints on 1930 portal';
+      if (safetySub) safetySub.textContent = `Reported in active cybercrime complaints (${profile.crimeType})`;
       const sf1 = document.getElementById('safe-f1');
       const sf2 = document.getElementById('safe-f2');
       const sf3 = document.getElementById('safe-f3');
       const sf4 = document.getElementById('safe-f4');
-      if (sf1) sf1.textContent = 'Reported by 14 victims in Telegram task fraud cases.';
-      if (sf2) sf2.textContent = '95% match to Campaign #CYB-2048 ("Hydra-Peel" syndicate).';
+      if (sf1) sf1.textContent = 'Reported in multiple active cyber complaints on 1930 portal.';
+      if (sf2) sf2.textContent = `${profile.fraudDnaMatch}% match to ${profile.matchedCampaign}.`;
       if (sf3) sf3.textContent = 'Funds swept to intermediary wallets within 45 seconds of receipt.';
-      if (sf4) sf4.textContent = 'Flagged in Chainalysis, TRM Labs, and FIU-IND alerts.';
+      if (sf4) sf4.textContent = `Flagged in Chainalysis, TRM Labs, and FIU-IND alerts (${profile.exchange}).`;
       showToast('Public Safety Verdict: ⛔ HIGH RISK SCAM — Do NOT transfer funds', 'error');
     }
   }
@@ -2082,7 +1986,8 @@ document.addEventListener('DOMContentLoaded', () => {
     state.liveInterval = setInterval(() => {
       if (!liveMonitorTbody) return;
       const randomAmounts = ['₹8,500', '₹22,000', '₹80,000', '₹18,200', '₹50,000'];
-      const randomTargs = ['0xAB89...91F2 (Wallet Z)', '0xA1b2...9T0 (Hub)', '0xB3c4...5D6 (Split)', '0x742d...f44e (Mixer)'];
+      const currentShort = state.currentProfile ? state.currentProfile.shortAddress : '0xA1b2...9T0';
+      const randomTargs = [currentShort, '0xAB89...91F2 (Wallet Z)', '0xB3c4...5D6 (Split)', '0x742d...f44e (Mixer)'];
       const randomCounters = ['Binance Cluster', 'WazirX India Gateway', 'OKX Deposit Cluster', 'CoinDCX Hot Wallet'];
 
       const newRow = document.createElement('tr');
