@@ -1156,6 +1156,29 @@ document.addEventListener('DOMContentLoaded', () => {
       targetView.classList.add('active');
     }
 
+    // Synchronize Dual Engine Header Mode Switcher & Sidebar List
+    const bModeCrypto = document.getElementById('btn-mode-crypto');
+    const bModeBanking = document.getElementById('btn-mode-banking');
+    const nListCrypto = document.getElementById('nav-list-crypto');
+    const nListBanking = document.getElementById('nav-list-banking');
+    const bSubtitle = document.getElementById('brand-subtitle');
+
+    if (viewName === 'banking-engine') {
+      state.currentEngineMode = 'banking';
+      if (bModeBanking) bModeBanking.classList.add('active');
+      if (bModeCrypto) bModeCrypto.classList.remove('active');
+      if (nListBanking) nListBanking.style.display = 'flex';
+      if (nListCrypto) nListCrypto.style.display = 'none';
+      if (bSubtitle) bSubtitle.textContent = '📱 UPI & Banking Rail Engine';
+    } else {
+      state.currentEngineMode = 'crypto';
+      if (bModeCrypto) bModeCrypto.classList.add('active');
+      if (bModeBanking) bModeBanking.classList.remove('active');
+      if (nListCrypto) nListCrypto.style.display = 'flex';
+      if (nListBanking) nListBanking.style.display = 'none';
+      if (bSubtitle) bSubtitle.textContent = '₿ Crypto Blockchain Engine';
+    }
+
     // Set ONLY the active link
     if (clickedLink) {
       document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
@@ -2460,32 +2483,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnAnalyzeUpi = document.getElementById('btn-analyze-upi');
   const btnCopyUpiInput = document.getElementById('btn-copy-upi-input');
 
+  const engineSwitcher = document.getElementById('engine-mode-switcher');
+
   function switchEngineMode(mode) {
     state.currentEngineMode = mode;
     if (mode === 'crypto') {
-      if (btnModeCrypto) btnModeCrypto.classList.add('active');
-      if (btnModeBanking) btnModeBanking.classList.remove('active');
-      if (navListCrypto) navListCrypto.style.display = 'flex';
-      if (navListBanking) navListBanking.style.display = 'none';
-      if (brandSubtitle) brandSubtitle.textContent = '₿ Crypto Blockchain Engine';
-      if (sidebarHelpText) sidebarHelpText.textContent = 'If you are a victim of crypto fraud, report it immediately.';
       switchView('dashboard');
-      showToast('Switched Interface to Mode 1: ₿ Crypto Blockchain Engine', 'info');
+      showToast('Switched to Mode 1: ₿ Crypto Blockchain Engine', 'info');
     } else {
-      if (btnModeBanking) btnModeBanking.classList.add('active');
-      if (btnModeCrypto) btnModeCrypto.classList.remove('active');
-      if (navListCrypto) navListCrypto.style.display = 'none';
-      if (navListBanking) navListBanking.style.display = 'flex';
-      if (brandSubtitle) brandSubtitle.textContent = '📱 UPI & Banking Rail Engine';
-      if (sidebarHelpText) sidebarHelpText.textContent = 'Need help tracing a suspect UPI ID or Bank UTR? Generate an emergency freeze notice.';
       switchView('banking-engine');
-      updateBankingData(state.currentUpi || 'daily.payout@oksbi');
-      showToast('Switched Interface to Mode 2: 📱 UPI & Banking Rails Engine (NPCI / CBS)', 'success');
+      showToast('Switched to Mode 2: 📱 UPI & Banking Rails Engine (NPCI / CBS)', 'success');
     }
   }
 
-  if (btnModeCrypto) btnModeCrypto.addEventListener('click', () => switchEngineMode('crypto'));
-  if (btnModeBanking) btnModeBanking.addEventListener('click', () => switchEngineMode('banking'));
+  if (engineSwitcher) {
+    engineSwitcher.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-engine-mode');
+      if (btn) {
+        const mode = btn.dataset.mode || (btn.id === 'btn-mode-banking' ? 'banking' : 'crypto');
+        switchEngineMode(mode);
+      }
+    });
+  }
+
+  if (btnModeCrypto) {
+    btnModeCrypto.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switchEngineMode('crypto');
+    });
+  }
+  if (btnModeBanking) {
+    btnModeBanking.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switchEngineMode('banking');
+    });
+  }
 
   // Banking Sidebar Link Listeners
   if (navListBanking) {
