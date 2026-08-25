@@ -879,6 +879,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Syndicate Cluster Filter Buttons Handler
+  document.querySelectorAll('[data-filter-cluster]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-filter-cluster]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cluster = btn.dataset.filterCluster || 'all';
+      renderNexusGraph(cluster);
+      showToast(`Filter: ${btn.textContent}`, 'info');
+    });
+  });
+
   // --- TOAST NOTIFICATIONS ---
   function showToast(message, type = 'info') {
     const toast = document.createElement('div');

@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <link rel="stylesheet" href="style.css?v=3.1">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -2164,14 +2164,14 @@
 
             <!-- NEXUS TOOLBAR (Hidden in Geo Mode) -->
             <div class="network-toolbar" id="nexus-map-toolbar" style="display: none;">
-              <div class="flex items-center gap-3 flex-wrap">
-                <span class="text-xs text-secondary font-bold">Filter Syndicate Clusters:</span>
+              <div class="cluster-filter-group">
+                <span class="text-xs text-secondary font-bold" style="white-space: nowrap; margin-right: 6px;">Filter Syndicate Clusters:</span>
                 <button class="btn-tool active" data-filter-cluster="all">All Linked Cases</button>
                 <button class="btn-tool" data-filter-cluster="telegram">Telegram Task Scams</button>
                 <button class="btn-tool" data-filter-cluster="ransomware">Ransomware Outflow</button>
                 <button class="btn-tool" data-filter-cluster="investment">Pig Butchering</button>
               </div>
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-2" style="white-space: nowrap;">
                 <span class="legend-dot dot-victim"></span> Case 1245
                 <span class="legend-dot dot-intermediary"></span> Case 9812
                 <span class="legend-dot dot-exchange"></span> Shared CEX
@@ -2971,6 +2971,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=3.0"></script>
+  <script src="app.js?v=3.1"></script>
 </body>
 </html>

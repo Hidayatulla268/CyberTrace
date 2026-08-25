@@ -3185,25 +3185,37 @@ html, body {
 }
 
 .geo-map-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-color);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 14px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .network-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-color);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 14px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.cluster-filter-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  white-space: nowrap !important;
 }
 
 .map-mode-toggle {
@@ -3228,10 +3240,13 @@ html, body {
   border-radius: 999px !important;
   cursor: pointer !important;
   white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
   outline: none !important;
+  flex-shrink: 0 !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -3248,16 +3263,24 @@ html, body {
 }
 
 .btn-tool {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: #091326 !important;
+  border: 1px solid rgba(0, 192, 255, 0.25) !important;
   color: #94a3b8 !important;
-  font-size: 0.76rem !important;
-  font-weight: 600 !important;
-  font-family: inherit !important;
-  padding: 5px 12px !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  font-family: var(--font-sans) !important;
+  padding: 6px 14px !important;
   border-radius: 6px !important;
   cursor: pointer !important;
   outline: none !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  line-height: 1 !important;
   transition: all 0.2s ease !important;
 }
 
@@ -3265,13 +3288,14 @@ html, body {
   background: rgba(0, 192, 255, 0.15) !important;
   border-color: #00c0ff !important;
   color: #ffffff !important;
+  box-shadow: 0 0 8px rgba(0, 192, 255, 0.3) !important;
 }
 
 .btn-tool.active {
   background: linear-gradient(135deg, #0066ff, #00c0ff) !important;
   border-color: #00c0ff !important;
   color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(0, 192, 255, 0.4) !important;
+  box-shadow: 0 0 12px rgba(0, 192, 255, 0.5) !important;
 }
 
 .btn-ghost-xs {
