@@ -5,6 +5,7 @@
  * - 🔍 Smart Wallet Scanner (Real-time on-chain RPC integration)
  * - 💰 Stolen Money Tracker (Dynamic Tranche Following)
  * - 🕸️ Fund-Flow Graph (Dynamic Multi-Hop Layering Visualizer)
+ * - 🌐 Geographic Money Flow Map (City-to-City Flight Trails)
  * - 🎯 Time-Travel Transaction Scrubber (MetaSleuth / Breadcrumbs)
  * - 🌉 Cross-Chain Bridge Tracker (TRM Labs / Chainalysis)
  * - 🏷️ Global Entity & Tag Directory (Arkham-grade 100k+ records)
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentAddress: '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0',
     currentCampaignId: 'CYB-2048',
     currentTrancheId: 'tx-50k',
+    currentMapMode: 'geo', // 'geo' or 'nexus'
     caseId: 'CYB-2026-001245',
     zoomLevel: 1,
     panX: 0,
@@ -587,6 +589,239 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // --- DYNAMIC GEOGRAPHIC MONEY FLOW MAP RENDERER ---
+  function renderDynamicGeoMap(profile) {
+    const netSvg = document.getElementById('network-map-svg');
+    const corridorBadge = document.getElementById('geo-corridor-badge');
+    const flowTotal = document.getElementById('geo-flow-total');
+    const insightPath = document.getElementById('geo-insight-path');
+    const insightJurisdiction = document.getElementById('geo-insight-jurisdiction');
+
+    if (!netSvg) return;
+
+    let originCity = "Mumbai, India";
+    let originFlag = "🇮🇳";
+    let transitCity = "Dubai, UAE";
+    let transitFlag = "🇦🇪";
+    let transitRole = "OTC Cashout Desk";
+    let destCity = "Singapore";
+    let destFlag = "🇸🇬";
+    let destRole = profile.exchange || "Binance Hub";
+
+    if (profile.crimeType && (profile.crimeType.includes('Ransomware') || profile.riskScore > 95)) {
+      originCity = "Kyiv, Ukraine";
+      originFlag = "🇺🇦";
+      transitCity = "Zurich, Switzerland";
+      transitFlag = "🇨🇭";
+      transitRole = "Mixer Relayer 0xRelay99B";
+      destCity = "Seychelles (Offshore)";
+      destFlag = "🇸🇨";
+      destRole = "Tornado.Cash Smart Contract";
+    } else if (profile.crimeType && (profile.crimeType.includes('Pig Butchering') || profile.crimeType.includes('Golden-Boar'))) {
+      originCity = "Bengaluru, India";
+      originFlag = "🇮🇳";
+      transitCity = "Bangkok, Thailand";
+      transitFlag = "🇹🇭";
+      transitRole = "Pig Butchering Staging Mule";
+      destCity = "Hong Kong";
+      destFlag = "🇭🇰";
+      destRole = "KuCoin Deposit Gateway";
+    } else if (profile.isUnreported) {
+      originCity = "Delhi, India";
+      originFlag = "🇮🇳";
+      transitCity = "Dubai, UAE";
+      transitFlag = "🇦🇪";
+      transitRole = "Zero-Day Splitter (80/20)";
+      destCity = "Singapore";
+      destFlag = "🇸🇬";
+      destRole = "Binance Multi-Sig Hot Cluster";
+    }
+
+    if (corridorBadge) corridorBadge.innerHTML = `${originFlag} ${originCity} &rarr; ${transitFlag} ${transitCity} &rarr; ${destFlag} ${destCity} (${destRole})`;
+    if (flowTotal) flowTotal.textContent = `Total Flow: ${profile.received || '₹8,42,000'}`;
+    if (insightPath) insightPath.textContent = `Victim Account (${originCity}) ──> Suspect Mule (${transitCity}) ──> CEX Consolidation (${destCity})`;
+    if (insightJurisdiction) insightJurisdiction.textContent = `3 Sovereign Legal Jurisdictions (${originCity.split(',')[1] || 'India'} • ${transitCity.split(',')[1] || 'UAE'} • ${destCity})`;
+
+    const amt1 = profile.flowAmounts ? profile.flowAmounts.split1 : '₹30,000';
+    const amt2 = profile.flowAmounts ? profile.flowAmounts.cexSweep : '₹20,000';
+
+    netSvg.innerHTML = `
+      <defs>
+        <pattern id="geo-grid-net" width="30" height="30" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.8" fill="rgba(0,192,255,0.08)" />
+          <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/>
+        </pattern>
+        <filter id="geo-glow-victim"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#10b981" flood-opacity="0.9"/></filter>
+        <filter id="geo-glow-mule"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f59e0b" flood-opacity="0.9"/></filter>
+        <filter id="geo-glow-cex"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#00c0ff" flood-opacity="0.9"/></filter>
+      </defs>
+
+      <rect width="100%" height="100%" fill="url(#geo-grid-net)" />
+
+      <!-- STYLIZED CONTINENTAL WATERMARK OUTLINES -->
+      <g opacity="0.15" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 60 140 Q 120 110, 180 150 Q 220 200, 190 280 Q 140 320, 90 270 Z" />
+        <path d="M 320 120 Q 380 90, 450 130 Q 480 180, 440 240 Q 370 260, 310 200 Z" />
+        <path d="M 580 130 Q 660 100, 760 140 Q 800 220, 720 310 Q 620 330, 560 250 Z" />
+        <line x1="30" y1="240" x2="830" y2="240" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3 3"/>
+        <line x1="430" y1="20" x2="430" y2="460" stroke="rgba(255,255,255,0.05)" stroke-dasharray="3 3"/>
+      </g>
+
+      <!-- FLIGHT PATH CURVES -->
+      <!-- Flight 1: Origin to Transit Mule -->
+      <path d="M 180 260 Q 300 130, 430 190" fill="none" stroke="#f59e0b" stroke-width="2.5" class="geo-flight-arc" />
+      <!-- Flight 2: Transit Mule to Destination CEX -->
+      <path d="M 430 190 Q 560 110, 680 270" fill="none" stroke="#00c0ff" stroke-width="2.5" class="geo-flight-arc" />
+
+      <!-- PARTICLES MOVING ON FLIGHT ARCS -->
+      <circle r="4" fill="#10b981"><animateMotion dur="3s" repeatCount="indefinite" path="M 180 260 Q 300 130, 430 190" /></circle>
+      <circle r="4" fill="#00c0ff"><animateMotion dur="2.6s" repeatCount="indefinite" path="M 430 190 Q 560 110, 680 270" /></circle>
+
+      <!-- AMOUNT & FLIGHT TIME TAGS -->
+      <g class="font-mono">
+        <!-- Tag 1 -->
+        <rect x="260" y="155" width="85" height="24" rx="6" fill="#0b1329" stroke="#f59e0b" stroke-width="1.2"/>
+        <text x="302" y="171" text-anchor="middle" fill="#fbbf24" font-size="10.5" font-weight="700">${amt1} &bull; 25m</text>
+        <!-- Tag 2 -->
+        <rect x="525" y="145" width="85" height="24" rx="6" fill="#0b1329" stroke="#00c0ff" stroke-width="1.2"/>
+        <text x="567" y="161" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="700">${amt2} &bull; 7m</text>
+      </g>
+
+      <!-- GEO NODES -->
+      <!-- Node 1: Victim Origin -->
+      <g class="geo-node" transform="translate(180, 260)">
+        <circle r="36" fill="rgba(16, 185, 129, 0.12)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle r="20" fill="#06281e" stroke="#10b981" stroke-width="2" filter="url(#geo-glow-victim)"/>
+        <text y="4" text-anchor="middle" font-size="13">🇮🇳</text>
+        <!-- City Box Below -->
+        <rect x="-80" y="28" width="160" height="42" rx="8" fill="#0b1528" stroke="#10b981" stroke-width="1.2"/>
+        <text y="44" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">${originCity}</text>
+        <text y="58" text-anchor="middle" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">Victim Inflow (${profile.received || '₹8,42k'})</text>
+      </g>
+
+      <!-- Node 2: Transit Layering Mule -->
+      <g class="geo-node" transform="translate(430, 190)">
+        <circle r="40" fill="rgba(245, 158, 11, 0.12)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle r="22" fill="#261b04" stroke="#f59e0b" stroke-width="2" filter="url(#geo-glow-mule)"/>
+        <text y="5" text-anchor="middle" font-size="14">${transitFlag}</text>
+        <!-- City Box Below -->
+        <rect x="-90" y="30" width="180" height="44" rx="8" fill="#0b1528" stroke="#f59e0b" stroke-width="1.2"/>
+        <text y="46" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="800">${transitCity}</text>
+        <text y="60" text-anchor="middle" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">${transitRole}</text>
+      </g>
+
+      <!-- Node 3: Destination Exchange Gateway -->
+      <g class="geo-node" transform="translate(680, 270)">
+        <circle r="40" fill="rgba(0, 192, 255, 0.12)" stroke="#00c0ff" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle r="24" fill="#042038" stroke="#00c0ff" stroke-width="2" filter="url(#geo-glow-cex)"/>
+        <text y="6" text-anchor="middle" font-size="15">${destFlag}</text>
+        <!-- City Box Below -->
+        <rect x="-95" y="32" width="190" height="46" rx="8" fill="#0b1528" stroke="#00c0ff" stroke-width="1.4"/>
+        <text y="48" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="800">${destCity}</text>
+        <text y="64" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">${destRole}</text>
+      </g>
+    `;
+  }
+
+  // --- CROSS-CASE SYNDICATE NEXUS GRAPH RENDERER ---
+  function renderNexusGraph(clusterFilter = 'all') {
+    const netSvg = document.getElementById('network-map-svg');
+    if (!netSvg) return;
+
+    netSvg.innerHTML = `
+      <defs>
+        <filter id="net-glow-red"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ef4444" flood-opacity="0.8"/></filter>
+        <filter id="net-glow-blue"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00c0ff" flood-opacity="0.8"/></filter>
+        <filter id="net-glow-purple"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#8b5cf6" flood-opacity="0.8"/></filter>
+      </defs>
+
+      <!-- Connecting Edges across cases -->
+      <line x1="160" y1="120" x2="360" y2="180" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" />
+      <line x1="160" y1="280" x2="360" y2="180" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" />
+      <line x1="160" y1="400" x2="360" y2="340" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" />
+      <line x1="360" y1="80" x2="360" y2="180" stroke="#ef4444" stroke-width="2.5" class="animated-edge-glow" />
+
+      <!-- Splitters to Shared Exchange Hubs -->
+      <line x1="360" y1="180" x2="620" y2="140" stroke="#00c0ff" stroke-width="2.5" />
+      <line x1="360" y1="180" x2="620" y2="280" stroke="#00c0ff" stroke-width="2" stroke-dasharray="4 4" />
+      <line x1="360" y1="340" x2="620" y2="280" stroke="#00c0ff" stroke-width="2" />
+      <line x1="360" y1="340" x2="620" y2="400" stroke="#00c0ff" stroke-width="2" />
+
+      <!-- Particles -->
+      <circle r="3.5" fill="#ef4444"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 120 L 360 180" /></circle>
+      <circle r="3.5" fill="#8b5cf6"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 280 L 360 180" /></circle>
+      <circle r="3.5" fill="#00c0ff"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 360 180 L 620 140" /></circle>
+
+      <!-- NODES: CASE 1 -->
+      <g class="net-node" transform="translate(160, 120)" id="net-case-1">
+        <circle r="28" fill="#1e1b4b" stroke="#ef4444" stroke-width="2" filter="url(#net-glow-red)"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #1245</text>
+        <text y="10" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">0xA1b2...9T0</text>
+        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Task Scam</text>
+      </g>
+
+      <!-- NODES: CASE 2 -->
+      <g class="net-node" transform="translate(160, 280)" id="net-case-2">
+        <circle r="28" fill="#1e1b4b" stroke="#8b5cf6" stroke-width="2" filter="url(#net-glow-purple)"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #9812</text>
+        <text y="10" text-anchor="middle" fill="#c084fc" font-size="8.5" font-family="JetBrains Mono">0x742d...f44e</text>
+        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Ransomware</text>
+      </g>
+
+      <!-- NODES: CASE 3 -->
+      <g class="net-node" transform="translate(160, 400)" id="net-case-3">
+        <circle r="28" fill="#1e1b4b" stroke="#f59e0b" stroke-width="2"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #3410</text>
+        <text y="10" text-anchor="middle" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">0x8920...43e7</text>
+        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Pig Butchering</text>
+      </g>
+
+      <!-- UNREPORTED ZERO-DAY NODE -->
+      <g class="net-node" transform="translate(360, 80)" id="net-case-z">
+        <rect x="-80" y="-18" width="160" height="36" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="2" filter="url(#net-glow-red)"/>
+        <text y="-2" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">🆕 UNREPORTED WALLET Z</text>
+        <text y="11" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">0xAB89...91F2 (91% DNA)</text>
+      </g>
+
+      <!-- SHARED LAUNDERING HUB 1 (INTERMEDIARY NEXUS) -->
+      <g class="net-node" transform="translate(360, 180)" id="net-shared-hub-1">
+        <rect x="-95" y="-24" width="190" height="48" rx="10" fill="#0f172a" stroke="#00c0ff" stroke-width="2.5" filter="url(#net-glow-blue)"/>
+        <text y="-6" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="800">⚡ SHARED LAUNDERING HUB</text>
+        <text y="8" text-anchor="middle" fill="#ffffff" font-size="9" font-family="JetBrains Mono">Wallet A (0xB3c4...5D6)</text>
+        <text y="18" text-anchor="middle" fill="#94a3b8" font-size="8">Used in Case #1245, #9812 &amp; Wallet Z</text>
+      </g>
+
+      <!-- SHARED LAUNDERING HUB 2 -->
+      <g class="net-node" transform="translate(360, 340)" id="net-shared-hub-2">
+        <rect x="-90" y="-20" width="180" height="40" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+        <text y="-4" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">SHARED OTC BROKER</text>
+        <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">0xOTC_Sweep...88B</text>
+      </g>
+
+      <!-- OFF-RAMP 1: BINANCE CONSOLIDATION CLUSTER -->
+      <g class="net-node" transform="translate(640, 140)" id="net-cex-binance">
+        <rect x="-100" y="-22" width="200" height="44" rx="10" fill="#0c2d48" stroke="#00c0ff" stroke-width="2" filter="url(#net-glow-blue)"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">🏦 BINANCE DEPOSIT CLUSTER</text>
+        <text y="10" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">Hot Cluster 14 (0xExch...90A)</text>
+      </g>
+
+      <!-- OFF-RAMP 2: WAZIRX GATEWAY -->
+      <g class="net-node" transform="translate(640, 280)" id="net-cex-wazirx">
+        <rect x="-90" y="-20" width="180" height="40" rx="8" fill="#0c2d48" stroke="#00c0ff" stroke-width="1.8"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="700">🏦 WAZIRX INDIA GATEWAY</text>
+        <text y="10" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">Hot Wallet 02</text>
+      </g>
+
+      <!-- OFF-RAMP 3: TORNADO MIXER POOL -->
+      <g class="net-node" transform="translate(640, 400)" id="net-cex-mixer">
+        <rect x="-90" y="-20" width="180" height="40" rx="8" fill="#1e113b" stroke="#8b5cf6" stroke-width="1.8"/>
+        <text y="-4" text-anchor="middle" fill="#c084fc" font-size="10.5" font-weight="700">🌪️ TORNADO CASH MIXER</text>
+        <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">100 ETH Pool Contract</text>
+      </g>
+    `;
+  }
+
   // --- UI SELECTORS ---
   const pageTitle = document.getElementById('page-title');
   const walletInput = document.getElementById('wallet-input');
@@ -619,6 +854,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileDropdown = document.getElementById('profile-dropdown');
   const mobileToggle = document.getElementById('mobile-toggle');
   const sidebar = document.getElementById('sidebar');
+
+  // Map Mode Switchers
+  const btnMapGeo = document.getElementById('btn-map-mode-geo');
+  const btnMapNexus = document.getElementById('btn-map-mode-nexus');
+  const geoToolbar = document.getElementById('geo-map-toolbar');
+  const nexusToolbar = document.getElementById('nexus-map-toolbar');
+
+  if (btnMapGeo && btnMapNexus) {
+    btnMapGeo.addEventListener('click', () => {
+      state.currentMapMode = 'geo';
+      btnMapGeo.classList.add('active');
+      btnMapNexus.classList.remove('active');
+      if (geoToolbar) geoToolbar.style.display = 'flex';
+      if (nexusToolbar) nexusToolbar.style.display = 'none';
+      const profile = calculateFraudDNAMatch(state.currentAddress);
+      renderDynamicGeoMap(profile);
+      showToast('Switched to Geographic City-to-City Money Flow Map', 'info');
+    });
+
+    btnMapNexus.addEventListener('click', () => {
+      state.currentMapMode = 'nexus';
+      btnMapNexus.classList.add('active');
+      btnMapGeo.classList.remove('active');
+      if (geoToolbar) geoToolbar.style.display = 'none';
+      if (nexusToolbar) nexusToolbar.style.display = 'flex';
+      renderNexusGraph('all');
+      showToast('Switched to Syndicate Cross-Case Nexus Graph', 'info');
+    });
+  }
 
   // --- TOAST NOTIFICATIONS ---
   function showToast(message, type = 'info') {
@@ -680,7 +944,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'cases': 'Investigator Case Workspace & Evidence Vault',
       'subpoena': 'Automated Section 91 CrPC & MLAT Subpoena Dispatcher',
       'stolen-tracker': 'Stolen Money Tracker — Hop-by-Hop Tranche Following',
-      'network-map': 'Fraud Network Map — Cross-Case Crime Syndicate Nexus',
+      'network-map': 'Fraud Network & Geographic Money Flow Map',
       'safety-check': 'Public Wallet Safety Check — Verify Before Sending Crypto',
       'fraud-dna': 'Fraud DNA™ — Behavioral Campaign Intelligence Matrix',
       'report-fraud': 'Report Crypto Fraud (I4C Intake)',
@@ -698,6 +962,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (viewName === 'fraud-dna') {
       renderDnaTree(state.currentCampaignId);
+    } else if (viewName === 'network-map') {
+      const profile = calculateFraudDNAMatch(state.currentAddress);
+      if (state.currentMapMode === 'geo') {
+        renderDynamicGeoMap(profile);
+      } else {
+        renderNexusGraph('all');
+      }
     }
   }
 
@@ -1451,11 +1722,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // 7. DYNAMICALLY RE-RENDER FUND-FLOW GRAPH SVG FOR THIS WALLET
       renderDynamicFundFlowGraph(profile);
 
-      // 8. Render Recent Tx table & Hidden Wallets for this wallet
+      // 8. DYNAMICALLY RE-RENDER GEOGRAPHIC MONEY FLOW MAP FOR THIS WALLET
+      if (state.currentMapMode === 'geo') {
+        renderDynamicGeoMap(profile);
+      }
+
+      // 9. Render Recent Tx table & Hidden Wallets for this wallet
       renderRecentTransactionsTable(profile.txs);
       renderHiddenWallets(address, profile);
 
-      // 9. Update Subpoena text for this wallet
+      // 10. Update Subpoena text for this wallet
       renderSubpoenaText(address, profile);
 
       if (liveRpcData) {
@@ -1530,11 +1806,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // SVG node clicks in flow graph
   document.addEventListener('click', (e) => {
-    const node = e.target.closest('.graph-node');
+    const node = e.target.closest('.graph-node, .geo-node, .net-node');
     if (node) {
-      const title = node.querySelector('.node-title')?.textContent || 'Node';
-      const detail = node.querySelector('.font-mono')?.textContent || '';
-      showToast(`Selected Node: ${title} (${detail})`, 'info');
+      const title = node.querySelector('.node-title, text')?.textContent || 'Node';
+      const detail = node.querySelector('.font-mono, text:nth-of-type(2)')?.textContent || '';
+      showToast(`Selected Node: ${title} ${detail ? '(' + detail + ')' : ''}`, 'info');
     }
   });
 

@@ -1126,11 +1126,11 @@ html, body {
 
 .graph-node {
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .graph-node:hover {
-  transform: scale(1.06) translate(var(--node-x, 0), var(--node-y, 0));
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(0, 192, 255, 0.7));
 }
 
 .flow-legend {
@@ -2496,11 +2496,11 @@ html, body {
 
 .dna-node {
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .dna-node:hover {
-  transform: scale(1.03);
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(139, 92, 246, 0.7));
 }
 
 .pulse-border-red {
@@ -3155,13 +3155,115 @@ html, body {
   max-height: 480px;
 }
 
-.net-node {
+.net-node, .geo-node {
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
-.net-node:hover {
-  transform: scale(1.05);
+.net-node:hover, .geo-node:hover {
+  filter: brightness(1.25) drop-shadow(0 0 12px rgba(0, 192, 255, 0.8));
+}
+
+/* GEOGRAPHIC MONEY FLOW MAP STYLES */
+.geo-map-container {
+  position: relative;
+  width: 100%;
+}
+
+.geo-flight-arc {
+  stroke-dasharray: 8 4;
+  animation: geoDash 1.8s linear infinite;
+}
+
+@keyframes geoDash {
+  from { stroke-dashoffset: 48; }
+  to { stroke-dashoffset: 0; }
+}
+
+.geo-map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.map-mode-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 4px;
+}
+
+.btn-map-mode {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-map-mode.active {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+/* ANTI-COLLAPSE & TEXT INTEGRITY UTILITIES */
+.card, .trail-step-box, .hop-card, .watch-item, .alert-card-full {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+h1, h2, h3, h4, .card-title, .verdict-title {
+  line-height: 1.35;
+}
+
+p, li, .text-secondary, .text-muted, .text-xs, .text-sm {
+  line-height: 1.55;
+}
+
+.metrics-grid {
+  min-width: 0;
+}
+
+.metric-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.metric-val, .metric-sub {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suspicion-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.check-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.subpoena-preview-box {
+  line-height: 1.65;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .network-insights-bar {
