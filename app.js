@@ -561,48 +561,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const insightPath = document.getElementById('geo-insight-path');
     const insightJurisdiction = document.getElementById('geo-insight-jurisdiction');
 
-    let originCity = "Mumbai, India";
-    let originFlag = "🇮🇳";
-    let transitCity = "Dubai, UAE";
-    let transitFlag = "🇦🇪";
-    let transitRole = "OTC Cashout Desk";
-    let destCity = "Singapore";
-    let destFlag = "🇸🇬";
-    let destRole = prof.exchange || "Binance Hub";
+    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0';
+    let hashVal = 0;
+    for (let i = 0; i < addr.length; i++) {
+      hashVal = (hashVal << 5) - hashVal + addr.charCodeAt(i);
+      hashVal |= 0;
+    }
+    const absHash = Math.abs(hashVal);
 
-    if (prof.crimeType && (prof.crimeType.includes('Ransomware') || prof.riskScore > 95)) {
-      originCity = "Kyiv, Ukraine";
-      originFlag = "🇺🇦";
-      transitCity = "Zurich, Switzerland";
-      transitFlag = "🇨🇭";
-      transitRole = "Mixer Relayer 0xRelay99B";
-      destCity = "Seychelles (Offshore)";
-      destFlag = "🇸🇨";
-      destRole = "Tornado.Cash Smart Contract";
-    } else if (prof.crimeType && (prof.crimeType.includes('Pig Butchering') || prof.crimeType.includes('Golden-Boar'))) {
-      originCity = "Bengaluru, India";
-      originFlag = "🇮🇳";
-      transitCity = "Bangkok, Thailand";
-      transitFlag = "🇹🇭";
-      transitRole = "Pig Butchering Staging Mule";
-      destCity = "Hong Kong";
-      destFlag = "🇭🇰";
-      destRole = "KuCoin Deposit Gateway";
-    } else if (prof.isUnreported) {
-      originCity = "Delhi, India";
-      originFlag = "🇮🇳";
-      transitCity = "Dubai, UAE";
-      transitFlag = "🇦🇪";
-      transitRole = "Zero-Day Splitter (80/20)";
-      destCity = "Singapore";
-      destFlag = "🇸🇬";
-      destRole = "Binance Multi-Sig Hot Cluster";
+    // Dynamic Indian & Global Origin Hubs
+    const originHubs = [
+      { city: "Mumbai, India", flag: "🇮🇳", x: 220, y: 270, region: "Maharashtra Cyber Cell" },
+      { city: "New Delhi, India", flag: "🇮🇳", x: 215, y: 235, region: "IFSO Special Cell" },
+      { city: "Bengaluru, India", flag: "🇮🇳", x: 228, y: 290, region: "Karnataka CID Cyber" },
+      { city: "Hyderabad, India", flag: "🇮🇳", x: 232, y: 275, region: "Cyberabad Police Station" },
+      { city: "Kolkata, India", flag: "🇮🇳", x: 250, y: 255, region: "WB Cyber Crime PS" },
+      { city: "Chennai, India", flag: "🇮🇳", x: 238, y: 298, region: "Tamil Nadu Cyber Wing" },
+      { city: "Ahmedabad, India", flag: "🇮🇳", x: 206, y: 260, region: "Gujarat CID Crime" },
+      { city: "Pune, India", flag: "🇮🇳", x: 218, y: 278, region: "Pune Police Cyber Cell" }
+    ];
+
+    // Dynamic International Layering Nodes (Transit OTC / Mules)
+    const transitHubs = [
+      { city: "Dubai, UAE", flag: "🇦🇪", x: 440, y: 185, role: "OTC P2P Cashout Desk" },
+      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 490, y: 240, role: "SE-Asia Task Scam Mule" },
+      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 395, y: 120, role: "Privacy Relayer 0xRelay99B" },
+      { city: "Singapore", flag: "🇸🇬", x: 505, y: 270, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})` },
+      { city: "Tbilisi, Georgia", flag: "🇬🇪", x: 425, y: 155, role: "Telegram Syndicate Mule" },
+      { city: "Manila, Philippines", flag: "🇵🇭", x: 535, y: 250, role: "Phishing Staging Hub" },
+      { city: "Kuala Lumpur, Malaysia", flag: "🇲🇾", x: 495, y: 280, role: "Fast-Peel Layering Mule" },
+      { city: "Lagos, Nigeria", flag: "🇳🇬", x: 365, y: 260, role: "P2P Arbitrage Liquidity Gate" }
+    ];
+
+    // Dynamic Destination Hubs
+    const destHubs = [
+      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 690, y: 250, role: prof.exchange || "Binance Hot Cluster 14" },
+      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 675, y: 275, role: "WazirX India Gateway Hot 02" },
+      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 685, y: 295, role: "OKX Multi-Sig Deposit Hub" },
+      { city: "Victoria (KuCoin Cluster)", flag: "🇸🇨", x: 695, y: 220, role: "KuCoin Deposit Liquidity Gateway" },
+      { city: "Hong Kong (Huobi Gateway)", flag: "🇭🇰", x: 705, y: 210, role: "HTX / Huobi Multi-Sig Ingestion" },
+      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 680, y: 160, role: "Tornado.Cash 100 ETH Smart Contract" }
+    ];
+
+    const isVitalik = addr.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045');
+    const isTornado = addr.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e') || addr.toLowerCase().includes('tornado');
+    const isKuCoin = addr.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7') || addr.toLowerCase().includes('kucoin');
+
+    let origin = originHubs[absHash % originHubs.length];
+    let transit = transitHubs[(absHash >> 2) % transitHubs.length];
+    let dest = destHubs[(absHash >> 4) % destHubs.length];
+
+    if (isVitalik) {
+      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 140, y: 120, region: "Vitalik Foundation" };
+      transit = { city: "Zug, Switzerland", flag: "🇨🇭", x: 400, y: 110, role: "Ethereum Core Staking" };
+      dest = { city: "Consensus Beacon", flag: "🛡️", x: 690, y: 140, role: "Beacon Deposit Contract" };
+    } else if (isTornado) {
+      origin = { city: "Kyiv, Ukraine", flag: "🇺🇦", x: 410, y: 120, region: "Phish Drain Exploit" };
+      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 395, y: 120, role: "Privacy Relayer 0xRelay99B" };
+      dest = { city: "Seychelles (Offshore)", flag: "🌪️", x: 680, y: 160, role: "Tornado.Cash 100 ETH Pool" };
+    } else if (isKuCoin) {
+      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 228, y: 290, region: "Investment Inflow" };
+      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 490, y: 240, role: "Pig Butchering Staging Mule" };
+      dest = { city: "Hong Kong", flag: "🇭🇰", x: 705, y: 210, role: "KuCoin Deposit Gateway" };
     }
 
-    const corridorHTML = `${originFlag} ${originCity} &rarr; ${transitFlag} ${transitCity} &rarr; ${destFlag} ${destCity} (${destRole})`;
+    const corridorHTML = `${origin.flag} ${origin.city} &rarr; ${transit.flag} ${transit.city} &rarr; ${dest.flag} ${dest.city} (${dest.role})`;
     const flowText = `Total Flow: ${prof.received || '₹8,42,000'}`;
-    const pathText = `Victim Account (${originCity}) ──> Suspect Mule (${transitCity}) ──> CEX Consolidation (${destCity})`;
-    const jurisText = `3 Sovereign Legal Jurisdictions (${originCity.split(',')[1] || 'India'} • ${transitCity.split(',')[1] || 'UAE'} • ${destCity})`;
+    const pathText = `Victim Account (${origin.city}) ──> Suspect Mule (${transit.city}) ──> CEX Consolidation (${dest.city})`;
+    const jurisText = `3 Sovereign Legal Jurisdictions (${origin.city.split(',')[1] || 'India'} • ${transit.city.split(',')[1] || 'UAE'} • ${dest.city.split(' ')[0]})`;
 
     if (corridorBadge) corridorBadge.innerHTML = corridorHTML;
     if (flowTotal) flowTotal.textContent = flowText;
@@ -611,6 +637,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const amt1 = prof.flowAmounts ? prof.flowAmounts.split1 : '₹30,000';
     const amt2 = prof.flowAmounts ? prof.flowAmounts.cexSweep : '₹20,000';
+    const muleAddrShort = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : `0x${(absHash + 11).toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`;
+
+    // Calculate curve control points
+    const ctrl1X = Math.round((origin.x + transit.x) / 2);
+    const ctrl1Y = Math.min(origin.y, transit.y) - 60;
+    const ctrl2X = Math.round((transit.x + dest.x) / 2);
+    const ctrl2Y = Math.min(transit.y, dest.y) - 60;
+
+    const tag1X = Math.round((origin.x + transit.x) / 2) - 45;
+    const tag1Y = Math.round((origin.y + transit.y) / 2) - 30;
+    const tag2X = Math.round((transit.x + dest.x) / 2) - 45;
+    const tag2Y = Math.round((transit.y + dest.y) / 2) - 30;
 
     const svgContent = `
       <defs>
@@ -655,56 +693,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- FLIGHT PATH CURVES -->
       <!-- Flight 1: Origin to Transit Mule -->
-      <path d="M 220 270 Q 330 110, 440 180" fill="none" stroke="#f59e0b" stroke-width="3" class="geo-flight-arc" />
+      <path d="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" fill="none" stroke="#f59e0b" stroke-width="3" class="geo-flight-arc" />
       <!-- Flight 2: Transit Mule to Destination CEX -->
-      <path d="M 440 180 Q 580 90, 690 260" fill="none" stroke="#00c0ff" stroke-width="3" class="geo-flight-arc" />
+      <path d="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" fill="none" stroke="#00c0ff" stroke-width="3" class="geo-flight-arc" />
 
       <!-- PARTICLES MOVING ON FLIGHT ARCS -->
-      <circle r="5" fill="#10b981"><animateMotion dur="2.8s" repeatCount="indefinite" path="M 220 270 Q 330 110, 440 180" /></circle>
-      <circle r="5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M 440 180 Q 580 90, 690 260" /></circle>
+      <circle r="5" fill="#10b981"><animateMotion dur="2.8s" repeatCount="indefinite" path="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" /></circle>
+      <circle r="5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" /></circle>
 
       <!-- AMOUNT & FLIGHT TIME TAGS -->
       <g class="font-mono">
         <!-- Tag 1 -->
-        <rect x="285" y="145" width="95" height="26" rx="6" fill="#0b1528" stroke="#f59e0b" stroke-width="1.4"/>
-        <text x="332" y="162" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700">${amt1} &bull; 25m</text>
+        <rect x="${tag1X}" y="${tag1Y}" width="105" height="26" rx="6" fill="#0b1528" stroke="#f59e0b" stroke-width="1.4"/>
+        <text x="${tag1X + 52}" y="${tag1Y + 17}" text-anchor="middle" fill="#fbbf24" font-size="10.5" font-weight="700">${amt1} &bull; 25m</text>
         <!-- Tag 2 -->
-        <rect x="545" y="135" width="95" height="26" rx="6" fill="#0b1528" stroke="#00c0ff" stroke-width="1.4"/>
-        <text x="592" y="152" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">${amt2} &bull; 7m</text>
+        <rect x="${tag2X}" y="${tag2Y}" width="105" height="26" rx="6" fill="#0b1528" stroke="#00c0ff" stroke-width="1.4"/>
+        <text x="${tag2X + 52}" y="${tag2Y + 17}" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="700">${amt2} &bull; 7m</text>
       </g>
 
       <!-- GEO NODES -->
       <!-- Node 1: Victim Origin -->
-      <g class="geo-node" transform="translate(220, 270)">
+      <g class="geo-node" transform="translate(${origin.x}, ${origin.y})">
         <circle r="38" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
         <circle r="22" fill="#06281e" stroke="#10b981" stroke-width="2.5" filter="url(#geo-glow-victim)"/>
-        <text y="5" text-anchor="middle" font-size="14">${originFlag}</text>
+        <text y="5" text-anchor="middle" font-size="14">${origin.flag}</text>
         <!-- City Box Below -->
         <rect x="-85" y="30" width="170" height="44" rx="8" fill="#091224" stroke="#10b981" stroke-width="1.4"/>
-        <text y="48" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="800">${originCity}</text>
+        <text y="48" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="800">${origin.city}</text>
         <text y="63" text-anchor="middle" fill="#6ee7b7" font-size="9" font-family="JetBrains Mono">Victim Inflow (${prof.received || '₹8,42k'})</text>
       </g>
 
       <!-- Node 2: Transit Layering Mule -->
-      <g class="geo-node" transform="translate(440, 180)">
+      <g class="geo-node" transform="translate(${transit.x}, ${transit.y})">
         <circle r="42" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/>
         <circle r="24" fill="#261b04" stroke="#f59e0b" stroke-width="2.5" filter="url(#geo-glow-mule)"/>
-        <text y="6" text-anchor="middle" font-size="15">${transitFlag}</text>
+        <text y="6" text-anchor="middle" font-size="15">${transit.flag}</text>
         <!-- City Box Below -->
-        <rect x="-95" y="32" width="190" height="46" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="1.4"/>
-        <text y="50" text-anchor="middle" fill="#fbbf24" font-size="11.5" font-weight="800">${transitCity}</text>
-        <text y="65" text-anchor="middle" fill="#fcd34d" font-size="9" font-family="JetBrains Mono">${transitRole}</text>
+        <rect x="-100" y="32" width="200" height="48" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="1.4"/>
+        <text y="50" text-anchor="middle" fill="#fbbf24" font-size="11.5" font-weight="800">${transit.city}</text>
+        <text y="65" text-anchor="middle" fill="#fcd34d" font-size="9" font-family="JetBrains Mono">${transit.role} (${muleAddrShort})</text>
       </g>
 
       <!-- Node 3: Destination Exchange Gateway -->
-      <g class="geo-node" transform="translate(690, 260)">
+      <g class="geo-node" transform="translate(${dest.x}, ${dest.y})">
         <circle r="44" fill="rgba(0, 192, 255, 0.15)" stroke="#00c0ff" stroke-width="2" stroke-dasharray="4 4"/>
         <circle r="26" fill="#042038" stroke="#00c0ff" stroke-width="2.5" filter="url(#geo-glow-cex)"/>
-        <text y="7" text-anchor="middle" font-size="16">${destFlag}</text>
+        <text y="7" text-anchor="middle" font-size="16">${dest.flag}</text>
         <!-- City Box Below -->
-        <rect x="-100" y="34" width="200" height="48" rx="8" fill="#091224" stroke="#00c0ff" stroke-width="1.6"/>
-        <text y="52" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800">${destCity}</text>
-        <text y="68" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="JetBrains Mono">${destRole}</text>
+        <rect x="-105" y="34" width="210" height="48" rx="8" fill="#091224" stroke="#00c0ff" stroke-width="1.6"/>
+        <text y="52" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800">${dest.city}</text>
+        <text y="68" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="JetBrains Mono">${dest.role}</text>
       </g>
     `;
 
@@ -714,88 +752,127 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- CROSS-CASE SYNDICATE NEXUS GRAPH RENDERER ---
   function renderNexusGraph(clusterFilter = 'all') {
     const netSvg = document.getElementById('network-map-svg');
+    if (!netSvg) return;
+
+    const prof = state.currentProfile || generateForensicProfile(state.currentAddress);
+    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0';
+    let hashVal = 0;
+    for (let i = 0; i < addr.length; i++) {
+      hashVal = (hashVal << 5) - hashVal + addr.charCodeAt(i);
+      hashVal |= 0;
+    }
+    const absHash = Math.abs(hashVal);
+
+    // Dynamic Connected FIR/Cybercrime Cases matching the cluster
+    const case1Id = `Case #${((absHash % 4000) + 1200)}`;
+    const case1Crime = "Task Scam Campaign";
+    const case1Addr = `0x${(absHash + 77).toString(16).slice(0, 4)}...${(absHash + 11).toString(16).slice(-4)}`;
+
+    const case2Id = `Case #${((absHash % 3000) + 5400)}`;
+    const case2Crime = "Ransomware Outflow";
+    const case2Addr = `0x${(absHash + 88).toString(16).slice(0, 4)}...${(absHash + 22).toString(16).slice(-4)}`;
+
+    const case3Id = `Case #${((absHash % 2500) + 8100)}`;
+    const case3Crime = "Pig Butchering Ring";
+    const case3Addr = `0x${(absHash + 99).toString(16).slice(0, 4)}...${(absHash + 33).toString(16).slice(-4)}`;
+
+    const mule1 = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : `0xMuleA...${(absHash + 44).toString(16).slice(-4)}`;
+    const mule2 = prof.hiddenWallets && prof.hiddenWallets[1] ? prof.hiddenWallets[1].addr : `0xMuleB...${(absHash + 55).toString(16).slice(-4)}`;
+    const targetAddr = prof.shortAddress;
+    const targetScore = prof.riskScore;
+    const targetDna = prof.fraudDnaMatch || 91;
+    const targetExchange = prof.exchange || "Binance Hot Cluster 14";
+
+    // Opacity based on filter
+    const opCase1 = (clusterFilter === 'all' || clusterFilter === 'telegram') ? '1' : '0.2';
+    const opCase2 = (clusterFilter === 'all' || clusterFilter === 'ransomware') ? '1' : '0.2';
+    const opCase3 = (clusterFilter === 'all' || clusterFilter === 'investment') ? '1' : '0.2';
 
     const nexusContent = `
       <defs>
         <pattern id="nexus-grid" width="30" height="30" patternUnits="userSpaceOnUse">
           <circle cx="2" cy="2" r="0.8" fill="rgba(139, 92, 246, 0.12)" />
         </pattern>
-        <filter id="net-glow-red"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" flood-opacity="0.85"/></filter>
-        <filter id="net-glow-blue"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.85"/></filter>
-        <filter id="net-glow-purple"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#8b5cf6" flood-opacity="0.85"/></filter>
+        <filter id="net-glow-red"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#ef4444" flood-opacity="0.9"/></filter>
+        <filter id="net-glow-blue"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#00c0ff" flood-opacity="0.9"/></filter>
+        <filter id="net-glow-purple"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8b5cf6" flood-opacity="0.9"/></filter>
+        <filter id="net-glow-target"><feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#f43f5e" flood-opacity="0.95"/></filter>
       </defs>
 
       <rect width="100%" height="100%" fill="#030712" />
       <rect width="100%" height="100%" fill="url(#nexus-grid)" />
 
-      <!-- Connecting Edges across cases -->
-      <line x1="160" y1="120" x2="360" y2="180" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4 4" class="animated-edge" />
-      <line x1="160" y1="280" x2="360" y2="180" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="4 4" class="animated-edge" />
-      <line x1="160" y1="400" x2="360" y2="340" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" class="animated-edge" />
-      <line x1="360" y1="80" x2="360" y2="180" stroke="#ef4444" stroke-width="2.5" class="animated-edge-glow" />
+      <!-- Connecting Edges across cases to Hubs -->
+      <line x1="160" y1="120" x2="360" y2="180" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4 4" opacity="${opCase1}" class="animated-edge" />
+      <line x1="160" y1="280" x2="360" y2="180" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="4 4" opacity="${opCase2}" class="animated-edge" />
+      <line x1="160" y1="400" x2="360" y2="340" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" opacity="${opCase3}" class="animated-edge" />
+
+      <!-- Actively Analyzed Wallet Edge to Intermediary Hub -->
+      <line x1="360" y1="70" x2="360" y2="180" stroke="#f43f5e" stroke-width="3" class="animated-edge-glow" />
 
       <!-- Splitters to Shared Exchange Hubs -->
       <line x1="360" y1="180" x2="620" y2="140" stroke="#00c0ff" stroke-width="2.5" />
       <line x1="360" y1="180" x2="620" y2="280" stroke="#00c0ff" stroke-width="2" stroke-dasharray="4 4" />
       <line x1="360" y1="340" x2="620" y2="280" stroke="#00c0ff" stroke-width="2" />
-      <line x1="360" y1="340" x2="620" y2="400" stroke="#00c0ff" stroke-width="2" />
+      <line x1="360" y1="340" x2="620" y2="400" stroke="#8b5cf6" stroke-width="2" />
 
       <!-- Particles -->
-      <circle r="4" fill="#ef4444"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 120 L 360 180" /></circle>
-      <circle r="4" fill="#8b5cf6"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 280 L 360 180" /></circle>
+      <circle r="4" fill="#ef4444" opacity="${opCase1}"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 120 L 360 180" /></circle>
+      <circle r="4" fill="#8b5cf6" opacity="${opCase2}"><animateMotion dur="3s" repeatCount="indefinite" path="M 160 280 L 360 180" /></circle>
+      <circle r="4" fill="#f43f5e"><animateMotion dur="2s" repeatCount="indefinite" path="M 360 70 L 360 180" /></circle>
       <circle r="4" fill="#00c0ff"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 360 180 L 620 140" /></circle>
 
-      <!-- NODES: CASE 1 -->
-      <g class="net-node" transform="translate(160, 120)" id="net-case-1">
+      <!-- NODES: CASE 1 (TELEGRAM TASK) -->
+      <g class="net-node" transform="translate(160, 120)" id="net-case-1" opacity="${opCase1}">
         <circle r="28" fill="#1e1b4b" stroke="#ef4444" stroke-width="2" filter="url(#net-glow-red)"/>
-        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #1245</text>
-        <text y="10" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">0xA1b2...9T0</text>
-        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Task Scam</text>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">${case1Id}</text>
+        <text y="10" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">${case1Addr}</text>
+        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">${case1Crime}</text>
       </g>
 
-      <!-- NODES: CASE 2 -->
-      <g class="net-node" transform="translate(160, 280)" id="net-case-2">
+      <!-- NODES: CASE 2 (RANSOMWARE) -->
+      <g class="net-node" transform="translate(160, 280)" id="net-case-2" opacity="${opCase2}">
         <circle r="28" fill="#1e1b4b" stroke="#8b5cf6" stroke-width="2" filter="url(#net-glow-purple)"/>
-        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #9812</text>
-        <text y="10" text-anchor="middle" fill="#c084fc" font-size="8.5" font-family="JetBrains Mono">0x742d...f44e</text>
-        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Ransomware</text>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">${case2Id}</text>
+        <text y="10" text-anchor="middle" fill="#c084fc" font-size="8.5" font-family="JetBrains Mono">${case2Addr}</text>
+        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">${case2Crime}</text>
       </g>
 
-      <!-- NODES: CASE 3 -->
-      <g class="net-node" transform="translate(160, 400)" id="net-case-3">
+      <!-- NODES: CASE 3 (PIG BUTCHERING) -->
+      <g class="net-node" transform="translate(160, 400)" id="net-case-3" opacity="${opCase3}">
         <circle r="28" fill="#1e1b4b" stroke="#f59e0b" stroke-width="2"/>
-        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Case #3410</text>
-        <text y="10" text-anchor="middle" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">0x8920...43e7</text>
-        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">Pig Butchering</text>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">${case3Id}</text>
+        <text y="10" text-anchor="middle" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">${case3Addr}</text>
+        <text y="22" text-anchor="middle" fill="#94a3b8" font-size="8">${case3Crime}</text>
       </g>
 
-      <!-- UNREPORTED ZERO-DAY NODE -->
-      <g class="net-node" transform="translate(360, 80)" id="net-case-z">
-        <rect x="-85" y="-18" width="170" height="36" rx="8" fill="#450a0a" stroke="#ef4444" stroke-width="2" filter="url(#net-glow-red)"/>
-        <text y="-2" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">🆕 UNREPORTED WALLET Z</text>
-        <text y="11" text-anchor="middle" fill="#fca5a5" font-size="8.5" font-family="JetBrains Mono">0xAB89...91F2 (91% DNA)</text>
+      <!-- ACTIVELY ANALYZED WALLET NODE (DYNAMIC TARGET) -->
+      <g class="net-node" transform="translate(360, 70)" id="net-case-target">
+        <rect x="-105" y="-22" width="210" height="44" rx="10" fill="#450a0a" stroke="#f43f5e" stroke-width="2.5" filter="url(#net-glow-target)"/>
+        <text y="-5" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">🎯 TARGET: ${targetAddr}</text>
+        <text y="10" text-anchor="middle" fill="#fda4af" font-size="8.5" font-family="JetBrains Mono">Risk ${targetScore} &bull; ${targetDna}% DNA</text>
       </g>
 
-      <!-- SHARED LAUNDERING HUB 1 (INTERMEDIARY NEXUS) -->
+      <!-- SHARED LAUNDERING HUB 1 (ACCOMPLICE MULE A) -->
       <g class="net-node" transform="translate(360, 180)" id="net-shared-hub-1">
-        <rect x="-100" y="-24" width="200" height="48" rx="10" fill="#091224" stroke="#00c0ff" stroke-width="2.5" filter="url(#net-glow-blue)"/>
+        <rect x="-105" y="-24" width="210" height="48" rx="10" fill="#091224" stroke="#00c0ff" stroke-width="2.5" filter="url(#net-glow-blue)"/>
         <text y="-6" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="800">⚡ SHARED LAUNDERING HUB</text>
-        <text y="8" text-anchor="middle" fill="#ffffff" font-size="9" font-family="JetBrains Mono">Wallet A (0xB3c4...5D6)</text>
-        <text y="18" text-anchor="middle" fill="#94a3b8" font-size="8">Used in Case #1245, #9812 &amp; Wallet Z</text>
+        <text y="8" text-anchor="middle" fill="#ffffff" font-size="9" font-family="JetBrains Mono">Accomplice Mule (${mule1})</text>
+        <text y="18" text-anchor="middle" fill="#94a3b8" font-size="8">Co-spent with ${targetAddr} &amp; ${case1Id}</text>
       </g>
 
-      <!-- SHARED LAUNDERING HUB 2 -->
+      <!-- SHARED LAUNDERING HUB 2 (ACCOMPLICE MULE B) -->
       <g class="net-node" transform="translate(360, 340)" id="net-shared-hub-2">
-        <rect x="-95" y="-20" width="190" height="40" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="2"/>
+        <rect x="-100" y="-20" width="200" height="40" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="2"/>
         <text y="-4" text-anchor="middle" fill="#fbbf24" font-size="10.5" font-weight="700">SHARED OTC BROKER</text>
-        <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">0xOTC_Sweep...88B</text>
+        <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">Layering Node (${mule2})</text>
       </g>
 
-      <!-- OFF-RAMP 1: BINANCE CONSOLIDATION CLUSTER -->
+      <!-- OFF-RAMP 1: DETECTED CEX CONSOLIDATION CLUSTER -->
       <g class="net-node" transform="translate(640, 140)" id="net-cex-binance">
-        <rect x="-105" y="-22" width="210" height="44" rx="10" fill="#0c2d48" stroke="#00c0ff" stroke-width="2" filter="url(#net-glow-blue)"/>
-        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">🏦 BINANCE DEPOSIT CLUSTER</text>
-        <text y="10" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">Hot Cluster 14 (0xExch...90A)</text>
+        <rect x="-110" y="-22" width="220" height="44" rx="10" fill="#0c2d48" stroke="#00c0ff" stroke-width="2" filter="url(#net-glow-blue)"/>
+        <text y="-4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="800">🏦 ${targetExchange.toUpperCase()}</text>
+        <text y="10" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">Deposit Consolidation Gate</text>
       </g>
 
       <!-- OFF-RAMP 2: WAZIRX GATEWAY -->
@@ -805,11 +882,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <text y="10" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">Hot Wallet 02</text>
       </g>
 
-      <!-- OFF-RAMP 3: TORNADO MIXER POOL -->
+      <!-- OFF-RAMP 3: TORNADO / DEFI MIXER POOL -->
       <g class="net-node" transform="translate(640, 400)" id="net-cex-mixer">
-        <rect x="-95" y="-20" width="190" height="40" rx="8" fill="#1e113b" stroke="#8b5cf6" stroke-width="1.8"/>
-        <text y="-4" text-anchor="middle" fill="#c084fc" font-size="10.5" font-weight="700">🌪️ TORNADO CASH MIXER</text>
-        <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">100 ETH Pool Contract</text>
+        <rect x="-105" y="-20" width="210" height="40" rx="8" fill="#1e113b" stroke="#8b5cf6" stroke-width="1.8"/>
+        <text y="-4" text-anchor="middle" fill="#c084fc" font-size="10.5" font-weight="700">🌪️ PRIVACY MIXER / BRIDGE</text>
+        <text y="10" text-anchor="middle" fill="#ffffff" font-size="8.5" font-family="JetBrains Mono">Cross-Chain Liquidity Router</text>
       </g>
     `;
 
@@ -1663,9 +1740,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // 7. DYNAMICALLY RE-RENDER FUND-FLOW GRAPH SVG FOR THIS WALLET
       renderDynamicFundFlowGraph(profile);
 
-      // 8. DYNAMICALLY RE-RENDER GEOGRAPHIC MONEY FLOW MAP FOR THIS WALLET
+      // 8. DYNAMICALLY RE-RENDER FRAUD NETWORK MAP FOR THIS WALLET
       if (state.currentMapMode === 'geo') {
         renderDynamicGeoMap(profile);
+      } else {
+        renderNexusGraph('all');
       }
 
       // 9. Render Recent Tx table & Hidden Wallets for this wallet
