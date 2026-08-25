@@ -678,6 +678,55 @@
                   <span class="legend-dot dot-exchange"></span>
                   <span class="legend-text">Exchange/Service</span>
                 </div>
+            </section>
+
+            <!-- 3B. EMBEDDED FRAUD NETWORK & GEOGRAPHIC MONEY FLOW MAP -->
+            <section class="card network-map-canvas-card" id="section-dashboard-network-map">
+              <div class="flow-card-header">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="feature-icon-badge purple-badge">🕸️</span>
+                    <h2 class="card-title">Fraud Network &amp; Geographic Money Flow Map</h2>
+                    <span class="badge-role role-dna">Cross-Border Forensics</span>
+                  </div>
+                  <span class="text-xs text-muted">Real-time international money trail from victim police jurisdiction to overseas OTC desks &amp; centralized exchanges.</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button class="btn-ghost-sm nav-trigger" data-view="network-map">
+                    <span>Full Screen Nexus View</span> &rarr;
+                  </button>
+                </div>
+              </div>
+
+              <!-- Map Toolbar -->
+              <div class="geo-map-toolbar">
+                <div class="flex items-center gap-3 flex-wrap">
+                  <span class="text-xs text-secondary font-bold">Laundering Corridor:</span>
+                  <span class="badge-role role-gas" id="dash-geo-corridor-badge">🇮🇳 Mumbai, India &rarr; 🇦🇪 Dubai, UAE &rarr; 🇸🇬 Singapore (Binance Hub)</span>
+                  <span class="badge-subtle" id="dash-geo-flow-total">Total Flow: ₹8,42,000</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="legend-dot dot-victim"></span> Origin
+                  <span class="legend-dot dot-intermediary"></span> Transit Mule
+                  <span class="legend-dot dot-exchange"></span> Off-Ramp CEX
+                </div>
+              </div>
+
+              <!-- Canvas Container -->
+              <div class="network-svg-container" style="min-height: 380px;">
+                <svg id="dash-network-map-svg" class="network-svg" viewBox="0 0 860 480" preserveAspectRatio="xMidYMid meet">
+                  <!-- Populated dynamically by JS -->
+                </svg>
+              </div>
+
+              <div class="network-insights-bar mt-3">
+                <div class="insight-item">
+                  <span class="insight-label">Cross-Border Money Path:</span>
+                  <span class="insight-val text-cyan font-bold" id="dash-geo-insight-path">Victim Account (Mumbai) ──&gt; Suspect Mule (Dubai) ──&gt; CEX Sweep (Singapore)</span>
+                </div>
+                <div class="insight-item">
+                  <button class="btn btn-primary btn-sm nav-trigger" data-view="subpoena">Draft Section 91 CrPC Notice</button>
+                </div>
               </div>
             </section>
 

@@ -555,12 +555,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- DYNAMIC GEOGRAPHIC MONEY FLOW MAP RENDERER ---
   function renderDynamicGeoMap(profile) {
     const netSvg = document.getElementById('network-map-svg');
+    const dashNetSvg = document.getElementById('dash-network-map-svg');
     const corridorBadge = document.getElementById('geo-corridor-badge');
+    const dashCorridorBadge = document.getElementById('dash-geo-corridor-badge');
     const flowTotal = document.getElementById('geo-flow-total');
+    const dashFlowTotal = document.getElementById('dash-geo-flow-total');
     const insightPath = document.getElementById('geo-insight-path');
+    const dashInsightPath = document.getElementById('dash-geo-insight-path');
     const insightJurisdiction = document.getElementById('geo-insight-jurisdiction');
-
-    if (!netSvg) return;
 
     let originCity = "Mumbai, India";
     let originFlag = "🇮🇳";
@@ -600,15 +602,23 @@ document.addEventListener('DOMContentLoaded', () => {
       destRole = "Binance Multi-Sig Hot Cluster";
     }
 
-    if (corridorBadge) corridorBadge.innerHTML = `${originFlag} ${originCity} &rarr; ${transitFlag} ${transitCity} &rarr; ${destFlag} ${destCity} (${destRole})`;
-    if (flowTotal) flowTotal.textContent = `Total Flow: ${profile.received || '₹8,42,000'}`;
-    if (insightPath) insightPath.textContent = `Victim Account (${originCity}) ──> Suspect Mule (${transitCity}) ──> CEX Consolidation (${destCity})`;
-    if (insightJurisdiction) insightJurisdiction.textContent = `3 Sovereign Legal Jurisdictions (${originCity.split(',')[1] || 'India'} • ${transitCity.split(',')[1] || 'UAE'} • ${destCity})`;
+    const corridorHTML = `${originFlag} ${originCity} &rarr; ${transitFlag} ${transitCity} &rarr; ${destFlag} ${destCity} (${destRole})`;
+    const flowText = `Total Flow: ${profile.received || '₹8,42,000'}`;
+    const pathText = `Victim Account (${originCity}) ──> Suspect Mule (${transitCity}) ──> CEX Consolidation (${destCity})`;
+    const jurisText = `3 Sovereign Legal Jurisdictions (${originCity.split(',')[1] || 'India'} • ${transitCity.split(',')[1] || 'UAE'} • ${destCity})`;
+
+    if (corridorBadge) corridorBadge.innerHTML = corridorHTML;
+    if (dashCorridorBadge) dashCorridorBadge.innerHTML = corridorHTML;
+    if (flowTotal) flowTotal.textContent = flowText;
+    if (dashFlowTotal) dashFlowTotal.textContent = flowText;
+    if (insightPath) insightPath.textContent = pathText;
+    if (dashInsightPath) dashInsightPath.textContent = pathText;
+    if (insightJurisdiction) insightJurisdiction.textContent = jurisText;
 
     const amt1 = profile.flowAmounts.split1;
     const amt2 = profile.flowAmounts.cexSweep;
 
-    netSvg.innerHTML = `
+    const svgContent = `
       <defs>
         <pattern id="geo-grid-net" width="30" height="30" patternUnits="userSpaceOnUse">
           <circle cx="1" cy="1" r="0.8" fill="rgba(0,192,255,0.08)" />
@@ -685,6 +695,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <text y="64" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">${destRole}</text>
       </g>
     `;
+
+    if (netSvg) netSvg.innerHTML = svgContent;
+    if (dashNetSvg) dashNetSvg.innerHTML = svgContent;
   }
 
   // --- CROSS-CASE SYNDICATE NEXUS GRAPH RENDERER ---
