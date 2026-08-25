@@ -1144,7 +1144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- VIEW ROUTING SYSTEM ---
-  function switchView(viewName) {
+  function switchView(viewName, clickedLink = null) {
     state.currentView = viewName;
     
     document.querySelectorAll('.view-content').forEach(view => {
@@ -1156,13 +1156,20 @@ document.addEventListener('DOMContentLoaded', () => {
       targetView.classList.add('active');
     }
 
-    navLinks.forEach(link => {
-      if (link.dataset.view === viewName) {
-        link.classList.add('active');
+    // Set ONLY the active link
+    if (clickedLink) {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      clickedLink.classList.add('active');
+    } else {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      if (viewName === 'banking-engine') {
+        const defaultBankLink = document.getElementById('nav-bank-search');
+        if (defaultBankLink) defaultBankLink.classList.add('active');
       } else {
-        link.classList.remove('active');
+        const matchingLink = document.querySelector(`#nav-list-crypto .nav-link[data-view="${viewName}"]`);
+        if (matchingLink) matchingLink.classList.add('active');
       }
-    });
+    }
 
     // Update Core USP step highlights
     document.querySelectorAll('.usp-step').forEach(s => {
@@ -1213,11 +1220,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  navLinks.forEach(link => {
+  // Setup click listeners for nav-links in Crypto Mode
+  document.querySelectorAll('#nav-list-crypto .nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const view = link.dataset.view || 'dashboard';
-      switchView(view);
+      switchView(view, link);
     });
   });
 
@@ -2484,8 +2492,6 @@ document.addEventListener('DOMContentLoaded', () => {
     navListBanking.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        navListBanking.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
 
         if (link.id === 'nav-bank-screener') {
           const modalScreener = document.getElementById('modal-citizen-screener');
@@ -2496,7 +2502,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const view = link.dataset.view || 'banking-engine';
-        switchView(view);
+        switchView(view, link);
 
         const subTargetId = link.dataset.sub;
         if (subTargetId) {
