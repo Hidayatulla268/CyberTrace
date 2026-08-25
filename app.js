@@ -343,20 +343,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const absHash = Math.abs(hashVal);
     const shortAddr = address.length > 14 ? `${address.slice(0, 6)}...${address.slice(-4)}` : address;
 
-    // Special Address Matching
+    // Special Address Matching for 5 Distinct Testing Presets
+    const isLazarus = address.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
+    const isTaskScam = address.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
+    const isDigitalArrest = address.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e');
+    const isPigButchering = address.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7');
+    const isBinanceSafe = address.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60');
     const isVitalik = address.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045');
-    const isBinanceCluster = address.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60') || address.toLowerCase().includes('binance');
-    const isTornado = address.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e') || address.toLowerCase().includes('tornado');
-    const isKuCoin = address.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7') || address.toLowerCase().includes('kucoin');
     const isWalletZ = address.toLowerCase().includes('ab89c41d2e5f78a9b30c2d4e6f8a91f2');
-    const isCase1245 = address.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
 
     // Campaign selection
     const campaignKeys = ['CYB-2048', 'CYB-3912', 'CYB-1084'];
     let campKey = campaignKeys[absHash % campaignKeys.length];
-    if (isTornado) campKey = 'CYB-3912';
-    if (isKuCoin) campKey = 'CYB-1084';
-    if (isCase1245 || isWalletZ) campKey = 'CYB-2048';
+    if (isLazarus || isDigitalArrest) campKey = 'CYB-3912';
+    if (isPigButchering) campKey = 'CYB-1084';
+    if (isTaskScam || isWalletZ) campKey = 'CYB-2048';
     const camp = campaignDNAProfiles[campKey] || campaignDNAProfiles['CYB-2048'];
 
     // Risk Scoring & Category
@@ -367,34 +368,58 @@ document.addEventListener('DOMContentLoaded', () => {
     let confidence = `${88 + (absHash % 11)}%`;
     let dnaMatch = 85 + (absHash % 13);
 
-    if (isVitalik) {
-      riskScore = 8;
+    // Preset 1: Lazarus Group State-Sponsored Hack
+    if (isLazarus) {
+      riskScore = 98;
+      riskLevel = 'CRITICAL / OFAC SANCTIONED';
+      crimeType = 'State-Sponsored Multi-Sig Exploit (Lazarus APT-38)';
+      exchange = 'Tornado.Cash 100 ETH Mixer &bull; Binance Off-Ramp';
+      confidence = '99%';
+      dnaMatch = 98;
+    } 
+    // Preset 2: Telegram Task-Based Scam
+    else if (isTaskScam) {
+      riskScore = 91;
+      riskLevel = 'HIGH RISK / SYNDICATE MATCH';
+      crimeType = 'Task-Based Part-Time Telegram Scam (Hydra-Peel)';
+      exchange = 'WazirX India Gateway Hot 02';
+      confidence = '93%';
+      dnaMatch = 91;
+    }
+    // Preset 3: Digital Arrest Police Extortion
+    else if (isDigitalArrest) {
+      riskScore = 96;
+      riskLevel = 'CRITICAL / ACTIVE POLICE FIR';
+      crimeType = 'Digital Arrest & Video Sextortion Syndicate';
+      exchange = 'CoinDCX Off-Ramp Hub &bull; Dubai OTC Desk';
+      confidence = '97%';
+      dnaMatch = 96;
+    }
+    // Preset 4: Fake High-Yield Pig Butchering
+    else if (isPigButchering) {
+      riskScore = 88;
+      riskLevel = 'HIGH RISK / MULE RING';
+      crimeType = 'Pig Butchering Fake Investment Arbitrage (Golden-Boar)';
+      exchange = 'OKX & KuCoin Multi-Sig Vault';
+      confidence = '91%';
+      dnaMatch = 88;
+    }
+    // Preset 5: Binance Verified Safe Benchmark
+    else if (isBinanceSafe) {
+      riskScore = 12;
       riskLevel = 'VERIFIED / LOW RISK';
+      crimeType = 'Official Centralized Exchange Liquidity Hot Wallet';
+      exchange = 'Binance Holdings Ltd. (Official Node 14)';
+      confidence = '99%';
+      dnaMatch = 8;
+    }
+    else if (isVitalik) {
+      riskScore = 6;
+      riskLevel = 'VERIFIED / PROTOCOL FOUNDER';
       crimeType = 'Verified Protocol Founder (Vitalik.eth)';
       exchange = 'Ethereum Core Staking Reserve';
       confidence = '99%';
-      dnaMatch = 4;
-    } else if (isBinanceCluster) {
-      riskScore = 22;
-      riskLevel = 'CEX LIQUIDITY CLUSTER';
-      crimeType = 'Centralized Exchange Settlement Pool';
-      exchange = 'Binance Internal Gateway';
-      confidence = '98%';
-      dnaMatch = 15;
-    } else if (isTornado) {
-      riskScore = 98;
-      riskLevel = 'CRITICAL / OFAC SANCTIONED';
-      crimeType = 'Privacy Mixer Smart Contract (Tornado.Cash)';
-      exchange = 'Tornado.Cash 100 ETH Pool';
-      confidence = '99%';
-      dnaMatch = 96;
-    } else if (isKuCoin) {
-      riskScore = 78;
-      riskLevel = 'HIGH RISK';
-      crimeType = 'Pig Butchering Investment Staging';
-      exchange = 'KuCoin Deposit Gateway';
-      confidence = '88%';
-      dnaMatch = 88;
+      dnaMatch = 3;
     } else if (isWalletZ) {
       riskScore = 92;
       riskLevel = 'CRITICAL / ZERO-DAY MATCH';
@@ -406,7 +431,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic Amounts
     let totalVal = 48000 + (absHash % 620000);
-    if (liveData && liveData.inrNum > 0) {
+    if (isLazarus) totalVal = 185000000;
+    else if (isTaskScam) totalVal = 84500;
+    else if (isDigitalArrest) totalVal = 150000;
+    else if (isPigButchering) totalVal = 14500000;
+    else if (isBinanceSafe) totalVal = 2840000000;
+    else if (liveData && liveData.inrNum > 0) {
       totalVal = liveData.inrNum;
     }
     const split1Val = Math.round(totalVal * 0.60);
@@ -626,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // --- DYNAMIC GEOGRAPHIC MONEY FLOW MAP RENDERER ---
+  // --- DYNAMIC REAL-WORLD GEOGRAPHIC MONEY FLOW MAP RENDERER ---
   function renderDynamicGeoMap(profile) {
     const prof = (profile && profile.flowAmounts) ? profile : (state.currentProfile || generateForensicProfile(state.currentAddress));
     const netSvg = document.getElementById('network-map-svg');
@@ -643,65 +673,75 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const absHash = Math.abs(hashVal);
 
-    // Dynamic Indian & Global Origin Hubs
+    // Accurate Cartographic City Coordinates on World/India Projection
     const originHubs = [
-      { city: "Mumbai, India", flag: "🇮🇳", x: 220, y: 270, region: "Maharashtra Cyber Cell" },
-      { city: "New Delhi, India", flag: "🇮🇳", x: 215, y: 235, region: "IFSO Special Cell" },
-      { city: "Bengaluru, India", flag: "🇮🇳", x: 228, y: 290, region: "Karnataka CID Cyber" },
-      { city: "Hyderabad, India", flag: "🇮🇳", x: 232, y: 275, region: "Cyberabad Police Station" },
-      { city: "Kolkata, India", flag: "🇮🇳", x: 250, y: 255, region: "WB Cyber Crime PS" },
-      { city: "Chennai, India", flag: "🇮🇳", x: 238, y: 298, region: "Tamil Nadu Cyber Wing" },
-      { city: "Ahmedabad, India", flag: "🇮🇳", x: 206, y: 260, region: "Gujarat CID Crime" },
-      { city: "Pune, India", flag: "🇮🇳", x: 218, y: 278, region: "Pune Police Cyber Cell" }
+      { city: "Mumbai, India", flag: "🇮🇳", x: 488, y: 245, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
+      { city: "New Delhi, India", flag: "🇮🇳", x: 495, y: 200, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
+      { city: "Bengaluru, India", flag: "🇮🇳", x: 502, y: 275, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
+      { city: "Hyderabad, India", flag: "🇮🇳", x: 506, y: 255, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
+      { city: "Kolkata, India", flag: "🇮🇳", x: 535, y: 220, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
+      { city: "Surat, India", flag: "🇮🇳", x: 480, y: 230, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
     ];
 
     // Dynamic International Layering Nodes (Transit OTC / Mules)
     const transitHubs = [
-      { city: "Dubai, UAE", flag: "🇦🇪", x: 440, y: 185, role: "OTC P2P Cashout Desk" },
-      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 490, y: 240, role: "SE-Asia Task Scam Mule" },
-      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 395, y: 120, role: "Privacy Relayer 0xRelay99B" },
-      { city: "Singapore", flag: "🇸🇬", x: 505, y: 270, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})` },
-      { city: "Tbilisi, Georgia", flag: "🇬🇪", x: 425, y: 155, role: "Telegram Syndicate Mule" },
-      { city: "Manila, Philippines", flag: "🇵🇭", x: 535, y: 250, role: "Phishing Staging Hub" },
-      { city: "Kuala Lumpur, Malaysia", flag: "🇲🇾", x: 495, y: 280, role: "Fast-Peel Layering Mule" },
-      { city: "Lagos, Nigeria", flag: "🇳🇬", x: 365, y: 260, role: "P2P Arbitrage Liquidity Gate" }
+      { city: "Dubai, UAE", flag: "🇦🇪", x: 445, y: 215, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" },
+      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 585, y: 245, role: "SE-Asia Task Scam Mule", lat: "13.7° N, 100.5° E" },
+      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 365, y: 115, role: "Privacy Relayer 0xRelay99B", lat: "47.3° N, 8.5° E" },
+      { city: "Singapore", flag: "🇸🇬", x: 598, y: 295, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})`, lat: "1.3° N, 103.8° E" },
+      { city: "Hong Kong", flag: "🇭🇰", x: 635, y: 225, role: "OTC Liquidity Gateway", lat: "22.3° N, 114.1° E" },
+      { city: "London, UK", flag: "🇬🇧", x: 325, y: 95, role: "Crypto Liquidity Arbitrage Hub", lat: "51.5° N, 0.1° W" }
     ];
 
     // Dynamic Destination Hubs
     const destHubs = [
-      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 690, y: 250, role: prof.exchange || "Binance Hot Cluster 14" },
-      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 675, y: 275, role: "WazirX India Gateway Hot 02" },
-      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 685, y: 295, role: "OKX Multi-Sig Deposit Hub" },
-      { city: "Victoria (KuCoin Cluster)", flag: "🇸🇨", x: 695, y: 220, role: "KuCoin Deposit Liquidity Gateway" },
-      { city: "Hong Kong (Huobi Gateway)", flag: "🇭🇰", x: 705, y: 210, role: "HTX / Huobi Multi-Sig Ingestion" },
-      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 680, y: 160, role: "Tornado.Cash 100 ETH Smart Contract" }
+      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 598, y: 295, role: prof.exchange || "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" },
+      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 488, y: 245, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
+      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 450, y: 320, role: "OKX Multi-Sig Deposit Hub", lat: "4.6° S, 55.4° E" },
+      { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 635, y: 225, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" },
+      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 365, y: 115, role: "Tornado.Cash 100 ETH Smart Contract", lat: "DeFi Cloud" }
     ];
 
+    const isLazarus = addr.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
+    const isTaskScam = addr.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
+    const isDigitalArrest = addr.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e');
+    const isPigButchering = addr.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7');
+    const isBinanceSafe = addr.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60');
     const isVitalik = addr.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045');
-    const isTornado = addr.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e') || addr.toLowerCase().includes('tornado');
-    const isKuCoin = addr.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7') || addr.toLowerCase().includes('kucoin');
 
     let origin = originHubs[absHash % originHubs.length];
     let transit = transitHubs[(absHash >> 2) % transitHubs.length];
     let dest = destHubs[(absHash >> 4) % destHubs.length];
 
-    if (isVitalik) {
-      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 140, y: 120, region: "Vitalik Foundation" };
-      transit = { city: "Zug, Switzerland", flag: "🇨🇭", x: 400, y: 110, role: "Ethereum Core Staking" };
-      dest = { city: "Consensus Beacon", flag: "🛡️", x: 690, y: 140, role: "Beacon Deposit Contract" };
-    } else if (isTornado) {
-      origin = { city: "Kyiv, Ukraine", flag: "🇺🇦", x: 410, y: 120, region: "Phish Drain Exploit" };
-      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 395, y: 120, role: "Privacy Relayer 0xRelay99B" };
-      dest = { city: "Seychelles (Offshore)", flag: "🌪️", x: 680, y: 160, role: "Tornado.Cash 100 ETH Pool" };
-    } else if (isKuCoin) {
-      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 228, y: 290, region: "Investment Inflow" };
-      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 490, y: 240, role: "Pig Butchering Staging Mule" };
-      dest = { city: "Hong Kong", flag: "🇭🇰", x: 705, y: 210, role: "KuCoin Deposit Gateway" };
+    if (isLazarus) {
+      origin = { city: "Seoul / Tokyo", flag: "🇰🇷", x: 680, y: 180, region: "Smart Contract Drain", lat: "37.5° N, 127.0° E" };
+      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 365, y: 115, role: "Tornado Cash Relayer", lat: "47.3° N, 8.5° E" };
+      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 598, y: 295, role: "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" };
+    } else if (isTaskScam) {
+      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 488, y: 245, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
+      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 585, y: 245, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
+      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 488, y: 245, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
+    } else if (isDigitalArrest) {
+      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 495, y: 200, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
+      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 445, y: 215, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
+      dest = { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 450, y: 320, role: "CoinDCX / OKX Off-Ramp Hub", lat: "4.6° S, 55.4° E" };
+    } else if (isPigButchering) {
+      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 502, y: 275, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
+      transit = { city: "Hong Kong", flag: "🇭🇰", x: 635, y: 225, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
+      dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 635, y: 225, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
+    } else if (isBinanceSafe) {
+      origin = { city: "London, UK", flag: "🇬🇧", x: 325, y: 95, region: "Institutional Settlement", lat: "51.5° N, 0.1° W" };
+      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 445, y: 215, role: "VASP Clearing Desk", lat: "25.2° N, 55.2° E" };
+      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 598, y: 295, role: "Binance Holdings Ltd. Hot 14", lat: "1.3° N, 103.8° E" };
+    } else if (isVitalik) {
+      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 140, y: 110, region: "Vitalik Foundation", lat: "43.6° N, 79.3° W" };
+      transit = { city: "Zug, Switzerland", flag: "🇨🇭", x: 365, y: 115, role: "Ethereum Core Staking", lat: "47.1° N, 8.5° E" };
+      dest = { city: "Consensus Beacon", flag: "🛡️", x: 598, y: 295, role: "Beacon Deposit Contract", lat: "Decentralized" };
     }
 
     const corridorHTML = `${origin.flag} ${origin.city} &rarr; ${transit.flag} ${transit.city} &rarr; ${dest.flag} ${dest.city} (${dest.role})`;
-    const flowText = `Total Flow: ${prof.received || '₹8,42,000'}`;
-    const pathText = `Victim Account (${origin.city}) ──> Suspect Mule (${transit.city}) ──> CEX Consolidation (${dest.city})`;
+    const flowText = `Total Flow: ${prof.received || '₹84,500'}`;
+    const pathText = `Origin Cyber Unit (${origin.city} [${origin.lat}]) ──> Laundering Transit (${transit.city}) ──> Terminal Off-Ramp (${dest.city})`;
     const jurisText = `3 Sovereign Legal Jurisdictions (${origin.city.split(',')[1] || 'India'} • ${transit.city.split(',')[1] || 'UAE'} • ${dest.city.split(' ')[0]})`;
 
     if (corridorBadge) corridorBadge.innerHTML = corridorHTML;
@@ -709,114 +749,150 @@ document.addEventListener('DOMContentLoaded', () => {
     if (insightPath) insightPath.textContent = pathText;
     if (insightJurisdiction) insightJurisdiction.textContent = jurisText;
 
-    const amt1 = prof.flowAmounts ? prof.flowAmounts.split1 : '₹30,000';
-    const amt2 = prof.flowAmounts ? prof.flowAmounts.cexSweep : '₹20,000';
+    const amt1 = prof.flowAmounts ? prof.flowAmounts.split1 : '₹50,000';
+    const amt2 = prof.flowAmounts ? prof.flowAmounts.cexSweep : '₹34,500';
     const muleAddrShort = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : `0x${(absHash + 11).toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`;
 
     // Calculate curve control points
     const ctrl1X = Math.round((origin.x + transit.x) / 2);
-    const ctrl1Y = Math.min(origin.y, transit.y) - 60;
+    const ctrl1Y = Math.min(origin.y, transit.y) - 50;
     const ctrl2X = Math.round((transit.x + dest.x) / 2);
-    const ctrl2Y = Math.min(transit.y, dest.y) - 60;
+    const ctrl2Y = Math.min(transit.y, dest.y) - 50;
 
     const tag1X = Math.round((origin.x + transit.x) / 2) - 45;
-    const tag1Y = Math.round((origin.y + transit.y) / 2) - 30;
+    const tag1Y = Math.round((origin.y + transit.y) / 2) - 25;
     const tag2X = Math.round((transit.x + dest.x) / 2) - 45;
-    const tag2Y = Math.round((transit.y + dest.y) / 2) - 30;
+    const tag2Y = Math.round((transit.y + dest.y) / 2) - 25;
 
     const svgContent = `
       <defs>
-        <pattern id="geo-grid-net" width="40" height="40" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="1.2" fill="rgba(0,192,255,0.15)" />
-          <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
-          <line x1="0" y1="0" x2="0" y2="40" stroke="rgba(255,255,255,0.04)" stroke-width="0.75"/>
+        <pattern id="geo-grid-net" width="30" height="30" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.8" fill="rgba(0,192,255,0.2)" />
+          <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
         </pattern>
-        <radialGradient id="geo-bg-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#0a1b3a" stop-opacity="0.8"/>
+        <radialGradient id="geo-bg-glow" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#071733" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#040b1a" stop-opacity="0.95"/>
           <stop offset="100%" stop-color="#020612" stop-opacity="1"/>
         </radialGradient>
-        <filter id="geo-glow-victim"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#10b981" flood-opacity="0.9"/></filter>
-        <filter id="geo-glow-mule"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#f59e0b" flood-opacity="0.9"/></filter>
-        <filter id="geo-glow-cex"><feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00c0ff" flood-opacity="0.9"/></filter>
+        <filter id="geo-glow-victim"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#10b981" flood-opacity="0.9"/></filter>
+        <filter id="geo-glow-mule"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f59e0b" flood-opacity="0.9"/></filter>
+        <filter id="geo-glow-cex"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#00c0ff" flood-opacity="0.9"/></filter>
       </defs>
 
-      <!-- BASE RECTANGLE & GRID -->
+      <!-- BASE RECTANGLE & OCEAN BACKGROUND -->
       <rect width="100%" height="100%" fill="url(#geo-bg-glow)" />
       <rect width="100%" height="100%" fill="url(#geo-grid-net)" />
 
-      <!-- WORLD MAP CONTINENTAL LANDMASS SILHOUETTES -->
-      <g opacity="0.35" fill="#0d234a" stroke="#00c0ff" stroke-width="1.2" stroke-linejoin="round">
-        <!-- North America -->
-        <path d="M 60 70 Q 110 50, 160 80 Q 210 110, 190 180 Q 140 210, 110 180 Q 70 140, 60 70 Z" />
-        <!-- South America -->
-        <path d="M 170 230 Q 210 240, 200 320 Q 180 390, 160 410 Q 140 350, 150 280 Z" />
-        <!-- Europe -->
-        <path d="M 370 70 Q 440 60, 480 100 Q 450 140, 400 150 Q 360 120, 370 70 Z" />
-        <!-- Africa -->
-        <path d="M 380 170 Q 460 160, 470 230 Q 480 320, 440 370 Q 390 350, 370 260 Z" />
-        <!-- Asia & India -->
-        <path d="M 490 60 Q 640 50, 760 90 Q 800 170, 740 240 Q 660 210, 600 230 Q 560 290, 520 230 Q 500 150, 490 60 Z" />
-        <!-- Australia -->
-        <path d="M 680 310 Q 770 300, 780 360 Q 750 420, 690 400 Q 660 360, 680 310 Z" />
+      <!-- GEOGRAPHIC LATITUDE & LONGITUDE GRATICULES -->
+      <g stroke="rgba(0, 192, 255, 0.12)" stroke-width="0.8" stroke-dasharray="4 6">
+        <!-- Equator (0° Lat) -->
+        <line x1="20" y1="280" x2="800" y2="280" />
+        <!-- Tropic of Cancer (23.5° N) -->
+        <line x1="20" y1="200" x2="800" y2="200" />
+        <!-- Arctic Circle (66.5° N) -->
+        <line x1="20" y1="90" x2="800" y2="90" />
+        <!-- Meridians -->
+        <line x1="140" y1="20" x2="140" y2="440" />
+        <line x1="330" y1="20" x2="330" y2="440" />
+        <line x1="490" y1="20" x2="490" y2="440" />
+        <line x1="640" y1="20" x2="640" y2="440" />
       </g>
 
-      <!-- LATITUDE / LONGITUDE RADAR LINES -->
-      <line x1="30" y1="240" x2="830" y2="240" stroke="rgba(0,192,255,0.15)" stroke-dasharray="4 4"/>
-      <line x1="430" y1="20" x2="430" y2="460" stroke="rgba(0,192,255,0.15)" stroke-dasharray="4 4"/>
-      <circle cx="430" cy="240" r="180" fill="none" stroke="rgba(0,192,255,0.06)" stroke-dasharray="6 6"/>
+      <!-- AUTHENTIC REAL-WORLD VECTOR CONTINENTS & INDIA CARTOGRAPHY -->
+      <g fill="#071b38" stroke="#00c0ff" stroke-width="1.1" stroke-linejoin="round" opacity="0.85">
+        <!-- 1. INDIA & SOUTH ASIA (High Detail Subcontinent Triangle) -->
+        <path d="M 470 180 L 485 170 L 510 172 L 525 180 L 545 190 L 555 205 L 540 225 L 530 250 L 520 280 L 510 305 L 500 285 L 485 260 L 475 235 L 465 210 L 468 190 Z" fill="#0b2b5c" stroke="#00e5ff" stroke-width="1.6" />
+        <!-- Sri Lanka Island -->
+        <ellipse cx="512" cy="320" rx="5" ry="8" fill="#0b2b5c" stroke="#00e5ff" stroke-width="1.2" />
 
-      <!-- FLIGHT PATH CURVES -->
+        <!-- 2. ARABIAN PENINSULA & PERSIAN GULF (Dubai / UAE Hub) -->
+        <path d="M 430 190 L 465 200 L 475 220 L 460 250 L 435 255 L 420 230 L 425 205 Z" fill="#092247" stroke="#00c0ff" stroke-width="1.3" />
+
+        <!-- 3. EURASIA & CENTRAL ASIA -->
+        <path d="M 340 90 L 380 80 L 430 75 L 480 85 L 560 80 L 650 90 L 740 110 L 780 140 L 750 190 L 700 210 L 650 215 L 610 230 L 570 240 L 560 210 L 540 190 L 510 172 L 470 180 L 440 190 L 410 195 L 390 170 L 360 140 L 330 120 Z" />
+
+        <!-- 4. SOUTHEAST ASIA & INDOCHINA -->
+        <path d="M 570 210 L 610 220 L 630 250 L 610 280 L 595 310 L 585 300 L 590 260 L 575 235 Z" fill="#092247" stroke="#00c0ff" stroke-width="1.3" />
+
+        <!-- 5. INDONESIA, MALAYSIA & PHILIPPINES ARCHIPELAGO -->
+        <path d="M 580 320 Q 640 330, 710 335" stroke="#00c0ff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <path d="M 640 280 Q 660 300, 680 310" stroke="#00c0ff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+        <path d="M 650 230 Q 665 250, 675 270" stroke="#00c0ff" stroke-width="2" stroke-linecap="round" fill="none"/>
+
+        <!-- 6. AFRICA -->
+        <path d="M 330 170 L 390 170 L 420 210 L 440 260 L 430 320 L 400 380 L 370 410 L 340 370 L 320 300 L 300 240 L 310 190 Z" />
+        <ellipse cx="445" cy="340" rx="6" ry="14" /> <!-- Madagascar -->
+
+        <!-- 7. EUROPE & BRITISH ISLES -->
+        <path d="M 320 90 L 360 70 L 400 75 L 410 110 L 380 130 L 340 140 L 320 120 Z" />
+        <path d="M 310 80 L 325 75 L 330 95 L 315 105 Z" /> <!-- UK & Ireland -->
+
+        <!-- 8. NORTH & SOUTH AMERICA -->
+        <path d="M 60 70 L 130 65 L 180 80 L 200 120 L 170 160 L 140 180 L 110 170 L 80 130 Z" opacity="0.6" />
+        <path d="M 140 200 L 180 215 L 200 260 L 190 330 L 165 390 L 145 350 L 135 270 Z" opacity="0.6" />
+
+        <!-- 9. AUSTRALIA -->
+        <path d="M 670 340 L 740 330 L 760 370 L 730 420 L 670 410 L 650 370 Z" />
+      </g>
+
+      <!-- INDIAN OCEAN RADAR SCAN RINGS -->
+      <circle cx="500" cy="270" r="120" fill="none" stroke="rgba(0, 229, 255, 0.15)" stroke-dasharray="4 6"/>
+      <circle cx="500" cy="270" r="220" fill="none" stroke="rgba(0, 229, 255, 0.08)" stroke-dasharray="6 8"/>
+
+      <!-- TRAJECTORY FLIGHT PATHS -->
       <!-- Flight 1: Origin to Transit Mule -->
-      <path d="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" fill="none" stroke="#f59e0b" stroke-width="3" class="geo-flight-arc" />
+      <path d="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5 5" class="geo-flight-arc" />
       <!-- Flight 2: Transit Mule to Destination CEX -->
-      <path d="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" fill="none" stroke="#00c0ff" stroke-width="3" class="geo-flight-arc" />
+      <path d="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" fill="none" stroke="#00c0ff" stroke-width="3" stroke-dasharray="5 5" class="geo-flight-arc" />
 
       <!-- PARTICLES MOVING ON FLIGHT ARCS -->
-      <circle r="5" fill="#10b981"><animateMotion dur="2.8s" repeatCount="indefinite" path="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" /></circle>
-      <circle r="5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" /></circle>
+      <circle r="4.5" fill="#10b981"><animateMotion dur="2.8s" repeatCount="indefinite" path="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" /></circle>
+      <circle r="4.5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" /></circle>
 
       <!-- AMOUNT & FLIGHT TIME TAGS -->
       <g class="font-mono">
         <!-- Tag 1 -->
-        <rect x="${tag1X}" y="${tag1Y}" width="105" height="26" rx="6" fill="#0b1528" stroke="#f59e0b" stroke-width="1.4"/>
-        <text x="${tag1X + 52}" y="${tag1Y + 17}" text-anchor="middle" fill="#fbbf24" font-size="10.5" font-weight="700">${amt1} &bull; 25m</text>
+        <rect x="${tag1X}" y="${tag1Y}" width="105" height="24" rx="6" fill="#0b1528" stroke="#f59e0b" stroke-width="1.4"/>
+        <text x="${tag1X + 52}" y="${tag1Y + 16}" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">${amt1} &bull; 25m</text>
         <!-- Tag 2 -->
-        <rect x="${tag2X}" y="${tag2Y}" width="105" height="26" rx="6" fill="#0b1528" stroke="#00c0ff" stroke-width="1.4"/>
-        <text x="${tag2X + 52}" y="${tag2Y + 17}" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-weight="700">${amt2} &bull; 7m</text>
+        <rect x="${tag2X}" y="${tag2Y}" width="105" height="24" rx="6" fill="#0b1528" stroke="#00c0ff" stroke-width="1.4"/>
+        <text x="${tag2X + 52}" y="${tag2Y + 16}" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="700">${amt2} &bull; 7m</text>
       </g>
 
-      <!-- GEO NODES -->
-      <!-- Node 1: Victim Origin -->
+      <!-- GEO NODES WITH PULSING RADAR BEACONS -->
+      <!-- Node 1: Victim Origin (Indian Cyber Zone) -->
       <g class="geo-node" transform="translate(${origin.x}, ${origin.y})">
-        <circle r="38" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="2" stroke-dasharray="4 4"/>
-        <circle r="22" fill="#06281e" stroke="#10b981" stroke-width="2.5" filter="url(#geo-glow-victim)"/>
-        <text y="5" text-anchor="middle" font-size="14">${origin.flag}</text>
+        <circle r="28" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle r="16" fill="#06281e" stroke="#10b981" stroke-width="2" filter="url(#geo-glow-victim)"/>
+        <text y="5" text-anchor="middle" font-size="11">${origin.flag}</text>
         <!-- City Box Below -->
-        <rect x="-85" y="30" width="170" height="44" rx="8" fill="#091224" stroke="#10b981" stroke-width="1.4"/>
-        <text y="48" text-anchor="middle" fill="#ffffff" font-size="11.5" font-weight="800">${origin.city}</text>
-        <text y="63" text-anchor="middle" fill="#6ee7b7" font-size="9" font-family="JetBrains Mono">Victim Inflow (${prof.received || '₹8,42k'})</text>
+        <rect x="-85" y="24" width="170" height="40" rx="6" fill="#091224" stroke="#10b981" stroke-width="1.2"/>
+        <text y="38" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">${origin.city}</text>
+        <text y="52" text-anchor="middle" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">Victim Inflow (${prof.received || '₹84,500'})</text>
       </g>
 
       <!-- Node 2: Transit Layering Mule -->
       <g class="geo-node" transform="translate(${transit.x}, ${transit.y})">
-        <circle r="42" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/>
-        <circle r="24" fill="#261b04" stroke="#f59e0b" stroke-width="2.5" filter="url(#geo-glow-mule)"/>
-        <text y="6" text-anchor="middle" font-size="15">${transit.flag}</text>
+        <circle r="30" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle r="18" fill="#261b04" stroke="#f59e0b" stroke-width="2" filter="url(#geo-glow-mule)"/>
+        <text y="5" text-anchor="middle" font-size="12">${transit.flag}</text>
         <!-- City Box Below -->
-        <rect x="-100" y="32" width="200" height="48" rx="8" fill="#091224" stroke="#f59e0b" stroke-width="1.4"/>
-        <text y="50" text-anchor="middle" fill="#fbbf24" font-size="11.5" font-weight="800">${transit.city}</text>
-        <text y="65" text-anchor="middle" fill="#fcd34d" font-size="9" font-family="JetBrains Mono">${transit.role} (${muleAddrShort})</text>
+        <rect x="-95" y="26" width="190" height="42" rx="6" fill="#091224" stroke="#f59e0b" stroke-width="1.2"/>
+        <text y="40" text-anchor="middle" fill="#fbbf24" font-size="10.5" font-weight="800">${transit.city}</text>
+        <text y="54" text-anchor="middle" fill="#fcd34d" font-size="8" font-family="JetBrains Mono">${transit.role} (${muleAddrShort})</text>
       </g>
 
       <!-- Node 3: Destination Exchange Gateway -->
       <g class="geo-node" transform="translate(${dest.x}, ${dest.y})">
-        <circle r="44" fill="rgba(0, 192, 255, 0.15)" stroke="#00c0ff" stroke-width="2" stroke-dasharray="4 4"/>
-        <circle r="26" fill="#042038" stroke="#00c0ff" stroke-width="2.5" filter="url(#geo-glow-cex)"/>
-        <text y="7" text-anchor="middle" font-size="16">${dest.flag}</text>
+        <circle r="32" fill="rgba(0, 192, 255, 0.15)" stroke="#00c0ff" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle r="20" fill="#042038" stroke="#00c0ff" stroke-width="2" filter="url(#geo-glow-cex)"/>
+        <text y="6" text-anchor="middle" font-size="13">${dest.flag}</text>
         <!-- City Box Below -->
-        <rect x="-105" y="34" width="210" height="48" rx="8" fill="#091224" stroke="#00c0ff" stroke-width="1.6"/>
-        <text y="52" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="800">${dest.city}</text>
-        <text y="68" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="JetBrains Mono">${dest.role}</text>
+        <rect x="-100" y="28" width="200" height="42" rx="6" fill="#091224" stroke="#00c0ff" stroke-width="1.4"/>
+        <text y="42" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">${dest.city}</text>
+        <text y="56" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">${dest.role}</text>
       </g>
     `;
 
