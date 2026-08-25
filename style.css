@@ -3887,6 +3887,26 @@ p, li, .text-secondary, .text-muted, .text-xs, .text-sm {
 /* MODE 2: UPI & BANKING RAILS FORENSICS STYLING           */
 /* ======================================================== */
 
+#btn-analyze-upi {
+  height: 42px !important;
+  padding: 8px 20px !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  max-width: 170px !important;
+  border-radius: var(--radius-md) !important;
+}
+
+#btn-analyze-upi svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0 !important;
+}
+
 .banking-kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
