@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=5.1">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -24,11 +24,26 @@
     <div class="sih-strip-content">
       <div class="sih-tag-group">
         <span class="sih-pill">SMART INDIA HACKATHON 2026</span>
-        <span class="sih-id-pill">Problem Statement ID: 26183</span>
-        <span class="mha-pill">Ministry of Home Affairs &bull; Indian Cyber Crime Coordination Centre (I4C), CIS Division</span>
+        <span class="sih-id-pill">PS-26183</span>
+        <span class="mha-pill">Ministry of Home Affairs &bull; I4C CIS Division</span>
       </div>
+
+      <!-- JUDGES LIVE DEMO WALKTHROUGH -->
+      <div class="judge-demo-bar">
+        <span class="demo-tag">Live Demo:</span>
+        <div class="demo-steps">
+          <button class="btn-demo-step" data-step="1" title="1. Enter Address">1. Address</button>
+          <button class="btn-demo-step" data-step="2" title="2. Analyze">2. Analyze</button>
+          <button class="btn-demo-step" data-step="3" title="3. Risk Score">3. Risk Score</button>
+          <button class="btn-demo-step" data-step="4" title="4. Flow Graph">4. Flow Graph</button>
+          <button class="btn-demo-step" data-step="5" title="5. Exchange Detection">5. Exchange Detection</button>
+          <button class="btn-demo-step" data-step="6" title="6. Fraud DNA Campaign Match">6. Fraud DNA™</button>
+          <button class="btn-demo-step" data-step="7" title="7. Generate Dossier">7. Dossier</button>
+        </div>
+      </div>
+
       <div class="sih-right-links">
-        <button class="btn-sih-doc" id="btn-open-ps-brief">&#128220; View PS-26183 Architecture Brief</button>
+        <button class="btn-sih-doc" id="btn-open-ps-brief">&#128220; Architecture Brief</button>
       </div>
     </div>
   </div>
@@ -339,39 +354,28 @@
           <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           </button>
-          <h1 class="page-title" id="page-title">Analyze Suspect Wallet</h1>
+          <h1 class="page-title" id="page-title">Crypto Blockchain Engine</h1>
         </div>
 
-        <!-- DUAL FORENSICS ENGINE SWITCHER -->
-        <div class="engine-mode-switcher" id="engine-mode-switcher">
-          <button class="btn-engine-mode active" id="btn-mode-crypto" data-mode="crypto">
-            <span class="engine-icon">₿</span>
-            <span>Mode 1: Crypto Blockchain Engine</span>
-          </button>
-          <button class="btn-engine-mode" id="btn-mode-banking" data-mode="banking">
-            <span class="engine-icon">📱</span>
-            <span>Mode 2: UPI &amp; Banking Rail Engine</span>
-          </button>
-        </div>
-
-        <!-- CITIZEN RISK SCREENER MODAL TRIGGER -->
-        <button class="btn-citizen-screener-top" id="btn-open-citizen-screener" title="Check Crypto Wallet or UPI ID before sending money">
-          <span>🛡️</span>
-          <span>Check Before You Send</span>
-        </button>
-
-        <!-- JUDGES LIVE DEMO WALKTHROUGH -->
-        <div class="judge-demo-bar">
-          <span class="demo-tag">SIH PS-26183 Demo:</span>
-          <div class="demo-steps">
-            <button class="btn-demo-step" data-step="1" title="1. Enter Address">1. Address</button>
-            <button class="btn-demo-step" data-step="2" title="2. Analyze">2. Analyze</button>
-            <button class="btn-demo-step" data-step="3" title="3. Risk Score">3. Risk Score</button>
-            <button class="btn-demo-step" data-step="4" title="4. Flow Graph">4. Flow Graph</button>
-            <button class="btn-demo-step" data-step="5" title="5. Exchange Detection">5. Exchange Detection</button>
-            <button class="btn-demo-step" data-step="6" title="6. Fraud DNA Campaign Match">6. Fraud DNA™</button>
-            <button class="btn-demo-step" data-step="7" title="7. Generate Dossier">7. Dossier</button>
+        <!-- CENTER ENGINE SWITCHER & SCREENER -->
+        <div class="header-center">
+          <!-- DUAL FORENSICS ENGINE SWITCHER -->
+          <div class="engine-mode-switcher" id="engine-mode-switcher">
+            <button class="btn-engine-mode active" id="btn-mode-crypto" data-mode="crypto">
+              <span class="engine-icon">₿</span>
+              <span>Mode 1: Crypto Blockchain Engine</span>
+            </button>
+            <button class="btn-engine-mode" id="btn-mode-banking" data-mode="banking">
+              <span class="engine-icon">📱</span>
+              <span>Mode 2: UPI &amp; Banking Rail Engine</span>
+            </button>
           </div>
+
+          <!-- CITIZEN RISK SCREENER MODAL TRIGGER -->
+          <button class="btn-citizen-screener-top" id="btn-open-citizen-screener" title="Check Crypto Wallet or UPI ID before sending money">
+            <span>🛡️</span>
+            <span>Check Before You Send</span>
+          </button>
         </div>
 
         <div class="header-right">
@@ -2939,17 +2943,17 @@
               <p class="text-xs text-secondary">National Cyber Crime Reporting Portal (NCRP) cross-reference report.</p>
 
               <div class="ncrp-match-box" id="ncrp-match-details">
-                <div class="flex items-center justify-between mb-2">
-                  <strong class="text-white text-sm">Modus Operandi:</strong>
-                  <span class="text-cyan font-mono text-xs" id="ncrp-mo-type">Task-Based Telegram Scam</span>
+                <div class="mb-2">
+                  <div class="text-secondary text-xs">Modus Operandi:</div>
+                  <div class="text-cyan font-mono text-xs font-bold mt-0.5" id="ncrp-mo-type">Task-Based Telegram Scam</div>
                 </div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-secondary text-xs">Total Reported Loss:</span>
                   <span class="text-amber font-mono font-bold" id="ncrp-total-loss">₹24,80,000</span>
                 </div>
-                <div class="flex items-center justify-between mb-2">
-                  <span class="text-secondary text-xs">Origin Police Stations:</span>
-                  <span class="text-white text-xs font-mono" id="ncrp-states-list">Mumbai (5), Delhi (4), Bengaluru (3), Surat (2)</span>
+                <div class="mb-2">
+                  <div class="text-secondary text-xs">Origin Police Stations:</div>
+                  <div class="text-white text-xs font-mono mt-0.5" id="ncrp-states-list">Mumbai (5), Delhi (4), Bengaluru (3), Surat (2)</div>
                 </div>
                 <div class="mt-2 text-xs text-muted" id="ncrp-flag-reasons">
                   • 3 complaints filed in last 24 hours on 1930 helpline.<br>
@@ -3395,6 +3399,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=5.0"></script>
+  <script src="app.js?v=5.1"></script>
 </body>
 </html>

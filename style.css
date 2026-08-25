@@ -436,24 +436,28 @@ html, body {
 
 /* TOP HEADER */
 .top-header {
-  height: 70px;
-  padding: 0 32px;
+  min-height: 64px;
+  height: auto;
+  padding: 10px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
-  background-color: rgba(10, 15, 29, 0.85);
-  backdrop-filter: blur(12px);
+  background-color: rgba(6, 11, 24, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   position: sticky;
   top: 0;
   z-index: 40;
-  gap: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .mobile-toggle {
@@ -466,49 +470,60 @@ html, body {
 }
 
 .mobile-toggle svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 }
 
 .page-title {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 /* JUDGES DEMO BAR */
 .judge-demo-bar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: rgba(0, 102, 255, 0.08);
   border: 1px solid rgba(0, 102, 255, 0.25);
   border-radius: 999px;
-  padding: 4px 10px 4px 14px;
+  padding: 2px 8px 2px 10px;
 }
 
 .demo-tag {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #38bdf8;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .demo-steps {
   display: flex;
   gap: 4px;
+  flex-wrap: wrap;
 }
 
 .btn-demo-step {
   background: transparent;
   border: 1px solid transparent;
   color: var(--text-secondary);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 999px;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.2s ease;
 }
 
@@ -526,7 +541,8 @@ html, body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 /* SECURITY SHIELD STATUS PILL */
@@ -841,6 +857,118 @@ html, body {
 .amber-badge { background-color: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
 .blue-badge { background-color: rgba(0, 102, 255, 0.2); color: #38bdf8; border: 1px solid rgba(0, 102, 255, 0.4); }
 
+/* ======================================================== */
+/* CORE USP WORKFLOW PIPELINE BAR                           */
+/* ======================================================== */
+.core-usp-strip {
+  background: rgba(10, 18, 36, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.usp-header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.usp-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 192, 255, 0.12);
+  border: 1px solid rgba(0, 192, 255, 0.35);
+  color: #38bdf8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+}
+
+.usp-tagline {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+  flex: 1;
+  min-width: 250px;
+}
+
+.usp-pipeline-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.usp-step {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.usp-step:hover {
+  background: rgba(0, 102, 255, 0.15);
+  border-color: #00c0ff;
+  transform: translateY(-1px);
+}
+
+.usp-step.active {
+  background: rgba(0, 102, 255, 0.25);
+  border-color: #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 192, 255, 0.35);
+}
+
+.usp-step-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0066ff;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.usp-step-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+}
+
+.usp-step-sub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.usp-arrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  user-select: none;
+  flex-shrink: 0;
+}
+
 /* DASHBOARD GRID SYSTEM */
 .dashboard-grid {
   padding: 24px 32px 40px;
@@ -969,17 +1097,25 @@ html, body {
   flex-shrink: 0;
 }
 
-.preset-pills {
+.preset-pills, .preset-wallets-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.preset-pills-list {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 12px;
   flex-wrap: wrap;
 }
 
 .preset-label {
   font-size: 0.75rem;
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .preset-btn {
@@ -987,9 +1123,10 @@ html, body {
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
   font-size: 0.72rem;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.2s ease;
 }
 
@@ -1002,13 +1139,26 @@ html, body {
 /* 2. KPI METRICS ROW */
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 14px;
 }
 
 .metric-card {
-  padding: 16px;
+  background: rgba(10, 18, 36, 0.65);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.metric-card.metric-card-row {
+  flex-direction: row;
   align-items: center;
   gap: 14px;
 }
@@ -1056,12 +1206,19 @@ html, body {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  width: 100%;
 }
 
 .metric-label {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .metric-value {
@@ -1073,11 +1230,16 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 }
 
-.metric-subtext {
+.metric-sub, .metric-subtext {
   font-size: 0.72rem;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 /* 3. TRANSACTION FLOW CARD */

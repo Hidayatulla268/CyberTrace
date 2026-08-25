@@ -1019,25 +1019,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const titles = {
-      'dashboard': 'Analyze Suspect Wallet',
-      'banking-engine': 'UPI & Banking Rails Forensics Engine (NPCI / Core Banking)',
-      'cross-chain': 'Cross-Chain Bridge & Hop Tracker (TRM Labs)',
-      'entities': 'Global Entity & Deanonymization Directory (Arkham)',
-      'mixer-demask': 'Mixer & Privacy Demasking Engine (Elliptic)',
-      'sanctions': 'OFAC SDN & Global Sanctions Screener',
-      'cases': 'Investigator Case Workspace & Evidence Vault',
-      'subpoena': 'Automated Section 91 CrPC & MLAT Subpoena Dispatcher',
-      'stolen-tracker': 'Stolen Money Tracker — Hop-by-Hop Tranche Following',
-      'network-map': 'Fraud Network & Geographic Money Flow Map',
-      'safety-check': 'Public Wallet Safety Check — Verify Before Sending Crypto',
-      'fraud-dna': 'Fraud DNA™ — Behavioral Campaign Intelligence Matrix',
-      'report-fraud': 'Report Crypto Fraud (I4C Intake)',
-      'monitor': 'Real-Time Blockchain Monitoring',
-      'exchange-intelligence': 'Centralized Exchange Attribution Directory',
-      'alerts': 'Live Threat Alerts & Fraud DNA Feed',
+      'dashboard': 'Crypto Blockchain Engine',
+      'banking-engine': 'UPI & Banking Rails Engine',
+      'cross-chain': 'Cross-Chain Bridge Tracker',
+      'entities': 'Arkham Entity Directory',
+      'mixer-demask': 'Mixer Demasking Engine',
+      'sanctions': 'OFAC Sanctions Screener',
+      'cases': 'Case Vault & Evidence',
+      'subpoena': 'Section 91 CrPC Subpoena',
+      'stolen-tracker': 'Stolen Money Tracker',
+      'network-map': 'Fraud Network Map',
+      'safety-check': 'Public Wallet Screener',
+      'fraud-dna': 'Fraud DNA™ Matrix',
+      'report-fraud': 'Report Crypto Fraud',
+      'monitor': 'Mempool Live Monitor',
+      'exchange-intelligence': 'Exchange Clusters',
+      'alerts': 'Live Threat Alerts',
       'reports': 'I4C Forensic Dossiers',
-      'about': 'SIH 2026 Problem Statement #26183',
-      'contact': 'Emergency Forensics Support'
+      'about': 'SIH 2026 PS-26183',
+      'contact': 'Forensics Support'
     };
     if (pageTitle) pageTitle.textContent = titles[viewName] || 'CyberTrace Console';
 
