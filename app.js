@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isTornado) campKey = 'CYB-3912';
     if (isKuCoin) campKey = 'CYB-1084';
     if (isCase1245 || isWalletZ) campKey = 'CYB-2048';
-    const camp = campaignDNAProfiles[campKey];
+    const camp = campaignDNAProfiles[campKey] || campaignDNAProfiles['CYB-2048'];
 
     // Risk Scoring & Category
     let riskScore = 84 + (absHash % 14);
@@ -556,13 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderDynamicGeoMap(profile) {
     const prof = (profile && profile.flowAmounts) ? profile : (state.currentProfile || generateForensicProfile(state.currentAddress));
     const netSvg = document.getElementById('network-map-svg');
-    const dashNetSvg = document.getElementById('dash-network-map-svg');
     const corridorBadge = document.getElementById('geo-corridor-badge');
-    const dashCorridorBadge = document.getElementById('dash-geo-corridor-badge');
     const flowTotal = document.getElementById('geo-flow-total');
-    const dashFlowTotal = document.getElementById('dash-geo-flow-total');
     const insightPath = document.getElementById('geo-insight-path');
-    const dashInsightPath = document.getElementById('dash-geo-insight-path');
     const insightJurisdiction = document.getElementById('geo-insight-jurisdiction');
 
     let originCity = "Mumbai, India";
@@ -609,11 +605,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const jurisText = `3 Sovereign Legal Jurisdictions (${originCity.split(',')[1] || 'India'} • ${transitCity.split(',')[1] || 'UAE'} • ${destCity})`;
 
     if (corridorBadge) corridorBadge.innerHTML = corridorHTML;
-    if (dashCorridorBadge) dashCorridorBadge.innerHTML = corridorHTML;
     if (flowTotal) flowTotal.textContent = flowText;
-    if (dashFlowTotal) dashFlowTotal.textContent = flowText;
     if (insightPath) insightPath.textContent = pathText;
-    if (dashInsightPath) dashInsightPath.textContent = pathText;
     if (insightJurisdiction) insightJurisdiction.textContent = jurisText;
 
     const amt1 = prof.flowAmounts ? prof.flowAmounts.split1 : '₹30,000';
@@ -716,13 +709,11 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     if (netSvg) netSvg.innerHTML = svgContent;
-    if (dashNetSvg) dashNetSvg.innerHTML = svgContent;
   }
 
   // --- CROSS-CASE SYNDICATE NEXUS GRAPH RENDERER ---
   function renderNexusGraph(clusterFilter = 'all') {
     const netSvg = document.getElementById('network-map-svg');
-    const dashNetSvg = document.getElementById('dash-network-map-svg');
 
     const nexusContent = `
       <defs>
@@ -823,7 +814,6 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     if (netSvg) netSvg.innerHTML = nexusContent;
-    if (dashNetSvg) dashNetSvg.innerHTML = nexusContent;
   }
 
   // --- UI SELECTORS ---

@@ -3307,6 +3307,57 @@ html, body {
 .mb-2 { margin-bottom: 8px; }
 .mb-3 { margin-bottom: 12px; }
 
+/* QUICK FORENSIC INTELLIGENCE BAR */
+.quick-forensic-tools-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.btn-quick-forensic {
+  background: #091326 !important;
+  border: 1px solid rgba(0, 192, 255, 0.25) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 12px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-quick-forensic:hover {
+  background: rgba(0, 192, 255, 0.12) !important;
+  border-color: #00c0ff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 192, 255, 0.3) !important;
+}
+
+.btn-quick-forensic .q-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.btn-quick-forensic .q-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.btn-quick-forensic .q-text strong {
+  font-size: 0.82rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.btn-quick-forensic .q-text span {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
 /* ANTI-COLLAPSE & TEXT INTEGRITY UTILITIES */
 .card, .trail-step-box, .hop-card, .watch-item, .alert-card-full {
   word-break: break-word;

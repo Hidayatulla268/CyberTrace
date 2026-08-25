@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -677,129 +677,39 @@
                 <div class="legend-item">
                   <span class="legend-dot dot-exchange"></span>
                   <span class="legend-text">Exchange/Service</span>
-                </div>
             </section>
 
-            <!-- 3B. EMBEDDED FRAUD NETWORK & GEOGRAPHIC MONEY FLOW MAP -->
-            <section class="card network-map-canvas-card" id="section-dashboard-network-map">
-              <div class="flow-card-header">
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="feature-icon-badge purple-badge">🕸️</span>
-                    <h2 class="card-title">Fraud Network &amp; Geographic Money Flow Map</h2>
-                    <span class="badge-role role-dna">Cross-Border Forensics</span>
-                  </div>
-                  <span class="text-xs text-muted">Real-time international money trail from victim police jurisdiction to overseas OTC desks &amp; centralized exchanges.</span>
+            <!-- 4. QUICK FORENSICS INTELLIGENCE BAR -->
+            <div class="quick-forensic-tools-bar" id="section-quick-forensic-bar">
+              <button class="btn-quick-forensic nav-trigger" data-view="network-map">
+                <span class="q-icon">🕸️</span>
+                <div class="q-text">
+                  <strong>Fraud Network Map</strong>
+                  <span>Cross-border money trails &rarr;</span>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button class="btn-ghost-sm nav-trigger" data-view="network-map">
-                    <span>Full Screen Nexus View</span> &rarr;
-                  </button>
+              </button>
+              <button class="btn-quick-forensic nav-trigger" data-view="stolen-tracker">
+                <span class="q-icon">💰</span>
+                <div class="q-text">
+                  <strong>Stolen Money Tracker</strong>
+                  <span>Hop-by-hop tranche tracer &rarr;</span>
                 </div>
-              </div>
-
-              <!-- Map Toolbar -->
-              <div class="geo-map-toolbar">
-                <div class="flex items-center gap-3 flex-wrap">
-                  <span class="text-xs text-secondary font-bold">Laundering Corridor:</span>
-                  <span class="badge-role role-gas" id="dash-geo-corridor-badge">🇮🇳 Mumbai, India &rarr; 🇦🇪 Dubai, UAE &rarr; 🇸🇬 Singapore (Binance Hub)</span>
-                  <span class="badge-subtle" id="dash-geo-flow-total">Total Flow: ₹8,42,000</span>
+              </button>
+              <button class="btn-quick-forensic nav-trigger" data-view="cross-chain">
+                <span class="q-icon">🌉</span>
+                <div class="q-text">
+                  <strong>Cross-Chain Bridges</strong>
+                  <span>Multi-chain asset hops &rarr;</span>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="legend-dot dot-victim"></span> Origin
-                  <span class="legend-dot dot-intermediary"></span> Transit Mule
-                  <span class="legend-dot dot-exchange"></span> Off-Ramp CEX
+              </button>
+              <button class="btn-quick-forensic nav-trigger" data-view="mixer-demask">
+                <span class="q-icon">🌪️</span>
+                <div class="q-text">
+                  <strong>Mixer Demasker</strong>
+                  <span>Tornado.Cash unmasking &rarr;</span>
                 </div>
-              </div>
-
-              <!-- Canvas Container -->
-              <div class="network-svg-container" style="min-height: 380px;">
-                <svg id="dash-network-map-svg" class="network-svg" viewBox="0 0 860 480" preserveAspectRatio="xMidYMid meet">
-                  <!-- Populated dynamically by JS -->
-                </svg>
-              </div>
-
-              <div class="network-insights-bar mt-3">
-                <div class="insight-item">
-                  <span class="insight-label">Cross-Border Money Path:</span>
-                  <span class="insight-val text-cyan font-bold" id="dash-geo-insight-path">Victim Account (Mumbai) ──&gt; Suspect Mule (Dubai) ──&gt; CEX Sweep (Singapore)</span>
-                </div>
-                <div class="insight-item">
-                  <button class="btn btn-primary btn-sm nav-trigger" data-view="subpoena">Draft Section 91 CrPC Notice</button>
-                </div>
-              </div>
-            </section>
-
-            <!-- 4. STOLEN MONEY TRACKER (SPECIFIC TRANCHE TRACER) -->
-            <section class="card stolen-tracker-widget" id="section-stolen-tracker-preview">
-              <div class="flow-card-header">
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="feature-icon-badge yellow-badge">💰</span>
-                    <h2 class="card-title">Stolen Money Tracker</h2>
-                    <span class="badge-subtle">Tranche Following Engine</span>
-                  </div>
-                  <span class="text-xs text-muted">Select victim inflow transaction and follow that specific stolen money hop-by-hop.</span>
-                </div>
-                <button class="btn-ghost-sm nav-trigger" data-view="stolen-tracker">
-                  <span>Open Full Tracker</span> &rarr;
-                </button>
-              </div>
-
-              <!-- Victim Inflow Selector -->
-              <div class="tracker-selector-bar">
-                <span class="text-xs text-secondary">Tracing Victim Inflow:</span>
-                <div class="inflow-chip active font-mono">
-                  <span class="text-white font-bold">TX #1: ₹50,000</span> (23 Aug, 05:15 PM &bull; 0x3b2a...3a4b)
-                </div>
-              </div>
-
-              <!-- Hop-by-Hop Tranche Progression Timeline -->
-              <div class="stolen-hops-timeline" id="stolen-hops-timeline">
-                <div class="hop-card hop-origin">
-                  <div class="hop-badge">HOP 0 &bull; INFLOW</div>
-                  <div class="hop-amount font-mono">₹50,000 (100%)</div>
-                  <div class="hop-addr font-mono text-muted">Victim Wallet &rarr; Suspect 0xA1b2...9T0</div>
-                  <div class="hop-time text-xs text-secondary">05:15 PM &bull; Initial Collection</div>
-                </div>
-
-                <div class="hop-connector-line">
-                  <span class="hop-split-tag">Peeling Split 60% / 40%</span>
-                </div>
-
-                <div class="hop-row-split">
-                  <div class="hop-card hop-split">
-                    <div class="hop-badge text-amber">HOP 1A &bull; LAYER 1</div>
-                    <div class="hop-amount font-mono text-amber">₹30,000 (60%)</div>
-                    <div class="hop-addr font-mono text-muted">To Wallet A (0xB3c4...5D6)</div>
-                    <div class="hop-time text-xs text-secondary">05:42 PM &bull; Peeling Splitter</div>
-                  </div>
-                  <div class="hop-card hop-dest">
-                    <div class="hop-badge text-cyan">HOP 1B &bull; OFF-RAMP</div>
-                    <div class="hop-amount font-mono text-cyan">₹20,000 (40%)</div>
-                    <div class="hop-addr font-mono text-muted">To Binance Cluster (0xExch...90A)</div>
-                    <div class="hop-time text-xs text-secondary">05:40 PM &bull; Direct CEX Deposit</div>
-                  </div>
-                </div>
-
-                <div class="hop-connector-line">
-                  <span class="hop-split-tag">Layer 2 Fan-Out 36% / 24%</span>
-                </div>
-
-                <div class="hop-row-split">
-                  <div class="hop-card hop-split">
-                    <div class="hop-badge text-green">HOP 2A &bull; LAYER 2</div>
-                    <div class="hop-amount font-mono">₹18,000 (36%)</div>
-                    <div class="hop-addr font-mono text-muted">To Wallet B &bull; WazirX Gateway</div>
-                  </div>
-                  <div class="hop-card hop-split">
-                    <div class="hop-badge text-green">HOP 2B &bull; LAYER 2</div>
-                    <div class="hop-amount font-mono">₹12,000 (24%)</div>
-                    <div class="hop-addr font-mono text-muted">To Wallet C &bull; Intermediate Hold</div>
-                  </div>
-                </div>
-              </div>
-            </section>
+              </button>
+            </div>
 
             <!-- 5. HIDDEN WALLET DETECTOR (ACCOMPLICE INFRASTRUCTURE) -->
             <section class="card hidden-wallets-widget" id="section-hidden-wallets">
@@ -3061,6 +2971,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=3.0"></script>
 </body>
 </html>
