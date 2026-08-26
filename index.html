@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7.7">
+  <link rel="stylesheet" href="style.css?v=7.8">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -2290,8 +2290,31 @@
               </div>
             </div>
 
-            <!-- SVG CANVAS CONTAINER -->
+            <!-- SVG CANVAS CONTAINER WITH INTERACTIVE ZOOM & PAN -->
             <div class="network-svg-container" id="network-map-canvas-container">
+              <!-- MAP FLOATING ZOOM & REGION CONTROLS -->
+              <div class="map-controls-hud">
+                <div class="map-zoom-actions">
+                  <button class="map-hud-btn" id="btn-map-zoom-in" title="Zoom In (+)"><span class="icon">➕</span></button>
+                  <button class="map-hud-btn" id="btn-map-zoom-out" title="Zoom Out (-)"><span class="icon">➖</span></button>
+                  <button class="map-hud-btn" id="btn-map-zoom-reset" title="Reset View (100%)"><span class="icon">⟲</span></button>
+                  <span class="map-hud-badge" id="map-zoom-badge">100%</span>
+                </div>
+                <div class="map-region-presets">
+                  <span class="map-preset-title">🎯 Quick Focus:</span>
+                  <button class="btn-tool map-preset-btn" data-focus="india">🇮🇳 India</button>
+                  <button class="btn-tool map-preset-btn" data-focus="dubai">🇦🇪 UAE / Gulf</button>
+                  <button class="btn-tool map-preset-btn" data-focus="seasia">🇸🇬 SE Asia</button>
+                  <button class="btn-tool map-preset-btn" data-focus="europe">🇪🇺 Europe</button>
+                  <button class="btn-tool map-preset-btn active" data-focus="world">🌐 Full World</button>
+                </div>
+              </div>
+
+              <!-- HINT STRIP -->
+              <div class="map-interaction-hint">
+                <span>💡 <strong>Interactive Controls:</strong> Scroll mouse wheel to zoom • Click &amp; drag map to pan • Click any pin for forensics</span>
+              </div>
+
               <svg id="network-map-svg" class="network-svg" viewBox="0 0 1024 655" preserveAspectRatio="xMidYMid meet">
                 <!-- Dynamically populated by JS renderDynamicGeoMap / renderNexusGraph -->
               </svg>
@@ -3536,6 +3559,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=7.7"></script>
+  <script src="app.js?v=7.8"></script>
 </body>
 </html>

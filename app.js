@@ -1151,7 +1151,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </g>
     `;
 
-    if (netSvg) netSvg.innerHTML = svgContent;
+    if (netSvg) {
+      netSvg.innerHTML = svgContent;
+      if (typeof updateMapViewBox === 'function') updateMapViewBox();
+    }
   }
 
   // --- CROSS-CASE SYNDICATE NEXUS GRAPH RENDERER ---
@@ -1295,7 +1298,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </g>
     `;
 
-    if (netSvg) netSvg.innerHTML = nexusContent;
+    if (netSvg) {
+      netSvg.innerHTML = nexusContent;
+      if (typeof updateMapViewBox === 'function') updateMapViewBox();
+    }
   }
 
   // --- UI SELECTORS ---
@@ -1371,6 +1377,168 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast(`Filter: ${btn.textContent}`, 'info');
     });
   });
+
+  // --- MAP ZOOM, PAN & REGION FOCUS CONTROLLER ---
+  const mapZoomState = {
+    viewWidth: 1024,
+    viewHeight: 655,
+    minX: 0,
+    minY: 0,
+    width: 1024,
+    height: 655,
+    zoomLevel: 1.0,
+    isPanning: false,
+    startX: 0,
+    startY: 0
+  };
+
+  function updateMapViewBox() {
+    const netSvg = document.getElementById('network-map-svg');
+    const badge = document.getElementById('map-zoom-badge');
+    if (netSvg) {
+      netSvg.setAttribute('viewBox', `${Math.round(mapZoomState.minX)} ${Math.round(mapZoomState.minY)} ${Math.round(mapZoomState.width)} ${Math.round(mapZoomState.height)}`);
+    }
+    if (badge) {
+      badge.textContent = `${Math.round(mapZoomState.zoomLevel * 100)}%`;
+    }
+  }
+
+  function zoomMap(factor, centerX = null, centerY = null) {
+    if (centerX === null) centerX = mapZoomState.minX + mapZoomState.width / 2;
+    if (centerY === null) centerY = mapZoomState.minY + mapZoomState.height / 2;
+
+    const newZoom = Math.min(Math.max(mapZoomState.zoomLevel * factor, 1.0), 6.0);
+    if (Math.abs(newZoom - mapZoomState.zoomLevel) < 0.001 && factor !== 1.0) return;
+
+    const prevWidth = mapZoomState.width;
+    const prevHeight = mapZoomState.height;
+
+    mapZoomState.zoomLevel = newZoom;
+    mapZoomState.width = mapZoomState.viewWidth / newZoom;
+    mapZoomState.height = mapZoomState.viewHeight / newZoom;
+
+    // Center zoom around cursor / specified center
+    const ratioX = (centerX - mapZoomState.minX) / prevWidth;
+    const ratioY = (centerY - mapZoomState.minY) / prevHeight;
+
+    mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, centerX - ratioX * mapZoomState.width));
+    mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, centerY - ratioY * mapZoomState.height));
+
+    updateMapViewBox();
+  }
+
+  function focusMapRegion(region) {
+    document.querySelectorAll('.map-preset-btn').forEach(b => {
+      if (b.dataset.focus === region) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+
+    if (region === 'india') {
+      // Focus India Subcontinent: Center ~(680, 310) @ 2.8x
+      mapZoomState.zoomLevel = 2.8;
+      mapZoomState.width = mapZoomState.viewWidth / 2.8;
+      mapZoomState.height = mapZoomState.viewHeight / 2.8;
+      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 680 - mapZoomState.width / 2));
+      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 310 - mapZoomState.height / 2));
+      showToast('Zoomed in: 🇮🇳 India Cyber Command Jurisdictions', 'info');
+    } else if (region === 'dubai') {
+      // Focus Dubai / Gulf: Center ~(618, 288) @ 3.0x
+      mapZoomState.zoomLevel = 3.0;
+      mapZoomState.width = mapZoomState.viewWidth / 3.0;
+      mapZoomState.height = mapZoomState.viewHeight / 3.0;
+      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 618 - mapZoomState.width / 2));
+      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 288 - mapZoomState.height / 2));
+      showToast('Zoomed in: 🇦🇪 Dubai & Persian Gulf OTC Desks', 'info');
+    } else if (region === 'seasia') {
+      // Focus Southeast Asia: Center ~(765, 365) @ 2.6x
+      mapZoomState.zoomLevel = 2.6;
+      mapZoomState.width = mapZoomState.viewWidth / 2.6;
+      mapZoomState.height = mapZoomState.viewHeight / 2.6;
+      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 765 - mapZoomState.width / 2));
+      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 365 - mapZoomState.height / 2));
+      showToast('Zoomed in: 🇸🇬 Southeast Asia Laundering Corridor', 'info');
+    } else if (region === 'europe') {
+      // Focus Europe: Center ~(495, 190) @ 2.7x
+      mapZoomState.zoomLevel = 2.7;
+      mapZoomState.width = mapZoomState.viewWidth / 2.7;
+      mapZoomState.height = mapZoomState.viewHeight / 2.7;
+      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 495 - mapZoomState.width / 2));
+      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 190 - mapZoomState.height / 2));
+      showToast('Zoomed in: 🇪🇺 European Relayers & Staking Relays', 'info');
+    } else {
+      // Reset to Full World
+      mapZoomState.zoomLevel = 1.0;
+      mapZoomState.minX = 0;
+      mapZoomState.minY = 0;
+      mapZoomState.width = mapZoomState.viewWidth;
+      mapZoomState.height = mapZoomState.viewHeight;
+      showToast('Restored: 🌐 Full World Geographic View (100%)', 'info');
+    }
+    updateMapViewBox();
+  }
+
+  // Hook Zoom & Pan Buttons
+  const btnZoomIn = document.getElementById('btn-map-zoom-in');
+  const btnZoomOut = document.getElementById('btn-map-zoom-out');
+  const btnZoomReset = document.getElementById('btn-map-zoom-reset');
+
+  if (btnZoomIn) btnZoomIn.addEventListener('click', () => zoomMap(1.3));
+  if (btnZoomOut) btnZoomOut.addEventListener('click', () => zoomMap(0.77));
+  if (btnZoomReset) btnZoomReset.addEventListener('click', () => focusMapRegion('world'));
+
+  document.querySelectorAll('.map-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const region = btn.dataset.focus || 'world';
+      focusMapRegion(region);
+    });
+  });
+
+  // Mouse Wheel & Drag Pan Listeners on Map Container
+  const mapCanvasContainer = document.getElementById('network-map-canvas-container');
+  if (mapCanvasContainer) {
+    mapCanvasContainer.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const rect = mapCanvasContainer.getBoundingClientRect();
+      const clientX = e.clientX - rect.left;
+      const clientY = e.clientY - rect.top;
+      
+      const svgX = mapZoomState.minX + (clientX / rect.width) * mapZoomState.width;
+      const svgY = mapZoomState.minY + (clientY / rect.height) * mapZoomState.height;
+
+      const factor = e.deltaY < 0 ? 1.2 : 0.83;
+      zoomMap(factor, svgX, svgY);
+    }, { passive: false });
+
+    mapCanvasContainer.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.map-controls-hud') || e.target.closest('button')) return;
+      mapZoomState.isPanning = true;
+      mapZoomState.startX = e.clientX;
+      mapZoomState.startY = e.clientY;
+      mapCanvasContainer.classList.add('panning');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!mapZoomState.isPanning) return;
+      const dx = e.clientX - mapZoomState.startX;
+      const dy = e.clientY - mapZoomState.startY;
+      mapZoomState.startX = e.clientX;
+      mapZoomState.startY = e.clientY;
+
+      const rect = mapCanvasContainer.getBoundingClientRect();
+      const scaleX = mapZoomState.width / rect.width;
+      const scaleY = mapZoomState.height / rect.height;
+
+      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, mapZoomState.minX - dx * scaleX));
+      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, mapZoomState.minY - dy * scaleY));
+
+      updateMapViewBox();
+    });
+
+    window.addEventListener('mouseup', () => {
+      mapZoomState.isPanning = false;
+      mapCanvasContainer.classList.remove('panning');
+    });
+  }
 
   // --- TOAST NOTIFICATIONS ---
   function showToast(message, type = 'info') {
