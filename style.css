@@ -3365,38 +3365,38 @@ html, body {
 
 
 .geo-map-toolbar {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 14px !important;
-  flex-wrap: wrap !important;
-  margin-bottom: 14px !important;
-  padding-bottom: 12px !important;
-  border-bottom: 1px solid var(--border-color) !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .network-toolbar {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 14px !important;
-  flex-wrap: wrap !important;
-  margin-bottom: 14px !important;
-  padding-bottom: 12px !important;
-  border-bottom: 1px solid var(--border-color) !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cluster-filter-group {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  flex-wrap: wrap !important;
-  white-space: nowrap !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
+
 
 .map-mode-toggle {
   display: inline-flex !important;

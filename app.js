@@ -544,117 +544,418 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // --- DYNAMIC FUND-FLOW GRAPH SVG RENDERER ---
+  // --- DYNAMIC MULTI-TOPOLOGY FUND-FLOW GRAPH SVG RENDERER ---
   function renderDynamicFundFlowGraph(profile) {
     const flowSvg = document.getElementById('flow-svg');
     if (!flowSvg) return;
 
-    const addrShort = profile.shortAddress;
-    const hop1Short = profile.hiddenWallets[0] ? profile.hiddenWallets[0].addr : '0xMuleA...5D6';
-    const hop2Short = profile.hiddenWallets[1] ? profile.hiddenWallets[1].addr : '0xMuleB...8E9';
-    const exchShort = profile.exchange.length > 15 ? profile.exchange.slice(0, 14) + '...' : profile.exchange;
+    const prof = (profile && profile.flowAmounts) ? profile : (state.currentProfile || generateForensicProfile(state.currentAddress));
+    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0';
+    const addrShort = prof.shortAddress || `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 
-    const amt1 = profile.flowAmounts.split1;
-    const amt2 = profile.flowAmounts.split2;
-    const amt3 = profile.flowAmounts.split3;
-    const amt4 = profile.flowAmounts.cexSweep;
+    let hashVal = 0;
+    for (let i = 0; i < addr.length; i++) {
+      hashVal = (hashVal << 5) - hashVal + addr.charCodeAt(i);
+      hashVal |= 0;
+    }
+    const absHash = Math.abs(hashVal);
 
-    flowSvg.innerHTML = `
+    const isLazarus = addr.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
+    const isTaskScam = addr.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
+    const isDigitalArrest = addr.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e');
+    const isPigButchering = addr.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7');
+    const isBinanceSafe = addr.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60');
+    const isVitalik = addr.toLowerCase().includes('d8da6bf26964af9d7eed9e03e53415d37aa96045');
+
+    const receivedAmt = prof.received || '₹84,500';
+    const split1Amt = prof.flowAmounts ? prof.flowAmounts.split1 : '₹50,700';
+    const split2Amt = prof.flowAmounts ? prof.flowAmounts.split2 : '₹33,800';
+    const split3Amt = prof.flowAmounts ? prof.flowAmounts.split3 : '₹30,420';
+    const cexSweepAmt = prof.flowAmounts ? prof.flowAmounts.cexSweep : '₹84,500';
+
+    let svgInner = '';
+    let customScrubberSteps = [];
+
+    const baseDefs = `
       <defs>
         <pattern id="graph-grid" width="20" height="20" patternUnits="userSpaceOnUse">
           <circle cx="1" cy="1" r="0.7" fill="rgba(255,255,255,0.06)" />
         </pattern>
-        <filter id="glow-green"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#10b981" flood-opacity="0.8"/></filter>
-        <filter id="glow-red"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" flood-opacity="0.8"/></filter>
-        <filter id="glow-amber"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#f59e0b" flood-opacity="0.8"/></filter>
-        <filter id="glow-blue"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.8"/></filter>
+        <filter id="glow-green"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#10b981" flood-opacity="0.85"/></filter>
+        <filter id="glow-red"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ef4444" flood-opacity="0.85"/></filter>
+        <filter id="glow-amber"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#f59e0b" flood-opacity="0.85"/></filter>
+        <filter id="glow-purple"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#a855f7" flood-opacity="0.85"/></filter>
+        <filter id="glow-blue"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.85"/></filter>
         <marker id="arrow-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748b" />
         </marker>
+        <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00c0ff" />
+        </marker>
       </defs>
-
       <rect width="100%" height="100%" fill="url(#graph-grid)" opacity="0.4" />
-
-      <!-- CONNECTIONS -->
-      <g class="flow-connections">
-        <path id="path-victim-suspect" d="M 120 140 L 225 140" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
-        <path id="path-suspect-walletA" d="M 285 140 C 330 140, 360 85, 420 85" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
-        <path id="path-walletA-walletB" d="M 480 85 L 565 92" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
-        <path id="path-walletA-walletC" d="M 450 115 L 450 170" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
-        <path id="path-suspect-exchange" d="M 285 145 C 330 150, 360 250, 435 250" stroke="#475569" stroke-width="2" stroke-dasharray="4 4" class="animated-edge" marker-end="url(#arrow-gray)"/>
-      </g>
-
-      <!-- PARTICLES -->
-      <g class="flow-particles">
-        <circle r="3" fill="#10b981"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 120 140 L 225 140" /></circle>
-        <circle r="3" fill="#ef4444"><animateMotion dur="3s" repeatCount="indefinite" path="M 285 140 C 330 140, 360 85, 420 85" /></circle>
-        <circle r="2.5" fill="#f59e0b"><animateMotion dur="2.8s" repeatCount="indefinite" path="M 480 85 L 565 92" /></circle>
-        <circle r="2.5" fill="#f59e0b"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 450 115 L 450 170" /></circle>
-        <circle r="3" fill="#38bdf8"><animateMotion dur="3.2s" repeatCount="indefinite" path="M 285 145 C 330 150, 360 250, 435 250" /></circle>
-      </g>
-
-      <!-- LABELS -->
-      <g class="flow-labels font-mono">
-        <rect x="330" y="88" width="65" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
-        <text x="362" y="102" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">${amt1}</text>
-
-        <rect x="500" y="65" width="65" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
-        <text x="532" y="79" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">${amt2}</text>
-
-        <rect x="456" y="132" width="65" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
-        <text x="488" y="146" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">${amt3}</text>
-
-        <rect x="330" y="210" width="65" height="20" rx="4" fill="#0f172a" stroke="#1e293b" />
-        <text x="362" y="224" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="600">${amt4}</text>
-      </g>
-
-      <!-- NODES -->
-      <g class="flow-nodes">
-        <!-- Node 1: Victim -->
-        <g class="graph-node node-victim" transform="translate(60, 110)">
-          <rect width="60" height="60" rx="10" fill="#091b15" stroke="#10b981" stroke-width="1.5" filter="url(#glow-green)"/>
-          <circle cx="30" cy="24" r="12" fill="#10b981" opacity="0.2"/>
-          <path d="M 25 24 L 29 28 L 36 20" stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <text class="node-title" x="30" y="44" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Victim</text>
-          <text class="font-mono node-sub" x="30" y="54" text-anchor="middle" fill="#6ee7b7" font-size="8.5">Inflow Hub</text>
-        </g>
-
-        <!-- Node 2: Suspect Wallet (DYNAMIC ANALYZED WALLET) -->
-        <g class="graph-node node-suspect" transform="translate(225, 105)">
-          <rect width="70" height="70" rx="10" fill="#1f1118" stroke="#ef4444" stroke-width="2" filter="url(#glow-red)"/>
-          <circle cx="35" cy="26" r="14" fill="#ef4444" opacity="0.2"/>
-          <path d="M 35 18 L 35 28 M 35 32 L 35 34" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-          <text class="node-title" x="35" y="48" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">Target Suspect</text>
-          <text class="font-mono node-sub" x="35" y="60" text-anchor="middle" fill="#fca5a5" font-size="8.5">${addrShort}</text>
-        </g>
-
-        <!-- Node 3: Splitter A -->
-        <g class="graph-node node-intermediary" transform="translate(420, 55)">
-          <rect width="60" height="60" rx="10" fill="#1e1809" stroke="#f59e0b" stroke-width="1.5" filter="url(#glow-amber)"/>
-          <circle cx="30" cy="24" r="12" fill="#f59e0b" opacity="0.2"/>
-          <text class="node-title" x="30" y="44" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Mule A (Split)</text>
-          <text class="font-mono node-sub" x="30" y="54" text-anchor="middle" fill="#fcd34d" font-size="8.5">${hop1Short}</text>
-        </g>
-
-        <!-- Node 4: Layering B -->
-        <g class="graph-node node-intermediary" transform="translate(565, 62)">
-          <rect width="60" height="60" rx="10" fill="#1e1809" stroke="#f59e0b" stroke-width="1.5" filter="url(#glow-amber)"/>
-          <circle cx="30" cy="24" r="12" fill="#f59e0b" opacity="0.2"/>
-          <text class="node-title" x="30" y="44" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">Mule B (Layer)</text>
-          <text class="font-mono node-sub" x="30" y="54" text-anchor="middle" fill="#fcd34d" font-size="8.5">${hop2Short}</text>
-        </g>
-
-        <!-- Node 5: Exchange Gateway -->
-        <g class="graph-node node-exchange" transform="translate(435, 220)">
-          <rect width="70" height="60" rx="10" fill="#0b1b2b" stroke="#00c0ff" stroke-width="1.5" filter="url(#glow-blue)"/>
-          <circle cx="35" cy="22" r="12" fill="#00c0ff" opacity="0.2"/>
-          <path d="M 28 26 L 35 18 L 42 26" stroke="#00c0ff" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <text class="node-title" x="35" y="42" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">CEX Gateway</text>
-          <text class="font-mono node-sub" x="35" y="52" text-anchor="middle" fill="#7dd3fc" font-size="8.5">${exchShort}</text>
-        </g>
-      </g>
     `;
+
+    if (isLazarus) {
+      // --- LAZARUS APT-38 EXPLOIT & TORNADO CASH MIXER TOPOLOGY ---
+      customScrubberSteps = [
+        { pct: 0, time: 'T+00:00', desc: 'Protocol Exploit: $2.2M (₹18.5 Cr) drained from DeFi smart contract vault' },
+        { pct: 25, time: 'T+00:12', desc: 'Exploit Staging: Funds consolidated in APT-38 primary drainer 0x098B' },
+        { pct: 50, time: 'T+00:28', desc: 'Zero-Knowledge Obfuscation: 100 ETH tranches injected into Tornado.Cash Mixer' },
+        { pct: 75, time: 'T+00:41', desc: 'Gas Relayer Dispatch: Unlinked withdrawals orchestrated via Relayer 0xRelay99B' },
+        { pct: 100, time: 'T+01:05', desc: 'Terminal Off-Ramp: Consolidated assets swept into Binance Deposit Hot 14' }
+      ];
+
+      svgInner = `
+        ${baseDefs}
+        <!-- CONNECTIONS -->
+        <g class="flow-connections">
+          <path id="flow-edge-1" class="step-hop-0" d="M 120 160 L 205 160" stroke="#475569" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-2" class="step-hop-1" d="M 285 160 L 365 160" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-3" class="step-hop-2" d="M 445 160 L 515 160" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-4" class="step-hop-3" d="M 595 160 L 655 160" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+        </g>
+        <!-- PARTICLES -->
+        <g class="flow-particles">
+          <circle r="3.5" fill="#ef4444"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 120 160 L 205 160" /></circle>
+          <circle r="3.5" fill="#a855f7"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 285 160 L 365 160" /></circle>
+          <circle r="3.5" fill="#a855f7"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 445 160 L 515 160" /></circle>
+          <circle r="3.5" fill="#00c0ff"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 595 160 L 655 160" /></circle>
+        </g>
+        <!-- LABELS -->
+        <g class="flow-labels font-mono">
+          <rect x="135" y="146" width="56" height="18" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="1"/>
+          <text x="163" y="159" text-anchor="middle" fill="#fca5a5" font-size="9" font-weight="700">₹18.5 Cr</text>
+          <rect x="300" y="146" width="56" height="18" rx="4" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+          <text x="328" y="159" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="700">100 ETH</text>
+          <rect x="456" y="146" width="52" height="18" rx="4" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+          <text x="482" y="159" text-anchor="middle" fill="#d8b4fe" font-size="9" font-weight="700">Relay Gas</text>
+          <rect x="604" y="146" width="48" height="18" rx="4" fill="#0f172a" stroke="#00c0ff" stroke-width="1"/>
+          <text x="628" y="159" text-anchor="middle" fill="#7dd3fc" font-size="9" font-weight="700">Sweep</text>
+        </g>
+        <!-- NODES -->
+        <g class="flow-nodes">
+          <g class="graph-node node-victim step-hop-0" transform="translate(40, 125)">
+            <rect width="80" height="70" rx="8" fill="#091b15" stroke="#10b981" stroke-width="1.8" filter="url(#glow-green)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Protocol Vault</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#6ee7b7" font-size="8">DeFi Bridge</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#cbd5e1" font-size="8.5" font-weight="700">₹18.5 Cr</text>
+          </g>
+          <g class="graph-node node-suspect step-hop-1" transform="translate(205, 125)">
+            <rect width="80" height="70" rx="8" fill="#1f1118" stroke="#ef4444" stroke-width="2" filter="url(#glow-red)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">APT-38 Exploit</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fca5a5" font-size="8">${addrShort}</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700">Risk 98%</text>
+          </g>
+          <g class="graph-node step-hop-2" transform="translate(365, 125)">
+            <rect width="80" height="70" rx="8" fill="#1c102a" stroke="#a855f7" stroke-width="1.8" filter="url(#glow-purple)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">🌪️ Tornado Cash</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#d8b4fe" font-size="8">100 ETH Pool</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#c084fc" font-size="8.5">Anon Set 10k</text>
+          </g>
+          <g class="graph-node step-hop-3" transform="translate(515, 125)">
+            <rect width="80" height="70" rx="8" fill="#1c102a" stroke="#a855f7" stroke-width="1.8" filter="url(#glow-purple)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Gas Relayer</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#d8b4fe" font-size="8">0xRelay99B</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#a855f7" font-size="8.5">94.2% Link</text>
+          </g>
+          <g class="graph-node node-exchange step-hop-4" transform="translate(655, 125)">
+            <rect width="80" height="70" rx="8" fill="#0b1b2b" stroke="#00c0ff" stroke-width="2" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Binance Hot 14</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">CEX Gateway</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">Terminal Sweep</text>
+          </g>
+        </g>
+      `;
+    } else if (isTaskScam) {
+      // --- TELEGRAM TASK JOB SCAM PEELING CHAIN TOPOLOGY ---
+      customScrubberSteps = [
+        { pct: 0, time: 'T+00:00', desc: 'Victim Extortion: ₹84,500 deposited into Telegram Task Scammer Hub' },
+        { pct: 33, time: 'T+00:08', desc: 'Bifurcated Peeling: 60% (₹50,700) to Mule A; 40% (₹33,800) to Mule B' },
+        { pct: 66, time: 'T+00:19', desc: 'Layer-2 Obfuscation: Mule A peels ₹30,420 to secondary mule account' },
+        { pct: 100, time: 'T+00:27', desc: 'Terminal Liquidation: Consolidated ₹84,500 swept into WazirX Hot 02 Gateway' }
+      ];
+
+      svgInner = `
+        ${baseDefs}
+        <!-- CONNECTIONS -->
+        <g class="flow-connections">
+          <path id="flow-edge-1" class="step-hop-0" d="M 115 160 L 195 160" stroke="#475569" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-2" class="step-hop-1" d="M 275 145 C 305 145, 315 95, 345 95" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-3" class="step-hop-1" d="M 275 175 C 305 175, 315 225, 345 225" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-4" class="step-hop-2" d="M 425 95 L 495 95" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-5" class="step-hop-3" d="M 575 95 C 605 95, 615 145, 645 145" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+          <path id="flow-edge-6" class="step-hop-3" d="M 425 225 C 535 225, 595 175, 645 175" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+        </g>
+        <!-- PARTICLES -->
+        <g class="flow-particles">
+          <circle r="3.5" fill="#ef4444"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 115 160 L 195 160" /></circle>
+          <circle r="3" fill="#f59e0b"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 275 145 C 305 145, 315 95, 345 95" /></circle>
+          <circle r="3" fill="#f59e0b"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 275 175 C 305 175, 315 225, 345 225" /></circle>
+          <circle r="2.5" fill="#f59e0b"><animateMotion dur="2s" repeatCount="indefinite" path="M 425 95 L 495 95" /></circle>
+          <circle r="3" fill="#00c0ff"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 575 95 C 605 95, 615 145, 645 145" /></circle>
+          <circle r="3" fill="#00c0ff"><animateMotion dur="2.5s" repeatCount="indefinite" path="M 425 225 C 535 225, 595 175, 645 175" /></circle>
+        </g>
+        <!-- LABELS -->
+        <g class="flow-labels font-mono">
+          <rect x="132" y="148" width="50" height="16" rx="4" fill="#0f172a" stroke="#10b981"/>
+          <text x="157" y="160" text-anchor="middle" fill="#6ee7b7" font-size="8.5">${receivedAmt}</text>
+          <rect x="282" y="105" width="55" height="16" rx="4" fill="#0f172a" stroke="#f59e0b"/>
+          <text x="309" y="117" text-anchor="middle" fill="#fbbf24" font-size="8.5">60% (${split1Amt})</text>
+          <rect x="282" y="195" width="55" height="16" rx="4" fill="#0f172a" stroke="#f59e0b"/>
+          <text x="309" y="207" text-anchor="middle" fill="#fbbf24" font-size="8.5">40% (${split2Amt})</text>
+          <rect x="436" y="82" width="50" height="16" rx="4" fill="#0f172a" stroke="#f59e0b"/>
+          <text x="461" y="94" text-anchor="middle" fill="#fbbf24" font-size="8.5">${split3Amt}</text>
+          <rect x="585" y="152" width="50" height="16" rx="4" fill="#0f172a" stroke="#00c0ff"/>
+          <text x="610" y="164" text-anchor="middle" fill="#38bdf8" font-size="8.5">Sweep</text>
+        </g>
+        <!-- NODES -->
+        <g class="flow-nodes">
+          <g class="graph-node node-victim step-hop-0" transform="translate(35, 125)">
+            <rect width="80" height="70" rx="8" fill="#091b15" stroke="#10b981" stroke-width="1.8" filter="url(#glow-green)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Victim Inflow</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#6ee7b7" font-size="8">Cyber Cell Reg</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#cbd5e1" font-size="8.5" font-weight="700">${receivedAmt}</text>
+          </g>
+          <g class="graph-node node-suspect step-hop-1" transform="translate(195, 125)">
+            <rect width="80" height="70" rx="8" fill="#1f1118" stroke="#ef4444" stroke-width="2" filter="url(#glow-red)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Task Scammer</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fca5a5" font-size="8">${addrShort}</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700">Risk 91%</text>
+          </g>
+          <g class="graph-node step-hop-2" transform="translate(345, 60)">
+            <rect width="80" height="70" rx="8" fill="#1e1809" stroke="#f59e0b" stroke-width="1.8" filter="url(#glow-amber)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Mule A (60%)</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fcd34d" font-size="8">0xMuleA...5D6</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#fbbf24" font-size="8.5" font-weight="700">${split1Amt}</text>
+          </g>
+          <g class="graph-node step-hop-2" transform="translate(345, 190)">
+            <rect width="80" height="70" rx="8" fill="#1e1809" stroke="#f59e0b" stroke-width="1.8" filter="url(#glow-amber)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Mule B (40%)</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fcd34d" font-size="8">0xMuleB...8E9</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#fbbf24" font-size="8.5" font-weight="700">${split2Amt}</text>
+          </g>
+          <g class="graph-node step-hop-3" transform="translate(495, 60)">
+            <rect width="80" height="70" rx="8" fill="#1e1809" stroke="#f59e0b" stroke-width="1.8" filter="url(#glow-amber)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Mule C (Peel)</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fcd34d" font-size="8">0xPeelC...2A1</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#fbbf24" font-size="8.5" font-weight="700">${split3Amt}</text>
+          </g>
+          <g class="graph-node node-exchange step-hop-4" transform="translate(645, 125)">
+            <rect width="80" height="70" rx="8" fill="#0b1b2b" stroke="#00c0ff" stroke-width="2" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">WazirX Hot 02</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">India Gateway</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">₹84,500 Sweep</text>
+          </g>
+        </g>
+      `;
+    } else if (isDigitalArrest) {
+      // --- DIGITAL ARREST & SEXTORTION PERMIT2 DRAINER TOPOLOGY ---
+      customScrubberSteps = [
+        { pct: 0, time: 'T+00:00', desc: 'Coercive Threat: Victim pressured into signing fraudulent Permit2 token drainer' },
+        { pct: 33, time: 'T+00:08', desc: 'Automated Drain: ₹1,50,000 sucked from victim account via Permit2 contract' },
+        { pct: 66, time: 'T+00:21', desc: 'OTC Staging: Funds transferred to Dubai OTC cashout broker desk' },
+        { pct: 100, time: 'T+00:38', desc: 'Terminal Liquidation: Off-ramped via OKX/CoinDCX multi-sig vault' }
+      ];
+
+      svgInner = `
+        ${baseDefs}
+        <!-- CONNECTIONS -->
+        <g class="flow-connections">
+          <path id="flow-edge-1" class="step-hop-0" d="M 120 160 L 220 160" stroke="#475569" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-2" class="step-hop-1" d="M 300 160 L 400 160" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-3" class="step-hop-2" d="M 480 160 L 580 160" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+        </g>
+        <!-- PARTICLES -->
+        <g class="flow-particles">
+          <circle r="3.5" fill="#10b981"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 120 160 L 220 160" /></circle>
+          <circle r="3.5" fill="#ef4444"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 300 160 L 400 160" /></circle>
+          <circle r="3.5" fill="#00c0ff"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 480 160 L 580 160" /></circle>
+        </g>
+        <!-- LABELS -->
+        <g class="flow-labels font-mono">
+          <rect x="145" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#10b981"/>
+          <text x="172" y="159" text-anchor="middle" fill="#6ee7b7" font-size="9">₹1,50,000</text>
+          <rect x="325" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#f59e0b"/>
+          <text x="352" y="159" text-anchor="middle" fill="#fbbf24" font-size="9">₹96,000</text>
+          <rect x="505" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#00c0ff"/>
+          <text x="532" y="159" text-anchor="middle" fill="#38bdf8" font-size="9">₹54,000</text>
+        </g>
+        <!-- NODES -->
+        <g class="flow-nodes">
+          <g class="graph-node node-victim step-hop-0" transform="translate(40, 125)">
+            <rect width="80" height="70" rx="8" fill="#091b15" stroke="#10b981" stroke-width="1.8" filter="url(#glow-green)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Victim Account</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#6ee7b7" font-size="8">Delhi Resident</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#cbd5e1" font-size="8.5" font-weight="700">₹1,50,000</text>
+          </g>
+          <g class="graph-node node-suspect step-hop-1" transform="translate(220, 125)">
+            <rect width="80" height="70" rx="8" fill="#1f1118" stroke="#ef4444" stroke-width="2" filter="url(#glow-red)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Permit2 Drain</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fca5a5" font-size="8">${addrShort}</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700">Risk 88%</text>
+          </g>
+          <g class="graph-node step-hop-2" transform="translate(400, 125)">
+            <rect width="80" height="70" rx="8" fill="#1e1809" stroke="#f59e0b" stroke-width="1.8" filter="url(#glow-amber)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Dubai OTC Desk</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fcd34d" font-size="8">0xDubai...88F</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#fbbf24" font-size="8.5" font-weight="700">P2P Cashout</text>
+          </g>
+          <g class="graph-node node-exchange step-hop-3" transform="translate(580, 125)">
+            <rect width="80" height="70" rx="8" fill="#0b1b2b" stroke="#00c0ff" stroke-width="2" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">OKX / CoinDCX</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">Multi-Sig Vault</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">Off-Ramp</text>
+          </g>
+        </g>
+      `;
+    } else if (isPigButchering) {
+      // --- PIG BUTCHERING ARBITRAGE PHISHING DEX TOPOLOGY ---
+      customScrubberSteps = [
+        { pct: 0, time: 'T+00:00', desc: 'Deceptive Staking: Victim deposits ₹1.45 Cr into fake high-yield DEX pool' },
+        { pct: 33, time: 'T+00:14', desc: 'Pool Liquidation: Syndicate drains liquidity into Multi-Sig Vault 0x8920' },
+        { pct: 66, time: 'T+00:30', desc: 'Parallel Split: 60% (₹87L) to OKX Gate; 40% (₹58L) to KuCoin Gate' },
+        { pct: 100, time: 'T+00:52', desc: 'Terminal Cashout: P2P arbitrage liquidation completed across foreign desks' }
+      ];
+
+      svgInner = `
+        ${baseDefs}
+        <!-- CONNECTIONS -->
+        <g class="flow-connections">
+          <path id="flow-edge-1" class="step-hop-0" d="M 120 160 L 200 160" stroke="#475569" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-2" class="step-hop-1" d="M 280 160 L 360 160" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-3" class="step-hop-2" d="M 440 145 C 490 145, 510 95, 560 95" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+          <path id="flow-edge-4" class="step-hop-2" d="M 440 175 C 490 175, 510 225, 560 225" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+        </g>
+        <!-- PARTICLES -->
+        <g class="flow-particles">
+          <circle r="3.5" fill="#10b981"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 120 160 L 200 160" /></circle>
+          <circle r="3.5" fill="#ef4444"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 280 160 L 360 160" /></circle>
+          <circle r="3" fill="#00c0ff"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 440 145 C 490 145, 510 95, 560 95" /></circle>
+          <circle r="3" fill="#00c0ff"><animateMotion dur="2.2s" repeatCount="indefinite" path="M 440 175 C 490 175, 510 225, 560 225" /></circle>
+        </g>
+        <!-- LABELS -->
+        <g class="flow-labels font-mono">
+          <rect x="135" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#10b981"/>
+          <text x="162" y="159" text-anchor="middle" fill="#6ee7b7" font-size="8.5">₹1.45 Cr</text>
+          <rect x="295" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#ef4444"/>
+          <text x="322" y="159" text-anchor="middle" fill="#fca5a5" font-size="8.5">Drain Sweep</text>
+          <rect x="475" y="100" width="60" height="18" rx="4" fill="#0f172a" stroke="#00c0ff"/>
+          <text x="505" y="113" text-anchor="middle" fill="#38bdf8" font-size="8.5">60% (₹87L)</text>
+          <rect x="475" y="200" width="60" height="18" rx="4" fill="#0f172a" stroke="#00c0ff"/>
+          <text x="505" y="213" text-anchor="middle" fill="#38bdf8" font-size="8.5">40% (₹58L)</text>
+        </g>
+        <!-- NODES -->
+        <g class="flow-nodes">
+          <g class="graph-node node-victim step-hop-0" transform="translate(40, 125)">
+            <rect width="80" height="70" rx="8" fill="#091b15" stroke="#10b981" stroke-width="1.8" filter="url(#glow-green)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Victim Deposit</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#6ee7b7" font-size="8">Bengaluru FIR</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#cbd5e1" font-size="8.5" font-weight="700">₹1.45 Cr</text>
+          </g>
+          <g class="graph-node node-suspect step-hop-1" transform="translate(200, 125)">
+            <rect width="80" height="70" rx="8" fill="#1f1118" stroke="#ef4444" stroke-width="2" filter="url(#glow-red)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Fake Mining DEX</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fca5a5" font-size="8">${addrShort}</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700">Risk 94%</text>
+          </g>
+          <g class="graph-node step-hop-2" transform="translate(360, 125)">
+            <rect width="80" height="70" rx="8" fill="#1e1809" stroke="#f59e0b" stroke-width="1.8" filter="url(#glow-amber)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Multi-Sig Vault</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fcd34d" font-size="8">0xVault...91A</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#fbbf24" font-size="8.5" font-weight="700">Syndicate Hub</text>
+          </g>
+          <g class="graph-node node-exchange step-hop-3" transform="translate(560, 60)">
+            <rect width="80" height="70" rx="8" fill="#0b1b2b" stroke="#00c0ff" stroke-width="2" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">OKX Hot Gate</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">Deposit Cluster</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">₹87,00,000</text>
+          </g>
+          <g class="graph-node node-exchange step-hop-3" transform="translate(560, 190)">
+            <rect width="80" height="70" rx="8" fill="#0b1b2b" stroke="#00c0ff" stroke-width="2" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">KuCoin Gateway</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">Deposit Cluster</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">₹58,00,000</text>
+          </g>
+        </g>
+      `;
+    } else {
+      // --- GENERAL / BINANCE SAFE / DYNAMIC ON-CHAIN WALLET TOPOLOGY ---
+      customScrubberSteps = [
+        { pct: 0, time: 'T+00:00', desc: `Inflow Receipt: ${receivedAmt} deposited into primary address ${addrShort}` },
+        { pct: 33, time: 'T+00:15', desc: `Layer-1 Routing: Split transfer of ${split1Amt} to secondary clearing node` },
+        { pct: 66, time: 'T+00:32', desc: `Intermediate Staging: ${split2Amt} routed to liquidity settlement address` },
+        { pct: 100, time: 'T+00:48', desc: `Terminal Settlement: Final sweep of ${cexSweepAmt} to ${prof.exchange || 'Exchange Gateway'}` }
+      ];
+
+      const mule1 = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : '0xClearing...5D6';
+      const mule2 = prof.hiddenWallets && prof.hiddenWallets[1] ? prof.hiddenWallets[1].addr : '0xSettlement...8E9';
+      const exchLabel = (prof.exchange || 'Binance Hot 14').split(' ')[0];
+
+      svgInner = `
+        ${baseDefs}
+        <!-- CONNECTIONS -->
+        <g class="flow-connections">
+          <path id="flow-edge-1" class="step-hop-0" d="M 120 160 L 220 160" stroke="#475569" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-2" class="step-hop-1" d="M 300 160 L 400 160" stroke="#00c0ff" stroke-width="2.5" stroke-dasharray="4 4" marker-end="url(#arrow-gray)"/>
+          <path id="flow-edge-3" class="step-hop-2" d="M 480 160 L 580 160" stroke="#00c0ff" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+        </g>
+        <!-- PARTICLES -->
+        <g class="flow-particles">
+          <circle r="3.5" fill="#10b981"><animateMotion dur="2.4s" repeatCount="indefinite" path="M 120 160 L 220 160" /></circle>
+          <circle r="3.5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M 300 160 L 400 160" /></circle>
+          <circle r="3.5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M 480 160 L 580 160" /></circle>
+        </g>
+        <!-- LABELS -->
+        <g class="flow-labels font-mono">
+          <rect x="145" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#10b981"/>
+          <text x="172" y="159" text-anchor="middle" fill="#6ee7b7" font-size="9">${receivedAmt}</text>
+          <rect x="325" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#00c0ff"/>
+          <text x="352" y="159" text-anchor="middle" fill="#7dd3fc" font-size="9">${split1Amt}</text>
+          <rect x="505" y="146" width="55" height="18" rx="4" fill="#0f172a" stroke="#00c0ff"/>
+          <text x="532" y="159" text-anchor="middle" fill="#7dd3fc" font-size="9">${cexSweepAmt}</text>
+        </g>
+        <!-- NODES -->
+        <g class="flow-nodes">
+          <g class="graph-node node-victim step-hop-0" transform="translate(40, 125)">
+            <rect width="80" height="70" rx="8" fill="#091b15" stroke="#10b981" stroke-width="1.8" filter="url(#glow-green)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Inflow Source</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#6ee7b7" font-size="8">Origin Vault</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#cbd5e1" font-size="8.5" font-weight="700">${receivedAmt}</text>
+          </g>
+          <g class="graph-node node-suspect step-hop-1" transform="translate(220, 125)">
+            <rect width="80" height="70" rx="8" fill="#1f1118" stroke="${isBinanceSafe || isVitalik ? '#10b981' : '#ef4444'}" stroke-width="2" filter="${isBinanceSafe || isVitalik ? 'url(#glow-green)' : 'url(#glow-red)'}"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Target Address</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="${isBinanceSafe || isVitalik ? '#6ee7b7' : '#fca5a5'}" font-size="8">${addrShort}</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="${isBinanceSafe || isVitalik ? '#10b981' : '#ef4444'}" font-size="8.5" font-weight="700">Risk ${prof.riskScore}/100</text>
+          </g>
+          <g class="graph-node step-hop-2" transform="translate(400, 125)">
+            <rect width="80" height="70" rx="8" fill="#091224" stroke="#00c0ff" stroke-width="1.8" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Settlement Node</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">${mule1.slice(0, 10)}</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">Routing Hub</text>
+          </g>
+          <g class="graph-node node-exchange step-hop-3" transform="translate(580, 125)">
+            <rect width="80" height="70" rx="8" fill="#0b1b2b" stroke="#00c0ff" stroke-width="2" filter="url(#glow-blue)"/>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">${exchLabel} Gateway</text>
+            <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#7dd3fc" font-size="8">CEX Cluster</text>
+            <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-weight="700">${cexSweepAmt}</text>
+          </g>
+        </g>
+      `;
+    }
+
+    state.currentScrubberSteps = customScrubberSteps;
+    flowSvg.innerHTML = svgInner;
+
+    // Reset scrubber slider to active state
+    if (typeof applyScrubberStep === 'function') {
+      const scrubSlider = document.getElementById('flow-timeline-slider');
+      const val = scrubSlider ? parseInt(scrubSlider.value) : 100;
+      applyScrubberStep(val);
+    }
   }
+
 
   // --- DYNAMIC REAL-WORLD GEOGRAPHIC MONEY FLOW MAP RENDERER ---
   function renderDynamicGeoMap(profile) {
@@ -1279,12 +1580,26 @@ document.addEventListener('DOMContentLoaded', () => {
       renderDnaTree(state.currentCampaignId);
     } else if (viewName === 'network-map') {
       const prof = state.currentProfile || generateForensicProfile(state.currentAddress);
+      const geoToolbar = document.getElementById('geo-map-toolbar');
+      const nexusToolbar = document.getElementById('nexus-map-toolbar');
+      const btnMapGeo = document.getElementById('btn-map-mode-geo');
+      const btnMapNexus = document.getElementById('btn-map-mode-nexus');
+
       if (state.currentMapMode === 'geo') {
+        if (geoToolbar) geoToolbar.style.display = 'flex';
+        if (nexusToolbar) nexusToolbar.style.display = 'none';
+        if (btnMapGeo) btnMapGeo.classList.add('active');
+        if (btnMapNexus) btnMapNexus.classList.remove('active');
         renderDynamicGeoMap(prof);
       } else {
+        if (geoToolbar) geoToolbar.style.display = 'none';
+        if (nexusToolbar) nexusToolbar.style.display = 'flex';
+        if (btnMapNexus) btnMapNexus.classList.add('active');
+        if (btnMapGeo) btnMapGeo.classList.remove('active');
         renderNexusGraph('all');
       }
     }
+
   }
 
   // Setup click listeners for nav-links in Crypto Mode
@@ -1445,22 +1760,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrubTimeBadge = document.getElementById('scrubber-time-badge');
   const scrubDesc = document.getElementById('scrubber-event-desc');
 
-  const scrubberSteps = [
-    { pct: 0, time: 'T+00:00', desc: 'Victim Inflow: Funds deposited into Target Suspect Hub' },
-    { pct: 33, time: 'T+00:25', desc: 'Step 1/3: 60% split into Layer-1 Intermediary Mule A' },
-    { pct: 66, time: 'T+00:26', desc: 'Step 2/3: Layer-2 Fan-Out into Mule B (36%) & Intermediate Hold (24%)' },
-    { pct: 100, time: 'T+00:27', desc: 'Step 3/3: 40% direct sweep into Centralized Exchange Hot Gateway' }
+  const scrubberDefaultSteps = [
+    { pct: 0, time: 'T+00:00', desc: 'Victim Inflow: Initial transaction received into Suspect Hub' },
+    { pct: 33, time: 'T+00:15', desc: 'Layer-1 Routing: Primary split into accomplice mule accounts' },
+    { pct: 66, time: 'T+00:30', desc: 'Layer-2 Peeling: Secondary hops to obfuscate audit trail' },
+    { pct: 100, time: 'T+00:45', desc: 'Terminal Liquidation: Consolidated assets swept into CEX Hot Gateway' }
   ];
 
   function applyScrubberStep(val) {
     if (scrubSlider) scrubSlider.value = val;
-    let currentStep = scrubberSteps[0];
-    for (let s of scrubberSteps) {
+    const steps = (state.currentScrubberSteps && state.currentScrubberSteps.length > 0) ? state.currentScrubberSteps : scrubberDefaultSteps;
+    let currentStep = steps[0];
+    for (let s of steps) {
       if (val >= s.pct) currentStep = s;
     }
     if (scrubTimeBadge) scrubTimeBadge.textContent = `${currentStep.time} (${val}% Complete)`;
     if (scrubDesc) scrubDesc.textContent = currentStep.desc;
+
+    // Real-Time Visual Progressive Activation of Flow Graph Nodes & Edges
+    const flowSvg = document.getElementById('flow-svg');
+    if (flowSvg) {
+      const hop0 = flowSvg.querySelectorAll('.step-hop-0');
+      const hop1 = flowSvg.querySelectorAll('.step-hop-1');
+      const hop2 = flowSvg.querySelectorAll('.step-hop-2');
+      const hop3 = flowSvg.querySelectorAll('.step-hop-3');
+      const hop4 = flowSvg.querySelectorAll('.step-hop-4');
+
+      hop0.forEach(el => { el.style.opacity = '1'; el.style.transition = 'opacity 0.3s ease'; });
+      hop1.forEach(el => { el.style.opacity = (val >= 25) ? '1' : '0.22'; el.style.transition = 'opacity 0.3s ease'; });
+      hop2.forEach(el => { el.style.opacity = (val >= 50) ? '1' : '0.22'; el.style.transition = 'opacity 0.3s ease'; });
+      hop3.forEach(el => { el.style.opacity = (val >= 75) ? '1' : '0.22'; el.style.transition = 'opacity 0.3s ease'; });
+      hop4.forEach(el => { el.style.opacity = (val >= 90) ? '1' : '0.22'; el.style.transition = 'opacity 0.3s ease'; });
+    }
   }
+
 
   if (scrubSlider) {
     scrubSlider.addEventListener('input', (e) => {
