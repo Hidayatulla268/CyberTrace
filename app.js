@@ -975,31 +975,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Exact Geographic Coordinates Calibrated on the 1024x655 World Map Outline
     const originHubs = [
-      { city: "Mumbai, India", flag: "🇮🇳", x: 674, y: 320, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
-      { city: "New Delhi, India", flag: "🇮🇳", x: 678, y: 275, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
-      { city: "Bengaluru, India", flag: "🇮🇳", x: 682, y: 345, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
-      { city: "Hyderabad, India", flag: "🇮🇳", x: 688, y: 325, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
-      { city: "Kolkata, India", flag: "🇮🇳", x: 715, y: 295, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
-      { city: "Surat, India", flag: "🇮🇳", x: 668, y: 308, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
+      { city: "Mumbai, India", flag: "🇮🇳", x: 676, y: 316, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
+      { city: "New Delhi, India", flag: "🇮🇳", x: 678, y: 246, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
+      { city: "Bengaluru, India", flag: "🇮🇳", x: 694, y: 340, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
+      { city: "Hyderabad, India", flag: "🇮🇳", x: 696, y: 312, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
+      { city: "Kolkata, India", flag: "🇮🇳", x: 738, y: 280, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
+      { city: "Surat, India", flag: "🇮🇳", x: 660, y: 296, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
     ];
 
     // Dynamic International Layering Nodes (Transit OTC / Mules)
     const transitHubs = [
-      { city: "Dubai, UAE", flag: "🇦🇪", x: 618, y: 288, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" },
-      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 755, y: 335, role: "SE-Asia Task Scam Mule", lat: "13.7° N, 100.5° E" },
-      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 510, y: 195, role: "Privacy Relayer 0xRelay99B", lat: "47.3° N, 8.5° E" },
-      { city: "Singapore", flag: "🇸🇬", x: 765, y: 395, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})`, lat: "1.3° N, 103.8° E" },
-      { city: "Hong Kong", flag: "🇭🇰", x: 788, y: 305, role: "OTC Liquidity Gateway", lat: "22.3° N, 114.1° E" },
-      { city: "London, UK", flag: "🇬🇧", x: 480, y: 178, role: "Crypto Liquidity Arbitrage Hub", lat: "51.5° N, 0.1° W" }
+      { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" },
+      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 760, y: 320, role: "SE-Asia Task Scam Mule", lat: "13.7° N, 100.5° E" },
+      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 507, y: 218, role: "Privacy Relayer 0xRelay99B", lat: "47.3° N, 8.5° E" },
+      { city: "Singapore", flag: "🇸🇬", x: 764, y: 385, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})`, lat: "1.3° N, 103.8° E" },
+      { city: "Hong Kong", flag: "🇭🇰", x: 807, y: 296, role: "OTC Liquidity Gateway", lat: "22.3° N, 114.1° E" },
+      { city: "London, UK", flag: "🇬🇧", x: 475, y: 196, role: "Crypto Liquidity Arbitrage Hub", lat: "51.5° N, 0.1° W" }
     ];
 
     // Dynamic Destination Hubs
     const destHubs = [
-      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 765, y: 395, role: prof.exchange || "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" },
-      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 674, y: 320, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
-      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 635, y: 420, role: "OKX Multi-Sig Deposit Hub", lat: "4.6° S, 55.4° E" },
-      { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 788, y: 305, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" },
-      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 510, y: 195, role: "Tornado.Cash 100 ETH Smart Contract", lat: "DeFi Cloud" }
+      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 764, y: 385, role: prof.exchange || "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" },
+      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 676, y: 316, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
+      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 636, y: 425, role: "OKX Multi-Sig Deposit Hub", lat: "4.6° S, 55.4° E" },
+      { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 807, y: 296, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" },
+      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 507, y: 218, role: "Tornado.Cash 100 ETH Smart Contract", lat: "DeFi Cloud" }
     ];
 
     const isLazarus = addr.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
@@ -1014,29 +1014,29 @@ document.addEventListener('DOMContentLoaded', () => {
     let dest = destHubs[(absHash >> 4) % destHubs.length];
 
     if (isLazarus) {
-      origin = { city: "Seoul / Tokyo", flag: "🇰🇷", x: 818, y: 235, region: "Smart Contract Drain", lat: "37.5° N, 127.0° E" };
-      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 510, y: 195, role: "Tornado Cash Relayer", lat: "47.3° N, 8.5° E" };
-      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 765, y: 395, role: "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" };
+      origin = { city: "Seoul / Tokyo", flag: "🇰🇷", x: 828, y: 230, region: "Smart Contract Drain", lat: "37.5° N, 127.0° E" };
+      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 507, y: 218, role: "Tornado Cash Relayer", lat: "47.3° N, 8.5° E" };
+      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 764, y: 385, role: "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" };
     } else if (isTaskScam) {
-      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 674, y: 320, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
-      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 755, y: 335, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
-      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 674, y: 320, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
+      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 676, y: 316, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
+      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 760, y: 320, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
+      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 676, y: 316, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
     } else if (isDigitalArrest) {
-      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 678, y: 275, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
-      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 618, y: 288, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
-      dest = { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 635, y: 420, role: "CoinDCX / OKX Off-Ramp Hub", lat: "4.6° S, 55.4° E" };
+      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 678, y: 246, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
+      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
+      dest = { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 636, y: 425, role: "CoinDCX / OKX Off-Ramp Hub", lat: "4.6° S, 55.4° E" };
     } else if (isPigButchering) {
-      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 682, y: 345, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
-      transit = { city: "Hong Kong", flag: "🇭🇰", x: 788, y: 305, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
-      dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 788, y: 305, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
+      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 694, y: 340, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
+      transit = { city: "Hong Kong", flag: "🇭🇰", x: 807, y: 296, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
+      dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 807, y: 296, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
     } else if (isBinanceSafe) {
-      origin = { city: "London, UK", flag: "🇬🇧", x: 480, y: 178, region: "Institutional Settlement", lat: "51.5° N, 0.1° W" };
-      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 618, y: 288, role: "VASP Clearing Desk", lat: "25.2° N, 55.2° E" };
-      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 765, y: 395, role: "Binance Holdings Ltd. Hot 14", lat: "1.3° N, 103.8° E" };
+      origin = { city: "London, UK", flag: "🇬🇧", x: 475, y: 196, region: "Institutional Settlement", lat: "51.5° N, 0.1° W" };
+      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "VASP Clearing Desk", lat: "25.2° N, 55.2° E" };
+      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 764, y: 385, role: "Binance Holdings Ltd. Hot 14", lat: "1.3° N, 103.8° E" };
     } else if (isVitalik) {
-      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 265, y: 205, region: "Vitalik Foundation", lat: "43.6° N, 79.3° W" };
-      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 510, y: 195, role: "Ethereum Core Staking", lat: "47.1° N, 8.5° E" };
-      dest = { city: "Consensus Beacon", flag: "🛡️", x: 765, y: 395, role: "Beacon Deposit Contract", lat: "Decentralized" };
+      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 262, y: 208, region: "Vitalik Foundation", lat: "43.6° N, 79.3° W" };
+      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 507, y: 218, role: "Ethereum Core Staking", lat: "47.1° N, 8.5° E" };
+      dest = { city: "Consensus Beacon", flag: "🛡️", x: 764, y: 385, role: "Beacon Deposit Contract", lat: "Decentralized" };
     }
 
     const corridorHTML = `${origin.flag} ${origin.city} &rarr; ${transit.flag} ${transit.city} &rarr; ${dest.flag} ${dest.city} (${dest.role})`;
@@ -1564,32 +1564,32 @@ document.addEventListener('DOMContentLoaded', () => {
       mapZoomState.zoomLevel = 2.8;
       const w = mapZoomState.viewWidth / 2.8;
       const h = mapZoomState.viewHeight / 2.8;
-      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 680 - w / 2));
-      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 310 - h / 2));
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 685 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 290 - h / 2));
       applyTargetViewBox(minX, minY, w, h, true);
       showToast('Smooth Zoom: 🇮🇳 India Cyber Command Stations', 'info');
     } else if (region === 'dubai') {
       mapZoomState.zoomLevel = 3.0;
       const w = mapZoomState.viewWidth / 3.0;
       const h = mapZoomState.viewHeight / 3.0;
-      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 618 - w / 2));
-      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 288 - h / 2));
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 616 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 274 - h / 2));
       applyTargetViewBox(minX, minY, w, h, true);
       showToast('Smooth Zoom: 🇦🇪 Dubai & Persian Gulf OTC Desks', 'info');
     } else if (region === 'seasia') {
       mapZoomState.zoomLevel = 2.6;
       const w = mapZoomState.viewWidth / 2.6;
       const h = mapZoomState.viewHeight / 2.6;
-      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 765 - w / 2));
-      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 365 - h / 2));
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 764 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 350 - h / 2));
       applyTargetViewBox(minX, minY, w, h, true);
       showToast('Smooth Zoom: 🇸🇬 Southeast Asia Laundering Corridor', 'info');
     } else if (region === 'europe') {
       mapZoomState.zoomLevel = 2.7;
       const w = mapZoomState.viewWidth / 2.7;
       const h = mapZoomState.viewHeight / 2.7;
-      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 495 - w / 2));
-      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 190 - h / 2));
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 490 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 205 - h / 2));
       applyTargetViewBox(minX, minY, w, h, true);
       showToast('Smooth Zoom: 🇪🇺 European Relayers & Staking Relays', 'info');
     } else {
