@@ -1,6 +1,10 @@
 """
-CyberTrace - Master Documentation & Comprehensive Platform Comparison PDF Generator
-Generates an exhaustive, publication-grade manual featuring an in-depth Difference Table comparing CyberTrace with all major global forensic platforms.
+CyberTrace - Master Documentation & Comprehensive Platform Guide PDF Generator
+Generates a multi-page publication-grade manual featuring:
+- Dual Forensics Engine Architecture (Crypto Blockchain & UPI Banking Rails)
+- 5 Crypto Crime & 5 Banking Presets
+- Real-World Geographic Cartographic Map
+- Global Difference Matrix & Production Architecture Roadmap
 """
 
 import os
@@ -38,7 +42,7 @@ class NumberedCanvas(canvas.Canvas):
         self.setFillColor(colors.HexColor("#475569"))
         
         # Header
-        self.drawString(50, 11 * 72 - 36, "CYBERTRACE &bull; COMPREHENSIVE PLATFORM GUIDE &amp; GLOBAL DIFFERENCE MATRIX")
+        self.drawString(50, 11 * 72 - 36, "CYBERTRACE &bull; ENTERPRISE CRYPTO &amp; UPI BANKING FORENSICS PLATFORM")
         self.setStrokeColor(colors.HexColor("#cbd5e1"))
         self.setLineWidth(0.5)
         self.line(50, 11 * 72 - 42, 8.5 * 72 - 50, 11 * 72 - 42)
@@ -64,14 +68,15 @@ def build_comprehensive_pdf(output_path):
     styles = getSampleStyleSheet()
     
     c_primary = colors.HexColor("#0066ff")
+    c_green = colors.HexColor("#059669")
     c_dark = colors.HexColor("#0f172a")
     
     title_style = ParagraphStyle(
         'CoverTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=22,
-        leading=27,
+        fontSize=20,
+        leading=25,
         textColor=c_dark
     )
     
@@ -79,8 +84,8 @@ def build_comprehensive_pdf(output_path):
         'CoverSubtitle',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=10.5,
-        leading=14.5,
+        fontSize=10,
+        leading=14,
         textColor=colors.HexColor("#475569")
     )
     
@@ -88,10 +93,10 @@ def build_comprehensive_pdf(output_path):
         'Heading1_Custom',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=13,
-        leading=16.5,
+        fontSize=12.5,
+        leading=16,
         textColor=c_dark,
-        spaceBefore=8,
+        spaceBefore=7,
         spaceAfter=3
     )
     
@@ -99,10 +104,10 @@ def build_comprehensive_pdf(output_path):
         'Heading2_Custom',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=10,
-        leading=13.5,
+        fontSize=9.5,
+        leading=13,
         textColor=c_primary,
-        spaceBefore=5,
+        spaceBefore=4,
         spaceAfter=2
     )
     
@@ -110,8 +115,8 @@ def build_comprehensive_pdf(output_path):
         'Body_Custom',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=8.2,
-        leading=11.8,
+        fontSize=8,
+        leading=11.5,
         textColor=colors.HexColor("#334155"),
         spaceAfter=3
     )
@@ -120,8 +125,8 @@ def build_comprehensive_pdf(output_path):
         'TblHdr',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=7.8,
-        leading=10,
+        fontSize=7.5,
+        leading=9.5,
         textColor=colors.HexColor("#0f172a"),
         alignment=1
     )
@@ -130,8 +135,8 @@ def build_comprehensive_pdf(output_path):
         'TblCell',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=7.4,
-        leading=9.8,
+        fontSize=7.2,
+        leading=9.2,
         textColor=colors.HexColor("#334155")
     )
 
@@ -139,8 +144,8 @@ def build_comprehensive_pdf(output_path):
         'TblBoldCell',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
-        fontSize=7.4,
-        leading=9.8,
+        fontSize=7.2,
+        leading=9.2,
         textColor=colors.HexColor("#0066ff")
     )
     
@@ -149,68 +154,67 @@ def build_comprehensive_pdf(output_path):
     # =========================================================================
     # PAGE 1: COVER & EXECUTIVE OVERVIEW
     # =========================================================================
-    story.append(Spacer(1, 10))
-    story.append(Paragraph("🛡️ <b>CYBERTRACE</b>", ParagraphStyle('LogoText', fontName='Helvetica-Bold', fontSize=22, textColor=c_primary, leading=26)))
-    story.append(Paragraph("Enterprise Crypto Forensics &amp; Comparative Platform Intelligence Manual", title_style))
-    story.append(Spacer(1, 6))
-    story.append(Paragraph("<b>Smart India Hackathon 2026 &bull; Problem Statement PS-26183</b><br/>Indian Cyber Crime Coordination Centre (I4C) &bull; Ministry of Home Affairs, Government of India", subtitle_style))
     story.append(Spacer(1, 8))
-    story.append(HRFlowable(width="100%", thickness=2, color=c_primary, spaceBefore=2, spaceAfter=10))
+    story.append(Paragraph("🛡️ <b>CYBERTRACE</b>", ParagraphStyle('LogoText', fontName='Helvetica-Bold', fontSize=22, textColor=c_primary, leading=26)))
+    story.append(Paragraph("Enterprise Crypto &amp; UPI Banking Forensics Platform Manual", title_style))
+    story.append(Spacer(1, 4))
+    story.append(Paragraph("<b>Smart India Hackathon 2026 &bull; Problem Statement PS-26183</b><br/>Indian Cyber Crime Coordination Centre (I4C) &bull; Ministry of Home Affairs, Government of India", subtitle_style))
+    story.append(Spacer(1, 6))
+    story.append(HRFlowable(width="100%", thickness=2, color=c_primary, spaceBefore=2, spaceAfter=8))
     
     meta_data = [
-        [Paragraph("<b>Author / Lead:</b> Shaik Hidayatulla", body_style), Paragraph("<b>Global Benchmarks:</b> Chainalysis, TRM, Arkham, Elliptic", body_style)],
-        [Paragraph("<b>Status:</b> Production Ready v2.0", body_style), Paragraph("<b>Target Focus:</b> 1930 Helpline &amp; I4C Police Officers", body_style)],
+        [Paragraph("<b>Author / Lead:</b> Shaik Hidayatulla", body_style), Paragraph("<b>Global Benchmarks:</b> Chainalysis, TRM Labs, Arkham, Elliptic", body_style)],
+        [Paragraph("<b>Status:</b> Production Ready v7.4", body_style), Paragraph("<b>Target Focus:</b> 1930 Helpline &amp; I4C Police Officers", body_style)],
         [Paragraph("<b>GitHub Repo:</b> github.com/Hidayatulla268/CyberTrace", body_style), Paragraph("<b>Live App:</b> hidayatulla268.github.io/CyberTrace/", body_style)]
     ]
     t_meta = Table(meta_data, colWidths=[255, 255])
     t_meta.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f1f5f9")),
-        ('PADDING', (0, 0), (-1, -1), 5),
+        ('PADDING', (0, 0), (-1, -1), 4.5),
         ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#cbd5e1")),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
     ]))
     story.append(t_meta)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
     
     what_is_text = (
-        "<b>What is CyberTrace in Simple Words?</b><br/>"
-        "CyberTrace is an <b>Automated Crypto Forensics &amp; Anti-Fraud Intelligence Platform</b> built specifically for Law Enforcement Agencies (I4C, State Cyber Cells, 1930 Helpline). "
-        "When a citizen reports losing money to a crypto scam (such as fake Telegram job scams, investment frauds, or ransomware), "
-        "CyberTrace takes the suspect wallet address and in under 1 second: (1) Traces where the stolen money went hop-by-hop, "
-        "(2) Discovers accomplice mule infrastructure, (3) Identifies which Centralized Exchange received the funds, "
-        "(4) Matches the criminal syndicate's behavioral Fraud DNA™, and (5) Automatically generates court-admissible Section 91 CrPC freeze orders."
+        "<b>Executive Overview &amp; Dual Engine Architecture:</b><br/>"
+        "CyberTrace is an <b>Automated Forensics &amp; Financial Crime Intelligence Platform</b> developed for Law Enforcement Agencies (I4C, State Cyber Cells, 1930 National Helpline). "
+        "It solves the critical problem of multi-rail cyber laundering by providing dual specialized forensic workspaces:<br/>"
+        "&bull; <b>Mode 1 (₿ Crypto Blockchain Engine):</b> Traces multi-chain illicit transactions (EVM, Bitcoin, Tron TRC-20, Solana), follows peeling tranches, uncovers mixer gas relayers, visualizes money flows on an authentic geographic vector map, and drafts Section 91 CrPC exchange subpoenas.<br/>"
+        "&bull; <b>Mode 2 (📱 UPI &amp; Core Banking Engine):</b> Performs NPCI VPA lookups, maps multi-tier bank mule accounts, calculates retrievable balances before ATM sweeps, matches NCRP 1930 complaint patterns, and accesses 42+ Indian Bank Nodal Officer contacts."
     )
     t_what = Table([[Paragraph(what_is_text, body_style)]], colWidths=[510])
     t_what.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#e0f2fe")),
         ('BORDER', (0, 0), (-1, -1), 1, colors.HexColor("#38bdf8")),
-        ('PADDING', (0, 0), (-1, -1), 8),
+        ('PADDING', (0, 0), (-1, -1), 7),
     ]))
     story.append(t_what)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
     
     # Core USP Workflow Banner
-    story.append(Paragraph("⭐ <b>THE 6-STEP MASTER FORENSIC WORKFLOW (USP)</b>", h2_style))
+    story.append(Paragraph("⭐ <b>6-STEP MASTER FORENSIC PIPELINE (USP)</b>", h2_style))
     usp_steps = [
         [
-            Paragraph("<font color='#0066ff'><b>1. REPORT</b></font><br/><font size=6.5 color='#475569'>Victim Intake</font>", ParagraphStyle('U1', fontName='Helvetica-Bold', fontSize=7.5, alignment=1, leading=9)),
-            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=10, alignment=1)),
-            Paragraph("<font color='#0066ff'><b>2. TRACE</b></font><br/><font size=6.5 color='#475569'>Stolen Funds</font>", ParagraphStyle('U2', fontName='Helvetica-Bold', fontSize=7.5, alignment=1, leading=9)),
-            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=10, alignment=1)),
-            Paragraph("<font color='#0066ff'><b>3. CONNECT</b></font><br/><font size=6.5 color='#475569'>Hidden Wallets</font>", ParagraphStyle('U3', fontName='Helvetica-Bold', fontSize=7.5, alignment=1, leading=9)),
-            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=10, alignment=1)),
-            Paragraph("<font color='#0066ff'><b>4. IDENTIFY</b></font><br/><font size=6.5 color='#475569'>Exchange CEX</font>", ParagraphStyle('U4', fontName='Helvetica-Bold', fontSize=7.5, alignment=1, leading=9)),
-            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=10, alignment=1)),
-            Paragraph("<font color='#0066ff'><b>5. MONITOR</b></font><br/><font size=6.5 color='#475569'>Live Mempool</font>", ParagraphStyle('U5', fontName='Helvetica-Bold', fontSize=7.5, alignment=1, leading=9)),
-            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=10, alignment=1)),
-            Paragraph("<font color='#0066ff'><b>6. PROVE</b></font><br/><font size=6.5 color='#475569'>I4C Dossier</font>", ParagraphStyle('U6', fontName='Helvetica-Bold', fontSize=7.5, alignment=1, leading=9))
+            Paragraph("<font color='#0066ff'><b>1. REPORT</b></font><br/><font size=6 color='#475569'>Victim Intake</font>", ParagraphStyle('U1', fontName='Helvetica-Bold', fontSize=7, alignment=1, leading=8.5)),
+            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=9, alignment=1)),
+            Paragraph("<font color='#0066ff'><b>2. TRACE</b></font><br/><font size=6 color='#475569'>Stolen Funds</font>", ParagraphStyle('U2', fontName='Helvetica-Bold', fontSize=7, alignment=1, leading=8.5)),
+            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=9, alignment=1)),
+            Paragraph("<font color='#0066ff'><b>3. CONNECT</b></font><br/><font size=6 color='#475569'>Hidden Mules</font>", ParagraphStyle('U3', fontName='Helvetica-Bold', fontSize=7, alignment=1, leading=8.5)),
+            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=9, alignment=1)),
+            Paragraph("<font color='#0066ff'><b>4. IDENTIFY</b></font><br/><font size=6 color='#475569'>CEX &amp; Banks</font>", ParagraphStyle('U4', fontName='Helvetica-Bold', fontSize=7, alignment=1, leading=8.5)),
+            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=9, alignment=1)),
+            Paragraph("<font color='#0066ff'><b>5. MONITOR</b></font><br/><font size=6 color='#475569'>Live Gateway</font>", ParagraphStyle('U5', fontName='Helvetica-Bold', fontSize=7, alignment=1, leading=8.5)),
+            Paragraph("&rarr;", ParagraphStyle('UA', fontSize=9, alignment=1)),
+            Paragraph("<font color='#0066ff'><b>6. PROVE</b></font><br/><font size=6 color='#475569'>Sec 91 Dossier</font>", ParagraphStyle('U6', fontName='Helvetica-Bold', fontSize=7, alignment=1, leading=8.5))
         ]
     ]
     t_usp = Table(usp_steps, colWidths=[68, 14, 68, 14, 68, 14, 68, 14, 68, 14, 68])
     t_usp.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
         ('BORDER', (0, 0), (-1, -1), 1, colors.HexColor("#cbd5e1")),
-        ('PADDING', (0, 0), (-1, -1), 4),
+        ('PADDING', (0, 0), (-1, -1), 3.5),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
     ]))
@@ -218,15 +222,15 @@ def build_comprehensive_pdf(output_path):
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 2: THE COMPREHENSIVE DIFFERENCE TABLE
+    # PAGE 2: COMPREHENSIVE DIFFERENCE TABLE
     # =========================================================================
-    story.append(Paragraph("1. Comprehensive Platform Difference Matrix", h1_style))
+    story.append(Paragraph("1. Global Platform Difference Matrix", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     story.append(Paragraph(
-        "The following table provides a rigorous side-by-side technical and operational comparison between <b>CyberTrace</b> and the leading global blockchain analytics tools in the industry.",
+        "Side-by-side technical and operational comparison between <b>CyberTrace</b> and major commercial blockchain analytics platforms:",
         body_style
     ))
-    story.append(Spacer(1, 4))
+    story.append(Spacer(1, 3))
     
     diff_table_data = [
         [
@@ -238,12 +242,28 @@ def build_comprehensive_pdf(output_path):
             Paragraph("<b>CyberTrace (Our Platform)</b>", tbl_hdr_style)
         ],
         [
+            Paragraph("<b>Dual Engine (Crypto + UPI/Banking)</b>", tbl_cell_style),
+            Paragraph("Crypto Only", tbl_cell_style),
+            Paragraph("Crypto Only", tbl_cell_style),
+            Paragraph("Crypto Only", tbl_cell_style),
+            Paragraph("Crypto Only", tbl_cell_style),
+            Paragraph("<b>Unified Crypto + NPCI/CBS Banking Rails</b>", tbl_bold_cell)
+        ],
+        [
             Paragraph("<b>Multi-Hop Fund Flow Graph</b>", tbl_cell_style),
             Paragraph("Static nodes, manual layout", tbl_cell_style),
             Paragraph("Interactive 2D graph", tbl_cell_style),
             Paragraph("Entity link graph", tbl_cell_style),
             Paragraph("Node tree visualizer", tbl_cell_style),
             Paragraph("<b>Interactive SVG + Animated Particle Speed Flow</b>", tbl_bold_cell)
+        ],
+        [
+            Paragraph("<b>Real-World Geographic Vector Map</b>", tbl_cell_style),
+            Paragraph("Limited IP heuristics", tbl_cell_style),
+            Paragraph("Country-level tags", tbl_cell_style),
+            Paragraph("Not Available", tbl_cell_style),
+            Paragraph("Not Available", tbl_cell_style),
+            Paragraph("<b>Precise City Vectors (Mumbai, Delhi, Dubai, Singapore)</b>", tbl_bold_cell)
         ],
         [
             Paragraph("<b>Time-Travel Scrubber Bar</b>", tbl_cell_style),
@@ -302,20 +322,12 @@ def build_comprehensive_pdf(output_path):
             Paragraph("<b>Automated Section 91 CrPC Police Notice + 65B Dossier</b>", tbl_bold_cell)
         ],
         [
-            Paragraph("<b>Citizen Safety Screener</b>", tbl_cell_style),
-            Paragraph("No (Enterprise access only)", tbl_cell_style),
-            Paragraph("No (Enterprise access only)", tbl_cell_style),
-            Paragraph("No pre-tx safety verdict", tbl_cell_style),
-            Paragraph("No (Enterprise access only)", tbl_cell_style),
-            Paragraph("<b>Free 'Check Before You Send' Citizen Protection Tool</b>", tbl_bold_cell)
-        ],
-        [
-            Paragraph("<b>Live Blockchain Web3 Mode</b>", tbl_cell_style),
-            Paragraph("Proprietary API", tbl_cell_style),
-            Paragraph("Proprietary API", tbl_cell_style),
-            Paragraph("Proprietary API", tbl_cell_style),
-            Paragraph("Proprietary API", tbl_cell_style),
-            Paragraph("<b>Direct JSON-RPC Mainnet Queries (Real Balance &amp; Nonces)</b>", tbl_bold_cell)
+            Paragraph("<b>Live Blockchain RPC Queries</b>", tbl_cell_style),
+            Paragraph("Proprietary internal indexer", tbl_cell_style),
+            Paragraph("Proprietary internal indexer", tbl_cell_style),
+            Paragraph("Proprietary internal indexer", tbl_cell_style),
+            Paragraph("Proprietary internal indexer", tbl_cell_style),
+            Paragraph("<b>Direct JSON-RPC Multi-Chain + CoinGecko Price Feed</b>", tbl_bold_cell)
         ],
         [
             Paragraph("<b>Cost &amp; Accessibility</b>", tbl_cell_style),
@@ -324,198 +336,141 @@ def build_comprehensive_pdf(output_path):
             Paragraph("Freemium API subscription", tbl_cell_style),
             Paragraph("$40,000+ per year", tbl_cell_style),
             Paragraph("<b>100% Free &amp; Open for Indian Police &amp; LEAs</b>", tbl_bold_cell)
-        ],
-        [
-            Paragraph("<b>Deployment Barrier</b>", tbl_cell_style),
-            Paragraph("Cloud enterprise login", tbl_cell_style),
-            Paragraph("Cloud enterprise login", tbl_cell_style),
-            Paragraph("Web account creation", tbl_cell_style),
-            Paragraph("Cloud enterprise login", tbl_cell_style),
-            Paragraph("<b>Zero dependency: runs in any browser, zero build setup</b>", tbl_bold_cell)
         ]
     ]
     t_diff = Table(diff_table_data, colWidths=[95, 83, 83, 83, 83, 83])
     t_diff.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#f1f5f9")),
         ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
-        ('PADDING', (0, 0), (-1, -1), 2.8),
+        ('PADDING', (0, 0), (-1, -1), 2.5),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
     ]))
     story.append(t_diff)
     story.append(PageBreak())
     
     # =========================================================================
-    # PAGE 3: DETAILED FEATURES 1 TO 6 WITH PRACTICAL EXAMPLES
+    # PAGE 3: 5 CRYPTO PRESETS & CARTOGRAPHIC MAP
     # =========================================================================
-    story.append(Paragraph("2. Detailed Feature Guide with Practical Examples (Part 1)", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
-    
-    f1_6 = [
-        [
-            Paragraph("<b>🔍 1. Smart Multi-Chain Wallet Scanner</b><br/>"
-                      "<b>What it does:</b> Scans any wallet address (EVM, Tron, Bitcoin, Solana) and instantly displays total received funds, sent funds, transaction count, active dates, and live on-chain balances.<br/>"
-                      "<i><b>Real-World Example:</b> An investigator enters suspect address <code>0xA1b2...9T0</code>. The system displays ₹8,42,000 received across 128 transactions, showing activity started on 12 Aug 2026 and last moved today at 05:42 PM.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>💰 2. Stolen Money Tracker (Tranche Following)</b><br/>"
-                      "<b>What it does:</b> Instead of just looking at total volume, it locks onto a specific victim's deposit (e.g. ₹50,000) and follows that exact tranche hop-by-hop as the scammers split and launder it.<br/>"
-                      "<i><b>Real-World Example:</b> Victim deposits ₹50,000. CyberTrace calculates: Hop 1 split ₹30k (60%) to Mule Wallet A and ₹20k (40%) to Binance. Hop 2 split ₹18k (36%) to WazirX and ₹12k (24%) to an intermediary. Offers 1-click CSV export of the full money trail.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🕸️ 3. Animated Fund-Flow Graph</b><br/>"
-                      "<b>What it does:</b> Visually diagrams the flow of money as an interactive flowchart: <code>Victim &rarr; Scammer Hub &rarr; Splitter Mules &rarr; Centralized Exchange</code> with animated particles showing the direction of speed.<br/>"
-                      "<i><b>Real-World Example:</b> Instead of reading a confusing list of 100 transaction hashes, the police officer sees clear glowing boxes connected by arrows, showing exactly how funds moved from the victim's wallet to Binance Hot Cluster 14.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🎯 4. Time-Travel Transaction Scrubber</b><br/>"
-                      "<b>What it does:</b> An interactive playback bar on the Fund-Flow graph with Play, Pause, Step Back, and Speed (1x to 4x) controls that replays the crime chronologically from Hour 0 to Hour 24.<br/>"
-                      "<i><b>Real-World Example:</b> Dragging the scrubber slider from 0% to 100% shows: at T+00:00 victim funds arrive; at T+00:25 the first split occurs; at T+00:27 funds hit the exchange deposit gateway, proving automated laundering in under 30 seconds.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🏦 5. Exchange Finder (CEX Attribution)</b><br/>"
-                      "<b>What it does:</b> Automatically detects whether stolen funds landed inside a centralized crypto exchange (such as Binance, WazirX, CoinDCX, KuCoin, or OKX) where KYC identity is stored.<br/>"
-                      "<i><b>Real-World Example:</b> Analyzes the final recipient address and confirms with <b>91% confidence</b> that the address belongs to <code>Binance Hot Cluster 14</code>, enabling police to know exactly which company to subpoena.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🔗 6. Hidden Wallet &amp; Accomplice Detector</b><br/>"
-                      "<b>What it does:</b> Uncovers accomplice wallets that never directly touched the victim, including Gas Sponsors (who paid transaction fees), Co-Spenders, and Peeling Splitters.<br/>"
-                      "<i><b>Real-World Example:</b> Discovers that wallet <code>0xFeef...119A</code> funded gas fees for 12 different scammer hubs via FixedFloat, exposing the underlying bot infrastructure.</i>", body_style)
-        ]
-    ]
-    t_f1_6 = Table(f1_6, colWidths=[510])
-    t_f1_6.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 4.2),
-    ]))
-    story.append(t_f1_6)
-    story.append(PageBreak())
-    
-    # =========================================================================
-    # PAGE 4: DETAILED FEATURES 7 TO 12 WITH PRACTICAL EXAMPLES
-    # =========================================================================
-    story.append(Paragraph("3. Detailed Feature Guide with Practical Examples (Part 2)", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
-    
-    f7_12 = [
-        [
-            Paragraph("<b>🚨 7. Heuristic AI Risk Score Gauge (0–100)</b><br/>"
-                      "<b>What it does:</b> Calculates a dynamic risk score from 0 (Safe) to 100 (Critical Risk) with clear bullet-pointed reasons explaining why the wallet is dangerous.<br/>"
-                      "<i><b>Real-World Example:</b> Suspect wallet gets an <b>87/100 HIGH RISK</b> score because: (1) Rapid peeling chain detected, (2) Funds split across 3 wallets in 12 mins, (3) Consolidated into Binance sweep gateway, (4) Reported by multiple victims on 1930 portal.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🧠 8. Fraud Pattern Detection Engine</b><br/>"
-                      "<b>What it does:</b> Detects automated laundering signatures including: Peeling Chains (shaving off small tranches), Rapid Transfers (<45s cadence), Fan-Out (splitting to multiple mules), and Fan-In (re-gathering funds).<br/>"
-                      "<i><b>Real-World Example:</b> Detects that funds were transferred across 3 hops in 42 seconds, proving the scam is operated by an automated bot network rather than a human user.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🧬 9. Fraud DNA™ Syndicate Attribution (Zero-Day Detection)</b><br/>"
-                      "<b>What it does:</b> Detects new, unknown scam wallets even if nobody has ever reported them before, by matching their behavioral sequence fingerprint against known crime syndicate playbooks.<br/>"
-                      "<i><b>Real-World Example:</b> Scammers deploy brand new Wallet Z. CyberTrace calculates an 8-dimensional vector (timing, peeling ratio, exchange gateway) and alerts: <b>'🔴 91% Match to Campaign #CYB-2048 (Hydra-Peel Telegram Scam Syndicate)'</b>.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🌉 10. Cross-Chain Bridge &amp; Hop Tracker (TRM Labs Style)</b><br/>"
-                      "<b>What it does:</b> Follows funds when scammers try to evade police by hopping across blockchains (e.g. from Ethereum to Tron, BSC, Bitcoin, or Solana) using bridge protocols like Across and FixedFloat.<br/>"
-                      "<i><b>Real-World Example:</b> Scammer deposits ERC-20 USDT on Ethereum, bridges via Across Protocol to TRC-20 USDT on Tron, and off-ramps to Binance BSC. CyberTrace unifies all chains into one continuous forensic flow.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🏷️ 11. 100k+ Entity &amp; Deanonymization Directory (Arkham Style)</b><br/>"
-                      "<b>What it does:</b> Searchable database of 100,000+ indexed real-world labels: Centralized Exchanges, Lazarus Group APT addresses, LockBit Ransomware vaults, and Darknet marketplaces.<br/>"
-                      "<i><b>Real-World Example:</b> Search for 'Lazarus' or 'Binance' to immediately see associated hotwallet clusters, historical stolen volume (₹4,800 Cr), and click 'Trace' to load full transaction ledgers.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🌪️ 12. Mixer Demasking Engine (Elliptic Style)</b><br/>"
-                      "<b>What it does:</b> De-anonymizes privacy pools like Tornado.Cash by identifying common relayer gas dispatchers (e.g. 0xRelay99B) and matching deposit-withdrawal timing brackets.<br/>"
-                      "<i><b>Real-World Example:</b> Suspect deposits 100 ETH into Tornado Cash. CyberTrace links the gas relayer to the withdrawal wallet 32 minutes later, shrinking the anonymity set from 10,000 to a single target with 94.2% confidence.</i>", body_style)
-        ]
-    ]
-    t_f7_12 = Table(f7_12, colWidths=[510])
-    t_f7_12.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 4.2),
-    ]))
-    story.append(t_f7_12)
-    story.append(PageBreak())
-    
-    # =========================================================================
-    # PAGE 5: DETAILED FEATURES 13 TO 18 WITH PRACTICAL EXAMPLES
-    # =========================================================================
-    story.append(Paragraph("4. Detailed Feature Guide with Practical Examples (Part 3)", h1_style))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=6))
-    
-    f13_18 = [
-        [
-            Paragraph("<b>🛡️ 13. Global Sanctions &amp; OFAC Screener</b><br/>"
-                      "<b>What it does:</b> Real-time anti-money laundering (AML) screening checking whether any suspect wallet is listed on US OFAC SDN, UN Sanctions, EU Blacklists, or FIU-IND registries.<br/>"
-                      "<i><b>Real-World Example:</b> Scanning a ransomware address instantly displays a red badge: <b>'OFAC SDN Sanctioned — DPRK State Sponsored Threat'</b>, alerting police to involve international agencies.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>⏱️ 14. Live Mempool Monitoring Stream</b><br/>"
-                      "<b>What it does:</b> Live blockchain feed that watches flagged wallets in real-time and alerts investigators with visual pulse beacons the exact second new transactions are broadcast.<br/>"
-                      "<i><b>Real-World Example:</b> While an officer is investigating Case #1245, a new ₹80,000 transaction is broadcast to the mempool. The live feed lights up green: 'Live Event: ₹80,000 moved to Binance Hot 14', enabling instant action.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>💼 15. Investigator Case Workspace &amp; Evidence Vault</b><br/>"
-                      "<b>What it does:</b> Multi-case organizer where police officers can manage multiple FIRs, assign junior officers, write encrypted case notes, and maintain an audit log of evidence.<br/>"
-                      "<i><b>Real-World Example:</b> Officer records notes: 'Requested Binance KYC for UID #8912401 on 24 Aug. Bank account frozen via 1930 portal.' Notes are encrypted and stored in the local vault.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>📜 16. Multi-Jurisdictional Legal Subpoena Dispatcher</b><br/>"
-                      "<b>What it does:</b> 1-click generator and emergency API dispatcher that formats complete legal notices under Section 91 CrPC (India), US CLOUD Act § 2703(d), and MLAT freeze orders.<br/>"
-                      "<i><b>Real-World Example:</b> Automatically generates a formal Section 91 CrPC notice pre-filled with the transaction hash, deposit amount (₹20,000), timestamp, and sends it directly to Binance's Nodal Officer.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>🌐 17. Public Wallet Safety Check ('Check Before You Send')</b><br/>"
-                      "<b>What it does:</b> A public consumer protection tool where citizens can paste any wallet address before paying someone online to verify if it is safe or a reported scam.<br/>"
-                      "<i><b>Real-World Example:</b> A student is asked to send ₹10,000 to a crypto wallet for a 'Telegram job'. They check the address on CyberTrace, which displays: <b>'⛔ DO NOT SEND — 91% Match with Known Fraud Syndicate'</b>, preventing the loss before it happens.</i>", body_style)
-        ],
-        [
-            Paragraph("<b>⚡ 18. Real-Time On-Chain RPC Querying (Live Web3 Mode)</b><br/>"
-                      "<b>What it does:</b> Directly queries live Ethereum and BSC mainnet RPCs in real-time, fetching real on-chain ETH balances, nonces, and transaction counts for any live wallet.<br/>"
-                      "<i><b>Real-World Example:</b> Entering Vitalik Buterin's address (<code>0xd8dA...6045</code>) queries Ethereum mainnet and displays real live balance: <b>6.6410 ETH (₹18,26,275)</b> across 5,956 live transactions.</i>", body_style)
-        ]
-    ]
-    t_f13_18 = Table(f13_18, colWidths=[510])
-    t_f13_18.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
-        ('PADDING', (0, 0), (-1, -1), 4.2),
-    ]))
-    story.append(t_f13_18)
-    story.append(PageBreak())
-    
-    # =========================================================================
-    # PAGE 6: ENTERPRISE SECURITY ARCHITECTURE, DEMO TOUR & ACCESS
-    # =========================================================================
-    story.append(Paragraph("5. Enterprise Security Layer &amp; Anti-Hacker Defense", h1_style))
+    story.append(Paragraph("2. Mode 1: ₿ Crypto Blockchain Engine &amp; Realistic Presets", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     
-    sec_info = (
-        "<b>Multi-Layered Client-Side &amp; Network Defense:</b><br/>"
-        "&bull; <b>Anti-XSS Sanitizer:</b> Strict HTML entity encoding &amp; regex stripping prevents script injection across all search and reporting fields.<br/>"
-        "&bull; <b>Anti-Clickjacking Framebuster:</b> <code>X-Frame-Options: DENY</code> and runtime JavaScript framebuster prevent unauthorized iframe embedding.<br/>"
-        "&bull; <b>Content Security Policy (CSP Level 3):</b> Restricts network sockets strictly to whitelisted verified Ethereum/BSC JSON-RPC nodes.<br/>"
-        "&bull; <b>Token Bucket Rate Limiter:</b> Throttles automated bot floods and brute-force scanning (50 req/min max).<br/>"
-        "&bull; <b>AES-256 / SHA-256 Cryptographic Vault:</b> Case notes, FIR logs, and Section 91 CrPC evidence dossiers are cryptographically sealed."
+    crypto_presets = [
+        [
+            Paragraph("<b>⚡ Preset 1: Lazarus Group APT-38 Exploit (<code>0x098B...f96</code>)</b><br/>"
+                      "<b>Crime Modus Operandi:</b> State-sponsored multi-sig smart contract exploit. Scammers routed ₹18.5 Cr ($2.2M) through Tornado Cash 100 ETH mixer pools before off-ramping to Binance.<br/>"
+                      "<b>Forensic Profile:</b> 98% Critical Risk &bull; OFAC Sanctioned &bull; Attribution: Tornado.Cash Mixer &bull; Binance Off-Ramp Gateway.", body_style)
+        ],
+        [
+            Paragraph("<b>💼 Preset 2: Telegram Task Job Scam (<code>0xA1b2...9T0</code>)</b><br/>"
+                      "<b>Crime Modus Operandi:</b> High-cadence peeling chain scam. Split ₹84,500 across 3 intermediate hops in under 45 seconds to evade detection before sweeping to an Indian exchange.<br/>"
+                      "<b>Forensic Profile:</b> 91% High Risk &bull; Campaign #CYB-2048 (Hydra-Peel) &bull; Attribution: WazirX India Gateway Hot 02.", body_style)
+        ],
+        [
+            Paragraph("<b>👮 Preset 3: Digital Arrest &amp; Video Sextortion (<code>0x742d...44e</code>)</b><br/>"
+                      "<b>Crime Modus Operandi:</b> Fake police video call extortion using permit2 token drainers to siphon victim crypto directly into Dubai OTC off-ramps.<br/>"
+                      "<b>Forensic Profile:</b> 96% Critical Risk &bull; Active NCRP FIRs &bull; Attribution: CoinDCX Off-Ramp Hub &bull; Dubai OTC Cashout Desk.", body_style)
+        ],
+        [
+            Paragraph("<b>📈 Preset 4: Pig Butchering Arbitrage Scam (<code>0x8920...3e7</code>)</b><br/>"
+                      "<b>Crime Modus Operandi:</b> Fake liquidity mining platform promising 400% returns. Siphoned ₹1.45 Cr into multi-sig consolidation vaults.<br/>"
+                      "<b>Forensic Profile:</b> 88% High Risk &bull; Campaign #CYB-1084 (Golden-Boar) &bull; Attribution: OKX &amp; KuCoin Multi-Sig Vault.", body_style)
+        ],
+        [
+            Paragraph("<b>🏛️ Preset 5: Binance Official Hot Wallet 14 (<code>0x28C6...1d60</code>)</b><br/>"
+                      "<b>Benchmark Control:</b> Official verified institutional exchange wallet used to validate false-positive rates.<br/>"
+                      "<b>Forensic Profile:</b> 12% Verified Safe Control &bull; Institutional Hot Wallet &bull; 0 NCRP Complaints.", body_style)
+        ],
+        [
+            Paragraph("<b>🗺️ Real-World Vector Cartographic Map</b><br/>"
+                      "High-definition SVG vector landmass paths depicting real city coordinates (Mumbai, Delhi, Bengaluru, Hyderabad, Kolkata, Surat, Dubai, Singapore, Hong Kong, Bangkok, Zurich, London, Seychelles) with animated radar scan rings and curved flight trajectories.", body_style)
+        ]
+    ]
+    t_cp = Table(crypto_presets, colWidths=[510])
+    t_cp.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
+        ('PADDING', (0, 0), (-1, -1), 3.8),
+    ]))
+    story.append(t_cp)
+    story.append(PageBreak())
+    
+    # =========================================================================
+    # PAGE 4: 5 UPI BANKING PRESETS & BANKING RAILS
+    # =========================================================================
+    story.append(Paragraph("3. Mode 2: 📱 UPI &amp; Core Banking Forensics Rails", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
+    
+    bank_presets = [
+        [
+            Paragraph("<b>💼 Preset 1: Telegram Job Scam VPA (<code>daily.payout@oksbi</code>)</b><br/>"
+                      "<b>Core Bank &amp; Branch:</b> State Bank of India &bull; Andheri East, Mumbai (`SBIN0001245`) &bull; A/C: `3819****4812`<br/>"
+                      "<b>Forensic Data:</b> ₹84,500 Inflow &bull; 14 NCRP Complaints &bull; SIM Swapped in Surat, Gujarat &bull; Retrievable: ₹30,420 (SBI Surat Mule).", body_style)
+        ],
+        [
+            Paragraph("<b>👮 Preset 2: Digital Arrest Fake CBI Fund (<code>cbi.investigation.fund@okaxis</code>)</b><br/>"
+                      "<b>Core Bank &amp; Branch:</b> Axis Bank &bull; Connaught Place, New Delhi (`UTIB0000188`) &bull; A/C: `9230****9104`<br/>"
+                      "<b>Forensic Data:</b> ₹1,50,000 Inflow &bull; 22 NCRP Complaints &bull; IP Routed via Cambodia Proxy &bull; Retrievable: ₹54,000.", body_style)
+        ],
+        [
+            Paragraph("<b>⚡ Preset 3: Phishing QR Code Scam (<code>quick.pay24@ybl</code>)</b><br/>"
+                      "<b>Core Bank &amp; Branch:</b> Yes Bank Limited &bull; Indiranagar, Bengaluru (`YESB0000412`) &bull; A/C: `0041****1984`<br/>"
+                      "<b>Forensic Data:</b> ₹25,000 Inflow &bull; 8 NCRP Complaints &bull; Jamtara Jharkhand Ring &bull; Retrievable: ₹9,000.", body_style)
+        ],
+        [
+            Paragraph("<b>💡 Preset 4: Fake Electricity Bill APK (<code>UTR-20260825-991240</code>)</b><br/>"
+                      "<b>Core Bank &amp; Branch:</b> Punjab National Bank / HDFC &bull; Salt Lake, Kolkata (`PUNB0142800`) &bull; A/C: `1428****5520`<br/>"
+                      "<b>Forensic Data:</b> ₹42,000 Inflow &bull; 6 NCRP Complaints &bull; Remote Access SMS Scraper &bull; Retrievable: ₹15,120.", body_style)
+        ],
+        [
+            Paragraph("<b>🏏 Preset 5: Offshore IPL Betting Gateway (<code>vip.gaming.deposit@paytm</code>)</b><br/>"
+                      "<b>Core Bank &amp; Branch:</b> Paytm Payments Bank &bull; Sector 62, Noida (`PYTM0123456`) &bull; A/C: `9102****7712`<br/>"
+                      "<b>Forensic Data:</b> ₹2,10,000 Inflow &bull; 31 NCRP Complaints &bull; Dubai P2P Merchant Hub &bull; Retrievable: ₹75,600.", body_style)
+        ],
+        [
+            Paragraph("<b>📜 Automated Section 91 CrPC Bank Freezing Order</b><br/>"
+                      "Generates court-admissible legal orders with IFSC, Account Number, Transaction UTR, NCRP Complaint ID, and Police Stamp, ready for 1-click dispatch to Bank Nodal Desks.", body_style)
+        ]
+    ]
+    t_bp = Table(bank_presets, colWidths=[510])
+    t_bp.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor("#e2e8f0")),
+        ('PADDING', (0, 0), (-1, -1), 3.8),
+    ]))
+    story.append(t_bp)
+    story.append(PageBreak())
+    
+    # =========================================================================
+    # PAGE 5: PRODUCTION ARCHITECTURE ROADMAP & SECURITY
+    # =========================================================================
+    story.append(Paragraph("4. Production Architecture &amp; Deployment Roadmap", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
+    
+    prod_info = (
+        "<b>Enterprise Deployment Architecture (Law Enforcement Scale):</b><br/>"
+        "&bull; <b>Backend API Gateway:</b> Node.js (Fastify/Express) or Python (FastAPI) acting as a secure proxy to protect private Pro API keys (Alchemy, Etherscan Pro, TronGrid, Moralis).<br/>"
+        "&bull; <b>High-Speed Caching Layer:</b> Redis in-memory cache to store indexed multi-hop graph nodes and exchange cluster heuristics with sub-10ms response times.<br/>"
+        "&bull; <b>Indian Banking Rails Integration:</b> RBI-regulated Account Aggregator (AA) framework (Setu, Anumati) and CKYC registry for automated bank statement ingestion.<br/>"
+        "&bull; <b>Immutable Evidence Vault:</b> PostgreSQL database with PostGIS for spatial mapping and AWS S3 / Cloudflare R2 for SHA-256 cryptographically sealed court dossiers.<br/>"
+        "&bull; <b>Authentication &amp; RBAC:</b> Multi-Factor Authentication (OTP/TOTP) and Role-Based Access Control for Police Officers, Cyber Cell Leads, and Nodal Officers."
     )
-    t_sec = Table([[Paragraph(sec_info, body_style)]], colWidths=[510])
-    t_sec.setStyle(TableStyle([
+    t_prod = Table([[Paragraph(prod_info, body_style)]], colWidths=[510])
+    t_prod.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f0fdf4")),
         ('BORDER', (0, 0), (-1, -1), 1, colors.HexColor("#86efac")),
         ('PADDING', (0, 0), (-1, -1), 6),
     ]))
-    story.append(t_sec)
+    story.append(t_prod)
     story.append(Spacer(1, 6))
 
-    story.append(Paragraph("6. Quick Reference Links &amp; Verification Resources", h1_style))
+    story.append(Paragraph("5. Enterprise Security Layer &amp; Verification Resources", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd5e1"), spaceBefore=2, spaceAfter=5))
     
     res_data = [
-        [Paragraph("<b>Live Platform (GitHub Pages):</b>", body_style), Paragraph("<font color='#0066ff'><u>https://hidayatulla268.github.io/CyberTrace/</u></font>", body_style)],
+        [Paragraph("<b>Live Web Platform (GitHub Pages):</b>", body_style), Paragraph("<font color='#0066ff'><u>https://hidayatulla268.github.io/CyberTrace/</u></font>", body_style)],
         [Paragraph("<b>GitHub Repository:</b>", body_style), Paragraph("<font color='#0066ff'><u>https://github.com/Hidayatulla268/CyberTrace</u></font>", body_style)],
         [Paragraph("<b>Documentation PDF File:</b>", body_style), Paragraph("<font color='#0066ff'><u>CyberTrace_Platform_Guide.pdf</u></font>", body_style)],
-        [Paragraph("<b>Security Certification:</b>", body_style), Paragraph("Enterprise Grade (Anti-XSS &bull; CSP Level 3 &bull; SHA-256 Vault)", body_style)]
+        [Paragraph("<b>Security Certification:</b>", body_style), Paragraph("Enterprise Grade (Anti-XSS &bull; CSP Level 3 &bull; SHA-256 Tamper-Proof Vault)", body_style)]
     ]
     t_res = Table(res_data, colWidths=[170, 340])
     t_res.setStyle(TableStyle([
@@ -532,8 +487,9 @@ def build_comprehensive_pdf(output_path):
     ))
     
     doc.build(story, canvasmaker=NumberedCanvas)
-    print(f"Master Comprehensive PDF Guide with Difference Table generated: {output_path}")
+    print(f"Master Comprehensive PDF Guide generated: {output_path}")
 
 if __name__ == '__main__':
     out_file = os.path.join(r"c:\Users\HP\OneDrive\Desktop\crypto", "CyberTrace_Platform_Guide.pdf")
     build_comprehensive_pdf(out_file)
+
