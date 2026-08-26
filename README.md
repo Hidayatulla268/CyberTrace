@@ -50,7 +50,7 @@ graph TD
 | Preset | Target Wallet Address | Modus Operandi & Crime Case | Total Loss | Risk Score | CEX / Off-Ramp Attribution |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **⚡ Preset 1** | `0x098B716B8Aaf21512996dC57EB0615e2383E2f96` | **Lazarus Group APT-38 Exploit** (State-sponsored multi-sig drain) | **₹18.50 Cr** | **98% (Critical)** | Tornado.Cash 100 ETH Mixer &bull; Binance Off-Ramp |
-| **💼 Preset 2** | `0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0` | **Telegram Task Job Scam** (Hydra-Peel 3-hop automated peeling chain) | **₹84,500** | **91% (High Risk)** | WazirX India Gateway Hot 02 |
+| **💼 Preset 2** | `0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0` | **Telegram Task Job Scam** (Hydra-Peel 3-hop automated peeling chain) | **₹84,500** | **91% (High Risk)** | WazirX India Gateway Hot 02 |
 | **👮 Preset 3** | `0x742d35Cc6634C0532925a3b844Bc454e4438f44e` | **Digital Arrest Sextortion** (Police impersonation & permit2 drainer) | **₹1,50,000** | **96% (Critical)** | CoinDCX Off-Ramp Hub &bull; Dubai OTC Desk |
 | **📈 Preset 4** | `0x89205A3E3b2A69De6DBf7F01ed13B2108B2C43e7` | **Pig Butchering Scam** (Fake high-yield liquidity mining arbitrage) | **₹1.45 Cr** | **88% (High Risk)** | OKX & KuCoin Multi-Sig Vault |
 | **🏛️ Preset 5** | `0x28C6c06298d514Db089934071355E5743bf21d60` | **Binance Hot Wallet 14** (Verified clean institutional exchange control) | **₹2,840 Cr** | **12% (Verified Safe)** | Binance Holdings Ltd. (0 NCRP FIRs) |
@@ -118,7 +118,7 @@ CyberTrace replaces abstract graphs with **high-definition SVG vector landmass c
 - Tracks illicit flows hopping across Ethereum, Tron (TRC-20), BSC (BEP-20), Bitcoin, and Solana via Across, Stargate, and FixedFloat.
 
 ### 5. 🌪️ Mixer & Obfuscation Demasking Engine (Elliptic Style)
-- De-anonymizes Tornado.Cash, Sinbad, and CoinJoin pools through deposit-withdrawal timing correlation and shared gas relayer dispatchers (e.g. `0xRelay99B`).
+- De-anonymizes Tornado.Cash, Sinbad, and CoinJoin pools through deposit-withdrawal timing correlation and shared gas relayer dispatchers (e.g. `0x3e18...99b2`).
 
 ### 6. 🧬 Fraud DNA™ — Behavioral Campaign Syndicate Attribution
 - Behavioral sequence fingerprinting that detects zero-day unknown scam wallets matching known crime syndicate playbooks:

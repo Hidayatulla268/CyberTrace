@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- APPLICATION STATE ---
   const state = {
     currentView: 'dashboard',
-    currentAddress: '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0',
+    currentAddress: '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0',
     currentProfile: null,
     currentCampaignId: 'CYB-2048',
     currentTrancheId: 'tx-main',
@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
     scrubberInterval: null,
     scrubberSpeed: 1,
     recentCases: [
-      { id: 'I4C-2026-001245', target: '0xA1b2...9T0', loss: '₹50,000', type: 'Task-Based Telegram Scam', time: '10 mins ago', status: 'Active Tracing' },
+      { id: 'I4C-2026-001245', target: '0xA1b2...A9B0', loss: '₹50,000', type: 'Task-Based Telegram Scam', time: '10 mins ago', status: 'Active Tracing' },
       { id: 'I4C-2026-009812', target: '0x742d...f44e', loss: '₹34,50,000', type: 'Ransomware Extortion Outflow', time: '1 hour ago', status: 'Mixer Flagged' },
       { id: 'I4C-2026-003410', target: '0x8920...43e7', loss: '₹4,15,000', type: 'Pig Butchering Investment Scam', time: '3 hours ago', status: 'Subpoena Sent' },
-      { id: 'I4C-2026-008819', target: '0xAB89...91F2', loss: '₹1,25,000', type: 'Fraud DNA Zero-Day Detection', time: 'Just now', status: 'DNA Matched (91%)' }
+      { id: 'I4C-2026-008819', target: '0xAB89...D5E6', loss: '₹1,25,000', type: 'Fraud DNA Zero-Day Detection', time: 'Just now', status: 'DNA Matched (91%)' }
     ]
   };
 
@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
       signatureSummary: '3-hop automated peeling chain, 80/20 tranche split, sub-minute execution, Binance off-ramp sweep.',
       nodes: {
         root: { label: '🧬 KNOWN FRAUD DNA', sub: 'Campaign #CYB-2048 (Hydra-Peel)' },
-        walletA: { name: 'Wallet A', addr: '0xA1b2...9T0', role: 'Victim 1 Hub' },
+        walletA: { name: 'Wallet A', addr: '0xA1b2...A9B0', role: 'Victim 1 Hub' },
         walletB: { name: 'Wallet B', addr: '0xB3c4...5D6', role: 'Victim 2 Hub' },
         patternHub: { label: '• Synthesized Fraud Pattern •' },
-        candidate: { name: '🆕 Candidate: Wallet Z', addr: '0xAB89C41d2E5F78a9...91F2', match: '91% PATTERN MATCH' }
+        candidate: { name: '🆕 Candidate: Wallet Z', addr: '0xAB89C41d2E5F78a9...D5E6', match: '91% PATTERN MATCH' }
       },
       dnaReasons: [
         'Similar Transaction Structure: 3-hop peel chain with fan-out into intermediary splitting nodes.',
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Similar Fund-Splitting Pattern: 100% immediate swap on Uniswap V3 followed by bridge router dispatch.',
         'Similar Transfer Timing & Cadence: High-velocity execution <12 seconds from victim approval.',
         'Similar Destination Behavior: Cross-chain routing through Across / Stargate Bridge to Tornado Pool.',
-        'Connected to Existing Syndicate Wallets: Gas sponsored by shared master relayer dispatcher 0xRelay...99B.'
+        'Connected to Existing Syndicate Wallets: Gas sponsored by shared master relayer dispatcher 0x3e18...99b2.'
       ],
       vectors: { timing: 98, split: 95, topology: 92, amount: 94, dest: 99, gas: 97 }
     },
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Special Address Matching for 5 Distinct Testing Presets
     const isLazarus = address.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
-    const isTaskScam = address.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
+    const isTaskScam = address.toLowerCase().includes('a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0');
     const isDigitalArrest = address.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e');
     const isPigButchering = address.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7');
     const isBinanceSafe = address.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60');
@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const muleA = `0x${(absHash + 11).toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`;
     const muleB = `0x${(absHash + 22).toString(16).slice(0, 4)}...${(absHash + 88).toString(16).slice(-4)}`;
     const muleC = `0x${(absHash + 44).toString(16).slice(0, 4)}...${(absHash + 66).toString(16).slice(-4)}`;
-    const gasRelay = `0xRelay_${(absHash + 33).toString(16).slice(0, 4)}...${absHash.toString(16).slice(-4)}`;
+    const gasRelay = `0x${((absHash + 0x3e18) % 0xffff).toString(16).padStart(4, '0')}...${(absHash % 0xffff).toString(16).padStart(4, '0')}`;
 
     // Determine unique dynamic topology for the wallet:
     let topologyType = 'peeling';
@@ -479,7 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic Cross-Chain Hops
     const crossHops = [
       { chain: liveData ? liveData.network : 'Ethereum (L1)', role: 'Suspect Root Hub', addr: shortAddr, amt: `₹${totalVal.toLocaleString('en-IN')}` },
-      { chain: 'Stargate Bridge Router', role: 'Liquidity Teleport', addr: '0xStargate...Router', amt: `₹${split1Val.toLocaleString('en-IN')}` },
+      { chain: 'Stargate Bridge Router', role: 'Liquidity Teleport', addr: '0x8731...d8e3', amt: `₹${split1Val.toLocaleString('en-IN')}` },
       { chain: 'Avalanche C-Chain', role: 'Intermediate Mule', addr: muleA, amt: `₹${split2Val.toLocaleString('en-IN')}` },
       { chain: 'Binance Smart Chain', role: 'CEX Consolidation', addr: exchange, amt: `₹${cexVal.toLocaleString('en-IN')}` }
     ];
@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!flowSvg) return;
 
     const prof = (profile && profile.flowAmounts) ? profile : (state.currentProfile || generateForensicProfile(state.currentAddress));
-    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0';
+    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0';
     const addrShort = prof.shortAddress || `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 
     let hashVal = 0;
@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const muleA = prof.muleA || `0x${(absHash + 11).toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`;
     const muleB = prof.muleB || `0x${(absHash + 22).toString(16).slice(0, 4)}...${(absHash + 88).toString(16).slice(-4)}`;
     const muleC = prof.muleC || `0x${(absHash + 44).toString(16).slice(0, 4)}...${(absHash + 66).toString(16).slice(-4)}`;
-    const gasRelay = prof.gasRelay || `0xRelay_${(absHash + 33).toString(16).slice(0, 4)}...${absHash.toString(16).slice(-4)}`;
+    const gasRelay = prof.gasRelay || `0x${((absHash + 0x3e18) % 0xffff).toString(16).padStart(4, '0')}...${(absHash % 0xffff).toString(16).padStart(4, '0')}`;
     const exchLabel = prof.exchange || 'Binance Hot Cluster 14';
 
     const topology = prof.topologyType || 'peeling';
@@ -773,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </g>
       `;
     }
-    // 3. TOPOLOGY: MULTISIG PARALLEL FAN-OUT (DEX Phishing / Pig Butchering)
+    // 3. TOPOLOGY: MULTISIG PARALLEL FAN-OUT (Fake Mining Scam / Pig Butchering via DEX Lure)
     else if (topology === 'multisig') {
       customScrubberSteps = [
         { pct: 0, time: 'T+00:00', desc: `Deceptive Staking: ${receivedAmt} deposited into contract ${addrShort}` },
@@ -819,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </g>
           <g class="graph-node node-suspect step-hop-1" transform="translate(200, 125)">
             <rect width="80" height="70" rx="8" fill="#1f1118" stroke="#ef4444" stroke-width="2" filter="url(#glow-red)"/>
-            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Fake Mining DEX</text>
+            <text x="40" y="24" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">Suspected Fake Mining</text>
             <text class="font-mono" x="40" y="38" text-anchor="middle" fill="#fca5a5" font-size="8">${addrShort}</text>
             <text class="font-mono" x="40" y="54" text-anchor="middle" fill="#ef4444" font-size="8.5" font-weight="700">Risk ${prof.riskScore}/100</text>
           </g>
@@ -1048,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const insightPath = document.getElementById('geo-insight-path');
     const insightJurisdiction = document.getElementById('geo-insight-jurisdiction');
 
-    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0';
+    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0';
     let hashVal = 0;
     for (let i = 0; i < addr.length; i++) {
       hashVal = (hashVal << 5) - hashVal + addr.charCodeAt(i);
@@ -1070,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const transitHubs = [
       { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" },
       { city: "Bangkok, Thailand", flag: "🇹🇭", x: 760, y: 320, role: "SE-Asia Task Scam Mule", lat: "13.7° N, 100.5° E" },
-      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 507, y: 218, role: "Privacy Relayer 0xRelay99B", lat: "47.3° N, 8.5° E" },
+      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 507, y: 218, role: "Privacy Relayer 0x3e18...99b2", lat: "47.3° N, 8.5° E" },
       { city: "Singapore", flag: "🇸🇬", x: 764, y: 385, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})`, lat: "1.3° N, 103.8° E" },
       { city: "Hong Kong", flag: "🇭🇰", x: 807, y: 296, role: "OTC Liquidity Gateway", lat: "22.3° N, 114.1° E" },
       { city: "London, UK", flag: "🇬🇧", x: 475, y: 196, role: "Crypto Liquidity Arbitrage Hub", lat: "51.5° N, 0.1° W" }
@@ -1086,7 +1086,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const isLazarus = addr.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
-    const isTaskScam = addr.toLowerCase().includes('a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0');
+    const isTaskScam = addr.toLowerCase().includes('a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0');
     const isDigitalArrest = addr.toLowerCase().includes('742d35cc6634c0532925a3b844bc454e4438f44e');
     const isPigButchering = addr.toLowerCase().includes('89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7');
     const isBinanceSafe = addr.toLowerCase().includes('28c6c06298d514db089934071355e5743bf21d60');
@@ -1279,7 +1279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!netSvg) return;
 
     const prof = state.currentProfile || generateForensicProfile(state.currentAddress);
-    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0';
+    const addr = prof.address || state.currentAddress || '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0';
     let hashVal = 0;
     for (let i = 0; i < addr.length; i++) {
       hashVal = (hashVal << 5) - hashVal + addr.charCodeAt(i);
@@ -1300,8 +1300,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const case3Crime = "Pig Butchering Ring";
     const case3Addr = `0x${(absHash + 99).toString(16).slice(0, 4)}...${(absHash + 33).toString(16).slice(-4)}`;
 
-    const mule1 = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : `0xMuleA...${(absHash + 44).toString(16).slice(-4)}`;
-    const mule2 = prof.hiddenWallets && prof.hiddenWallets[1] ? prof.hiddenWallets[1].addr : `0xMuleB...${(absHash + 55).toString(16).slice(-4)}`;
+    const mule1 = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : `0x54a1...${(absHash + 44).toString(16).slice(-4)}`;
+    const mule2 = prof.hiddenWallets && prof.hiddenWallets[1] ? prof.hiddenWallets[1].addr : `0x78b2...${(absHash + 55).toString(16).slice(-4)}`;
     const targetAddr = prof.shortAddress;
     const targetScore = prof.riskScore;
     const targetDna = prof.fraudDnaMatch || 91;
@@ -2151,15 +2151,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const entityTbody = document.getElementById('entity-tbody');
 
   const globalEntityDB = [
-    { name: 'Binance Hot Cluster 14', cat: 'exchange', role: 'CEX Deposit Hotwallet', addr: '0xExch...90A', fullAddr: '0x28C6c06298d514Db089934071355E5743bf21d60', vol: '₹1,420 Cr (1.2M TXs)', flag: 'Global KYC Compliant', flagRisk: 'low' },
-    { name: 'WazirX India Gateway Hot 02', cat: 'exchange', role: 'CEX India FIU Registered', addr: '0xWazirX...Hot02', fullAddr: '0xWazirXIndiaHot02Gateway', vol: '₹280 Cr (410k TXs)', flag: 'FIU-IND Verified', flagRisk: 'low' },
-    { name: 'CoinDCX Staging Pool', cat: 'exchange', role: 'CEX Liquidity Cluster', addr: '0xCoinDCX...Pool1', fullAddr: '0xCoinDCXStagingPool01', vol: '₹390 Cr', flag: 'FIU-IND Verified', flagRisk: 'low' },
+    { name: 'Binance Hot Cluster 14', cat: 'exchange', role: 'CEX Deposit Hotwallet', addr: '0x28C6...1d60', fullAddr: '0x28C6c06298d514Db089934071355E5743bf21d60', vol: '₹1,420 Cr (1.2M TXs)', flag: 'Global KYC Compliant', flagRisk: 'low' },
+    { name: 'WazirX India Gateway Hot 02', cat: 'exchange', role: 'CEX India FIU Registered', addr: '0x42fB...89c2', fullAddr: '0x42fB918a28e78e2270Ec08bF5d38f2B54E6F89c2', vol: '₹280 Cr (410k TXs)', flag: 'FIU-IND Verified', flagRisk: 'low' },
+    { name: 'CoinDCX Staging Pool', cat: 'exchange', role: 'CEX Liquidity Cluster', addr: '0x7a25...488D', fullAddr: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D', vol: '₹390 Cr', flag: 'FIU-IND Verified', flagRisk: 'low' },
     { name: 'Lazarus Group (DPRK Syndicate)', cat: 'threat', role: 'State-Sponsored APT Threat', addr: '0x098B...2f96', fullAddr: '0x098B716B8Aaf21512996dC57EB0615e2383E2f96', vol: '₹4,800 Cr Stolen', flag: 'OFAC SDN Sanctioned', flagRisk: 'high' },
-    { name: 'LockBit 3.0 Ransomware Vault', cat: 'threat', role: 'Ransomware Extortion Hub', addr: '0xLockBit...33A1', fullAddr: '0xLockBit30RansomwareVault33A1', vol: '₹750 Cr', flag: 'FBI / Europol Seized', flagRisk: 'high' },
+    { name: 'LockBit 3.0 Ransomware Vault', cat: 'threat', role: 'Ransomware Extortion Hub', addr: '0x3B88...33A1', fullAddr: '0x3B884C6b91De82012759e6c1e5509930f5F933A1', vol: '₹750 Cr', flag: 'FBI / Europol Seized', flagRisk: 'high' },
     { name: 'Tornado.Cash 100 ETH Pool', cat: 'mixer', role: 'Privacy Mixer Smart Contract', addr: '0x742d...f44e', fullAddr: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', vol: '₹8,900 Cr Mixed', flag: 'OFAC Sanctioned', flagRisk: 'high' },
-    { name: 'Sinbad.io Bitcoin Mixer Relay', cat: 'mixer', role: 'Obfuscation Mixer Node', addr: '0xSinbad...88F1', fullAddr: '0xSinbadMixerRelay88F1', vol: '₹1,200 Cr', flag: 'OFAC Sanctioned', flagRisk: 'high' },
-    { name: 'Wintermute Trading OTC Node', cat: 'otc', role: 'Institutional Liquidity', addr: '0xWinter...99E1', fullAddr: '0xWintermuteTradingOTCNode99E1', vol: '₹12,400 Cr', flag: 'Licensed Market Maker', flagRisk: 'low' },
-    { name: 'Hydra Market Darknet Hotwallet', cat: 'darknet', role: 'Darknet Marketplace Node', addr: '0xHydra...Clust88', fullAddr: '0xHydraMarketSeizedCluster88', vol: '₹2,100 Cr Seized', flag: 'Seized by BKA / FBI', flagRisk: 'high' }
+    { name: 'Sinbad.io Bitcoin Mixer Relay', cat: 'mixer', role: 'Obfuscation Mixer Node', addr: '0x88f1...88F1', fullAddr: '0x88f15263158c3f4e24D7A1996EbCcf639C8088F1', vol: '₹1,200 Cr', flag: 'OFAC Sanctioned', flagRisk: 'high' },
+    { name: 'Wintermute Trading OTC Node', cat: 'otc', role: 'Institutional Liquidity', addr: '0x99e1...99E1', fullAddr: '0x99e1c2514Bb3113dB9ffE2235B472506B1A499E1', vol: '₹12,400 Cr', flag: 'Licensed Market Maker', flagRisk: 'low' },
+    { name: 'Hydra Market Darknet Hotwallet', cat: 'darknet', role: 'Darknet Marketplace Node', addr: '0x88a3...1d88', fullAddr: '0x88a35602958d514Db089934071355E5743bf21d88', vol: '₹2,100 Cr Seized', flag: 'Seized by BKA / FBI', flagRisk: 'high' }
   ];
 
   function filterEntityTable() {
@@ -2235,11 +2235,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const exch = profile.exchange || 'Binance Services / WazirX India';
 
     subBox.innerHTML = `
-      <h4 class="text-cyan font-bold mb-2">NOTICE UNDER SECTION 91 OF CODE OF CRIMINAL PROCEDURE, 1973</h4>
+      <h4 class="text-cyan font-bold mb-2">NOTICE UNDER SECTION 91 CrPC, 1973 / SECTION 94 BNSS, 2023</h4>
       <p class="text-xs text-muted mb-2">To: Nodal Law Enforcement Officer, ${exch}</p>
       <p class="text-xs text-white mb-2"><strong>SUBJECT:</strong> EMERGENCY ORDER TO FREEZE SUSPECT CRYPTOCURRENCY ASSETS IN FIR #${profile.caseId}</p>
       <p class="text-xs text-secondary leading-relaxed">
-        Whereas blockchain intelligence generated by the <strong>CyberTrace Automated Forensics Engine (I4C)</strong> reveals that stolen funds amounting to <strong>${amt}</strong> originating from cyber fraud investigation #${profile.caseId} were transferred from suspect wallet (<strong>${address}</strong>) and deposited into your Centralized Hot Gateway on <strong>${profile.lastActivity}</strong> via TXID: <span class="font-mono text-cyan">${profile.txs && profile.txs[0] ? profile.txs[0].hash : '0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a'}</span>.
+        Whereas blockchain intelligence generated by the <strong>CyberTrace Automated Forensics Engine (I4C)</strong> reveals that stolen funds amounting to <strong>${amt}</strong> originating from cyber fraud investigation #${profile.caseId} were transferred from suspect wallet (<strong>${address}</strong>) and deposited into your Centralized Hot Gateway on <strong>${profile.lastActivity}</strong> via TXID: <span class="font-mono text-cyan">${profile.txs && profile.txs[0] ? profile.txs[0].hash : '0x4c2e5a7b9c1d3f6e8a0b2c4d6e8f0a2c4e6f3a8b1c9d0e2f4a6b8c0d2e4f6a8b'}</span>.
         <br/><br/>
         You are hereby commanded under Section 91 CrPC to immediately freeze recipient account and preserve all KYC and login records.
       </p>
@@ -2657,11 +2657,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initial render with default wallet profile
-  const initProf = generateForensicProfile('0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0');
+  const initProf = generateForensicProfile('0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0');
   state.currentProfile = initProf;
   renderDynamicGeoMap(initProf);
   renderDynamicFundFlowGraph(initProf);
-  updateDashboardData('0xA1b2C3d4E5f6G7h8I9j0K1L2m3N4o5P6q7R8s9T0');
+  updateDashboardData('0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0');
 
   // Search input handler
   if (btnAnalyze) {
@@ -2785,7 +2785,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnDnaApplyDashboard) {
     btnDnaApplyDashboard.addEventListener('click', () => {
       switchView('dashboard');
-      updateDashboardData('0xAB89C41d2E5F78a9B30C2d4E6F8a91F2');
+      updateDashboardData('0xAB89C41d2E5F78a9B30C2d4E6F8a91F29C34D5E6');
     });
   }
 
@@ -2803,7 +2803,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnExportStolenTrail) {
     btnExportStolenTrail.addEventListener('click', () => {
       const prof = state.currentProfile || generateForensicProfile(state.currentAddress);
-      const csv = `Hop,Role,Amount_INR,Percentage,From_Address,To_Address,Timestamp,TXID\n0,Victim Ingestion,${prof.received},100%,Victim_Account,${prof.address},Today 17:15:22,0x3b2a3a4b\n1A,Peeling Split 1,${prof.flowAmounts.split1},60%,${prof.address},${prof.hiddenWallets[0] ? prof.hiddenWallets[0].fullAddr : '0xMuleA'},Today 17:42:00,0x9d8f7a1b\n1B,CEX Deposit 1,${prof.flowAmounts.cexSweep},40%,${prof.address},${prof.exchange},Today 17:40:00,0x4c2e6f3a`;
+      const csv = `Hop,Role,Amount_INR,Percentage,From_Address,To_Address,Timestamp,TXID\n0,Victim Ingestion,${prof.received},100%,Victim_Account,${prof.address},Today 17:15:22,0x3b2a3a4b\n1A,Peeling Split 1,${prof.flowAmounts.split1},60%,${prof.address},${prof.hiddenWallets[0] ? prof.hiddenWallets[0].fullAddr : '0x54a189c2001a2b3c4d5e6f7a8b9c0d1e2f3a4b5c'},Today 17:42:00,0x9d8f7a1b\n1B,CEX Deposit 1,${prof.flowAmounts.cexSweep},40%,${prof.address},${prof.exchange},Today 17:40:00,0x4c2e6f3a`;
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -2929,7 +2929,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Demo Step 5: Centralized Exchange (Binance Cluster) 91% identified', 'info');
       } else if (step === 6) {
         const dnaSec = document.getElementById('section-fraud-dna');
-        updateDashboardData('0xAB89C41d2E5F78a9B30C2d4E6F8a91F2');
+        updateDashboardData('0xAB89C41d2E5F78a9B30C2d4E6F8a91F29C34D5E6');
         if (dnaSec) {
           dnaSec.classList.add('highlight-step');
           dnaSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2954,8 +2954,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const liveStatusText = document.getElementById('live-feed-status');
 
   const simulatedStreams = [
-    { hash: '0x3c2a...881f', target: '0xAB89...91F2 (Wallet Z)', counter: 'Binance Hot 14', amount: '₹80,000', time: '1s ago', threat: 'Fraud DNA (91%)' },
-    { hash: '0x9d8f...7a1b', target: '0xA1b2...9T0 (Hub)', counter: 'Binance Hot 14', amount: '₹20,000', time: '4s ago', threat: 'High (87)' },
+    { hash: '0x3c2a...881f', target: '0xAB89...D5E6 (Wallet Z)', counter: 'Binance Hot 14', amount: '₹80,000', time: '1s ago', threat: 'Fraud DNA (91%)' },
+    { hash: '0x9d8f...7a1b', target: '0xA1b2...A9B0 (Hub)', counter: 'Binance Hot 14', amount: '₹20,000', time: '4s ago', threat: 'High (87)' },
     { hash: '0x992e...44b1', target: '0xB3c4...5D6 (Split)', counter: 'WazirX India Hot', amount: '₹12,000', time: '8s ago', threat: 'Medium (65)' },
     { hash: '0x7711...aa90', target: '0x742d...f44e (Mixer)', counter: 'Tornado.Cash 10ETH', amount: '₹1,20,000', time: '12s ago', threat: 'High (98)' },
     { hash: '0x55aa...11cc', target: '0x8920...43e7 (Drain)', counter: 'KuCoin Gateway 2', amount: '₹35,000', time: '18s ago', threat: 'High (74)' }
@@ -2982,8 +2982,8 @@ document.addEventListener('DOMContentLoaded', () => {
     state.liveInterval = setInterval(() => {
       if (!liveMonitorTbody) return;
       const randomAmounts = ['₹8,500', '₹22,000', '₹80,000', '₹18,200', '₹50,000'];
-      const currentShort = state.currentProfile ? state.currentProfile.shortAddress : '0xA1b2...9T0';
-      const randomTargs = [currentShort, '0xAB89...91F2 (Wallet Z)', '0xB3c4...5D6 (Split)', '0x742d...f44e (Mixer)'];
+      const currentShort = state.currentProfile ? state.currentProfile.shortAddress : '0xA1b2...A9B0';
+      const randomTargs = [currentShort, '0xAB89...D5E6 (Wallet Z)', '0xB3c4...5D6 (Split)', '0x742d...f44e (Mixer)'];
       const randomCounters = ['Binance Cluster', 'WazirX India Gateway', 'OKX Deposit Cluster', 'CoinDCX Hot Wallet'];
 
       const newRow = document.createElement('tr');
