@@ -1110,43 +1110,61 @@ document.addEventListener('DOMContentLoaded', () => {
         </g>
       </g>
 
-      <!-- PRECISE REAL-WORLD CITY PINS & HOLOGRAPHIC CHIPS PLACED ON THIS MAP -->
-      <!-- 1. ORIGIN: VICTIM CYBER JURISDICTION -->
+      <!-- PRECISE REAL-WORLD CITY PINS & NON-OVERLAPPING ANGULAR LEADER CALLOUTS -->
+      <!-- 1. ORIGIN: VICTIM CYBER JURISDICTION (Callout Angles to Top-Left) -->
       <g class="geo-node" transform="translate(${origin.x}, ${origin.y})">
-        <circle r="8" class="radar-ping" fill="none" stroke="#10b981"/>
-        <circle r="7" fill="#10b981" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-victim)"/>
+        <!-- Radial Radar Ring -->
+        <circle r="9" class="radar-ping" fill="none" stroke="#10b981"/>
+        <circle r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-victim)"/>
         <circle r="2.5" fill="#ffffff"/>
-        <!-- Compact Hologram Chip Offset -->
-        <g transform="translate(12, -24)" filter="url(#geo-hud-shadow)">
-          <rect width="144" height="24" rx="12" fill="rgba(4, 15, 30, 0.9)" stroke="#10b981" stroke-width="1.4"/>
-          <text x="10" y="16" fill="#ffffff" font-size="10" font-weight="800">${origin.flag} ${origin.city.split(',')[0]}</text>
-          <text x="82" y="16" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">${prof.received || '₹84,500'}</text>
+        
+        <!-- Staggered Leader Callout Line (Up-Left) -->
+        <path d="M 0 0 L -22 -22 L -155 -22" fill="none" stroke="#10b981" stroke-width="1.6" stroke-dasharray="3 3"/>
+        <circle cx="-155" cy="-22" r="2.5" fill="#10b981"/>
+
+        <!-- Hologram Badge Card -->
+        <g transform="translate(-165, -36)" filter="url(#geo-hud-shadow)">
+          <rect width="155" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#10b981" stroke-width="1.5"/>
+          <text x="10" y="17" fill="#ffffff" font-size="10" font-weight="800">${origin.flag} ${origin.city.split(',')[0]}</text>
+          <text x="86" y="17" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">${prof.received || '₹84,500'}</text>
         </g>
       </g>
 
-      <!-- 2. TRANSIT: OTC MULE DESK -->
+      <!-- 2. TRANSIT: OTC MULE DESK (Callout Angles to Bottom-Right) -->
       <g class="geo-node" transform="translate(${transit.x}, ${transit.y})">
-        <circle r="8" class="radar-ping" fill="none" stroke="#f59e0b"/>
-        <circle r="7" fill="#f59e0b" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-mule)"/>
+        <!-- Radial Radar Ring -->
+        <circle r="9" class="radar-ping" fill="none" stroke="#f59e0b"/>
+        <circle r="7.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-mule)"/>
         <circle r="2.5" fill="#ffffff"/>
-        <!-- Compact Hologram Chip Offset -->
-        <g transform="translate(12, -24)" filter="url(#geo-hud-shadow)">
-          <rect width="146" height="24" rx="12" fill="rgba(4, 15, 30, 0.9)" stroke="#f59e0b" stroke-width="1.4"/>
-          <text x="10" y="16" fill="#fbbf24" font-size="10" font-weight="800">${transit.flag} ${transit.city.split(',')[0]}</text>
-          <text x="82" y="16" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">Mule Transit</text>
+
+        <!-- Staggered Leader Callout Line (Down-Right) -->
+        <path d="M 0 0 L 22 22 L 155 22" fill="none" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="3 3"/>
+        <circle cx="155" cy="22" r="2.5" fill="#f59e0b"/>
+
+        <!-- Hologram Badge Card -->
+        <g transform="translate(18, 14)" filter="url(#geo-hud-shadow)">
+          <rect width="155" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="10" y="17" fill="#fbbf24" font-size="10" font-weight="800">${transit.flag} ${transit.city.split(',')[0]}</text>
+          <text x="86" y="17" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">Mule Transit</text>
         </g>
       </g>
 
-      <!-- 3. DESTINATION: TERMINAL EXCHANGE GATEWAY -->
+      <!-- 3. DESTINATION: TERMINAL EXCHANGE GATEWAY (Callout Angles to Top-Right) -->
       <g class="geo-node" transform="translate(${dest.x}, ${dest.y})">
-        <circle r="9" class="radar-ping" fill="none" stroke="#00c0ff"/>
-        <circle r="8" fill="#00c0ff" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-cex)"/>
+        <!-- Radial Radar Ring -->
+        <circle r="10" class="radar-ping" fill="none" stroke="#00c0ff"/>
+        <circle r="8.5" fill="#00c0ff" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-cex)"/>
         <circle r="3" fill="#ffffff"/>
-        <!-- Compact Hologram Chip Offset -->
-        <g transform="translate(12, -24)" filter="url(#geo-hud-shadow)">
-          <rect width="156" height="24" rx="12" fill="rgba(4, 15, 30, 0.9)" stroke="#00c0ff" stroke-width="1.5"/>
-          <text x="10" y="16" fill="#ffffff" font-size="10" font-weight="800">${dest.flag} ${dest.city.split(' ')[0]}</text>
-          <text x="84" y="16" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">CEX Off-Ramp</text>
+
+        <!-- Staggered Leader Callout Line (Up-Right) -->
+        <path d="M 0 0 L 26 -26 L 160 -26" fill="none" stroke="#00c0ff" stroke-width="1.6" stroke-dasharray="3 3"/>
+        <circle cx="160" cy="-26" r="2.5" fill="#00c0ff"/>
+
+        <!-- Hologram Badge Card -->
+        <g transform="translate(22, -40)" filter="url(#geo-hud-shadow)">
+          <rect width="160" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#00c0ff" stroke-width="1.5"/>
+          <text x="10" y="17" fill="#ffffff" font-size="10" font-weight="800">${dest.flag} ${dest.city.split(' ')[0]}</text>
+          <text x="88" y="17" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">CEX Off-Ramp</text>
         </g>
       </g>
     `;
@@ -1378,53 +1396,111 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- MAP ZOOM, PAN & REGION FOCUS CONTROLLER ---
+  // --- MAP ZOOM, PAN & REGION FOCUS CONTROLLER WITH SILKY-SMOOTH SPRING GLIDE ---
   const mapZoomState = {
     viewWidth: 1024,
     viewHeight: 655,
-    minX: 0,
-    minY: 0,
-    width: 1024,
-    height: 655,
+    currentMinX: 0,
+    currentMinY: 0,
+    currentW: 1024,
+    currentH: 655,
+    targetMinX: 0,
+    targetMinY: 0,
+    targetW: 1024,
+    targetH: 655,
     zoomLevel: 1.0,
     isPanning: false,
     startX: 0,
-    startY: 0
+    startY: 0,
+    animId: null
   };
 
-  function updateMapViewBox() {
+  function stepMapGlide() {
+    const ease = 0.24; // Smooth exponential camera glide
+    mapZoomState.currentMinX += (mapZoomState.targetMinX - mapZoomState.currentMinX) * ease;
+    mapZoomState.currentMinY += (mapZoomState.targetMinY - mapZoomState.currentMinY) * ease;
+    mapZoomState.currentW += (mapZoomState.targetW - mapZoomState.currentW) * ease;
+    mapZoomState.currentH += (mapZoomState.targetH - mapZoomState.currentH) * ease;
+
     const netSvg = document.getElementById('network-map-svg');
     const badge = document.getElementById('map-zoom-badge');
     if (netSvg) {
-      netSvg.setAttribute('viewBox', `${Math.round(mapZoomState.minX)} ${Math.round(mapZoomState.minY)} ${Math.round(mapZoomState.width)} ${Math.round(mapZoomState.height)}`);
+      netSvg.setAttribute('viewBox', `${mapZoomState.currentMinX.toFixed(1)} ${mapZoomState.currentMinY.toFixed(1)} ${mapZoomState.currentW.toFixed(1)} ${mapZoomState.currentH.toFixed(1)}`);
     }
     if (badge) {
-      badge.textContent = `${Math.round(mapZoomState.zoomLevel * 100)}%`;
+      badge.textContent = `${Math.round((mapZoomState.viewWidth / mapZoomState.currentW) * 100)}%`;
+    }
+
+    const delta = Math.abs(mapZoomState.targetMinX - mapZoomState.currentMinX) +
+                  Math.abs(mapZoomState.targetMinY - mapZoomState.currentMinY) +
+                  Math.abs(mapZoomState.targetW - mapZoomState.currentW) +
+                  Math.abs(mapZoomState.targetH - mapZoomState.currentH);
+
+    if (delta > 0.4) {
+      mapZoomState.animId = requestAnimationFrame(stepMapGlide);
+    } else {
+      mapZoomState.currentMinX = mapZoomState.targetMinX;
+      mapZoomState.currentMinY = mapZoomState.targetMinY;
+      mapZoomState.currentW = mapZoomState.targetW;
+      mapZoomState.currentH = mapZoomState.targetH;
+      if (netSvg) {
+        netSvg.setAttribute('viewBox', `${mapZoomState.targetMinX} ${mapZoomState.targetMinY} ${mapZoomState.targetW} ${mapZoomState.targetH}`);
+      }
+      if (badge) {
+        badge.textContent = `${Math.round(mapZoomState.zoomLevel * 100)}%`;
+      }
+      mapZoomState.animId = null;
     }
   }
 
-  function zoomMap(factor, centerX = null, centerY = null) {
-    if (centerX === null) centerX = mapZoomState.minX + mapZoomState.width / 2;
-    if (centerY === null) centerY = mapZoomState.minY + mapZoomState.height / 2;
+  function applyTargetViewBox(minX, minY, width, height, smooth = true) {
+    mapZoomState.targetMinX = minX;
+    mapZoomState.targetMinY = minY;
+    mapZoomState.targetW = width;
+    mapZoomState.targetH = height;
+
+    if (!smooth) {
+      mapZoomState.currentMinX = minX;
+      mapZoomState.currentMinY = minY;
+      mapZoomState.currentW = width;
+      mapZoomState.currentH = height;
+      const netSvg = document.getElementById('network-map-svg');
+      const badge = document.getElementById('map-zoom-badge');
+      if (netSvg) netSvg.setAttribute('viewBox', `${minX} ${minY} ${width} ${height}`);
+      if (badge) badge.textContent = `${Math.round(mapZoomState.zoomLevel * 100)}%`;
+      return;
+    }
+
+    if (!mapZoomState.animId) {
+      mapZoomState.animId = requestAnimationFrame(stepMapGlide);
+    }
+  }
+
+  function updateMapViewBox() {
+    applyTargetViewBox(mapZoomState.targetMinX, mapZoomState.targetMinY, mapZoomState.targetW, mapZoomState.targetH, false);
+  }
+
+  function zoomMap(factor, centerX = null, centerY = null, smooth = true) {
+    if (centerX === null) centerX = mapZoomState.targetMinX + mapZoomState.targetW / 2;
+    if (centerY === null) centerY = mapZoomState.targetMinY + mapZoomState.targetH / 2;
 
     const newZoom = Math.min(Math.max(mapZoomState.zoomLevel * factor, 1.0), 6.0);
     if (Math.abs(newZoom - mapZoomState.zoomLevel) < 0.001 && factor !== 1.0) return;
 
-    const prevWidth = mapZoomState.width;
-    const prevHeight = mapZoomState.height;
+    const prevW = mapZoomState.targetW;
+    const prevH = mapZoomState.targetH;
 
     mapZoomState.zoomLevel = newZoom;
-    mapZoomState.width = mapZoomState.viewWidth / newZoom;
-    mapZoomState.height = mapZoomState.viewHeight / newZoom;
+    const newW = mapZoomState.viewWidth / newZoom;
+    const newH = mapZoomState.viewHeight / newZoom;
 
-    // Center zoom around cursor / specified center
-    const ratioX = (centerX - mapZoomState.minX) / prevWidth;
-    const ratioY = (centerY - mapZoomState.minY) / prevHeight;
+    const ratioX = (centerX - mapZoomState.targetMinX) / prevW;
+    const ratioY = (centerY - mapZoomState.targetMinY) / prevH;
 
-    mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, centerX - ratioX * mapZoomState.width));
-    mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, centerY - ratioY * mapZoomState.height));
+    const newMinX = Math.max(0, Math.min(mapZoomState.viewWidth - newW, centerX - ratioX * newW));
+    const newMinY = Math.max(0, Math.min(mapZoomState.viewHeight - newH, centerY - ratioY * newH));
 
-    updateMapViewBox();
+    applyTargetViewBox(newMinX, newMinY, newW, newH, smooth);
   }
 
   function focusMapRegion(region) {
@@ -1434,47 +1510,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (region === 'india') {
-      // Focus India Subcontinent: Center ~(680, 310) @ 2.8x
       mapZoomState.zoomLevel = 2.8;
-      mapZoomState.width = mapZoomState.viewWidth / 2.8;
-      mapZoomState.height = mapZoomState.viewHeight / 2.8;
-      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 680 - mapZoomState.width / 2));
-      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 310 - mapZoomState.height / 2));
-      showToast('Zoomed in: 🇮🇳 India Cyber Command Jurisdictions', 'info');
+      const w = mapZoomState.viewWidth / 2.8;
+      const h = mapZoomState.viewHeight / 2.8;
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 680 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 310 - h / 2));
+      applyTargetViewBox(minX, minY, w, h, true);
+      showToast('Smooth Zoom: 🇮🇳 India Cyber Command Stations', 'info');
     } else if (region === 'dubai') {
-      // Focus Dubai / Gulf: Center ~(618, 288) @ 3.0x
       mapZoomState.zoomLevel = 3.0;
-      mapZoomState.width = mapZoomState.viewWidth / 3.0;
-      mapZoomState.height = mapZoomState.viewHeight / 3.0;
-      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 618 - mapZoomState.width / 2));
-      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 288 - mapZoomState.height / 2));
-      showToast('Zoomed in: 🇦🇪 Dubai & Persian Gulf OTC Desks', 'info');
+      const w = mapZoomState.viewWidth / 3.0;
+      const h = mapZoomState.viewHeight / 3.0;
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 618 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 288 - h / 2));
+      applyTargetViewBox(minX, minY, w, h, true);
+      showToast('Smooth Zoom: 🇦🇪 Dubai & Persian Gulf OTC Desks', 'info');
     } else if (region === 'seasia') {
-      // Focus Southeast Asia: Center ~(765, 365) @ 2.6x
       mapZoomState.zoomLevel = 2.6;
-      mapZoomState.width = mapZoomState.viewWidth / 2.6;
-      mapZoomState.height = mapZoomState.viewHeight / 2.6;
-      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 765 - mapZoomState.width / 2));
-      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 365 - mapZoomState.height / 2));
-      showToast('Zoomed in: 🇸🇬 Southeast Asia Laundering Corridor', 'info');
+      const w = mapZoomState.viewWidth / 2.6;
+      const h = mapZoomState.viewHeight / 2.6;
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 765 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 365 - h / 2));
+      applyTargetViewBox(minX, minY, w, h, true);
+      showToast('Smooth Zoom: 🇸🇬 Southeast Asia Laundering Corridor', 'info');
     } else if (region === 'europe') {
-      // Focus Europe: Center ~(495, 190) @ 2.7x
       mapZoomState.zoomLevel = 2.7;
-      mapZoomState.width = mapZoomState.viewWidth / 2.7;
-      mapZoomState.height = mapZoomState.viewHeight / 2.7;
-      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, 495 - mapZoomState.width / 2));
-      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, 190 - mapZoomState.height / 2));
-      showToast('Zoomed in: 🇪🇺 European Relayers & Staking Relays', 'info');
+      const w = mapZoomState.viewWidth / 2.7;
+      const h = mapZoomState.viewHeight / 2.7;
+      const minX = Math.max(0, Math.min(mapZoomState.viewWidth - w, 495 - w / 2));
+      const minY = Math.max(0, Math.min(mapZoomState.viewHeight - h, 190 - h / 2));
+      applyTargetViewBox(minX, minY, w, h, true);
+      showToast('Smooth Zoom: 🇪🇺 European Relayers & Staking Relays', 'info');
     } else {
-      // Reset to Full World
       mapZoomState.zoomLevel = 1.0;
-      mapZoomState.minX = 0;
-      mapZoomState.minY = 0;
-      mapZoomState.width = mapZoomState.viewWidth;
-      mapZoomState.height = mapZoomState.viewHeight;
+      applyTargetViewBox(0, 0, mapZoomState.viewWidth, mapZoomState.viewHeight, true);
       showToast('Restored: 🌐 Full World Geographic View (100%)', 'info');
     }
-    updateMapViewBox();
   }
 
   // Hook Zoom & Pan Buttons
@@ -1482,8 +1553,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnZoomOut = document.getElementById('btn-map-zoom-out');
   const btnZoomReset = document.getElementById('btn-map-zoom-reset');
 
-  if (btnZoomIn) btnZoomIn.addEventListener('click', () => zoomMap(1.3));
-  if (btnZoomOut) btnZoomOut.addEventListener('click', () => zoomMap(0.77));
+  if (btnZoomIn) btnZoomIn.addEventListener('click', () => zoomMap(1.3, null, null, true));
+  if (btnZoomOut) btnZoomOut.addEventListener('click', () => zoomMap(0.77, null, null, true));
   if (btnZoomReset) btnZoomReset.addEventListener('click', () => focusMapRegion('world'));
 
   document.querySelectorAll('.map-preset-btn').forEach(btn => {
@@ -1502,15 +1573,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const clientX = e.clientX - rect.left;
       const clientY = e.clientY - rect.top;
       
-      const svgX = mapZoomState.minX + (clientX / rect.width) * mapZoomState.width;
-      const svgY = mapZoomState.minY + (clientY / rect.height) * mapZoomState.height;
+      const svgX = mapZoomState.currentMinX + (clientX / rect.width) * mapZoomState.currentW;
+      const svgY = mapZoomState.currentMinY + (clientY / rect.height) * mapZoomState.currentH;
 
       const factor = e.deltaY < 0 ? 1.2 : 0.83;
-      zoomMap(factor, svgX, svgY);
+      zoomMap(factor, svgX, svgY, true);
     }, { passive: false });
 
     mapCanvasContainer.addEventListener('mousedown', (e) => {
-      if (e.target.closest('.map-controls-hud') || e.target.closest('button')) return;
+      if (e.target.closest('.map-floating-zoom-widget') || e.target.closest('button')) return;
       mapZoomState.isPanning = true;
       mapZoomState.startX = e.clientX;
       mapZoomState.startY = e.clientY;
@@ -1525,13 +1596,13 @@ document.addEventListener('DOMContentLoaded', () => {
       mapZoomState.startY = e.clientY;
 
       const rect = mapCanvasContainer.getBoundingClientRect();
-      const scaleX = mapZoomState.width / rect.width;
-      const scaleY = mapZoomState.height / rect.height;
+      const scaleX = mapZoomState.targetW / rect.width;
+      const scaleY = mapZoomState.targetH / rect.height;
 
-      mapZoomState.minX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.width, mapZoomState.minX - dx * scaleX));
-      mapZoomState.minY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.height, mapZoomState.minY - dy * scaleY));
+      const newMinX = Math.max(0, Math.min(mapZoomState.viewWidth - mapZoomState.targetW, mapZoomState.targetMinX - dx * scaleX));
+      const newMinY = Math.max(0, Math.min(mapZoomState.viewHeight - mapZoomState.targetH, mapZoomState.targetMinY - dy * scaleY));
 
-      updateMapViewBox();
+      applyTargetViewBox(newMinX, newMinY, mapZoomState.targetW, mapZoomState.targetH, false);
     });
 
     window.addEventListener('mouseup', () => {
