@@ -1103,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (isTaskScam) {
       origin = { city: "Mumbai, India", flag: "🇮🇳", x: 685, y: 312, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
       transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 760, y: 320, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
-      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 685, y: 312, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
+      dest = { city: "Singapore (WazirX Off-Ramp)", flag: "🇸🇬", x: 764, y: 385, role: "WazirX India Gateway Hot 02", lat: "1.3° N, 103.8° E" };
     } else if (isDigitalArrest) {
       origin = { city: "New Delhi, India", flag: "🇮🇳", x: 685, y: 252, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
       transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
@@ -1111,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (isPigButchering) {
       origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 698, y: 338, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
       transit = { city: "Hong Kong", flag: "🇭🇰", x: 807, y: 296, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
-      dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 807, y: 296, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
+      dest = { city: "Singapore (KuCoin Cluster)", flag: "🇸🇬", x: 764, y: 385, role: "KuCoin Deposit Liquidity Gateway", lat: "1.3° N, 103.8° E" };
     } else if (isBinanceSafe) {
       origin = { city: "London, UK", flag: "🇬🇧", x: 475, y: 196, region: "Institutional Settlement", lat: "51.5° N, 0.1° W" };
       transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "VASP Clearing Desk", lat: "25.2° N, 55.2° E" };
@@ -2125,12 +2125,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnScrubBack) {
     btnScrubBack.addEventListener('click', () => {
+      if (!scrubSlider) return;
       let curr = Math.max(0, parseInt(scrubSlider.value) - 33);
       applyScrubberStep(curr);
     });
   }
   if (btnScrubFwd) {
     btnScrubFwd.addEventListener('click', () => {
+      if (!scrubSlider) return;
       let curr = Math.min(100, parseInt(scrubSlider.value) + 33);
       applyScrubberStep(curr);
     });
@@ -2454,11 +2456,13 @@ document.addEventListener('DOMContentLoaded', () => {
     state.currentAddress = cleanAddr;
     if (walletInput) walletInput.value = cleanAddr;
 
-    btnAnalyze.innerHTML = `
-      <svg class="animate-spin" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path></svg>
-      Analyzing On-Chain...
-    `;
-    btnAnalyze.disabled = true;
+    if (btnAnalyze) {
+      btnAnalyze.innerHTML = `
+        <svg class="animate-spin" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path></svg>
+        Analyzing On-Chain...
+      `;
+      btnAnalyze.disabled = true;
+    }
 
     // Check if real on-chain live data is available via public RPC
     let liveRpcData = null;
@@ -2473,8 +2477,10 @@ document.addEventListener('DOMContentLoaded', () => {
     state.caseId = profile.caseId;
 
     setTimeout(() => {
-      btnAnalyze.innerHTML = 'Analyze';
-      btnAnalyze.disabled = false;
+      if (btnAnalyze) {
+        btnAnalyze.innerHTML = 'Analyze';
+        btnAnalyze.disabled = false;
+      }
 
       // 1. Update KPIs
       const metricRec = document.getElementById('metric-received');
