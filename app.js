@@ -1110,79 +1110,76 @@ document.addEventListener('DOMContentLoaded', () => {
         </g>
       </g>
 
-      <!-- PRECISE REAL-WORLD CITY PINS & ADAPTIVE LEADER CALLOUTS (GOOGLE MAPS LOD) -->
-      <!-- 1. ORIGIN: VICTIM CYBER JURISDICTION (Callout Angles to Top-Left) -->
+      <!-- PRECISE REAL-WORLD CITY PINS: CENTERED GOOGLE-MAPS TEARDROP DROP-PINS (LOD PINNING) -->
+      <!-- 1. ORIGIN: VICTIM CYBER JURISDICTION -->
       <g class="geo-node geo-adaptive-pin" data-x="${origin.x}" data-y="${origin.y}" transform="translate(${origin.x}, ${origin.y}) scale(1)">
-        <!-- Radial Radar Ring -->
-        <circle r="9" class="radar-ping" fill="none" stroke="#10b981"/>
-        <circle r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-victim)"/>
-        <circle r="2.5" fill="#ffffff"/>
-        
-        <!-- Staggered Leader Callout Line (Up-Left) -->
-        <path d="M 0 0 L -22 -22 L -155 -22" fill="none" stroke="#10b981" stroke-width="1.6" stroke-dasharray="3 3"/>
-        <circle cx="-155" cy="-22" r="2.5" fill="#10b981"/>
+        <!-- Target Reticle & Radar Pulse -->
+        <circle cx="0" cy="0" r="10" class="radar-ping" fill="none" stroke="#10b981" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="3.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
 
-        <!-- Hologram Badge Card -->
-        <g transform="translate(-165, -36)" filter="url(#geo-hud-shadow)">
-          <rect width="155" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#10b981" stroke-width="1.5"/>
-          <text x="10" y="17" fill="#ffffff" font-size="10" font-weight="800">${origin.flag} ${origin.city.split(',')[0]}</text>
-          <text x="86" y="17" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">${prof.received || '₹84,500'}</text>
+        <!-- Google Maps Teardrop Drop-Pin (Points with Needle directly at 0,0) -->
+        <path d="M 0 0 C -4 -6 -12 -13 -12 -21 C -12 -28 -6 -33 0 -33 C 6 -33 12 -28 12 -21 C 12 -13 4 -6 0 0 Z" fill="#10b981" stroke="#ffffff" stroke-width="1.8" filter="url(#geo-hud-shadow)"/>
+        <circle cx="0" cy="-21" r="4.5" fill="#040e22" stroke="#ffffff" stroke-width="1.2"/>
+        <circle cx="0" cy="-21" r="2" fill="#10b981"/>
+
+        <!-- Centered City Identifier Card (Directly Above Drop-Pin) -->
+        <g transform="translate(0, -48)" filter="url(#geo-hud-shadow)">
+          <rect x="-72" y="-12" width="144" height="24" rx="12" fill="rgba(4, 15, 30, 0.95)" stroke="#10b981" stroke-width="1.5"/>
+          <text x="0" y="4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">${origin.flag} ${origin.city.split(',')[0]} <tspan fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">${prof.received || '₹84,500'}</tspan></text>
         </g>
 
-        <!-- HIGH ZOOM PRECINCT DETAIL (Revealed dynamically on Zoom >= 1.8x) -->
-        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(-175, -62)" filter="url(#geo-hud-shadow)">
-          <rect width="180" height="22" rx="5" fill="rgba(2, 10, 24, 0.96)" stroke="#10b981" stroke-width="1.2"/>
-          <text x="10" y="15" fill="#a7f3d0" font-size="8.5" font-family="JetBrains Mono" font-weight="700">🏢 ${origin.region || 'Cyber Police Command'}</text>
+        <!-- Dynamic High-Zoom Precinct Detail (Revealed on Zoom >= 1.7x) -->
+        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(0, -70)" filter="url(#geo-hud-shadow)">
+          <rect x="-85" y="-10" width="170" height="20" rx="4" fill="rgba(2, 10, 24, 0.96)" stroke="#10b981" stroke-width="1.2"/>
+          <text x="0" y="4" text-anchor="middle" fill="#a7f3d0" font-size="8.5" font-family="JetBrains Mono" font-weight="700">🏢 ${origin.region || 'Cyber Police Command'}</text>
         </g>
       </g>
 
-      <!-- 2. TRANSIT: OTC MULE DESK (Callout Angles to Bottom-Right) -->
+      <!-- 2. TRANSIT: OTC MULE DESK -->
       <g class="geo-node geo-adaptive-pin" data-x="${transit.x}" data-y="${transit.y}" transform="translate(${transit.x}, ${transit.y}) scale(1)">
-        <!-- Radial Radar Ring -->
-        <circle r="9" class="radar-ping" fill="none" stroke="#f59e0b"/>
-        <circle r="7.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-mule)"/>
-        <circle r="2.5" fill="#ffffff"/>
+        <!-- Target Reticle & Radar Pulse -->
+        <circle cx="0" cy="0" r="10" class="radar-ping" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="3.5" fill="#f59e0b" stroke="#ffffff" stroke-width="1.5"/>
 
-        <!-- Staggered Leader Callout Line (Down-Right) -->
-        <path d="M 0 0 L 22 22 L 155 22" fill="none" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="3 3"/>
-        <circle cx="155" cy="22" r="2.5" fill="#f59e0b"/>
+        <!-- Google Maps Teardrop Drop-Pin (Points with Needle directly at 0,0) -->
+        <path d="M 0 0 C -4 -6 -12 -13 -12 -21 C -12 -28 -6 -33 0 -33 C 6 -33 12 -28 12 -21 C 12 -13 4 -6 0 0 Z" fill="#f59e0b" stroke="#ffffff" stroke-width="1.8" filter="url(#geo-hud-shadow)"/>
+        <circle cx="0" cy="-21" r="4.5" fill="#040e22" stroke="#ffffff" stroke-width="1.2"/>
+        <circle cx="0" cy="-21" r="2" fill="#f59e0b"/>
 
-        <!-- Hologram Badge Card -->
-        <g transform="translate(18, 14)" filter="url(#geo-hud-shadow)">
-          <rect width="155" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#f59e0b" stroke-width="1.5"/>
-          <text x="10" y="17" fill="#fbbf24" font-size="10" font-weight="800">${transit.flag} ${transit.city.split(',')[0]}</text>
-          <text x="86" y="17" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">Mule Transit</text>
+        <!-- Centered City Identifier Card (Directly Above Drop-Pin) -->
+        <g transform="translate(0, -48)" filter="url(#geo-hud-shadow)">
+          <rect x="-72" y="-12" width="144" height="24" rx="12" fill="rgba(4, 15, 30, 0.95)" stroke="#f59e0b" stroke-width="1.5"/>
+          <text x="0" y="4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">${transit.flag} ${transit.city.split(',')[0]} <tspan fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">Mule</tspan></text>
         </g>
 
-        <!-- HIGH ZOOM PRECINCT DETAIL (Revealed dynamically on Zoom >= 1.8x) -->
-        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(18, 44)" filter="url(#geo-hud-shadow)">
-          <rect width="180" height="22" rx="5" fill="rgba(2, 10, 24, 0.96)" stroke="#f59e0b" stroke-width="1.2"/>
-          <text x="10" y="15" fill="#fde68a" font-size="8.5" font-family="JetBrains Mono" font-weight="700">📍 ${transit.role || 'OTC Laundering Desk'}</text>
+        <!-- Dynamic High-Zoom Precinct Detail (Revealed on Zoom >= 1.7x) -->
+        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(0, -70)" filter="url(#geo-hud-shadow)">
+          <rect x="-85" y="-10" width="170" height="20" rx="4" fill="rgba(2, 10, 24, 0.96)" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="0" y="4" text-anchor="middle" fill="#fde68a" font-size="8.5" font-family="JetBrains Mono" font-weight="700">📍 ${transit.role || 'OTC Laundering Desk'}</text>
         </g>
       </g>
 
-      <!-- 3. DESTINATION: TERMINAL EXCHANGE GATEWAY (Callout Angles to Top-Right) -->
+      <!-- 3. DESTINATION: TERMINAL EXCHANGE GATEWAY -->
       <g class="geo-node geo-adaptive-pin" data-x="${dest.x}" data-y="${dest.y}" transform="translate(${dest.x}, ${dest.y}) scale(1)">
-        <!-- Radial Radar Ring -->
-        <circle r="10" class="radar-ping" fill="none" stroke="#00c0ff"/>
-        <circle r="8.5" fill="#00c0ff" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-cex)"/>
-        <circle r="3" fill="#ffffff"/>
+        <!-- Target Reticle & Radar Pulse -->
+        <circle cx="0" cy="0" r="11" class="radar-ping" fill="none" stroke="#00c0ff" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="4" fill="#00c0ff" stroke="#ffffff" stroke-width="1.5"/>
 
-        <!-- Staggered Leader Callout Line (Up-Right) -->
-        <path d="M 0 0 L 26 -26 L 160 -26" fill="none" stroke="#00c0ff" stroke-width="1.6" stroke-dasharray="3 3"/>
-        <circle cx="160" cy="-26" r="2.5" fill="#00c0ff"/>
+        <!-- Google Maps Teardrop Drop-Pin (Points with Needle directly at 0,0) -->
+        <path d="M 0 0 C -4 -6 -12 -13 -12 -21 C -12 -28 -6 -33 0 -33 C 6 -33 12 -28 12 -21 C 12 -13 4 -6 0 0 Z" fill="#00c0ff" stroke="#ffffff" stroke-width="1.8" filter="url(#geo-hud-shadow)"/>
+        <circle cx="0" cy="-21" r="4.5" fill="#040e22" stroke="#ffffff" stroke-width="1.2"/>
+        <circle cx="0" cy="-21" r="2" fill="#00c0ff"/>
 
-        <!-- Hologram Badge Card -->
-        <g transform="translate(22, -40)" filter="url(#geo-hud-shadow)">
-          <rect width="160" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#00c0ff" stroke-width="1.5"/>
-          <text x="10" y="17" fill="#ffffff" font-size="10" font-weight="800">${dest.flag} ${dest.city.split(' ')[0]}</text>
-          <text x="88" y="17" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">CEX Off-Ramp</text>
+        <!-- Centered City Identifier Card (Directly Above Drop-Pin) -->
+        <g transform="translate(0, -48)" filter="url(#geo-hud-shadow)">
+          <rect x="-75" y="-12" width="150" height="24" rx="12" fill="rgba(4, 15, 30, 0.95)" stroke="#00c0ff" stroke-width="1.5"/>
+          <text x="0" y="4" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800">${dest.flag} ${dest.city.split(' ')[0]} <tspan fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">CEX</tspan></text>
         </g>
 
-        <!-- HIGH ZOOM PRECINCT DETAIL (Revealed dynamically on Zoom >= 1.8x) -->
-        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(22, -66)" filter="url(#geo-hud-shadow)">
-          <rect width="180" height="22" rx="5" fill="rgba(2, 10, 24, 0.96)" stroke="#00c0ff" stroke-width="1.2"/>
-          <text x="10" y="15" fill="#bae6fd" font-size="8.5" font-family="JetBrains Mono" font-weight="700">🏦 ${dest.role || 'Consolidated Exchange Vault'}</text>
+        <!-- Dynamic High-Zoom Precinct Detail (Revealed on Zoom >= 1.7x) -->
+        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(0, -70)" filter="url(#geo-hud-shadow)">
+          <rect x="-90" y="-10" width="180" height="20" rx="4" fill="rgba(2, 10, 24, 0.96)" stroke="#00c0ff" stroke-width="1.2"/>
+          <text x="0" y="4" text-anchor="middle" fill="#bae6fd" font-size="8.5" font-family="JetBrains Mono" font-weight="700">🏦 ${dest.role || 'Consolidated CEX Vault'}</text>
         </g>
       </g>
     `;
