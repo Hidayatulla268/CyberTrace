@@ -673,33 +673,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const absHash = Math.abs(hashVal);
 
-    // Accurate Cartographic City Coordinates on World/India Projection
+    // Highly Accurate Geographic City Coordinates on 920x500 World Equirectangular Canvas
     const originHubs = [
-      { city: "Mumbai, India", flag: "🇮🇳", x: 488, y: 245, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
-      { city: "New Delhi, India", flag: "🇮🇳", x: 495, y: 200, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
-      { city: "Bengaluru, India", flag: "🇮🇳", x: 502, y: 275, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
-      { city: "Hyderabad, India", flag: "🇮🇳", x: 506, y: 255, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
-      { city: "Kolkata, India", flag: "🇮🇳", x: 535, y: 220, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
-      { city: "Surat, India", flag: "🇮🇳", x: 480, y: 230, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
+      { city: "Mumbai, India", flag: "🇮🇳", x: 578, y: 245, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
+      { city: "New Delhi, India", flag: "🇮🇳", x: 588, y: 196, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
+      { city: "Bengaluru, India", flag: "🇮🇳", x: 588, y: 278, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
+      { city: "Hyderabad, India", flag: "🇮🇳", x: 594, y: 254, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
+      { city: "Kolkata, India", flag: "🇮🇳", x: 628, y: 220, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
+      { city: "Surat, India", flag: "🇮🇳", x: 568, y: 232, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
     ];
 
     // Dynamic International Layering Nodes (Transit OTC / Mules)
     const transitHubs = [
-      { city: "Dubai, UAE", flag: "🇦🇪", x: 445, y: 215, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" },
-      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 585, y: 245, role: "SE-Asia Task Scam Mule", lat: "13.7° N, 100.5° E" },
-      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 365, y: 115, role: "Privacy Relayer 0xRelay99B", lat: "47.3° N, 8.5° E" },
-      { city: "Singapore", flag: "🇸🇬", x: 598, y: 295, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})`, lat: "1.3° N, 103.8° E" },
-      { city: "Hong Kong", flag: "🇭🇰", x: 635, y: 225, role: "OTC Liquidity Gateway", lat: "22.3° N, 114.1° E" },
-      { city: "London, UK", flag: "🇬🇧", x: 325, y: 95, role: "Crypto Liquidity Arbitrage Hub", lat: "51.5° N, 0.1° W" }
+      { city: "Dubai, UAE", flag: "🇦🇪", x: 524, y: 216, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" },
+      { city: "Bangkok, Thailand", flag: "🇹🇭", x: 668, y: 248, role: "SE-Asia Task Scam Mule", lat: "13.7° N, 100.5° E" },
+      { city: "Zurich, Switzerland", flag: "🇨🇭", x: 422, y: 132, role: "Privacy Relayer 0xRelay99B", lat: "47.3° N, 8.5° E" },
+      { city: "Singapore", flag: "🇸🇬", x: 678, y: 298, role: `Cross-Border Splitter (${prof.flowAmounts ? prof.flowAmounts.split1 : '80/20'})`, lat: "1.3° N, 103.8° E" },
+      { city: "Hong Kong", flag: "🇭🇰", x: 710, y: 226, role: "OTC Liquidity Gateway", lat: "22.3° N, 114.1° E" },
+      { city: "London, UK", flag: "🇬🇧", x: 395, y: 114, role: "Crypto Liquidity Arbitrage Hub", lat: "51.5° N, 0.1° W" }
     ];
 
     // Dynamic Destination Hubs
     const destHubs = [
-      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 598, y: 295, role: prof.exchange || "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" },
-      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 488, y: 245, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
-      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 450, y: 320, role: "OKX Multi-Sig Deposit Hub", lat: "4.6° S, 55.4° E" },
-      { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 635, y: 225, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" },
-      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 365, y: 115, role: "Tornado.Cash 100 ETH Smart Contract", lat: "DeFi Cloud" }
+      { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 678, y: 298, role: prof.exchange || "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" },
+      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 578, y: 245, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
+      { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 535, y: 320, role: "OKX Multi-Sig Deposit Hub", lat: "4.6° S, 55.4° E" },
+      { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 710, y: 226, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" },
+      { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 422, y: 132, role: "Tornado.Cash 100 ETH Smart Contract", lat: "DeFi Cloud" }
     ];
 
     const isLazarus = addr.toLowerCase().includes('098b716b8aaf21512996dc57eb0615e2383e2f96');
@@ -714,29 +714,29 @@ document.addEventListener('DOMContentLoaded', () => {
     let dest = destHubs[(absHash >> 4) % destHubs.length];
 
     if (isLazarus) {
-      origin = { city: "Seoul / Tokyo", flag: "🇰🇷", x: 680, y: 180, region: "Smart Contract Drain", lat: "37.5° N, 127.0° E" };
-      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 365, y: 115, role: "Tornado Cash Relayer", lat: "47.3° N, 8.5° E" };
-      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 598, y: 295, role: "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" };
+      origin = { city: "Seoul / Tokyo", flag: "🇰🇷", x: 760, y: 170, region: "Smart Contract Drain", lat: "37.5° N, 127.0° E" };
+      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 422, y: 132, role: "Tornado Cash Relayer", lat: "47.3° N, 8.5° E" };
+      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 678, y: 298, role: "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" };
     } else if (isTaskScam) {
-      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 488, y: 245, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
-      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 585, y: 245, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
-      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 488, y: 245, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
+      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 578, y: 245, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
+      transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 668, y: 248, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
+      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 578, y: 245, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
     } else if (isDigitalArrest) {
-      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 495, y: 200, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
-      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 445, y: 215, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
-      dest = { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 450, y: 320, role: "CoinDCX / OKX Off-Ramp Hub", lat: "4.6° S, 55.4° E" };
+      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 588, y: 196, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
+      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 524, y: 216, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
+      dest = { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 535, y: 320, role: "CoinDCX / OKX Off-Ramp Hub", lat: "4.6° S, 55.4° E" };
     } else if (isPigButchering) {
-      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 502, y: 275, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
-      transit = { city: "Hong Kong", flag: "🇭🇰", x: 635, y: 225, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
-      dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 635, y: 225, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
+      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 588, y: 278, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
+      transit = { city: "Hong Kong", flag: "🇭🇰", x: 710, y: 226, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
+      dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 710, y: 226, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
     } else if (isBinanceSafe) {
-      origin = { city: "London, UK", flag: "🇬🇧", x: 325, y: 95, region: "Institutional Settlement", lat: "51.5° N, 0.1° W" };
-      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 445, y: 215, role: "VASP Clearing Desk", lat: "25.2° N, 55.2° E" };
-      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 598, y: 295, role: "Binance Holdings Ltd. Hot 14", lat: "1.3° N, 103.8° E" };
+      origin = { city: "London, UK", flag: "🇬🇧", x: 395, y: 114, region: "Institutional Settlement", lat: "51.5° N, 0.1° W" };
+      transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 524, y: 216, role: "VASP Clearing Desk", lat: "25.2° N, 55.2° E" };
+      dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 678, y: 298, role: "Binance Holdings Ltd. Hot 14", lat: "1.3° N, 103.8° E" };
     } else if (isVitalik) {
-      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 140, y: 110, region: "Vitalik Foundation", lat: "43.6° N, 79.3° W" };
-      transit = { city: "Zug, Switzerland", flag: "🇨🇭", x: 365, y: 115, role: "Ethereum Core Staking", lat: "47.1° N, 8.5° E" };
-      dest = { city: "Consensus Beacon", flag: "🛡️", x: 598, y: 295, role: "Beacon Deposit Contract", lat: "Decentralized" };
+      origin = { city: "Toronto, Canada", flag: "🇨🇦", x: 230, y: 140, region: "Vitalik Foundation", lat: "43.6° N, 79.3° W" };
+      transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 422, y: 132, role: "Ethereum Core Staking", lat: "47.1° N, 8.5° E" };
+      dest = { city: "Consensus Beacon", flag: "🛡️", x: 678, y: 298, role: "Beacon Deposit Contract", lat: "Decentralized" };
     }
 
     const corridorHTML = `${origin.flag} ${origin.city} &rarr; ${transit.flag} ${transit.city} &rarr; ${dest.flag} ${dest.city} (${dest.role})`;
@@ -751,153 +751,193 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const amt1 = prof.flowAmounts ? prof.flowAmounts.split1 : '₹50,000';
     const amt2 = prof.flowAmounts ? prof.flowAmounts.cexSweep : '₹34,500';
-    const muleAddrShort = prof.hiddenWallets && prof.hiddenWallets[0] ? prof.hiddenWallets[0].addr : `0x${(absHash + 11).toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`;
 
     // Calculate curve control points
     const ctrl1X = Math.round((origin.x + transit.x) / 2);
-    const ctrl1Y = Math.min(origin.y, transit.y) - 50;
+    const ctrl1Y = Math.min(origin.y, transit.y) - 45;
     const ctrl2X = Math.round((transit.x + dest.x) / 2);
-    const ctrl2Y = Math.min(transit.y, dest.y) - 50;
+    const ctrl2Y = Math.min(transit.y, dest.y) - 45;
 
-    const tag1X = Math.round((origin.x + transit.x) / 2) - 45;
-    const tag1Y = Math.round((origin.y + transit.y) / 2) - 25;
-    const tag2X = Math.round((transit.x + dest.x) / 2) - 45;
-    const tag2Y = Math.round((transit.y + dest.y) / 2) - 25;
+    const mid1X = Math.round((origin.x + transit.x) / 2);
+    const mid1Y = Math.round((origin.y + transit.y) / 2) - 22;
+    const mid2X = Math.round((transit.x + dest.x) / 2);
+    const mid2Y = Math.round((transit.y + dest.y) / 2) - 22;
 
     const svgContent = `
       <defs>
-        <pattern id="geo-grid-net" width="30" height="30" patternUnits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="0.8" fill="rgba(0,192,255,0.2)" />
-          <line x1="0" y1="0" x2="30" y2="0" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
-          <line x1="0" y1="0" x2="0" y2="30" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
-        </pattern>
-        <radialGradient id="geo-bg-glow" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stop-color="#071733" stop-opacity="0.9"/>
-          <stop offset="60%" stop-color="#040b1a" stop-opacity="0.95"/>
+        <radialGradient id="geo-ocean-grad" cx="50%" cy="50%" r="65%">
+          <stop offset="0%" stop-color="#071836" stop-opacity="1"/>
+          <stop offset="60%" stop-color="#040e22" stop-opacity="1"/>
           <stop offset="100%" stop-color="#020612" stop-opacity="1"/>
         </radialGradient>
-        <filter id="geo-glow-victim"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#10b981" flood-opacity="0.9"/></filter>
-        <filter id="geo-glow-mule"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f59e0b" flood-opacity="0.9"/></filter>
-        <filter id="geo-glow-cex"><feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#00c0ff" flood-opacity="0.9"/></filter>
+        <pattern id="geo-lat-lon-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.6" fill="rgba(0, 192, 255, 0.25)" />
+          <line x1="0" y1="0" x2="40" y2="0" stroke="rgba(0, 192, 255, 0.04)" stroke-width="0.5"/>
+          <line x1="0" y1="0" x2="0" y2="40" stroke="rgba(0, 192, 255, 0.04)" stroke-width="0.5"/>
+        </pattern>
+        <filter id="geo-glow-victim"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#10b981" flood-opacity="0.95"/></filter>
+        <filter id="geo-glow-mule"><feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#f59e0b" flood-opacity="0.95"/></filter>
+        <filter id="geo-glow-cex"><feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00c0ff" flood-opacity="0.95"/></filter>
+        <filter id="geo-hud-shadow"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.8"/></filter>
       </defs>
 
-      <!-- BASE RECTANGLE & OCEAN BACKGROUND -->
-      <rect width="100%" height="100%" fill="url(#geo-bg-glow)" />
-      <rect width="100%" height="100%" fill="url(#geo-grid-net)" />
+      <!-- OCEAN CANVAS BACKGROUND -->
+      <rect width="100%" height="100%" fill="url(#geo-ocean-grad)" />
+      <rect width="100%" height="100%" fill="url(#geo-lat-lon-grid)" />
 
       <!-- GEOGRAPHIC LATITUDE & LONGITUDE GRATICULES -->
-      <g stroke="rgba(0, 192, 255, 0.12)" stroke-width="0.8" stroke-dasharray="4 6">
-        <!-- Equator (0° Lat) -->
-        <line x1="20" y1="280" x2="800" y2="280" />
+      <g stroke="rgba(0, 192, 255, 0.15)" stroke-width="0.75" stroke-dasharray="3 5">
+        <!-- Equator -->
+        <line x1="0" y1="298" x2="920" y2="298" />
         <!-- Tropic of Cancer (23.5° N) -->
-        <line x1="20" y1="200" x2="800" y2="200" />
-        <!-- Arctic Circle (66.5° N) -->
-        <line x1="20" y1="90" x2="800" y2="90" />
-        <!-- Meridians -->
-        <line x1="140" y1="20" x2="140" y2="440" />
-        <line x1="330" y1="20" x2="330" y2="440" />
-        <line x1="490" y1="20" x2="490" y2="440" />
-        <line x1="640" y1="20" x2="640" y2="440" />
+        <line x1="0" y1="220" x2="920" y2="220" />
+        <!-- Tropic of Capricorn (23.5° S) -->
+        <line x1="0" y1="375" x2="920" y2="375" />
+        <!-- Arctic Circle -->
+        <line x1="0" y1="95" x2="920" y2="95" />
+        <!-- Prime Meridian (0°) & Major Longitudes -->
+        <line x1="395" y1="0" x2="395" y2="500" />
+        <line x1="230" y1="0" x2="230" y2="500" />
+        <line x1="578" y1="0" x2="578" y2="500" />
+        <line x1="750" y1="0" x2="750" y2="500" />
       </g>
 
-      <!-- AUTHENTIC REAL-WORLD VECTOR CONTINENTS & INDIA CARTOGRAPHY -->
-      <g fill="#071b38" stroke="#00c0ff" stroke-width="1.1" stroke-linejoin="round" opacity="0.85">
-        <!-- 1. INDIA & SOUTH ASIA (High Detail Subcontinent Triangle) -->
-        <path d="M 470 180 L 485 170 L 510 172 L 525 180 L 545 190 L 555 205 L 540 225 L 530 250 L 520 280 L 510 305 L 500 285 L 485 260 L 475 235 L 465 210 L 468 190 Z" fill="#0b2b5c" stroke="#00e5ff" stroke-width="1.6" />
+      <!-- AUTHENTIC REAL-WORLD CONTINENTS & LANDMASSES -->
+      <g fill="#091d3d" stroke="#00c0ff" stroke-width="1.1" stroke-linejoin="round" opacity="0.92">
+        <!-- 1. NORTH AMERICA -->
+        <path d="M 65 72 L 95 62 L 130 52 L 165 48 L 205 45 L 235 55 L 245 80 L 220 85 L 200 95 L 210 115 L 230 110 L 250 125 L 235 155 L 215 150 L 195 185 L 180 205 L 165 240 L 150 225 L 140 190 L 115 170 L 105 140 L 80 125 L 65 95 Z" />
+        <!-- Greenland -->
+        <path d="M 320 30 L 355 25 L 375 45 L 360 85 L 330 95 L 310 70 Z" fill="#081833" stroke="#00a8e8" stroke-width="0.9"/>
+        <!-- Florida & Baja California -->
+        <path d="M 215 150 L 225 175 L 220 185 L 210 170 Z" />
+        <path d="M 140 180 L 148 215 L 142 220 L 135 185 Z" />
+        <path d="M 225 195 Q 245 200, 265 205" stroke="#00c0ff" stroke-width="2" fill="none"/>
+
+        <!-- 2. SOUTH AMERICA -->
+        <path d="M 180 205 L 210 215 L 245 220 L 285 245 L 305 270 L 285 320 L 260 380 L 235 440 L 215 455 L 210 435 L 220 380 L 210 320 L 190 270 L 175 230 L 175 210 Z" />
+
+        <!-- 3. EUROPE & BRITISH ISLES -->
+        <path d="M 385 100 L 400 90 L 408 110 L 398 130 L 385 125 Z" fill="#0b244d"/> <!-- Great Britain -->
+        <path d="M 372 108 L 380 102 L 382 118 L 374 122 Z" fill="#0b244d"/> <!-- Ireland -->
+        <path d="M 425 60 L 450 50 L 470 65 L 465 105 L 445 115 L 435 95 L 420 80 Z" /> <!-- Scandinavia -->
+        <path d="M 370 145 L 405 135 L 425 130 L 455 125 L 490 120 L 515 130 L 510 155 L 475 165 L 455 160 L 440 170 L 425 185 L 415 180 L 420 165 L 395 170 L 365 185 L 360 165 Z" /> <!-- West/Central Europe -->
+        <path d="M 435 150 L 445 175 L 455 185 L 448 190 L 438 175 Z" /> <!-- Italy Boot -->
+        <ellipse cx="442" cy="195" rx="4" ry="3" /> <!-- Sicily -->
+
+        <!-- 4. AFRICA & MADAGASCAR -->
+        <path d="M 365 185 L 410 180 L 455 185 L 495 195 L 515 220 L 550 250 L 525 285 L 505 340 L 485 410 L 460 445 L 435 440 L 415 390 L 405 320 L 380 270 L 345 240 L 345 210 L 360 190 Z" />
+        <path d="M 525 350 L 535 340 L 540 380 L 530 395 L 522 370 Z" fill="#0b244d"/> <!-- Madagascar -->
+
+        <!-- 5. MIDDLE EAST & ARABIAN PENINSULA -->
+        <path d="M 495 195 L 520 190 L 550 195 L 565 215 L 555 255 L 530 265 L 505 240 L 500 215 Z" fill="#0c2954" stroke="#00d4ff" stroke-width="1.3" />
+
+        <!-- 6. RUSSIA, EURASIA & EAST ASIA -->
+        <path d="M 515 130 L 560 110 L 620 95 L 690 90 L 760 95 L 820 100 L 860 115 L 840 145 L 810 150 L 780 160 L 740 180 L 710 210 L 680 225 L 655 195 L 640 185 L 625 175 L 605 165 L 580 160 L 565 175 L 550 195 L 520 190 L 515 130 Z" />
+        <!-- Korean Peninsula -->
+        <path d="M 748 160 L 758 162 L 755 180 L 746 178 Z" fill="#0c2954" stroke="#00e5ff" stroke-width="1.2"/>
+        <!-- Japanese Archipelago -->
+        <path d="M 780 140 L 795 135 L 790 155 L 775 160 Z" fill="#0c2954" stroke="#00e5ff" stroke-width="1.2"/>
+        <path d="M 770 165 L 788 162 L 780 185 L 765 180 Z" fill="#0c2954" stroke="#00e5ff" stroke-width="1.2"/>
+        <!-- Taiwan Island -->
+        <path d="M 718 225 L 724 222 L 722 235 L 716 235 Z" fill="#0c2954" stroke="#00e5ff" stroke-width="1.1"/>
+
+        <!-- 7. INDIA & SOUTH ASIA SUBCONTINENT (HIGH PRECISION REALISTIC PENINSULA) -->
+        <path d="M 580 160 L 605 165 L 625 175 L 640 185 L 655 195 L 645 215 L 635 225 L 625 230 L 615 250 L 605 275 L 595 295 L 588 305 L 582 285 L 578 260 L 575 245 L 560 238 L 550 228 L 555 218 L 570 212 L 565 195 L 575 175 Z" fill="#0e346b" stroke="#00f0ff" stroke-width="1.8" />
         <!-- Sri Lanka Island -->
-        <ellipse cx="512" cy="320" rx="5" ry="8" fill="#0b2b5c" stroke="#00e5ff" stroke-width="1.2" />
+        <path d="M 592 312 L 598 310 L 600 322 L 594 326 Z" fill="#0e346b" stroke="#00f0ff" stroke-width="1.3"/>
+        <!-- Andaman & Nicobar Islands -->
+        <circle cx="660" cy="275" r="1.5" fill="#00f0ff"/>
+        <circle cx="662" cy="288" r="1.5" fill="#00f0ff"/>
+        <circle cx="664" cy="300" r="1.5" fill="#00f0ff"/>
+        <!-- Lakshadweep / Maldives -->
+        <circle cx="572" cy="300" r="1.2" fill="#00f0ff"/>
+        <circle cx="572" cy="320" r="1.2" fill="#00f0ff"/>
+        <circle cx="572" cy="335" r="1.2" fill="#00f0ff"/>
 
-        <!-- 2. ARABIAN PENINSULA & PERSIAN GULF (Dubai / UAE Hub) -->
-        <path d="M 430 190 L 465 200 L 475 220 L 460 250 L 435 255 L 420 230 L 425 205 Z" fill="#092247" stroke="#00c0ff" stroke-width="1.3" />
+        <!-- 8. SOUTHEAST ASIA & INDOCHINA -->
+        <path d="M 645 215 L 665 210 L 690 220 L 685 250 L 670 260 L 660 240 L 650 230 Z" fill="#0b244d"/>
+        <path d="M 668 255 L 675 275 L 678 298 L 672 295 L 665 270 Z" fill="#0c2954" stroke="#00e5ff" stroke-width="1.3"/> <!-- Malay Peninsula -->
+        <!-- Indonesia / Philippines -->
+        <path d="M 660 305 L 695 330 L 685 338 L 650 312 Z" fill="#0b244d"/> <!-- Sumatra -->
+        <path d="M 695 340 L 740 345 L 735 352 L 690 347 Z" fill="#0b244d"/> <!-- Java -->
+        <path d="M 700 290 L 725 285 L 730 315 L 705 318 Z" fill="#0b244d"/> <!-- Borneo -->
+        <path d="M 730 235 L 740 230 L 745 260 L 732 265 Z" fill="#0b244d"/> <!-- Philippines -->
 
-        <!-- 3. EURASIA & CENTRAL ASIA -->
-        <path d="M 340 90 L 380 80 L 430 75 L 480 85 L 560 80 L 650 90 L 740 110 L 780 140 L 750 190 L 700 210 L 650 215 L 610 230 L 570 240 L 560 210 L 540 190 L 510 172 L 470 180 L 440 190 L 410 195 L 390 170 L 360 140 L 330 120 Z" />
-
-        <!-- 4. SOUTHEAST ASIA & INDOCHINA -->
-        <path d="M 570 210 L 610 220 L 630 250 L 610 280 L 595 310 L 585 300 L 590 260 L 575 235 Z" fill="#092247" stroke="#00c0ff" stroke-width="1.3" />
-
-        <!-- 5. INDONESIA, MALAYSIA & PHILIPPINES ARCHIPELAGO -->
-        <path d="M 580 320 Q 640 330, 710 335" stroke="#00c0ff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <path d="M 640 280 Q 660 300, 680 310" stroke="#00c0ff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-        <path d="M 650 230 Q 665 250, 675 270" stroke="#00c0ff" stroke-width="2" stroke-linecap="round" fill="none"/>
-
-        <!-- 6. AFRICA -->
-        <path d="M 330 170 L 390 170 L 420 210 L 440 260 L 430 320 L 400 380 L 370 410 L 340 370 L 320 300 L 300 240 L 310 190 Z" />
-        <ellipse cx="445" cy="340" rx="6" ry="14" /> <!-- Madagascar -->
-
-        <!-- 7. EUROPE & BRITISH ISLES -->
-        <path d="M 320 90 L 360 70 L 400 75 L 410 110 L 380 130 L 340 140 L 320 120 Z" />
-        <path d="M 310 80 L 325 75 L 330 95 L 315 105 Z" /> <!-- UK & Ireland -->
-
-        <!-- 8. NORTH & SOUTH AMERICA -->
-        <path d="M 60 70 L 130 65 L 180 80 L 200 120 L 170 160 L 140 180 L 110 170 L 80 130 Z" opacity="0.6" />
-        <path d="M 140 200 L 180 215 L 200 260 L 190 330 L 165 390 L 145 350 L 135 270 Z" opacity="0.6" />
-
-        <!-- 9. AUSTRALIA -->
-        <path d="M 670 340 L 740 330 L 760 370 L 730 420 L 670 410 L 650 370 Z" />
+        <!-- 9. AUSTRALIA & NEW ZEALAND -->
+        <path d="M 730 360 L 780 345 L 820 365 L 830 415 L 795 440 L 745 430 L 725 395 Z" />
+        <ellipse cx="804" cy="456" rx="6" ry="5" /> <!-- Tasmania -->
+        <path d="M 855 425 L 865 420 L 860 445 Z" fill="#0b244d"/> <!-- NZ North -->
+        <path d="M 848 448 L 858 442 L 852 468 Z" fill="#0b244d"/> <!-- NZ South -->
       </g>
 
-      <!-- INDIAN OCEAN RADAR SCAN RINGS -->
-      <circle cx="500" cy="270" r="120" fill="none" stroke="rgba(0, 229, 255, 0.15)" stroke-dasharray="4 6"/>
-      <circle cx="500" cy="270" r="220" fill="none" stroke="rgba(0, 229, 255, 0.08)" stroke-dasharray="6 8"/>
+      <!-- INDIAN OCEAN RADAR SWEEP RINGS -->
+      <circle cx="585" cy="275" r="90" fill="none" stroke="rgba(0, 240, 255, 0.16)" stroke-dasharray="3 5"/>
+      <circle cx="585" cy="275" r="180" fill="none" stroke="rgba(0, 240, 255, 0.08)" stroke-dasharray="5 7"/>
 
-      <!-- TRAJECTORY FLIGHT PATHS -->
-      <!-- Flight 1: Origin to Transit Mule -->
-      <path d="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="5 5" class="geo-flight-arc" />
-      <!-- Flight 2: Transit Mule to Destination CEX -->
-      <path d="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" fill="none" stroke="#00c0ff" stroke-width="3" stroke-dasharray="5 5" class="geo-flight-arc" />
+      <!-- CURVED BALLISTIC TRAJECTORY ARCS -->
+      <path d="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" fill="none" stroke="#f59e0b" stroke-width="2.5" class="geo-flight-arc" />
+      <path d="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" fill="none" stroke="#00c0ff" stroke-width="2.5" class="geo-flight-arc" />
 
-      <!-- PARTICLES MOVING ON FLIGHT ARCS -->
-      <circle r="4.5" fill="#10b981"><animateMotion dur="2.8s" repeatCount="indefinite" path="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" /></circle>
-      <circle r="4.5" fill="#00c0ff"><animateMotion dur="2.4s" repeatCount="indefinite" path="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" /></circle>
+      <!-- TRAVELING PHOTON BEADS -->
+      <circle r="4.5" fill="#10b981" filter="url(#geo-glow-victim)"><animateMotion dur="2.6s" repeatCount="indefinite" path="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" /></circle>
+      <circle r="4.5" fill="#00c0ff" filter="url(#geo-glow-cex)"><animateMotion dur="2.2s" repeatCount="indefinite" path="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" /></circle>
 
-      <!-- AMOUNT & FLIGHT TIME TAGS -->
-      <g class="font-mono">
-        <!-- Tag 1 -->
-        <rect x="${tag1X}" y="${tag1Y}" width="105" height="24" rx="6" fill="#0b1528" stroke="#f59e0b" stroke-width="1.4"/>
-        <text x="${tag1X + 52}" y="${tag1Y + 16}" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">${amt1} &bull; 25m</text>
-        <!-- Tag 2 -->
-        <rect x="${tag2X}" y="${tag2Y}" width="105" height="24" rx="6" fill="#0b1528" stroke="#00c0ff" stroke-width="1.4"/>
-        <text x="${tag2X + 52}" y="${tag2Y + 16}" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="700">${amt2} &bull; 7m</text>
+      <!-- MIDPOINT TRANCHE FLOW BADGES -->
+      <g font-family="JetBrains Mono" font-size="9" font-weight="700">
+        <g transform="translate(${mid1X - 45}, ${mid1Y})">
+          <rect width="90" height="20" rx="10" fill="rgba(8, 18, 38, 0.9)" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="45" y="14" text-anchor="middle" fill="#fbbf24">${amt1} &bull; 25m</text>
+        </g>
+        <g transform="translate(${mid2X - 45}, ${mid2Y})">
+          <rect width="90" height="20" rx="10" fill="rgba(8, 18, 38, 0.9)" stroke="#00c0ff" stroke-width="1.2"/>
+          <text x="45" y="14" text-anchor="middle" fill="#38bdf8">${amt2} &bull; 7m</text>
+        </g>
       </g>
 
-      <!-- GEO NODES WITH PULSING RADAR BEACONS -->
-      <!-- Node 1: Victim Origin (Indian Cyber Zone) -->
+      <!-- PRECISE REAL-WORLD CITY PINS & HOLOGRAPHIC CHIPS -->
+      <!-- 1. ORIGIN: VICTIM CYBER JURISDICTION -->
       <g class="geo-node" transform="translate(${origin.x}, ${origin.y})">
-        <circle r="28" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3 3"/>
-        <circle r="16" fill="#06281e" stroke="#10b981" stroke-width="2" filter="url(#geo-glow-victim)"/>
-        <text y="5" text-anchor="middle" font-size="11">${origin.flag}</text>
-        <!-- City Box Below -->
-        <rect x="-85" y="24" width="170" height="40" rx="6" fill="#091224" stroke="#10b981" stroke-width="1.2"/>
-        <text y="38" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">${origin.city}</text>
-        <text y="52" text-anchor="middle" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">Victim Inflow (${prof.received || '₹84,500'})</text>
+        <circle r="6" class="radar-ping" fill="none" stroke="#10b981"/>
+        <circle r="6" fill="#10b981" stroke="#ffffff" stroke-width="1.8" filter="url(#geo-glow-victim)"/>
+        <circle r="2" fill="#ffffff"/>
+        <!-- Compact Hologram Chip Offset -->
+        <g transform="translate(10, -22)" filter="url(#geo-hud-shadow)">
+          <rect width="136" height="22" rx="11" fill="rgba(4, 15, 30, 0.88)" stroke="#10b981" stroke-width="1.2"/>
+          <text x="8" y="15" fill="#ffffff" font-size="9.5" font-weight="800">${origin.flag} ${origin.city.split(',')[0]}</text>
+          <text x="76" y="15" fill="#6ee7b7" font-size="8" font-family="JetBrains Mono">${prof.received || '₹84,500'}</text>
+        </g>
       </g>
 
-      <!-- Node 2: Transit Layering Mule -->
+      <!-- 2. TRANSIT: OTC MULE DESK -->
       <g class="geo-node" transform="translate(${transit.x}, ${transit.y})">
-        <circle r="30" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 3"/>
-        <circle r="18" fill="#261b04" stroke="#f59e0b" stroke-width="2" filter="url(#geo-glow-mule)"/>
-        <text y="5" text-anchor="middle" font-size="12">${transit.flag}</text>
-        <!-- City Box Below -->
-        <rect x="-95" y="26" width="190" height="42" rx="6" fill="#091224" stroke="#f59e0b" stroke-width="1.2"/>
-        <text y="40" text-anchor="middle" fill="#fbbf24" font-size="10.5" font-weight="800">${transit.city}</text>
-        <text y="54" text-anchor="middle" fill="#fcd34d" font-size="8" font-family="JetBrains Mono">${transit.role} (${muleAddrShort})</text>
+        <circle r="6" class="radar-ping" fill="none" stroke="#f59e0b"/>
+        <circle r="6" fill="#f59e0b" stroke="#ffffff" stroke-width="1.8" filter="url(#geo-glow-mule)"/>
+        <circle r="2" fill="#ffffff"/>
+        <!-- Compact Hologram Chip Offset -->
+        <g transform="translate(10, -22)" filter="url(#geo-hud-shadow)">
+          <rect width="138" height="22" rx="11" fill="rgba(4, 15, 30, 0.88)" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="8" y="15" fill="#fbbf24" font-size="9.5" font-weight="800">${transit.flag} ${transit.city.split(',')[0]}</text>
+          <text x="76" y="15" fill="#fcd34d" font-size="8" font-family="JetBrains Mono">Mule Transit</text>
+        </g>
       </g>
 
-      <!-- Node 3: Destination Exchange Gateway -->
+      <!-- 3. DESTINATION: TERMINAL EXCHANGE GATEWAY -->
       <g class="geo-node" transform="translate(${dest.x}, ${dest.y})">
-        <circle r="32" fill="rgba(0, 192, 255, 0.15)" stroke="#00c0ff" stroke-width="1.5" stroke-dasharray="3 3"/>
-        <circle r="20" fill="#042038" stroke="#00c0ff" stroke-width="2" filter="url(#geo-glow-cex)"/>
-        <text y="6" text-anchor="middle" font-size="13">${dest.flag}</text>
-        <!-- City Box Below -->
-        <rect x="-100" y="28" width="200" height="42" rx="6" fill="#091224" stroke="#00c0ff" stroke-width="1.4"/>
-        <text y="42" text-anchor="middle" fill="#ffffff" font-size="10.5" font-weight="800">${dest.city}</text>
-        <text y="56" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">${dest.role}</text>
+        <circle r="7" class="radar-ping" fill="none" stroke="#00c0ff"/>
+        <circle r="7" fill="#00c0ff" stroke="#ffffff" stroke-width="1.8" filter="url(#geo-glow-cex)"/>
+        <circle r="2.5" fill="#ffffff"/>
+        <!-- Compact Hologram Chip Offset -->
+        <g transform="translate(10, -22)" filter="url(#geo-hud-shadow)">
+          <rect width="148" height="22" rx="11" fill="rgba(4, 15, 30, 0.88)" stroke="#00c0ff" stroke-width="1.3"/>
+          <text x="8" y="15" fill="#ffffff" font-size="9.5" font-weight="800">${dest.flag} ${dest.city.split(' ')[0]}</text>
+          <text x="78" y="15" fill="#38bdf8" font-size="8" font-family="JetBrains Mono">CEX Off-Ramp</text>
+        </g>
       </g>
     `;
 
     if (netSvg) netSvg.innerHTML = svgContent;
   }
+
 
   // --- CROSS-CASE SYNDICATE NEXUS GRAPH RENDERER ---
   function renderNexusGraph(clusterFilter = 'all') {
