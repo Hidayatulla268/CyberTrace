@@ -1098,21 +1098,21 @@ document.addEventListener('DOMContentLoaded', () => {
       <circle r="5" fill="#10b981" filter="url(#geo-glow-victim)"><animateMotion dur="2.6s" repeatCount="indefinite" path="M ${origin.x} ${origin.y} Q ${ctrl1X} ${ctrl1Y}, ${transit.x} ${transit.y}" /></circle>
       <circle r="5" fill="#00c0ff" filter="url(#geo-glow-cex)"><animateMotion dur="2.2s" repeatCount="indefinite" path="M ${transit.x} ${transit.y} Q ${ctrl2X} ${ctrl2Y}, ${dest.x} ${dest.y}" /></circle>
 
-      <!-- MIDPOINT TRANCHE FLOW BADGES -->
+      <!-- MIDPOINT TRANCHE FLOW BADGES (ADAPTIVE SCALE) -->
       <g font-family="JetBrains Mono" font-size="9.5" font-weight="700">
-        <g transform="translate(${mid1X - 50}, ${mid1Y})">
-          <rect width="100" height="22" rx="11" fill="rgba(8, 18, 38, 0.92)" stroke="#f59e0b" stroke-width="1.4" filter="url(#geo-hud-shadow)"/>
-          <text x="50" y="15" text-anchor="middle" fill="#fbbf24">${amt1} &bull; 25m</text>
+        <g class="geo-adaptive-pin" data-x="${mid1X}" data-y="${mid1Y}" transform="translate(${mid1X}, ${mid1Y}) scale(1)">
+          <rect x="-50" y="-11" width="100" height="22" rx="11" fill="rgba(8, 18, 38, 0.92)" stroke="#f59e0b" stroke-width="1.4" filter="url(#geo-hud-shadow)"/>
+          <text x="0" y="4" text-anchor="middle" fill="#fbbf24">${amt1} &bull; 25m</text>
         </g>
-        <g transform="translate(${mid2X - 50}, ${mid2Y})">
-          <rect width="100" height="22" rx="11" fill="rgba(8, 18, 38, 0.92)" stroke="#00c0ff" stroke-width="1.4" filter="url(#geo-hud-shadow)"/>
-          <text x="50" y="15" text-anchor="middle" fill="#38bdf8">${amt2} &bull; 7m</text>
+        <g class="geo-adaptive-pin" data-x="${mid2X}" data-y="${mid2Y}" transform="translate(${mid2X}, ${mid2Y}) scale(1)">
+          <rect x="-50" y="-11" width="100" height="22" rx="11" fill="rgba(8, 18, 38, 0.92)" stroke="#00c0ff" stroke-width="1.4" filter="url(#geo-hud-shadow)"/>
+          <text x="0" y="4" text-anchor="middle" fill="#38bdf8">${amt2} &bull; 7m</text>
         </g>
       </g>
 
-      <!-- PRECISE REAL-WORLD CITY PINS & NON-OVERLAPPING ANGULAR LEADER CALLOUTS -->
+      <!-- PRECISE REAL-WORLD CITY PINS & ADAPTIVE LEADER CALLOUTS (GOOGLE MAPS LOD) -->
       <!-- 1. ORIGIN: VICTIM CYBER JURISDICTION (Callout Angles to Top-Left) -->
-      <g class="geo-node" transform="translate(${origin.x}, ${origin.y})">
+      <g class="geo-node geo-adaptive-pin" data-x="${origin.x}" data-y="${origin.y}" transform="translate(${origin.x}, ${origin.y}) scale(1)">
         <!-- Radial Radar Ring -->
         <circle r="9" class="radar-ping" fill="none" stroke="#10b981"/>
         <circle r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-victim)"/>
@@ -1128,10 +1128,16 @@ document.addEventListener('DOMContentLoaded', () => {
           <text x="10" y="17" fill="#ffffff" font-size="10" font-weight="800">${origin.flag} ${origin.city.split(',')[0]}</text>
           <text x="86" y="17" fill="#6ee7b7" font-size="8.5" font-family="JetBrains Mono">${prof.received || '₹84,500'}</text>
         </g>
+
+        <!-- HIGH ZOOM PRECINCT DETAIL (Revealed dynamically on Zoom >= 1.8x) -->
+        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(-175, -62)" filter="url(#geo-hud-shadow)">
+          <rect width="180" height="22" rx="5" fill="rgba(2, 10, 24, 0.96)" stroke="#10b981" stroke-width="1.2"/>
+          <text x="10" y="15" fill="#a7f3d0" font-size="8.5" font-family="JetBrains Mono" font-weight="700">🏢 ${origin.region || 'Cyber Police Command'}</text>
+        </g>
       </g>
 
       <!-- 2. TRANSIT: OTC MULE DESK (Callout Angles to Bottom-Right) -->
-      <g class="geo-node" transform="translate(${transit.x}, ${transit.y})">
+      <g class="geo-node geo-adaptive-pin" data-x="${transit.x}" data-y="${transit.y}" transform="translate(${transit.x}, ${transit.y}) scale(1)">
         <!-- Radial Radar Ring -->
         <circle r="9" class="radar-ping" fill="none" stroke="#f59e0b"/>
         <circle r="7.5" fill="#f59e0b" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-mule)"/>
@@ -1147,10 +1153,16 @@ document.addEventListener('DOMContentLoaded', () => {
           <text x="10" y="17" fill="#fbbf24" font-size="10" font-weight="800">${transit.flag} ${transit.city.split(',')[0]}</text>
           <text x="86" y="17" fill="#fcd34d" font-size="8.5" font-family="JetBrains Mono">Mule Transit</text>
         </g>
+
+        <!-- HIGH ZOOM PRECINCT DETAIL (Revealed dynamically on Zoom >= 1.8x) -->
+        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(18, 44)" filter="url(#geo-hud-shadow)">
+          <rect width="180" height="22" rx="5" fill="rgba(2, 10, 24, 0.96)" stroke="#f59e0b" stroke-width="1.2"/>
+          <text x="10" y="15" fill="#fde68a" font-size="8.5" font-family="JetBrains Mono" font-weight="700">📍 ${transit.role || 'OTC Laundering Desk'}</text>
+        </g>
       </g>
 
       <!-- 3. DESTINATION: TERMINAL EXCHANGE GATEWAY (Callout Angles to Top-Right) -->
-      <g class="geo-node" transform="translate(${dest.x}, ${dest.y})">
+      <g class="geo-node geo-adaptive-pin" data-x="${dest.x}" data-y="${dest.y}" transform="translate(${dest.x}, ${dest.y}) scale(1)">
         <!-- Radial Radar Ring -->
         <circle r="10" class="radar-ping" fill="none" stroke="#00c0ff"/>
         <circle r="8.5" fill="#00c0ff" stroke="#ffffff" stroke-width="2" filter="url(#geo-glow-cex)"/>
@@ -1165,6 +1177,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <rect width="160" height="26" rx="13" fill="rgba(4, 15, 30, 0.94)" stroke="#00c0ff" stroke-width="1.5"/>
           <text x="10" y="17" fill="#ffffff" font-size="10" font-weight="800">${dest.flag} ${dest.city.split(' ')[0]}</text>
           <text x="88" y="17" fill="#38bdf8" font-size="8.5" font-family="JetBrains Mono">CEX Off-Ramp</text>
+        </g>
+
+        <!-- HIGH ZOOM PRECINCT DETAIL (Revealed dynamically on Zoom >= 1.8x) -->
+        <g class="geo-high-zoom-detail" style="opacity: 0; display: none;" transform="translate(22, -66)" filter="url(#geo-hud-shadow)">
+          <rect width="180" height="22" rx="5" fill="rgba(2, 10, 24, 0.96)" stroke="#00c0ff" stroke-width="1.2"/>
+          <text x="10" y="15" fill="#bae6fd" font-size="8.5" font-family="JetBrains Mono" font-weight="700">🏦 ${dest.role || 'Consolidated Exchange Vault'}</text>
         </g>
       </g>
     `;
@@ -1396,7 +1414,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- MAP ZOOM, PAN & REGION FOCUS CONTROLLER WITH SILKY-SMOOTH SPRING GLIDE ---
+  // --- MAP ZOOM, PAN & REGION FOCUS CONTROLLER WITH GOOGLE-MAPS ADAPTIVE LOD ---
   const mapZoomState = {
     viewWidth: 1024,
     viewHeight: 655,
@@ -1415,6 +1433,35 @@ document.addEventListener('DOMContentLoaded', () => {
     animId: null
   };
 
+  function updateAdaptivePinScales() {
+    const netSvg = document.getElementById('network-map-svg');
+    if (!netSvg) return;
+    const currentZoom = mapZoomState.viewWidth / mapZoomState.currentW;
+    // Google Maps Counter-Scaling: pins & badges maintain readable font & card scale while locking position
+    const pinScale = Math.max(0.35, Math.min(1.0, 1.0 / currentZoom));
+
+    netSvg.querySelectorAll('.geo-adaptive-pin').forEach(pin => {
+      const x = pin.dataset.x;
+      const y = pin.dataset.y;
+      if (x !== undefined && y !== undefined) {
+        pin.setAttribute('transform', `translate(${x}, ${y}) scale(${pinScale.toFixed(3)})`);
+      }
+    });
+
+    // Dynamic high-zoom detail labels (reveal precinct & technical forensic coordinates when zoom >= 1.7x)
+    const highZoomDetails = netSvg.querySelectorAll('.geo-high-zoom-detail');
+    highZoomDetails.forEach(el => {
+      if (currentZoom >= 1.7) {
+        const op = Math.min(1.0, (currentZoom - 1.7) / 0.8).toFixed(2);
+        el.style.opacity = op;
+        el.style.display = 'block';
+      } else {
+        el.style.opacity = '0';
+        el.style.display = 'none';
+      }
+    });
+  }
+
   function stepMapGlide() {
     const ease = 0.24; // Smooth exponential camera glide
     mapZoomState.currentMinX += (mapZoomState.targetMinX - mapZoomState.currentMinX) * ease;
@@ -1430,6 +1477,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (badge) {
       badge.textContent = `${Math.round((mapZoomState.viewWidth / mapZoomState.currentW) * 100)}%`;
     }
+
+    updateAdaptivePinScales();
 
     const delta = Math.abs(mapZoomState.targetMinX - mapZoomState.currentMinX) +
                   Math.abs(mapZoomState.targetMinY - mapZoomState.currentMinY) +
@@ -1449,6 +1498,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (badge) {
         badge.textContent = `${Math.round(mapZoomState.zoomLevel * 100)}%`;
       }
+      updateAdaptivePinScales();
       mapZoomState.animId = null;
     }
   }
@@ -1468,6 +1518,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const badge = document.getElementById('map-zoom-badge');
       if (netSvg) netSvg.setAttribute('viewBox', `${minX} ${minY} ${width} ${height}`);
       if (badge) badge.textContent = `${Math.round(mapZoomState.zoomLevel * 100)}%`;
+      updateAdaptivePinScales();
       return;
     }
 
@@ -1564,7 +1615,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Mouse Wheel & Drag Pan Listeners on Map Container
+  // Mouse Wheel, Drag Pan & Double-Click Zoom Listeners
   const mapCanvasContainer = document.getElementById('network-map-canvas-container');
   if (mapCanvasContainer) {
     mapCanvasContainer.addEventListener('wheel', (e) => {
@@ -1579,6 +1630,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const factor = e.deltaY < 0 ? 1.2 : 0.83;
       zoomMap(factor, svgX, svgY, true);
     }, { passive: false });
+
+    // Double click to zoom in at that exact point (like Google Maps)
+    mapCanvasContainer.addEventListener('dblclick', (e) => {
+      if (e.target.closest('.map-floating-zoom-widget') || e.target.closest('button')) return;
+      e.preventDefault();
+      const rect = mapCanvasContainer.getBoundingClientRect();
+      const clientX = e.clientX - rect.left;
+      const clientY = e.clientY - rect.top;
+      
+      const svgX = mapZoomState.currentMinX + (clientX / rect.width) * mapZoomState.currentW;
+      const svgY = mapZoomState.currentMinY + (clientY / rect.height) * mapZoomState.currentH;
+
+      zoomMap(1.6, svgX, svgY, true);
+    });
 
     mapCanvasContainer.addEventListener('mousedown', (e) => {
       if (e.target.closest('.map-floating-zoom-widget') || e.target.closest('button')) return;
