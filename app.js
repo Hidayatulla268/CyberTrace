@@ -975,12 +975,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Exact Geographic Coordinates Calibrated on the 1024x655 World Map Outline
     const originHubs = [
-      { city: "Mumbai, India", flag: "🇮🇳", x: 676, y: 316, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
-      { city: "New Delhi, India", flag: "🇮🇳", x: 678, y: 246, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
-      { city: "Bengaluru, India", flag: "🇮🇳", x: 694, y: 340, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
-      { city: "Hyderabad, India", flag: "🇮🇳", x: 696, y: 312, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
-      { city: "Kolkata, India", flag: "🇮🇳", x: 738, y: 280, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
-      { city: "Surat, India", flag: "🇮🇳", x: 660, y: 296, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
+      { city: "Mumbai, India", flag: "🇮🇳", x: 685, y: 312, region: "Maharashtra Cyber Police HQ", lat: "18.9° N, 72.8° E" },
+      { city: "New Delhi, India", flag: "🇮🇳", x: 685, y: 252, region: "IFSO Special Cell, Delhi Police", lat: "28.6° N, 77.2° E" },
+      { city: "Bengaluru, India", flag: "🇮🇳", x: 698, y: 338, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" },
+      { city: "Hyderabad, India", flag: "🇮🇳", x: 702, y: 316, region: "Cyberabad Police Command Center", lat: "17.3° N, 78.4° E" },
+      { city: "Kolkata, India", flag: "🇮🇳", x: 734, y: 286, region: "West Bengal Cyber Crime PS", lat: "22.5° N, 88.3° E" },
+      { city: "Surat, India", flag: "🇮🇳", x: 672, y: 296, region: "Gujarat Crime Branch", lat: "21.1° N, 72.8° E" }
     ];
 
     // Dynamic International Layering Nodes (Transit OTC / Mules)
@@ -996,7 +996,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic Destination Hubs
     const destHubs = [
       { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 764, y: 385, role: prof.exchange || "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" },
-      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 676, y: 316, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
+      { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 685, y: 312, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" },
       { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 636, y: 425, role: "OKX Multi-Sig Deposit Hub", lat: "4.6° S, 55.4° E" },
       { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 807, y: 296, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" },
       { city: "Decentralized (Tornado Pool)", flag: "🌪️", x: 507, y: 218, role: "Tornado.Cash 100 ETH Smart Contract", lat: "DeFi Cloud" }
@@ -1018,15 +1018,15 @@ document.addEventListener('DOMContentLoaded', () => {
       transit = { city: "Zurich, Switzerland", flag: "🇨🇭", x: 507, y: 218, role: "Tornado Cash Relayer", lat: "47.3° N, 8.5° E" };
       dest = { city: "Singapore (Binance Hub)", flag: "🇸🇬", x: 764, y: 385, role: "Binance Hot Cluster 14", lat: "1.3° N, 103.8° E" };
     } else if (isTaskScam) {
-      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 676, y: 316, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
+      origin = { city: "Mumbai, India", flag: "🇮🇳", x: 685, y: 312, region: "Maharashtra Cyber Cell", lat: "18.9° N, 72.8° E" };
       transit = { city: "Bangkok, Thailand", flag: "🇹🇭", x: 760, y: 320, role: "Hydra-Peel Task Mule", lat: "13.7° N, 100.5° E" };
-      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 676, y: 316, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
+      dest = { city: "Mumbai (WazirX Gateway)", flag: "🇮🇳", x: 685, y: 312, role: "WazirX India Gateway Hot 02", lat: "18.9° N, 72.8° E" };
     } else if (isDigitalArrest) {
-      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 678, y: 246, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
+      origin = { city: "New Delhi, India", flag: "🇮🇳", x: 685, y: 252, region: "IFSO Special Cell", lat: "28.6° N, 77.2° E" };
       transit = { city: "Dubai, UAE", flag: "🇦🇪", x: 616, y: 274, role: "OTC P2P Cashout Desk", lat: "25.2° N, 55.2° E" };
       dest = { city: "Seychelles (OKX Vault)", flag: "🇸🇨", x: 636, y: 425, role: "CoinDCX / OKX Off-Ramp Hub", lat: "4.6° S, 55.4° E" };
     } else if (isPigButchering) {
-      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 694, y: 340, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
+      origin = { city: "Bengaluru, India", flag: "🇮🇳", x: 698, y: 338, region: "Karnataka CID Cyber Crime", lat: "12.9° N, 77.5° E" };
       transit = { city: "Hong Kong", flag: "🇭🇰", x: 807, y: 296, role: "Golden-Boar Staging Mule", lat: "22.3° N, 114.1° E" };
       dest = { city: "Hong Kong (KuCoin Cluster)", flag: "🇭🇰", x: 807, y: 296, role: "KuCoin Deposit Liquidity Gateway", lat: "22.3° N, 114.1° E" };
     } else if (isBinanceSafe) {
