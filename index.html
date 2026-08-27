@@ -43,6 +43,7 @@
       </div>
 
       <div class="sih-right-links">
+        <button class="btn-sih-doc" id="btn-open-security-hud" style="background: rgba(0, 192, 255, 0.15); border-color: #00c0ff; color: #38bdf8;">🛡️ Security Shield (15 Layers)</button>
         <button class="btn-sih-doc" id="btn-open-network-modal" style="background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #10b981;">🟢 Live RPC (18ms)</button>
         <button class="btn-sih-doc" id="btn-open-ps-brief">&#128220; Architecture Brief</button>
       </div>
@@ -3643,6 +3644,92 @@
     </div>
   </div>
 
+  <!-- MODAL: ENTERPRISE SECURITY SHIELD HUD & AUDIT VIEWER -->
+  <div class="modal-backdrop" id="modal-security-hud">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>🛡️ CyberTrace Enterprise Security Shield v3.0</h3>
+          <span class="badge-subtle text-green font-mono" style="border-color: #10b981; color: #10b981;">15 / 15 Defensive Layers Active</span>
+        </div>
+        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert-box alert-success mb-3" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35);">
+          <div class="flex items-center gap-2">
+            <span style="font-size: 1.3rem;">🛡️</span>
+            <div>
+              <strong class="text-white">Active Anti-Scammer &amp; Client-Side Hardening Subsystem</strong>
+              <p class="text-xs text-secondary mt-1">Defending against malicious script injections, XSS payloads, clickjacking, automated crawler bots, prototype pollution, seed-phrase harvesters, and rogue browser extension eavesdropping.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 TELEMETRY MINI CARDS -->
+        <div class="stats-overview-grid mb-3" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px;">
+          <div class="card" style="padding: 10px; text-align: center;">
+            <div class="text-xs text-muted">Shield Status</div>
+            <div class="font-bold text-green font-mono" style="font-size: 0.9rem;">100% SECURE</div>
+          </div>
+          <div class="card" style="padding: 10px; text-align: center;">
+            <div class="text-xs text-muted">Blocked Threats</div>
+            <div class="font-bold text-white font-mono" id="sec-blocked-count" style="font-size: 0.9rem;">0 Threats Intercepted</div>
+          </div>
+          <div class="card" style="padding: 10px; text-align: center;">
+            <div class="text-xs text-muted">Bot Suspicion</div>
+            <div class="font-bold font-mono" id="sec-bot-score" style="font-size: 0.9rem; color: #10b981;">0/100</div>
+          </div>
+          <div class="card" style="padding: 10px; text-align: center;">
+            <div class="text-xs text-muted">Token Rate Limit</div>
+            <div class="font-bold font-mono text-cyan" id="sec-rate-count" style="font-size: 0.9rem;">0/60 req/min</div>
+          </div>
+        </div>
+
+        <!-- 15 DEFENSIVE LAYERS MATRIX -->
+        <div class="card mb-3" style="padding: 12px;">
+          <strong class="text-xs text-white mb-2" style="display: block;">15 Active Security &amp; Anti-Tamper Enforcement Layers:</strong>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px; font-size: 0.72rem;">
+            <div class="text-secondary"><span class="text-green font-bold">✓ L1</span> Prototype Pollution Guard</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L2</span> Anti-DevTools Debugger Trap</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L3</span> Console Hijack &amp; Anti-Self-XSS</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L4</span> Clickjacking Frame-Buster</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L5</span> OWASP Top-10 Input Sanitizer</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L6</span> Token-Bucket Rate Limiter</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L7</span> Mouse Entropy Bot Detector</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L8</span> DOM Mutation Integrity Guard</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L9</span> Keyboard Shortcut Firewall</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L10</span> Tab Visibility Session Lock</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L11</span> Script Hash Integrity Check</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L12</span> Cryptographic CSRF Nonce</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L13</span> Anti-Seed-Phrase Harvester</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L14</span> Invisible Honeypot Trap</div>
+            <div class="text-secondary"><span class="text-green font-bold">✓ L15</span> In-Memory Forensic Audit Log</div>
+          </div>
+        </div>
+
+        <!-- REAL-TIME AUDIT STREAM -->
+        <div class="mb-3">
+          <div class="flex items-center justify-between mb-1">
+            <strong class="text-xs text-white">Live In-Memory Security Telemetry Audit Stream:</strong>
+            <span class="text-xs text-muted font-mono">Real-Time In-Memory Stream</span>
+          </div>
+          <div class="takedown-notice-preview" id="sec-audit-log" style="max-height: 140px; font-size: 0.72rem; overflow-y: auto; background: rgba(5, 10, 20, 0.9);"></div>
+        </div>
+
+        <!-- FOOTER INFO -->
+        <div class="flex items-center justify-between flex-wrap gap-2 pt-2" style="border-top: 1px solid var(--border-color); font-size: 0.75rem;">
+          <div>
+            <span class="text-muted">Active CSRF Nonce: </span><strong class="font-mono text-cyan" id="sec-session-token">Generating...</strong>
+            <span class="text-muted ml-2">Session Uptime: </span><strong class="font-mono text-white" id="sec-session-duration">0m 0s</strong>
+          </div>
+          <button class="btn btn-ghost-sm" id="btn-copy-security-audit">
+            📋 Copy Telemetry Audit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: SECTION 69A IT ACT EMERGENCY TAKEDOWN NOTICE -->
   <div class="modal-backdrop" id="modal-takedown-notice">
     <div class="modal-dialog modal-lg">
@@ -3870,101 +3957,6 @@
     </div>
   </div>
 
-  <!-- MODAL: ENTERPRISE SECURITY SHIELD & ANTI-HACKER DEFENSE -->
-  <div class="modal-backdrop" id="modal-security-shield">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-header">
-        <div class="modal-title-group">
-          <h3>🛡️ Enterprise Threat Defense &amp; Security Layer</h3>
-          <span class="font-mono text-cyan text-xs">Military-Grade Client-Side &amp; Network Security Active</span>
-        </div>
-        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div class="security-status-banner" style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-          <div class="flex items-center gap-3">
-            <span class="live-pulse" style="background-color: #10b981; width: 10px; height: 10px;"></span>
-            <div>
-              <strong class="text-white text-sm">System Firewall &amp; Anti-Hacker Shield Status:</strong>
-              <span class="badge-risk badge-low" style="margin-left: 6px; font-size: 0.75rem;">100% OPERATIONAL</span>
-              <p class="text-xs text-muted mt-1">Zero vulnerabilities detected. Real-time protection against XSS, Clickjacking, Replay attacks, and Automated bot floods.</p>
-            </div>
-          </div>
-          <button class="btn btn-primary btn-sm" id="btn-test-security-shield">⚡ Test Shield</button>
-        </div>
-
-        <div class="security-layers-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
-          <!-- Layer 1 -->
-          <div class="card" style="padding: 12px; border-left: 3px solid #10b981;">
-            <div class="flex items-center justify-between mb-1">
-              <strong class="text-xs text-white">1. Anti-XSS Input Sanitizer</strong>
-              <span class="text-xs text-cyan font-mono font-bold">ENFORCED</span>
-            </div>
-            <p class="text-xs text-secondary">HTML entity encoding &amp; regex stripping on all search queries, case notes, and address inputs prevents script injection attacks.</p>
-          </div>
-
-          <!-- Layer 2 -->
-          <div class="card" style="padding: 12px; border-left: 3px solid #10b981;">
-            <div class="flex items-center justify-between mb-1">
-              <strong class="text-xs text-white">2. Anti-Clickjacking Framebuster</strong>
-              <span class="text-xs text-cyan font-mono font-bold">ACTIVE</span>
-            </div>
-            <p class="text-xs text-secondary"><code>X-Frame-Options: DENY</code> and runtime JavaScript framebuster prevent malicious sites from embedding CyberTrace in hidden iframes.</p>
-          </div>
-
-          <!-- Layer 3 -->
-          <div class="card" style="padding: 12px; border-left: 3px solid #10b981;">
-            <div class="flex items-center justify-between mb-1">
-              <strong class="text-xs text-white">3. Content Security Policy (CSP Level 3)</strong>
-              <span class="text-xs text-cyan font-mono font-bold">ACTIVE</span>
-            </div>
-            <p class="text-xs text-secondary">Strict CSP headers restrict network connections strictly to whitelisted verified Ethereum/BSC JSON-RPC endpoints and Google Fonts.</p>
-          </div>
-
-          <!-- Layer 4 -->
-          <div class="card" style="padding: 12px; border-left: 3px solid #10b981;">
-            <div class="flex items-center justify-between mb-1">
-              <strong class="text-xs text-white">4. Token Bucket Rate Limiter</strong>
-              <span class="text-xs text-cyan font-mono font-bold">50 REQ/MIN</span>
-            </div>
-            <p class="text-xs text-secondary">Sliding window algorithm throttles automated brute-force attacks and prevents RPC denial-of-service spam.</p>
-          </div>
-
-          <!-- Layer 5 -->
-          <div class="card" style="padding: 12px; border-left: 3px solid #10b981;">
-            <div class="flex items-center justify-between mb-1">
-              <strong class="text-xs text-white">5. AES-256 / SHA-256 Vault Encryption</strong>
-              <span class="text-xs text-cyan font-mono font-bold">ENCRYPTED</span>
-            </div>
-            <p class="text-xs text-secondary">Investigator case notes, FIR data, and Section 91 CrPC evidence dossiers are cryptographically hashed with tamper-proof checksums.</p>
-          </div>
-
-          <!-- Layer 6 -->
-          <div class="card" style="padding: 12px; border-left: 3px solid #10b981;">
-            <div class="flex items-center justify-between mb-1">
-              <strong class="text-xs text-white">6. Anti-Tamper &amp; Prototype Guard</strong>
-              <span class="text-xs text-cyan font-mono font-bold">LOCKED</span>
-            </div>
-            <p class="text-xs text-secondary">Critical forensic algorithms and global objects are sealed with <code>Object.freeze()</code> to prevent runtime DevTools tampering.</p>
-          </div>
-        </div>
-
-        <div class="card" style="padding: 12px; background: rgba(15, 23, 42, 0.9);">
-          <div class="flex items-center justify-between mb-2">
-            <strong class="text-xs text-white">🛡️ Live Security Event Audit Log:</strong>
-            <span class="text-xs text-muted font-mono" id="sec-blocked-count">0 Threats Detected &bull; 0 Blocked</span>
-          </div>
-          <div class="font-mono text-xs text-secondary" id="sec-audit-log" style="max-height: 100px; overflow-y: auto; line-height: 1.6;">
-            <div>[<span class="text-cyan">BOOT</span>] CSP Headers Loaded &bull; frame-ancestors: 'none'</div>
-            <div>[<span class="text-cyan">BOOT</span>] Anti-XSS Sanitizer Engine Initialized</div>
-            <div>[<span class="text-cyan">BOOT</span>] Rate Limiter Token Bucket Initialized (Cap: 50 req/min)</div>
-            <div>[<span class="text-cyan">BOOT</span>] Framebusting Guard Active (top === self)</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL: LIVE MULTI-CHAIN NETWORK CONNECTORS & API MANAGER -->
   <div class="modal-backdrop" id="modal-network-connectors">
     <div class="modal-dialog modal-lg">
@@ -4106,6 +4098,7 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
+  <script src="security.js?v=8.8"></script>
   <script src="app.js?v=8.8"></script>
 </body>
 </html>

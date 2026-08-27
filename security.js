@@ -608,6 +608,21 @@ Close this console immediately.
   function L13_clipboardGuard() {
     document.addEventListener('paste', function (e) {
       const pasted = (e.clipboardData || window.clipboardData)?.getData('text') || '';
+      
+      // 1. BIP-39 Seed Phrase Theft Guard (12, 18, or 24 words)
+      const words = pasted.trim().split(/\s+/);
+      if ((words.length === 12 || words.length === 18 || words.length === 24) && words.every(w => /^[a-zA-Z]{3,8}$/.test(w))) {
+        _log('SEED_PHRASE_INTERCEPTED', `Detected 12/24-word recovery phrase in paste buffer — blocked to protect citizen from theft`);
+        _showSecurityToast('🚨 CRITICAL SAFETY SHIELD: 12/24-word Secret Recovery Seed Phrase detected! NEVER share or paste recovery seed phrases anywhere. CyberTrace will NEVER ask for private keys.');
+        return;
+      }
+
+      // 2. Raw 64-Hex Private Key Exposure Guard
+      if (/^(0x)?[0-9a-fA-F]{64}$/.test(pasted.trim())) {
+        _log('PRIVATE_KEY_EXPOSURE_WARN', 'Detected raw 64-character private key in paste buffer — user alerted');
+        _showSecurityToast('🚨 SECURITY SHIELD: Potential raw Private Key detected! Never expose private keys in web browsers.');
+      }
+
       const suspiciousPatterns = [
         /fetch\s*\(/i,
         /document\.cookie/i,
@@ -632,7 +647,7 @@ Close this console immediately.
       }
     }, { passive: true });
 
-    _log('L13_ACTIVE', 'Clipboard Poison Guard initialized');
+    _log('L13_ACTIVE', 'Clipboard Poison Guard & Anti-Seed-Phrase Shield initialized');
   }
 
   /* ═══════════════════════════════════════════

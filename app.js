@@ -2022,6 +2022,28 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenPsBrief.addEventListener('click', () => openModal(modalPsBrief));
   }
 
+  const btnOpenSecurityHud = document.getElementById('btn-open-security-hud');
+  const modalSecurityHud = document.getElementById('modal-security-hud');
+  if (btnOpenSecurityHud && modalSecurityHud) {
+    btnOpenSecurityHud.addEventListener('click', () => {
+      openModal(modalSecurityHud);
+      showToast('🛡️ Enterprise Security Shield HUD: All 15 Defensive Layers Active', 'info');
+    });
+  }
+
+  const btnCopySecurityAudit = document.getElementById('btn-copy-security-audit');
+  if (btnCopySecurityAudit) {
+    btnCopySecurityAudit.addEventListener('click', () => {
+      const logs = (window.CyberShield && typeof window.CyberShield.getAuditLog === 'function')
+        ? window.CyberShield.getAuditLog()
+        : [];
+      const logText = logs.map(l => `[${l.type} • ${l.time}] ${l.msg}`).join('\n');
+      navigator.clipboard.writeText(logText || 'Security Shield 15/15 Active • No Threats Detected').then(() => {
+        showToast('📋 Security Audit Telemetry copied to clipboard!', 'success');
+      });
+    });
+  }
+
   if (btnViewFullGraph && modalGraph) {
     btnViewFullGraph.addEventListener('click', () => {
       const viewport = document.getElementById('graph-full-viewport');
