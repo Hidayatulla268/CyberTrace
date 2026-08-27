@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8.5">
+  <link rel="stylesheet" href="style.css?v=8.7">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -2791,7 +2791,7 @@
           <div class="view-header-block">
             <div class="flex items-center justify-between flex-wrap gap-3">
               <div class="flex items-center gap-3">
-                <div class="view-icon-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4);">
+                <div class="view-icon-badge" style="background: rgba(0, 192, 255, 0.15); color: #00c0ff; border: 1px solid rgba(0, 192, 255, 0.3);">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                 </div>
                 <div>
@@ -2800,8 +2800,8 @@
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <span class="badge-subtle font-mono text-green" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #10b981;">🟢 Live Phishing Engine Active</span>
-                <span class="ps-sub-badge" style="border-color: #ef4444; color: #ef4444;">Section 69A IT Act</span>
+                <span class="badge-subtle font-mono text-green" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #10b981;">🟢 Live Phishing Engine Active</span>
+                <span class="badge-subtle font-mono text-red" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5;">Section 69A IT Act</span>
               </div>
             </div>
           </div>
@@ -2810,7 +2810,7 @@
           <div class="card" style="border-color: rgba(0, 192, 255, 0.3); margin-bottom: 16px;">
             <div class="flex items-center justify-between mb-2">
               <label for="url-scanner-input" class="input-label font-bold text-white">Paste Any Suspicious Link, Shortlink (bit.ly), DApp URL, or Website to Verify</label>
-              <span class="text-xs text-muted">Supports HTTP, HTTPS, Telegram (t.me), WhatsApp shortlinks &amp; Web3 Domains</span>
+              <span class="text-xs text-muted font-mono">Supports HTTP, HTTPS, Telegram (t.me), WhatsApp shortlinks &amp; Web3 Domains</span>
             </div>
             <div class="search-bar-row">
               <div class="input-container">
@@ -2826,7 +2826,7 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </button>
               </div>
-              <button class="btn btn-primary" id="btn-scan-url" style="background: linear-gradient(135deg, #ef4444, #f59e0b); box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35); padding: 9px 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; height: 42px; white-space: nowrap; flex-shrink: 0;">
+              <button class="btn-scan-action" id="btn-scan-url" title="Execute Deep Phishing Scan">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
                 <span>⚡ Scan URL Now</span>
               </button>
@@ -2835,7 +2835,7 @@
             <!-- PRESET ATTACK SAMPLES -->
             <div class="url-preset-pills">
               <span class="text-xs text-muted font-bold" style="align-self: center;">Try Crime Attack Presets:</span>
-              <button class="url-preset-btn" data-url="https://uniswap-v3-airdrop-reward.xyz/connect-wallet">🪙 Uniswap Permit2 Drainer</button>
+              <button class="url-preset-btn active" data-url="https://uniswap-v3-airdrop-reward.xyz/connect-wallet">🪙 Uniswap Permit2 Drainer</button>
               <button class="url-preset-btn" data-url="https://sbi-rewards-kyc-update.top/claim-points.apk">🏦 Fake SBI KYC APK Phish</button>
               <button class="url-preset-btn" data-url="https://telegram-earn-task-vip88.online/mule-signup">💼 Telegram Task Job Scam</button>
               <button class="url-preset-btn" data-url="https://cbi-police-cybercell-verification.in/case-notice.pdf.apk">👮 Digital Arrest Court APK</button>
@@ -2853,15 +2853,15 @@
               </div>
               <p class="text-sm text-secondary mt-1" id="url-verdict-desc">This URL is impersonating <strong>Uniswap Labs</strong> and uses malicious JavaScript to execute gasless <code>Permit2</code> multi-token batch approvals to drain connected crypto wallets.</p>
               <div class="flex items-center gap-2 flex-wrap mt-2" id="url-verdict-tags">
-                <span class="badge-subtle text-red" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444;">🚨 Smart Contract Drainer</span>
-                <span class="badge-subtle text-amber" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b;">⚠️ Typosquatted Brand ("uniswap")</span>
-                <span class="badge-subtle text-purple" style="background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6;">🌪️ Zero-Day TLD (.xyz)</span>
-                <span class="badge-subtle text-cyan" style="background: rgba(0, 192, 255, 0.2); border: 1px solid #00c0ff;">🧬 Linked to Campaign #CYB-3912</span>
+                <span class="badge-subtle text-red" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5);">🚨 Smart Contract Drainer</span>
+                <span class="badge-subtle text-amber" style="background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.5);">⚠️ Typosquatted Brand ("uniswap")</span>
+                <span class="badge-subtle text-purple" style="background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.5);">🌪️ Zero-Day TLD (.xyz)</span>
+                <span class="badge-subtle text-cyan" style="background: rgba(0, 192, 255, 0.2); border: 1px solid rgba(0, 192, 255, 0.5);">🧬 Linked to Campaign #CYB-3912</span>
               </div>
             </div>
             <div style="text-align: right;">
-              <button class="btn btn-primary btn-sm" id="btn-open-takedown-modal" style="background: #ef4444; border-color: #ef4444;">
-                🚨 Emergency Section 69A Takedown
+              <button class="btn-takedown-action" id="btn-open-takedown-modal">
+                🚨 Emergency Section 69A Takedown &rarr;
               </button>
             </div>
           </div>
@@ -3396,6 +3396,48 @@
     </div>
   </div>
 
+  <!-- MODAL: SECTION 69A IT ACT EMERGENCY TAKEDOWN NOTICE -->
+  <div class="modal-backdrop" id="modal-takedown-notice">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3>🚨 Emergency Domain Takedown Order &bull; Section 69A IT Act</h3>
+          <span class="badge-subtle text-red font-mono" style="border-color: #ef4444; color: #fca5a5;">CERT-In / DoT Dispatch Ready</span>
+        </div>
+        <button class="btn-close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert-box alert-danger mb-3">
+          <div class="flex items-center gap-2">
+            <span style="font-size: 1.2rem;">⚖️</span>
+            <div>
+              <strong class="text-white">Statutory Blocking Notice under Section 69A Information Technology Act, 2000</strong>
+              <p class="text-xs text-secondary mt-1">Directs CERT-In, DoT, ISPs (Jio/Airtel/Vi/BSNL) and domain registrars to immediately lock, suspend, and DNS sinkhole this weaponized phishing asset.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <pre class="takedown-notice-preview" id="takedown-modal-pre" style="max-height: 280px;"></pre>
+        </div>
+
+        <div class="flex items-center justify-between flex-wrap gap-2 pt-3" style="border-top: 1px solid var(--border-color);">
+          <div class="text-xs text-muted">
+            <span>Dispatched via: <strong>I4C CIS Threat Intelligence Clearinghouse</strong></span>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-ghost-sm" id="btn-copy-modal-takedown">
+              📋 Copy Notice Text
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn-dispatch-certin">
+              ⚡ Dispatch to CERT-In &amp; DoT
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: PDF REPORT PREVIEW / PRINT -->
   <div class="modal-backdrop" id="modal-pdf-dossier">
     <div class="modal-dialog modal-lg printable-dossier">
@@ -3817,6 +3859,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=8.5"></script>
+  <script src="app.js?v=8.7"></script>
 </body>
 </html>

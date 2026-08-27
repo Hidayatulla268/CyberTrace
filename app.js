@@ -2912,6 +2912,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnTraceUrlWallet = document.getElementById('btn-trace-url-wallet');
   const btnCopyTakedownText = document.getElementById('btn-copy-takedown-text');
   const btnOpenTakedownModal = document.getElementById('btn-open-takedown-modal');
+  const modalTakedownNotice = document.getElementById('modal-takedown-notice');
+  const takedownModalPre = document.getElementById('takedown-modal-pre');
+  const btnCopyModalTakedown = document.getElementById('btn-copy-modal-takedown');
+  const btnDispatchCertIn = document.getElementById('btn-dispatch-certin');
 
   let activeScannedUrlProfile = null;
 
@@ -3096,6 +3100,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!input) return;
     if (urlScannerInput) urlScannerInput.value = input;
 
+    // Highlight matching preset button
+    document.querySelectorAll('.url-preset-btn').forEach(btn => {
+      if (btn.dataset.url === input || input.includes(btn.dataset.url) || btn.dataset.url.includes(input)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
     // Ensure scheme for URL parsing
     let parsedUrl = null;
     let fullUrl = input;
@@ -3106,23 +3119,23 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       parsedUrl = new URL(fullUrl);
     } catch (e) {
-      // Fallback manual decomposition
       parsedUrl = {
         protocol: 'https:',
-        hostname: input.split('/')[0],
-        pathname: '/' + (input.split('/').slice(1).join('/') || ''),
+        hostname: input.replace(/^https?:\/\//i, '').split('/')[0],
+        pathname: '/' + (input.replace(/^https?:\/\//i, '').split('/').slice(1).join('/') || ''),
         search: ''
       };
     }
 
     const host = parsedUrl.hostname.toLowerCase();
+    const cleanHost = host.replace(/^www\./i, '');
     const path = parsedUrl.pathname.toLowerCase();
     const search = parsedUrl.search || '';
 
     // Check against Presets
     let profile = null;
     for (const key in urlAttackPresets) {
-      if (host.includes(key) || key.includes(host)) {
+      if (cleanHost.includes(key) || key.includes(cleanHost) || host.includes(key)) {
         profile = urlAttackPresets[key];
         break;
       }
@@ -3237,7 +3250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (verdictTags && profile.tags) {
       verdictTags.innerHTML = profile.tags.map(t => `
-        <span class="badge-subtle text-${t.color}" style="background: rgba(${t.color === 'red' ? '239, 68, 68' : t.color === 'amber' ? '245, 158, 11' : t.color === 'green' ? '16, 185, 129' : '0, 192, 255'}, 0.2); border: 1px solid var(--border-color);">${t.text}</span>
+        <span class="badge-subtle text-${t.color}" style="background: rgba(${t.color === 'red' ? '239, 68, 68' : t.color === 'amber' ? '245, 158, 11' : t.color === 'green' ? '16, 185, 129' : '0, 192, 255'}, 0.18); border: 1px solid rgba(${t.color === 'red' ? '239, 68, 68' : t.color === 'amber' ? '245, 158, 11' : t.color === 'green' ? '16, 185, 129' : '0, 192, 255'}, 0.4);">${t.text}</span>
       `).join('');
     }
 
@@ -3248,7 +3261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const partParams = document.getElementById('url-part-params');
     const schemeStatus = document.getElementById('url-scheme-status');
 
-    if (partProto) partProto.textContent = parsedUrl.protocol + '//';
+    if (partProto) partProto.textContent = (parsedUrl.protocol ? parsedUrl.protocol + '//' : 'https://');
     if (partDomain) {
       partDomain.textContent = host;
       partDomain.className = `url-chip ${profile.isSafe ? 'url-chip-domain-safe' : 'url-chip-domain'}`;
@@ -3328,7 +3341,84 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast(`URL Scan Completed: ${profile.title.slice(0, 30)}...`, profile.isSafe ? 'success' : 'error');
   }
 
-  // --- WIRE UP URL SCANNER EVENT LISTENERS ---
+  // --- RESILIENT EVENT DELEGATION FOR PRESETS & BUTTONS ---
+  document.addEventListener('click', (e) => {
+    // 1. Preset Button Click
+    const presetBtn = e.target.closest('.url-preset-btn');
+    if (presetBtn && presetBtn.dataset.url) {
+      e.preventDefault();
+      const url = presetBtn.dataset.url;
+      if (urlScannerInput) urlScannerInput.value = url;
+      document.querySelectorAll('.url-preset-btn').forEach(b => b.classList.remove('active'));
+      presetBtn.classList.add('active');
+      scanSuspiciousUrl(url);
+      return;
+    }
+
+    // 2. Trace Linked Drainer Wallet
+    const traceBtn = e.target.closest('#btn-trace-url-wallet');
+    if (traceBtn) {
+      e.preventDefault();
+      const targetWallet = (activeScannedUrlProfile && activeScannedUrlProfile.nexus && activeScannedUrlProfile.nexus.wallet)
+        ? activeScannedUrlProfile.nexus.wallet
+        : '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+      switchView('dashboard');
+      updateDashboardData(targetWallet);
+      showToast(`🔍 Tracing Linked Drainer Wallet: ${targetWallet.slice(0, 10)}...`, 'info');
+      return;
+    }
+
+    // 3. Open Takedown Modal
+    const takedownBtn = e.target.closest('#btn-open-takedown-modal');
+    if (takedownBtn) {
+      e.preventDefault();
+      const noticeText = generateTakedownNoticeText(activeScannedUrlProfile);
+      if (takedownModalPre) takedownModalPre.textContent = noticeText;
+      if (modalTakedownNotice) openModal(modalTakedownNotice);
+      return;
+    }
+
+    // 4. Copy Notice inside Modal
+    const copyModalBtn = e.target.closest('#btn-copy-modal-takedown');
+    if (copyModalBtn) {
+      e.preventDefault();
+      const noticeText = generateTakedownNoticeText(activeScannedUrlProfile);
+      navigator.clipboard.writeText(noticeText).then(() => {
+        showToast('📋 Section 69A IT Act Takedown Notice copied to clipboard!', 'success');
+      });
+      return;
+    }
+
+    // 5. Dispatch to CERT-In Button inside Modal
+    const certInBtn = e.target.closest('#btn-dispatch-certin');
+    if (certInBtn) {
+      e.preventDefault();
+      showToast('⚡ Section 69A Takedown Requisition dispatched to CERT-In & DoT Incident Desk!', 'success');
+      if (modalTakedownNotice) closeModal(modalTakedownNotice);
+      return;
+    }
+
+    // 6. Copy Takedown Button in Card 4
+    const copyCardBtn = e.target.closest('#btn-copy-takedown-text');
+    if (copyCardBtn) {
+      e.preventDefault();
+      const notice = generateTakedownNoticeText(activeScannedUrlProfile);
+      navigator.clipboard.writeText(notice).then(() => {
+        showToast('📋 Section 69A IT Act Emergency Takedown Notice copied to clipboard!', 'success');
+      });
+      return;
+    }
+
+    // 7. Copy URL Input Button
+    const copyInputBtn = e.target.closest('#btn-copy-url-input');
+    if (copyInputBtn && urlScannerInput) {
+      e.preventDefault();
+      navigator.clipboard.writeText(urlScannerInput.value.trim());
+      showToast(`Copied URL: ${urlScannerInput.value.trim()}`, 'info');
+      return;
+    }
+  });
+
   if (btnScanUrl && urlScannerInput) {
     btnScanUrl.addEventListener('click', () => {
       scanSuspiciousUrl(urlScannerInput.value);
@@ -3337,36 +3427,6 @@ document.addEventListener('DOMContentLoaded', () => {
     urlScannerInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         scanSuspiciousUrl(urlScannerInput.value);
-      }
-    });
-  }
-
-  if (btnCopyUrlInput && urlScannerInput) {
-    btnCopyUrlInput.addEventListener('click', () => {
-      navigator.clipboard.writeText(urlScannerInput.value.trim());
-      showToast(`Copied URL: ${urlScannerInput.value.trim()}`, 'info');
-    });
-  }
-
-  document.querySelectorAll('.url-preset-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.dataset.url;
-      if (url) {
-        scanSuspiciousUrl(url);
-      }
-    });
-  });
-
-  if (btnTraceUrlWallet) {
-    btnTraceUrlWallet.addEventListener('click', () => {
-      if (activeScannedUrlProfile && activeScannedUrlProfile.nexus && activeScannedUrlProfile.nexus.wallet) {
-        const targetWallet = activeScannedUrlProfile.nexus.wallet;
-        switchView('dashboard');
-        updateDashboardData(targetWallet);
-        showToast(`🔍 Jumping to Blockchain Graph for Linked Drainer: ${targetWallet.slice(0, 10)}...`, 'info');
-      } else {
-        switchView('dashboard');
-        updateDashboardData('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
       }
     });
   }
@@ -3411,24 +3471,6 @@ Issued by:
 Investigating Officer & Cyber Threat Intelligence Unit,
 Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs, Govt. of India
 ================================================================================`;
-  }
-
-  if (btnCopyTakedownText) {
-    btnCopyTakedownText.addEventListener('click', () => {
-      const notice = generateTakedownNoticeText(activeScannedUrlProfile);
-      navigator.clipboard.writeText(notice).then(() => {
-        showToast('📋 Section 69A IT Act Emergency Takedown Notice copied to clipboard!', 'success');
-      });
-    });
-  }
-
-  if (btnOpenTakedownModal) {
-    btnOpenTakedownModal.addEventListener('click', () => {
-      const notice = generateTakedownNoticeText(activeScannedUrlProfile);
-      navigator.clipboard.writeText(notice).then(() => {
-        showToast('🚨 Section 69A IT Act Takedown Notice Copied! Ready to dispatch to CERT-In / DoT.', 'success');
-      });
-    });
   }
 
   // Run initial scan on load for default URL
