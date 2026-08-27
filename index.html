@@ -130,6 +130,15 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="#url-scanner" class="nav-link" data-view="url-scanner" id="nav-url-scanner">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              </span>
+              <span class="nav-label">URL &amp; Phishing Scanner</span>
+              <span class="nav-pill-dna" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">SCAN</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#monitor" class="nav-link" data-view="monitor" id="nav-monitor">
               <span class="nav-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line></svg>
@@ -311,6 +320,15 @@
               </span>
               <span class="nav-label">Citizen UPI Screener</span>
               <span class="nav-pill-dna" style="background: #10b981;">FREE</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#url-scanner" class="nav-link" data-view="url-scanner" id="nav-bank-url-scanner">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              </span>
+              <span class="nav-label">URL &amp; Phishing Scanner</span>
+              <span class="nav-pill-dna" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">SCAN</span>
             </a>
           </li>
           <li class="nav-item">
@@ -2765,6 +2783,212 @@
       </div>
 
       <!-- ======================================================== -->
+      <!-- VIEW: MALICIOUS URL & PHISHING LINK SCANNER STUDIO       -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-url-scanner">
+        <div class="view-page-container">
+          <!-- HEADER BLOCK -->
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                </div>
+                <div>
+                  <h2>🔗 Malicious URL, Phishing &amp; Fake Website Scanner</h2>
+                  <p class="text-secondary text-sm">Real-time threat deconstruction of suspect links sent via WhatsApp, Telegram, SMS, Email, or Web3 DApps before clicking.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle font-mono text-green" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #10b981;">🟢 Live Phishing Engine Active</span>
+                <span class="ps-sub-badge" style="border-color: #ef4444; color: #ef4444;">Section 69A IT Act</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- URL INPUT SECTION -->
+          <div class="card" style="border-color: rgba(0, 192, 255, 0.3); margin-bottom: 16px;">
+            <div class="flex items-center justify-between mb-2">
+              <label for="url-scanner-input" class="input-label font-bold text-white">Paste Any Suspicious Link, Shortlink (bit.ly), DApp URL, or Website to Verify</label>
+              <span class="text-xs text-muted">Supports HTTP, HTTPS, Telegram (t.me), WhatsApp shortlinks &amp; Web3 Domains</span>
+            </div>
+            <div class="search-bar-row">
+              <div class="input-container">
+                <input 
+                  type="text" 
+                  id="url-scanner-input" 
+                  class="wallet-input font-mono" 
+                  value="https://uniswap-v3-airdrop-reward.xyz/connect-wallet" 
+                  placeholder="e.g. https://sbi-rewards-kyc.top/claim or t.me/task_bot..." 
+                  spellcheck="false"
+                >
+                <button class="btn-copy-input" id="btn-copy-url-input" title="Copy URL">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              </div>
+              <button class="btn btn-primary" id="btn-scan-url" style="background: linear-gradient(135deg, #ef4444, #f59e0b); box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35); padding: 9px 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; height: 42px; white-space: nowrap; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+                <span>⚡ Scan URL Now</span>
+              </button>
+            </div>
+
+            <!-- PRESET ATTACK SAMPLES -->
+            <div class="url-preset-pills">
+              <span class="text-xs text-muted font-bold" style="align-self: center;">Try Crime Attack Presets:</span>
+              <button class="url-preset-btn" data-url="https://uniswap-v3-airdrop-reward.xyz/connect-wallet">🪙 Uniswap Permit2 Drainer</button>
+              <button class="url-preset-btn" data-url="https://sbi-rewards-kyc-update.top/claim-points.apk">🏦 Fake SBI KYC APK Phish</button>
+              <button class="url-preset-btn" data-url="https://telegram-earn-task-vip88.online/mule-signup">💼 Telegram Task Job Scam</button>
+              <button class="url-preset-btn" data-url="https://cbi-police-cybercell-verification.in/case-notice.pdf.apk">👮 Digital Arrest Court APK</button>
+              <button class="url-preset-btn" data-url="https://www.binance.com/en/trade/BTC_USDT">🏛️ Binance Official (Safe)</button>
+            </div>
+          </div>
+
+          <!-- VERDICT HERO BANNER -->
+          <div class="url-verdict-banner url-verdict-danger" id="url-verdict-banner">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="pulse-indicator-red" id="url-verdict-pulse"></span>
+                <h3 class="text-lg font-bold text-white" id="url-verdict-title">🚨 DANGEROUS PHISHING &amp; MALICIOUS PERMIT2 DRAINER</h3>
+                <span class="badge-risk badge-high font-mono font-bold" id="url-verdict-score">96 / 100 THREAT SCORE</span>
+              </div>
+              <p class="text-sm text-secondary mt-1" id="url-verdict-desc">This URL is impersonating <strong>Uniswap Labs</strong> and uses malicious JavaScript to execute gasless <code>Permit2</code> multi-token batch approvals to drain connected crypto wallets.</p>
+              <div class="flex items-center gap-2 flex-wrap mt-2" id="url-verdict-tags">
+                <span class="badge-subtle text-red" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444;">🚨 Smart Contract Drainer</span>
+                <span class="badge-subtle text-amber" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b;">⚠️ Typosquatted Brand ("uniswap")</span>
+                <span class="badge-subtle text-purple" style="background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6;">🌪️ Zero-Day TLD (.xyz)</span>
+                <span class="badge-subtle text-cyan" style="background: rgba(0, 192, 255, 0.2); border: 1px solid #00c0ff;">🧬 Linked to Campaign #CYB-3912</span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <button class="btn btn-primary btn-sm" id="btn-open-takedown-modal" style="background: #ef4444; border-color: #ef4444;">
+                🚨 Emergency Section 69A Takedown
+              </button>
+            </div>
+          </div>
+
+          <!-- URL SYNTAX BREAKDOWN -->
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="text-xs text-white">🔬 Deconstructed URL Anatomy &amp; Structure:</strong>
+              <span class="text-xs font-mono text-cyan" id="url-scheme-status">🔒 HTTPS Secured (Fake SSL)</span>
+            </div>
+            <div class="url-breakdown-box" id="url-breakdown-box">
+              <span class="url-chip url-chip-proto" id="url-part-proto">https://</span>
+              <span class="url-chip url-chip-domain" id="url-part-domain">uniswap-v3-airdrop-reward.xyz</span>
+              <span class="url-chip url-chip-path" id="url-part-path">/connect-wallet</span>
+              <span class="url-chip url-chip-param" id="url-part-params">?ref=telegram_bot</span>
+            </div>
+          </div>
+
+          <!-- 4 FORENSIC TELEMETRY CARDS (2x2 GRID) -->
+          <div class="url-scanner-grid">
+            <!-- CARD 1: WHOIS & DOMAIN REPUTATION -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge blue-badge">🌐</span>
+                <h3 class="card-title">1. Domain &amp; WHOIS Intelligence</h3>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Domain Name:</span>
+                <span class="font-mono text-white font-bold" id="url-whois-domain">uniswap-v3-airdrop-reward.xyz</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Domain Age:</span>
+                <span class="font-mono text-danger font-bold" id="url-whois-age">3 Days Old (High-Risk Zero Day)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Registrar:</span>
+                <span class="text-secondary" id="url-whois-registrar">NameCheap Inc. (Withheld for Privacy)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Hosting Server IP:</span>
+                <span class="font-mono text-cyan" id="url-whois-ip">104.21.55.92 (Cloudflare AS13335)</span>
+              </div>
+              <div class="stats-row">
+                <span class="stat-label">SSL Certificate:</span>
+                <span class="text-amber text-xs" id="url-whois-ssl">Let's Encrypt Free DV (Issued 48h ago)</span>
+              </div>
+            </div>
+
+            <!-- CARD 2: BRAND SPOOF & PHISHING HEURISTICS -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge purple-badge">🎯</span>
+                <h3 class="card-title">2. Phishing &amp; Spoof Analysis</h3>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Impersonated Entity:</span>
+                <span class="font-bold text-amber" id="url-spoof-target">Uniswap Labs (DeFi Protocol)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Primary Attack Vector:</span>
+                <span class="text-danger font-bold" id="url-spoof-vector">Permit2 Batch Token Approval Drain</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Typosquatting Risk:</span>
+                <span class="text-danger font-mono" id="url-spoof-typo">94% Brand Keyword Hijack</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Common Delivery:</span>
+                <span class="text-secondary" id="url-spoof-delivery">Telegram Job Groups / WhatsApp Forwards</span>
+              </div>
+              <div class="stats-row">
+                <span class="stat-label">Payload Type:</span>
+                <span class="badge-role role-dna font-mono" id="url-spoof-payload">Phishing DApp Web3 Injector</span>
+              </div>
+            </div>
+
+            <!-- CARD 3: EXTRACTED ARTIFACTS & FORENSIC NEXUS -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge red-badge">🔗</span>
+                <h3 class="card-title">3. Discovered On-Chain &amp; Mule Nexus</h3>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Embedded Drainer Wallet:</span>
+                <span class="font-mono text-cyan" id="url-nexus-wallet">0x742d...f44e</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Associated Syndicate:</span>
+                <span class="text-amber font-bold" id="url-nexus-campaign">Campaign #CYB-3912 ("Phantom-Drainer")</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Destination Off-Ramp:</span>
+                <span class="text-white" id="url-nexus-exchange">Binance Hot Cluster 14 &bull; Dubai OTC Desk</span>
+              </div>
+              <div class="stats-row mb-3">
+                <span class="stat-label">Total Traced Loss:</span>
+                <span class="font-mono text-danger font-bold" id="url-nexus-loss">₹2,10,00,000+ (42 Victims)</span>
+              </div>
+              <button class="btn btn-ghost-sm btn-block" id="btn-trace-url-wallet" style="border-color: #00c0ff; color: #00c0ff;">
+                🔍 Jump &amp; Trace Discovered Drainer Wallet &rarr;
+              </button>
+            </div>
+
+            <!-- CARD 4: CITIZEN ADVICE & LEA EMERGENCY ACTION -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge green-badge">🛡️</span>
+                <h3 class="card-title">4. Citizen Safety &amp; Legal Takedown</h3>
+              </div>
+              <div id="url-action-advice" style="font-size: 0.82rem; line-height: 1.6; margin-bottom: 12px;">
+                <div class="text-danger font-bold mb-1">❌ IMMEDIATE CITIZEN ACTIONS:</div>
+                <div class="text-white">• <strong>DO NOT CLICK</strong> or enter seed phrases, UPI PINs, or passwords.</div>
+                <div class="text-white">• <strong>DO NOT APPROVE</strong> Permit2 / Web3 transaction requests in MetaMask.</div>
+                <div class="text-white">• <strong>REPORT LINK</strong> to 1930 Cyber Helpline or forward to I4C Portal.</div>
+              </div>
+              <div class="pt-2" style="border-top: 1px solid var(--border-color);">
+                <div class="text-xs text-muted mb-2">Statutory Takedown Provision: <strong>Section 69A Information Technology Act, 2000</strong></div>
+                <button class="btn btn-primary btn-sm btn-block" id="btn-copy-takedown-text">
+                  📋 Copy Ready-to-Send Cert-In / DoT Takedown Notice
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
       <!-- VIEW 19: MODE 2: UPI & BANKING RAILS FORENSICS ENGINE     -->
       <!-- ======================================================== -->
       <div class="view-content" id="view-banking-engine">
@@ -3135,6 +3359,38 @@
             <li><strong>Exchange Cluster Identification:</strong> Heuristic models attribute transactions to Centralized Exchanges (Binance, WazirX, KuCoin) with confidence metrics (e.g., 91%).</li>
             <li><strong>Law Enforcement Dossier Generator:</strong> 1-click printable Section 91 CrPC compliant forensic dossier ready for police FIRs and exchange freeze notices.</li>
           </ul>
+        </div>
+
+        <div class="dossier-section">
+          <h4>📚 Official Technical Documentation &amp; Source Code Manuals (PDF Downloads):</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px;">
+            <a href="CyberTrace_Platform_Guide.pdf" target="_blank" class="card" style="padding: 12px; text-decoration: none; border-color: rgba(0, 192, 255, 0.4); display: block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              <div class="flex items-center gap-2 mb-1">
+                <span style="font-size: 1.2rem;">📄</span>
+                <strong class="text-xs text-white">Platform Guide &amp; Specs</strong>
+              </div>
+              <p class="text-xs text-muted" style="margin: 0 0 6px 0;">Comprehensive manual covering dual-engine architecture, 10 crime presets &amp; global benchmark matrix.</p>
+              <span class="badge-role role-gas text-cyan font-bold font-mono" style="font-size: 0.7rem;">Download Guide PDF &rarr;</span>
+            </a>
+
+            <a href="CyberTrace_Complete_Source_Code.pdf" target="_blank" class="card" style="padding: 12px; text-decoration: none; border-color: rgba(16, 185, 129, 0.4); display: block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              <div class="flex items-center gap-2 mb-1">
+                <span style="font-size: 1.2rem;">💻</span>
+                <strong class="text-xs text-white">Complete Source Code (144 Pages)</strong>
+              </div>
+              <p class="text-xs text-muted" style="margin: 0 0 6px 0;">Full production repository code (12,709+ LOC) across HTML, JS, CSS &amp; Security with line numbering.</p>
+              <span class="badge-role role-dna text-green font-bold font-mono" style="font-size: 0.7rem;">Download Code PDF &rarr;</span>
+            </a>
+
+            <a href="CyberTrace_Abbreviations_and_Shortcuts_Guide.pdf" target="_blank" class="card" style="padding: 12px; text-decoration: none; border-color: rgba(245, 158, 11, 0.4); display: block; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              <div class="flex items-center gap-2 mb-1">
+                <span style="font-size: 1.2rem;">📖</span>
+                <strong class="text-xs text-white">Abbreviations &amp; Shortcuts</strong>
+              </div>
+              <p class="text-xs text-muted" style="margin: 0 0 6px 0;">Glossary of all 75+ law enforcement acronyms, legal statutes (CrPC/BNSS), crypto terms &amp; UPI rails.</p>
+              <span class="badge-role role-splitter text-amber font-bold font-mono" style="font-size: 0.7rem;">Download Shortcuts PDF &rarr;</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

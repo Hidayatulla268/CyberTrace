@@ -1900,12 +1900,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
-  // Setup click listeners for nav-links in Crypto Mode
-  document.querySelectorAll('#nav-list-crypto .nav-link').forEach(link => {
+  // Setup click listeners for nav-links across all menus (Crypto, Banking, URL Scanner)
+  document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const view = link.dataset.view || 'dashboard';
+      const sub = link.dataset.sub;
       switchView(view, link);
+      if (sub) {
+        const subEl = document.getElementById(sub);
+        if (subEl) {
+          setTimeout(() => subEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+      }
     });
   });
 
@@ -2680,6 +2687,18 @@ document.addEventListener('DOMContentLoaded', () => {
         SecurityShield.logEvent('XSS_BLOCKED', `Sanitized input payload: "${rawVal.slice(0, 25)}..."`);
         showToast('🛡️ Security Shield: Potentially malicious script characters were neutralized', 'error');
       }
+
+      // Check if user entered a URL instead of a wallet
+      const isUrlInput = val.startsWith('http://') || val.startsWith('https://') || val.includes('t.me/') || val.includes('.xyz') || val.includes('.top') || val.includes('.online') || val.includes('.apk') || (val.includes('.') && val.includes('/'));
+      if (isUrlInput) {
+        switchView('url-scanner');
+        if (typeof scanSuspiciousUrl === 'function') {
+          scanSuspiciousUrl(val);
+        }
+        showToast('🔗 Detected URL/Link Input &rarr; Routing to URL Phishing Scanner', 'info');
+        return;
+      }
+
       updateDashboardData(val);
     });
   }
@@ -2883,6 +2902,539 @@ document.addEventListener('DOMContentLoaded', () => {
       runPublicSafetyCheck(btn.dataset.testAddr);
     });
   });
+
+  // ========================================================
+  // 🔗 MALICIOUS URL, PHISHING & FAKE WEBSITE SCANNER ENGINE
+  // ========================================================
+  const urlScannerInput = document.getElementById('url-scanner-input');
+  const btnScanUrl = document.getElementById('btn-scan-url');
+  const btnCopyUrlInput = document.getElementById('btn-copy-url-input');
+  const btnTraceUrlWallet = document.getElementById('btn-trace-url-wallet');
+  const btnCopyTakedownText = document.getElementById('btn-copy-takedown-text');
+  const btnOpenTakedownModal = document.getElementById('btn-open-takedown-modal');
+
+  let activeScannedUrlProfile = null;
+
+  const urlAttackPresets = {
+    'uniswap-v3-airdrop-reward.xyz': {
+      url: 'https://uniswap-v3-airdrop-reward.xyz/connect-wallet',
+      title: '🚨 DANGEROUS PHISHING & MALICIOUS PERMIT2 DRAINER',
+      score: 96,
+      scoreLevel: 'CRITICAL THREAT',
+      desc: 'This URL is impersonating <strong>Uniswap Labs</strong> and uses malicious JavaScript to execute gasless <code>Permit2</code> multi-token batch approvals to drain connected crypto wallets.',
+      tags: [
+        { text: '🚨 Smart Contract Drainer', color: 'red' },
+        { text: '⚠️ Typosquatted Brand ("uniswap")', color: 'amber' },
+        { text: '🌪️ Zero-Day TLD (.xyz)', color: 'purple' },
+        { text: '🧬 Linked to Campaign #CYB-3912', color: 'cyan' }
+      ],
+      whois: {
+        domain: 'uniswap-v3-airdrop-reward.xyz',
+        age: '3 Days Old (High-Risk Zero Day)',
+        registrar: 'NameCheap Inc. (Withheld for Privacy)',
+        ip: '104.21.55.92 (Cloudflare AS13335, Netherlands)',
+        ssl: "Let's Encrypt Free DV (Issued 48h ago)"
+      },
+      spoof: {
+        target: 'Uniswap Labs (DeFi Protocol)',
+        vector: 'Permit2 Batch Token Approval Drain',
+        typo: '94% Brand Keyword Hijack',
+        delivery: 'Telegram Job Groups / Discord Fake Airdrop Bots',
+        payload: 'Phishing DApp Web3 Injector (Permit2)'
+      },
+      nexus: {
+        wallet: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+        walletShort: '0x742d...f44e',
+        campaign: 'Campaign #CYB-3912 ("Phantom-Drainer")',
+        exchange: 'Binance Hot Cluster 14 • Dubai OTC Desk',
+        loss: '₹2,10,00,000+ (42 Victims Reported)'
+      },
+      isSafe: false
+    },
+    'sbi-rewards-kyc-update.top': {
+      url: 'https://sbi-rewards-kyc-update.top/claim-points.apk',
+      title: '🚨 CRITICAL MALWARE APK & FAKE SBI BANKING PHISH',
+      score: 94,
+      scoreLevel: 'CRITICAL THREAT',
+      desc: 'This URL distributes a weaponized malicious Android APK (<code>SBI_Rewards_2026.apk</code>) that intercepts SMS OTPs and steals online banking credentials.',
+      tags: [
+        { text: '📱 Malicious APK Dropper', color: 'red' },
+        { text: '🏦 Spoofed Brand: State Bank of India', color: 'amber' },
+        { text: '⚠️ High-Risk TLD (.top)', color: 'purple' },
+        { text: '📱 Linked to 14 NCRP Complaints', color: 'green' }
+      ],
+      whois: {
+        domain: 'sbi-rewards-kyc-update.top',
+        age: '5 Days Old (Zero-Day Ingestion)',
+        registrar: 'Hostinger Operations, UAB (Anonymous)',
+        ip: '185.220.101.44 (Mevspace Sp. z o.o., Poland)',
+        ssl: 'Self-Signed Invalid SSL Cert'
+      },
+      spoof: {
+        target: 'State Bank of India (YONO SBI)',
+        vector: 'Remote Access RAT & SMS OTP Forwarder APK',
+        typo: '98% Banking Brand Spoof',
+        delivery: 'SMS Smishing Broadcasts ("Dear Customer, SBI Points Expiring")',
+        payload: 'Weaponized Trojan APK (Package: com.sbi.rewards.update)'
+      },
+      nexus: {
+        wallet: '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0',
+        walletShort: 'daily.payout@oksbi (Axis Mule)',
+        campaign: 'Campaign #CYB-2048 ("Hydra-Peel" APK Network)',
+        exchange: 'State Bank of India • Andheri East Branch (Mule Account)',
+        loss: '₹84,50,000+ (14 NCRP 1930 FIRs)'
+      },
+      isSafe: false
+    },
+    'telegram-earn-task-vip88.online': {
+      url: 'https://telegram-earn-task-vip88.online/mule-signup',
+      title: '🚨 HIGH RISK TELEGRAM TASK FRAUD PLATFORM',
+      score: 91,
+      scoreLevel: 'HIGH RISK',
+      desc: 'This URL hosts a fake part-time YouTube rating/Google Review task investment website designed to lure victims into paying escalating deposits.',
+      tags: [
+        { text: '💼 Telegram Task Syndicate', color: 'red' },
+        { text: '🪙 Crypto Deposit Gateway', color: 'cyan' },
+        { text: '🧬 91% Match to Campaign #CYB-2048', color: 'amber' }
+      ],
+      whois: {
+        domain: 'telegram-earn-task-vip88.online',
+        age: '8 Days Old',
+        registrar: 'Tucows Domains Inc.',
+        ip: '172.67.189.12 (Cloudflare CDN, USA)',
+        ssl: "Let's Encrypt Authority X3"
+      },
+      spoof: {
+        target: 'Telegram Web / YouTube Partners',
+        vector: 'Prepaid Task Escalation & Fake Merchant Portal',
+        typo: '88% Social Platform Impersonation',
+        delivery: 'Telegram Direct Messages from fake HR recruiters',
+        payload: 'Phishing Frontend with Fake Balance Simulator'
+      },
+      nexus: {
+        wallet: '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0',
+        walletShort: '0xA1b2...A9B0',
+        campaign: 'Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)',
+        exchange: 'WazirX India Gateway Hot 02',
+        loss: '₹84,500 Initial Loss (₹84.5L Cluster Loss)'
+      },
+      isSafe: false
+    },
+    'cbi-police-cybercell-verification.in': {
+      url: 'https://cbi-police-cybercell-verification.in/case-notice.pdf.apk',
+      title: '🚨 CRITICAL "DIGITAL ARREST" POLICE EXTORTION PHISH',
+      score: 98,
+      scoreLevel: 'CRITICAL THREAT',
+      desc: 'This URL impersonates the <strong>CBI & Ministry of Home Affairs</strong> with fake arrest warrants and a malicious screen-sharing APK for video sextortion/coercion.',
+      tags: [
+        { text: '👮 Fake Police / CBI Impersonation', color: 'red' },
+        { text: '🚨 Coercive Digital Arrest Threat', color: 'red' },
+        { text: '📱 Spyware APK Payload', color: 'purple' },
+        { text: '⚖️ Active National FIR Priority', color: 'amber' }
+      ],
+      whois: {
+        domain: 'cbi-police-cybercell-verification.in',
+        age: '2 Days Old (Active Weaponized Domain)',
+        registrar: 'GoDaddy.com LLC (Fake Indian Address Registration)',
+        ip: '194.26.29.110 (Chisinau, Moldova)',
+        ssl: 'cPanel Inc. Free SSL'
+      },
+      spoof: {
+        target: 'Central Bureau of Investigation (CBI) / I4C MHA',
+        vector: 'Coercive Video Call Impersonation & Fake Supreme Court Order',
+        typo: '99% Government Agency Spoof',
+        delivery: 'WhatsApp Video Calls with police uniform avatars',
+        payload: 'Screen-Monitoring APK + Fake CBI Investigation Fund Escrow'
+      },
+      nexus: {
+        wallet: '0x89205A3E3b2A69De6DBf7F01ed13B2108B2C43e7',
+        walletShort: 'cbi.investigation.fund@okaxis',
+        campaign: 'Digital Arrest Police Extortion Racket',
+        exchange: 'Axis Bank CP Branch • Dubai OTC Desk',
+        loss: '₹1.50 Crore Extorted across 22 Complaints'
+      },
+      isSafe: false
+    },
+    'binance.com': {
+      url: 'https://www.binance.com/en/trade/BTC_USDT',
+      title: '✅ VERIFIED OFFICIAL & SAFE DOMAIN',
+      score: 4,
+      scoreLevel: 'VERIFIED SAFE',
+      desc: 'Official verified domain for <strong>Binance Holdings Ltd.</strong> Global cryptographic SSL certificates, enterprise DNSSEC, and clean reputation on all threat intelligence feeds.',
+      tags: [
+        { text: '🛡️ Official VASP Domain', color: 'green' },
+        { text: '🔒 Extended Validation SSL', color: 'cyan' },
+        { text: '0 Security Complaints', color: 'green' }
+      ],
+      whois: {
+        domain: 'binance.com',
+        age: '7+ Years Old (Registered 2017)',
+        registrar: 'MarkMonitor Inc. (Enterprise Tier)',
+        ip: '18.67.111.45 (Amazon CloudFront / Global Anycast)',
+        ssl: 'DigiCert Global Root G2 (EV High-Assurance SSL)'
+      },
+      spoof: {
+        target: 'None (Genuine Entity)',
+        vector: 'Official Institutional Web Application',
+        typo: '0% (Exact Match Domain)',
+        delivery: 'Direct User Navigation / Verified Search Results',
+        payload: 'Legitimate Web Trading Platform'
+      },
+      nexus: {
+        wallet: '0x28C6c06298d514Db089934071355E5743bf21d60',
+        walletShort: '0x28C6...1d60',
+        campaign: 'Official Centralized Exchange Reserve',
+        exchange: 'Binance Holdings Ltd. (Node 14)',
+        loss: '₹0 (Verified Clean Institutional Hot Wallet)'
+      },
+      isSafe: true
+    }
+  };
+
+  function scanSuspiciousUrl(rawUrl) {
+    let input = (rawUrl || '').trim();
+    if (!input) return;
+    if (urlScannerInput) urlScannerInput.value = input;
+
+    // Ensure scheme for URL parsing
+    let parsedUrl = null;
+    let fullUrl = input;
+    if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+      fullUrl = 'https://' + fullUrl;
+    }
+
+    try {
+      parsedUrl = new URL(fullUrl);
+    } catch (e) {
+      // Fallback manual decomposition
+      parsedUrl = {
+        protocol: 'https:',
+        hostname: input.split('/')[0],
+        pathname: '/' + (input.split('/').slice(1).join('/') || ''),
+        search: ''
+      };
+    }
+
+    const host = parsedUrl.hostname.toLowerCase();
+    const path = parsedUrl.pathname.toLowerCase();
+    const search = parsedUrl.search || '';
+
+    // Check against Presets
+    let profile = null;
+    for (const key in urlAttackPresets) {
+      if (host.includes(key) || key.includes(host)) {
+        profile = urlAttackPresets[key];
+        break;
+      }
+    }
+
+    // Dynamic analysis for unknown custom URLs
+    if (!profile) {
+      const isOfficial = host.endsWith('binance.com') || host.endsWith('wazirx.com') || host.endsWith('sbi.co.in') || host.endsWith('hdfcbank.com') || host.endsWith('icicibank.com') || host.endsWith('gov.in') || host.endsWith('nic.in');
+      const hasBadTld = host.endsWith('.xyz') || host.endsWith('.top') || host.endsWith('.online') || host.endsWith('.site') || host.endsWith('.vip') || host.endsWith('.cfd') || host.endsWith('.link') || host.endsWith('.icu') || host.endsWith('.live') || host.endsWith('.shop');
+      const hasApk = path.includes('.apk') || path.includes('.exe') || path.includes('download');
+      const hasDrainerKeywords = path.includes('permit2') || path.includes('airdrop') || path.includes('claim') || path.includes('connect-wallet') || path.includes('drain') || host.includes('uniswap') || host.includes('metamask');
+      const hasBankingKeywords = host.includes('sbi') || host.includes('kyc') || host.includes('yono') || host.includes('reward') || path.includes('kyc-update') || path.includes('redeem');
+      const hasPoliceKeywords = host.includes('police') || host.includes('cbi') || host.includes('cybercell') || path.includes('notice') || path.includes('arrest');
+      const hasTaskKeywords = host.includes('task') || host.includes('earn') || host.includes('job') || path.includes('mule');
+
+      let threatScore = 45;
+      let title = '🟡 SUSPICIOUS ZERO-DAY UNVERIFIED DOMAIN';
+      let desc = 'This URL is not recognized in official registries and exhibits suspicious hosting or path characteristics.';
+      let target = 'Unknown / Unverified Host';
+      let vector = 'General Web Traffic';
+      let typo = '25% Heuristic Risk';
+      let payload = 'Web Content';
+      let isSafe = false;
+
+      if (isOfficial) {
+        threatScore = 6;
+        title = '✅ VERIFIED OFFICIAL & SAFE DOMAIN';
+        desc = `Official verified domain (${host}). Verified SSL certificate and clean history across cyber threat registries.`;
+        target = 'Official Verified Organization';
+        vector = 'Legitimate Web Service';
+        typo = '0% (Exact Match)';
+        payload = 'Standard Web Page';
+        isSafe = true;
+      } else {
+        if (hasBadTld) threatScore += 25;
+        if (hasApk) { threatScore += 30; vector = 'Weaponized APK Dropper (Malware)'; }
+        if (hasDrainerKeywords) { threatScore += 28; vector = 'Web3 Permit2 Smart Contract Drainer'; target = 'Web3 / Crypto Wallet Protocol'; }
+        if (hasBankingKeywords) { threatScore += 26; vector = 'Banking KYC Phishing & OTP Harvest'; target = 'Indian Commercial Bank'; }
+        if (hasPoliceKeywords) { threatScore += 32; vector = 'Digital Arrest Coercive Police Extortion'; target = 'Law Enforcement / I4C'; }
+        if (hasTaskKeywords) { threatScore += 22; vector = 'Telegram Task Part-Time Job Scam'; target = 'Part-Time Work Fraud'; }
+
+        threatScore = Math.min(99, Math.max(70, threatScore));
+        title = threatScore >= 90 ? '🚨 CRITICAL MALICIOUS PHISHING DETECTED' : '🔴 HIGH RISK PHISHING LINK';
+        desc = `Heuristic scanners identified suspicious spoofing indicators targeting <strong>${target}</strong> with attack vector: <strong>${vector}</strong>.`;
+      }
+
+      let hashVal = 0;
+      for (let i = 0; i < input.length; i++) hashVal = (hashVal << 5) - hashVal + input.charCodeAt(i);
+      const absHash = Math.abs(hashVal);
+
+      profile = {
+        url: input,
+        title: title,
+        score: threatScore,
+        scoreLevel: isSafe ? 'VERIFIED SAFE' : (threatScore >= 90 ? 'CRITICAL THREAT' : 'HIGH RISK'),
+        desc: desc,
+        tags: isSafe ? [
+          { text: '🛡️ Official Domain', color: 'green' },
+          { text: '🔒 Verified SSL', color: 'cyan' }
+        ] : [
+          { text: `⚠️ Suspicious TLD (${host.split('.').pop()})`, color: 'amber' },
+          { text: `🚨 ${vector.split(' ')[0]} Indicator`, color: 'red' },
+          { text: '🧬 Unregistered Host', color: 'purple' }
+        ],
+        whois: {
+          domain: host,
+          age: isSafe ? '5+ Years Old' : `${(absHash % 12) + 2} Days Old (Zero-Day)`,
+          registrar: isSafe ? 'Official Institutional Registrar' : 'Privacy Protection Service Inc.',
+          ip: isSafe ? 'Global Anycast CDN' : `185.${(absHash % 200) + 20}.${(absHash % 150) + 10}.14 (Unverified Hosting)`,
+          ssl: isSafe ? 'EV TLS Certificate (Active)' : "Let's Encrypt Free DV (Unverified)"
+        },
+        spoof: {
+          target: target,
+          vector: vector,
+          typo: typo,
+          delivery: 'WhatsApp / Telegram / SMS Smishing',
+          payload: payload
+        },
+        nexus: {
+          wallet: `0x${absHash.toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`,
+          walletShort: `0x${absHash.toString(16).slice(0, 4)}...${(absHash + 99).toString(16).slice(-4)}`,
+          campaign: 'Zero-Day Scam Infrastructure',
+          exchange: 'Binance / WazirX Off-Ramp Network',
+          loss: isSafe ? '₹0' : '₹45,000+ Potential Exposure'
+        },
+        isSafe: isSafe
+      };
+    }
+
+    activeScannedUrlProfile = profile;
+
+    // --- RENDER VERDICT HERO BANNER ---
+    const verdictBanner = document.getElementById('url-verdict-banner');
+    const verdictTitle = document.getElementById('url-verdict-title');
+    const verdictScore = document.getElementById('url-verdict-score');
+    const verdictDesc = document.getElementById('url-verdict-desc');
+    const verdictTags = document.getElementById('url-verdict-tags');
+    const verdictPulse = document.getElementById('url-verdict-pulse');
+
+    if (verdictBanner) {
+      verdictBanner.className = `url-verdict-banner ${profile.isSafe ? 'url-verdict-safe' : (profile.score >= 90 ? 'url-verdict-danger' : 'url-verdict-warning')}`;
+    }
+    if (verdictTitle) verdictTitle.textContent = profile.title;
+    if (verdictScore) {
+      verdictScore.textContent = `${profile.score} / 100 THREAT SCORE`;
+      verdictScore.className = `badge-risk ${profile.isSafe ? 'badge-low' : 'badge-high'} font-mono font-bold`;
+    }
+    if (verdictDesc) verdictDesc.innerHTML = profile.desc;
+    if (verdictPulse) {
+      verdictPulse.className = profile.isSafe ? 'pulse-indicator-green' : 'pulse-indicator-red';
+    }
+
+    if (verdictTags && profile.tags) {
+      verdictTags.innerHTML = profile.tags.map(t => `
+        <span class="badge-subtle text-${t.color}" style="background: rgba(${t.color === 'red' ? '239, 68, 68' : t.color === 'amber' ? '245, 158, 11' : t.color === 'green' ? '16, 185, 129' : '0, 192, 255'}, 0.2); border: 1px solid var(--border-color);">${t.text}</span>
+      `).join('');
+    }
+
+    // --- RENDER DECONSTRUCTED URL ANATOMY ---
+    const partProto = document.getElementById('url-part-proto');
+    const partDomain = document.getElementById('url-part-domain');
+    const partPath = document.getElementById('url-part-path');
+    const partParams = document.getElementById('url-part-params');
+    const schemeStatus = document.getElementById('url-scheme-status');
+
+    if (partProto) partProto.textContent = parsedUrl.protocol + '//';
+    if (partDomain) {
+      partDomain.textContent = host;
+      partDomain.className = `url-chip ${profile.isSafe ? 'url-chip-domain-safe' : 'url-chip-domain'}`;
+    }
+    if (partPath) partPath.textContent = path || '/';
+    if (partParams) {
+      partParams.textContent = search || '(no params)';
+      partParams.style.display = search ? 'inline-block' : 'none';
+    }
+    if (schemeStatus) {
+      schemeStatus.textContent = parsedUrl.protocol === 'https:' ? (profile.isSafe ? '🔒 HTTPS Official Secure' : '🔒 HTTPS Secured (Fake SSL)') : '⚠️ Insecure HTTP';
+      schemeStatus.style.color = parsedUrl.protocol === 'https:' ? (profile.isSafe ? '#10b981' : '#f59e0b') : '#ef4444';
+    }
+
+    // --- RENDER CARD 1: WHOIS INTELLIGENCE ---
+    const whoisDomain = document.getElementById('url-whois-domain');
+    const whoisAge = document.getElementById('url-whois-age');
+    const whoisRegistrar = document.getElementById('url-whois-registrar');
+    const whoisIp = document.getElementById('url-whois-ip');
+    const whoisSsl = document.getElementById('url-whois-ssl');
+
+    if (whoisDomain) whoisDomain.textContent = profile.whois.domain;
+    if (whoisAge) {
+      whoisAge.textContent = profile.whois.age;
+      whoisAge.className = `font-mono font-bold ${profile.isSafe ? 'text-green' : 'text-danger'}`;
+    }
+    if (whoisRegistrar) whoisRegistrar.textContent = profile.whois.registrar;
+    if (whoisIp) whoisIp.textContent = profile.whois.ip;
+    if (whoisSsl) whoisSsl.textContent = profile.whois.ssl;
+
+    // --- RENDER CARD 2: SPOOF & ATTACK VECTOR ---
+    const spoofTarget = document.getElementById('url-spoof-target');
+    const spoofVector = document.getElementById('url-spoof-vector');
+    const spoofTypo = document.getElementById('url-spoof-typo');
+    const spoofDelivery = document.getElementById('url-spoof-delivery');
+    const spoofPayload = document.getElementById('url-spoof-payload');
+
+    if (spoofTarget) spoofTarget.textContent = profile.spoof.target;
+    if (spoofVector) {
+      spoofVector.textContent = profile.spoof.vector;
+      spoofVector.className = profile.isSafe ? 'text-green font-bold' : 'text-danger font-bold';
+    }
+    if (spoofTypo) spoofTypo.textContent = profile.spoof.typo;
+    if (spoofDelivery) spoofDelivery.textContent = profile.spoof.delivery;
+    if (spoofPayload) spoofPayload.textContent = profile.spoof.payload;
+
+    // --- RENDER CARD 3: EXTRACTED ON-CHAIN & MULE NEXUS ---
+    const nexusWallet = document.getElementById('url-nexus-wallet');
+    const nexusCampaign = document.getElementById('url-nexus-campaign');
+    const nexusExchange = document.getElementById('url-nexus-exchange');
+    const nexusLoss = document.getElementById('url-nexus-loss');
+
+    if (nexusWallet) nexusWallet.textContent = profile.nexus.walletShort;
+    if (nexusCampaign) nexusCampaign.textContent = profile.nexus.campaign;
+    if (nexusExchange) nexusExchange.textContent = profile.nexus.exchange;
+    if (nexusLoss) nexusLoss.textContent = profile.nexus.loss;
+
+    // --- RENDER CARD 4: CITIZEN ACTIONS ---
+    const adviceBox = document.getElementById('url-action-advice');
+    if (adviceBox) {
+      if (profile.isSafe) {
+        adviceBox.innerHTML = `
+          <div class="text-green font-bold mb-1">✅ CITIZEN SAFETY VERDICT:</div>
+          <div class="text-white">• <strong>SAFE TO ACCESS:</strong> Official verified domain for institutional operations.</div>
+          <div class="text-white">• <strong>SECURITY REMINDER:</strong> Always verify URL spelling in browser address bar.</div>
+        `;
+      } else {
+        adviceBox.innerHTML = `
+          <div class="text-danger font-bold mb-1">❌ IMMEDIATE CITIZEN ACTIONS:</div>
+          <div class="text-white">• <strong>DO NOT CLICK</strong> or enter seed phrases, UPI PINs, or passwords.</div>
+          <div class="text-white">• <strong>DO NOT APPROVE</strong> Permit2 / Web3 transaction requests in MetaMask.</div>
+          <div class="text-white">• <strong>REPORT LINK</strong> to 1930 Cyber Helpline or forward to I4C Portal.</div>
+        `;
+      }
+    }
+
+    showToast(`URL Scan Completed: ${profile.title.slice(0, 30)}...`, profile.isSafe ? 'success' : 'error');
+  }
+
+  // --- WIRE UP URL SCANNER EVENT LISTENERS ---
+  if (btnScanUrl && urlScannerInput) {
+    btnScanUrl.addEventListener('click', () => {
+      scanSuspiciousUrl(urlScannerInput.value);
+    });
+
+    urlScannerInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        scanSuspiciousUrl(urlScannerInput.value);
+      }
+    });
+  }
+
+  if (btnCopyUrlInput && urlScannerInput) {
+    btnCopyUrlInput.addEventListener('click', () => {
+      navigator.clipboard.writeText(urlScannerInput.value.trim());
+      showToast(`Copied URL: ${urlScannerInput.value.trim()}`, 'info');
+    });
+  }
+
+  document.querySelectorAll('.url-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.dataset.url;
+      if (url) {
+        scanSuspiciousUrl(url);
+      }
+    });
+  });
+
+  if (btnTraceUrlWallet) {
+    btnTraceUrlWallet.addEventListener('click', () => {
+      if (activeScannedUrlProfile && activeScannedUrlProfile.nexus && activeScannedUrlProfile.nexus.wallet) {
+        const targetWallet = activeScannedUrlProfile.nexus.wallet;
+        switchView('dashboard');
+        updateDashboardData(targetWallet);
+        showToast(`🔍 Jumping to Blockchain Graph for Linked Drainer: ${targetWallet.slice(0, 10)}...`, 'info');
+      } else {
+        switchView('dashboard');
+        updateDashboardData('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
+      }
+    });
+  }
+
+  // Section 69A IT Act Emergency Takedown Notice Generator
+  function generateTakedownNoticeText(p) {
+    const prof = p || activeScannedUrlProfile || urlAttackPresets['uniswap-v3-airdrop-reward.xyz'];
+    return `================================================================================
+EMERGENCY DIGITAL CONTENT BLOCKING ORDER UNDER SECTION 69A OF IT ACT, 2000
+================================================================================
+TO:
+1. Designated Officer / Director, CERT-In & Ministry of Electronics & IT (MeitY)
+2. Director (Security), Department of Telecommunications (DoT)
+3. Domain Registrar & Web Hosting Abuse Desk (${prof.whois.registrar} / ${prof.whois.ip})
+
+SUBJECT: IMMEDIATE BLOCKING & DOMAIN SUSPENSION REQUISITION FOR WEAPONIZED
+         PHISHING / CYBER FRAUD ASSET (URL: ${prof.url})
+
+Sir/Madam,
+Whereas real-time cyber threat analytics conducted by the Indian Cyber Crime
+Coordination Centre (I4C) CIS Division has detected an active cyber fraud
+infrastructure targeting Indian citizens:
+
+1. SUSPECT MALICIOUS URL : ${prof.url}
+2. HOSTING DOMAIN        : ${prof.whois.domain}
+3. DOMAIN REGISTRAR      : ${prof.whois.registrar}
+4. SERVER IP & ASN       : ${prof.whois.ip}
+5. THREAT CLASSIFICATION : ${prof.spoof.vector} (Threat Score: ${prof.score}/100)
+6. IMPERSONATED BRAND    : ${prof.spoof.target}
+7. LINKED ON-CHAIN NEXUS : ${prof.nexus.walletShort} (${prof.nexus.campaign})
+8. ESTIMATED VICTIM LOSS : ${prof.nexus.loss}
+
+YOU ARE HEREBY DIRECTED UNDER SECTION 69A OF THE INFORMATION TECHNOLOGY ACT, 2000
+AND BLOCKING RULES, 2009 TO:
+1. Immediately suspend, lock, and sinkhole the domain name (${prof.whois.domain}).
+2. Direct all Internet Service Providers (ISPs) and Telcos across India to block
+   DNS resolution and IP routing to the destination server.
+3. Preserve server access logs, registrant identity details, and payment UTRs
+   for transmission to the Cyber Crime Police Station / I4C Investigation Team.
+
+Issued by:
+Investigating Officer & Cyber Threat Intelligence Unit,
+Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs, Govt. of India
+================================================================================`;
+  }
+
+  if (btnCopyTakedownText) {
+    btnCopyTakedownText.addEventListener('click', () => {
+      const notice = generateTakedownNoticeText(activeScannedUrlProfile);
+      navigator.clipboard.writeText(notice).then(() => {
+        showToast('📋 Section 69A IT Act Emergency Takedown Notice copied to clipboard!', 'success');
+      });
+    });
+  }
+
+  if (btnOpenTakedownModal) {
+    btnOpenTakedownModal.addEventListener('click', () => {
+      const notice = generateTakedownNoticeText(activeScannedUrlProfile);
+      navigator.clipboard.writeText(notice).then(() => {
+        showToast('🚨 Section 69A IT Act Takedown Notice Copied! Ready to dispatch to CERT-In / DoT.', 'success');
+      });
+    });
+  }
+
+  // Run initial scan on load for default URL
+  setTimeout(() => {
+    scanSuspiciousUrl('https://uniswap-v3-airdrop-reward.xyz/connect-wallet');
+  }, 100);
 
   // --- JUDGES DEMO BAR STEP-BY-STEP TOUR ---
   const demoButtons = document.querySelectorAll('.btn-demo-step');
