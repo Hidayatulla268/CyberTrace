@@ -4422,6 +4422,109 @@ button:focus-visible, input:focus-visible, a:focus-visible {
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.45) !important;
 }
 
+/* ======================================================== */
+/* 🔥 BURNER & DORMANT WALLET FORENSICS STYLES              */
+/* ======================================================== */
+
+.burner-lifecycle-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  .burner-lifecycle-timeline {
+    grid-template-columns: 1fr;
+  }
+}
+
+.burner-timeline-step {
+  background: rgba(10, 18, 36, 0.85);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 14px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.burner-timeline-step:hover {
+  border-color: #00c0ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 192, 255, 0.2);
+}
+
+.burner-timeline-step::after {
+  content: '→';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-cyan);
+  font-weight: bold;
+  font-size: 1rem;
+  z-index: 2;
+}
+
+.burner-timeline-step:last-child::after {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .burner-timeline-step::after {
+    display: none;
+  }
+}
+
+.burner-step-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.burner-step-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.burner-step-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.burner-gas-badge {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.burner-sweep-badge {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
 
 
 

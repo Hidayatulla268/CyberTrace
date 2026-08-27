@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8.7">
+  <link rel="stylesheet" href="style.css?v=8.8">
 </head>
 <body>
   <!-- SIH 2026 TOP BANNER -->
@@ -136,6 +136,15 @@
               </span>
               <span class="nav-label">URL &amp; Phishing Scanner</span>
               <span class="nav-pill-dna" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">SCAN</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#burner-tracer" class="nav-link" data-view="burner-tracer" id="nav-burner-tracer">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+              </span>
+              <span class="nav-label">Burner Wallet Forensics</span>
+              <span class="nav-pill-dna" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">GAS TRACE</span>
             </a>
           </li>
           <li class="nav-item">
@@ -329,6 +338,15 @@
               </span>
               <span class="nav-label">URL &amp; Phishing Scanner</span>
               <span class="nav-pill-dna" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">SCAN</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#burner-tracer" class="nav-link" data-view="burner-tracer" id="nav-bank-burner-tracer">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+              </span>
+              <span class="nav-label">Burner Wallet Forensics</span>
+              <span class="nav-pill-dna" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">GAS TRACE</span>
             </a>
           </li>
           <li class="nav-item">
@@ -2989,6 +3007,235 @@
       </div>
 
       <!-- ======================================================== -->
+      <!-- VIEW: BURNER & "DISAPPEARED" WALLET FORENSICS STUDIO      -->
+      <!-- ======================================================== -->
+      <div class="view-content" id="view-burner-tracer">
+        <div class="view-page-container">
+          <!-- HEADER BLOCK -->
+          <div class="view-header-block">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+              <div class="flex items-center gap-3">
+                <div class="view-icon-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+                </div>
+                <div>
+                  <h2>🔥 Burner &amp; "Disappeared" Wallet Forensics Studio</h2>
+                  <p class="text-secondary text-sm">Recover abandoned, 0-balance, and temporary crime wallets by tracing backward to initial genesis gas funding and forward to terminal exchange cash-out sweeps.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="badge-subtle font-mono text-amber" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24;">⛽ Gas Lineage Active</span>
+                <span class="badge-subtle font-mono text-cyan" style="background: rgba(0, 192, 255, 0.15); border: 1px solid rgba(0, 192, 255, 0.4); color: #38bdf8;">Section 91 CrPC CEX Trace</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SEARCH INPUT & PRESETS -->
+          <div class="card" style="border-color: rgba(245, 158, 11, 0.35); margin-bottom: 16px;">
+            <div class="flex items-center justify-between mb-2">
+              <label for="burner-search-input" class="input-label font-bold text-white">Enter Abandoned, 0-Balance, or Single-Use Burner Wallet Address</label>
+              <span class="text-xs text-muted font-mono">Supports EVM (0x), Tron (T...), Bitcoin &amp; Solana Addresses</span>
+            </div>
+            <div class="search-bar-row">
+              <div class="input-container">
+                <input 
+                  type="text" 
+                  id="burner-search-input" 
+                  class="wallet-input font-mono" 
+                  value="0x742d35Cc6634C0532925a3b844Bc454e4438f44e" 
+                  placeholder="e.g. 0x742d...f44e or TX89a...bc4" 
+                  spellcheck="false"
+                >
+                <button class="btn-copy-input" id="btn-copy-burner-input" title="Copy Wallet">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+              </div>
+              <button class="btn-scan-action" id="btn-trace-burner" style="background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);" title="Trace Gas Ancestry & Forward Liquidation">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                <span>⚡ Trace Gas Ancestry &amp; Sweep</span>
+              </button>
+            </div>
+
+            <!-- PRESET BURNER WALLET SAMPLES -->
+            <div class="url-preset-pills">
+              <span class="text-xs text-muted font-bold" style="align-self: center;">Try Burner Forensics Samples:</span>
+              <button class="url-preset-btn active burner-preset-btn" data-wallet="0x742d35Cc6634C0532925a3b844Bc454e4438f44e">🪙 Permit2 Drainer Burner (0x742d...f44e)</button>
+              <button class="url-preset-btn burner-preset-btn" data-wallet="0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0">📱 Task Mule Burner (0xA1b2...A9B0)</button>
+              <button class="url-preset-btn burner-preset-btn" data-wallet="0x3B884C6b91De82012759e6c1e5509930f5F933A1">🕵️ LockBit Ransomware Burner (0x3B88...33A1)</button>
+              <button class="url-preset-btn burner-preset-btn" data-wallet="0x89205A3E3b2A69De6DBf7F01ed13B2108B2C43e7">🛑 Digital Arrest Extortion Burner (0x8920...43e7)</button>
+            </div>
+          </div>
+
+          <!-- HERO BANNER: BURNER FORENSIC STATUS -->
+          <div class="url-verdict-banner url-verdict-warning" id="burner-verdict-banner">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="pulse-indicator-red"></span>
+                <h3 class="text-lg font-bold text-white" id="burner-verdict-title">🔥 ABANDONED ZERO-BALANCE BURNER WALLET DETECTED</h3>
+                <span class="badge-risk badge-high font-mono font-bold" id="burner-balance-tag">₹0.00 BALANCE (SWEPT CLEAN)</span>
+              </div>
+              <p class="text-sm text-secondary mt-1" id="burner-verdict-desc">
+                Current balance is <strong>₹0.00 (0.0000 ETH)</strong>. The fraudster abandoned this wallet after sweeping funds in <strong>34 seconds</strong>. CyberTrace successfully de-anonymized the entity via <strong>Backward Gas Lineage</strong> and <strong>Forward CEX Sweep Attribution</strong>.
+              </p>
+              <div class="flex items-center gap-2 flex-wrap mt-2" id="burner-verdict-tags">
+                <span class="burner-gas-badge" id="burner-tag-gas">⛽ Gas Funder: Binance Hot Node 14</span>
+                <span class="burner-sweep-badge" id="burner-tag-sweep">🌪️ Swept to WazirX India Gateway</span>
+                <span class="badge-subtle text-cyan" style="background: rgba(0, 192, 255, 0.2); border: 1px solid rgba(0, 192, 255, 0.4);" id="burner-tag-time">⏳ Active Span: 34s</span>
+                <span class="badge-subtle text-purple" style="background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.4);" id="burner-tag-dna">🧬 DNA Match: 96%</span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <button class="btn-takedown-action" id="btn-open-burner-subpoena" style="border-color: #f59e0b; color: #fbbf24; background: rgba(245, 158, 11, 0.15);">
+                📜 Section 91 CrPC Gas Subpoena &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- 4-STAGE BURNER LIFECYCLE RECONSTRUCTION -->
+          <div class="card" style="margin-bottom: 16px;">
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs text-white">⏳ Reconstructed Burner Wallet Lifecycle Timeline (Minute-by-Minute Forensic Audit):</strong>
+              <span class="text-xs font-mono text-cyan">4 / 4 Forensic Phases Solved</span>
+            </div>
+            <div class="burner-lifecycle-timeline" id="burner-timeline-container">
+              <div class="burner-timeline-step">
+                <div class="burner-step-time" id="burner-step1-time">T - 02:15 min</div>
+                <div class="burner-step-title">1. Genesis Gas Funding</div>
+                <div class="burner-step-desc" id="burner-step1-desc">Funded with <strong>0.015 ETH</strong> from Binance KYC User Account to pay for transaction fees.</div>
+              </div>
+              <div class="burner-timeline-step">
+                <div class="burner-step-time" id="burner-step2-time">T + 00:00 min</div>
+                <div class="burner-step-title">2. Victim Inflow</div>
+                <div class="burner-step-desc" id="burner-step2-desc">Received <strong>₹84,500</strong> from victim via Permit2 malicious batch approval.</div>
+              </div>
+              <div class="burner-timeline-step">
+                <div class="burner-step-time" id="burner-step3-time">T + 00:34 sec</div>
+                <div class="burner-step-title">3. Automated Sweep</div>
+                <div class="burner-step-desc" id="burner-step3-desc">Script automatically routed 100% of funds to Intermediary Mule A in 34 seconds.</div>
+              </div>
+              <div class="burner-timeline-step">
+                <div class="burner-step-time" id="burner-step4-time">T + 00:45 sec</div>
+                <div class="burner-step-title">4. Wallet Abandoned</div>
+                <div class="burner-step-desc" id="burner-step4-desc">Balance reduced to <strong>₹0.00</strong>. Wallet deleted from scammer client app.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 FORENSIC TELEMETRY CARDS (2x2 GRID) -->
+          <div class="url-scanner-grid">
+            <!-- CARD 1: BACKWARD GAS ANCESTRY -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge amber-badge">⛽</span>
+                <h3 class="card-title">1. Backward Gas Ancestry (Parent Master Funder)</h3>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Genesis Gas Tx:</span>
+                <span class="font-mono text-cyan copyable" id="burner-gas-tx" data-copy="0x9d8f7a1b5c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f">0x9d8f...7a1b</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Parent Master Wallet:</span>
+                <span class="font-mono text-white font-bold copyable" id="burner-gas-funder" data-copy="0x28C6c06298d514Db089934071355E5743bf21d60">0x28C6...1d60</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Master Funder Entity:</span>
+                <span class="text-amber font-bold" id="burner-gas-entity">Binance Holdings Ltd. (Hot Node 14)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Initial Gas Provided:</span>
+                <span class="font-mono text-green font-bold" id="burner-gas-amount">0.015 ETH (₹4,260)</span>
+              </div>
+              <div class="stats-row mb-3">
+                <span class="stat-label">KYC Trace Status:</span>
+                <span class="text-green font-bold" id="burner-gas-status">🟢 Verified KYC Account on Centralized Exchange</span>
+              </div>
+              <button class="btn btn-ghost-sm btn-block" id="btn-jump-funder-wallet" style="border-color: #fbbf24; color: #fbbf24;">
+                🔍 Trace Parent Master Funder Wallet &rarr;
+              </button>
+            </div>
+
+            <!-- CARD 2: FORWARD LIQUIDATION SWEEP -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge red-badge">🌪️</span>
+                <h3 class="card-title">2. Forward Liquidation Sweep (Follow the Money)</h3>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Liquidation Sweep Tx:</span>
+                <span class="font-mono text-cyan copyable" id="burner-sweep-tx" data-copy="0x7711aa90bb22cc33dd44ee55ff66aa77889900112233445566778899aabbccdd">0x7711...aa90</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Total Stolen Inflow:</span>
+                <span class="font-mono text-danger font-bold" id="burner-sweep-amount">₹84,500 (100% Swept)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Sweep Execution Velocity:</span>
+                <span class="font-mono text-cyan font-bold" id="burner-sweep-speed">T + 00:34 sec (Automated Bot)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Terminal Cash-Out Cluster:</span>
+                <span class="text-white font-bold" id="burner-sweep-cluster">WazirX India Gateway Hot 02</span>
+              </div>
+              <div class="stats-row mb-3">
+                <span class="stat-label">Laundering Modus:</span>
+                <span class="text-secondary" id="burner-sweep-modus">Multi-Hop Peeling Chain (60/40 Split Ratio)</span>
+              </div>
+              <button class="btn btn-ghost-sm btn-block" id="btn-jump-sweep-graph" style="border-color: #00c0ff; color: #00c0ff;">
+                📊 View Multi-Hop Fund Graph &rarr;
+              </button>
+            </div>
+
+            <!-- CARD 3: FORENSIC ATTRIBUTION & FRAUD DNA -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge purple-badge">🧬</span>
+                <h3 class="card-title">3. Forensic Attribution &amp; Syndicate DNA</h3>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Linked Crime Syndicate:</span>
+                <span class="text-amber font-bold" id="burner-dna-syndicate">Campaign #CYB-3912 ("Phantom-Drainer")</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Total Cluster Loss:</span>
+                <span class="font-mono text-danger font-bold" id="burner-dna-loss">₹2,10,00,000+ (42 Victims)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Attributed Exchange:</span>
+                <span class="text-white font-bold" id="burner-dna-exchange">Binance Holdings Ltd. (98% Confidence)</span>
+              </div>
+              <div class="stats-row mb-2">
+                <span class="stat-label">Zero-Day Factor:</span>
+                <span class="text-cyan font-mono" id="burner-dna-zeroday">Unreported Single-Use Burner Address</span>
+              </div>
+              <div class="stats-row">
+                <span class="stat-label">Evidence Preservation:</span>
+                <span class="text-green font-mono" id="burner-dna-sha">SHA-256 Hash Locked (Sec 65B Compliant)</span>
+              </div>
+            </div>
+
+            <!-- CARD 4: STATUTORY SECTION 91 CrPC SUBPOENA -->
+            <div class="card">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="feature-icon-badge blue-badge">⚖️</span>
+                <h3 class="card-title">4. Law Enforcement KYC Requisition</h3>
+              </div>
+              <p class="text-xs text-secondary mb-2">
+                Statutory requisition under <strong>Section 91 CrPC &amp; Section 94 BNSS, 2023</strong> addressed to the funding exchange (<span class="text-white font-bold" id="burner-subpoena-target">Binance Holdings Ltd.</span>) to freeze user account and furnish identity records.
+              </p>
+              <div class="alert-box alert-warning mb-3" style="padding: 8px 12px; font-size: 0.75rem;">
+                <strong>Demanded KYC Artifacts:</strong> Name, PAN, Aadhaar, Passport, Mobile, Linked Bank A/C, IP Logs, Device IMEI &amp; Withdrawal Destination.
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-primary btn-sm btn-block" id="btn-copy-burner-subpoena">
+                  📋 Copy Section 91 Subpoena
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
       <!-- VIEW 19: MODE 2: UPI & BANKING RAILS FORENSICS ENGINE     -->
       <!-- ======================================================== -->
       <div class="view-content" id="view-banking-engine">
@@ -3859,6 +4106,6 @@
   <!-- TOAST CONTAINER -->
   <div class="toast-container" id="toast-container"></div>
 
-  <script src="app.js?v=8.7"></script>
+  <script src="app.js?v=8.8"></script>
 </body>
 </html>

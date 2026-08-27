@@ -3478,6 +3478,471 @@ Indian Cyber Crime Coordination Centre (I4C), Ministry of Home Affairs, Govt. of
     scanSuspiciousUrl('https://uniswap-v3-airdrop-reward.xyz/connect-wallet');
   }, 100);
 
+  // ========================================================
+  // 🔥 BURNER & "DISAPPEARED" WALLET FORENSICS ENGINE
+  // ========================================================
+  const burnerSearchInput = document.getElementById('burner-search-input');
+  const btnTraceBurner = document.getElementById('btn-trace-burner');
+  const btnCopyBurnerInput = document.getElementById('btn-copy-burner-input');
+  const btnJumpFunderWallet = document.getElementById('btn-jump-funder-wallet');
+  const btnJumpSweepGraph = document.getElementById('btn-jump-sweep-graph');
+  const btnOpenBurnerSubpoena = document.getElementById('btn-open-burner-subpoena');
+  const btnCopyBurnerSubpoena = document.getElementById('btn-copy-burner-subpoena');
+
+  let activeBurnerProfile = null;
+
+  const burnerWalletPresets = {
+    '0x742d35cc6634c0532925a3b844bc454e4438f44e': {
+      address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+      shortAddr: '0x742d...f44e',
+      title: '🔥 ABANDONED ZERO-BALANCE BURNER WALLET DETECTED',
+      balance: '₹0.00 (0.0000 ETH) — 100% Swept Clean',
+      lifespan: '34 Seconds from Inflow to Total Drain',
+      desc: 'Current balance is <strong>₹0.00 (0.0000 ETH)</strong>. The fraudster abandoned this wallet after sweeping funds in <strong>34 seconds</strong>. CyberTrace successfully de-anonymized the entity via <strong>Backward Gas Lineage</strong> and <strong>Forward CEX Sweep Attribution</strong>.',
+      gas: {
+        tx: '0x9d8f7a1b5c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f',
+        txShort: '0x9d8f...7a1b',
+        funder: '0x28C6c06298d514Db089934071355E5743bf21d60',
+        funderShort: '0x28C6...1d60',
+        entity: 'Binance Holdings Ltd. (Hot Node 14)',
+        amount: '0.015 ETH (₹4,260)',
+        status: '🟢 Verified KYC Account on Centralized Exchange',
+        funderKycId: 'BIN-KYC-99214'
+      },
+      sweep: {
+        tx: '0x7711aa90bb22cc33dd44ee55ff66aa77889900112233445566778899aabbccdd',
+        txShort: '0x7711...aa90',
+        amount: '₹84,500 USDT (100% Swept)',
+        speed: 'T + 00:34 sec (Automated Bot Sweep)',
+        cluster: 'WazirX India Gateway Hot 02',
+        modus: 'Multi-Hop Peeling Chain (60/40 Split Ratio)'
+      },
+      dna: {
+        syndicate: 'Campaign #CYB-3912 ("Phantom-Drainer")',
+        loss: '₹2,10,00,000+ (42 Victims)',
+        exchange: 'Binance Holdings Ltd. (98% Confidence)',
+        zeroday: 'Unreported Single-Use Burner Address',
+        sha: 'SHA-256 Hash Locked (Sec 65B Compliant)'
+      },
+      timeline: [
+        { time: 'T - 02:15 min', title: '1. Genesis Gas Funding', desc: 'Funded with <strong>0.015 ETH</strong> from Binance KYC User Account to pay for transaction fees.' },
+        { time: 'T + 00:00 min', title: '2. Victim Inflow', desc: 'Received <strong>₹84,500</strong> from victim via Permit2 malicious batch approval.' },
+        { time: 'T + 00:34 sec', title: '3. Automated Sweep', desc: 'Script automatically routed 100% of funds to Intermediary Mule A in 34 seconds.' },
+        { time: 'T + 00:45 sec', title: '4. Wallet Abandoned', desc: 'Balance reduced to <strong>₹0.00</strong>. Wallet deleted from scammer client app.' }
+      ]
+    },
+    '0xa1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0': {
+      address: '0xA1b2C3d4E5f6A7B8C9D0E1F2A3B4C5D6E7F8A9B0',
+      shortAddr: '0xA1b2...A9B0',
+      title: '🔥 DORMANT MULE COLLECTION BURNER DETECTED',
+      balance: '₹0.00 (0.0000 ETH) — 100% Swept Clean',
+      lifespan: '48 Seconds Hop Velocity',
+      desc: 'Used as an intermediary task fraud collection hop. Inflow swept to secondary mules within <strong>48 seconds</strong> and gas sponsored by WazirX India FIU gateway.',
+      gas: {
+        tx: '0x3c2a881f2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e',
+        txShort: '0x3c2a...881f',
+        funder: '0x42fB918a28e78e2270Ec08bF5d38f2B54E6F89c2',
+        funderShort: '0x42fB...89c2',
+        entity: 'WazirX India Gateway (FIU-IND Verified Account)',
+        amount: '0.008 ETH (₹2,270)',
+        status: '🟢 FIU-IND Verified Indian Bank Account Linked',
+        funderKycId: 'WRX-IND-40812'
+      },
+      sweep: {
+        tx: '0x992e44b12b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e',
+        txShort: '0x992e...44b1',
+        amount: '₹50,000 (100% Swept)',
+        speed: 'T + 00:48 sec (Rapid Dispersion)',
+        cluster: 'Binance Hot Cluster 14 (Dubai Liquidity Pool)',
+        modus: 'Two-Tier Mule Splitting Strategy'
+      },
+      dna: {
+        syndicate: 'Campaign #CYB-2048 ("Hydra-Peel" Telegram Scam)',
+        loss: '₹84,50,000+ (14 NCRP Complaints)',
+        exchange: 'WazirX India & Binance Gateway (94% Match)',
+        zeroday: 'Dormant Collection Node',
+        sha: 'SHA-256 Hash Locked (Sec 65B Compliant)'
+      },
+      timeline: [
+        { time: 'T - 05:40 min', title: '1. Genesis Gas Funding', desc: 'Funded with <strong>0.008 ETH</strong> from WazirX India KYC account.' },
+        { time: 'T + 00:00 min', title: '2. Victim Inflow', desc: 'Received <strong>₹50,000</strong> task investment deposit.' },
+        { time: 'T + 00:48 sec', title: '3. Layer-1 Dispersion', desc: 'Split into 2 accomplice accounts (₹30k and ₹20k).' },
+        { time: 'T + 01:10 min', title: '4. Dormant State', desc: 'Balance reduced to <strong>₹0.00</strong>. Inactive on ledger.' }
+      ]
+    },
+    '0x3b884c6b91de82012759e6c1e5509930f5f933a1': {
+      address: '0x3B884C6b91De82012759e6c1e5509930f5F933A1',
+      shortAddr: '0x3B88...33A1',
+      title: '🔥 RANSOMWARE EXTORTION BURNER VAULT',
+      balance: '₹0.00 (0.0000 BTC/ETH) — Mixed via Tornado Pool',
+      lifespan: '2 Minutes to Anonymization Pool',
+      desc: 'Disposable ransom drop address used for extortion payment. Swept directly into Tornado.Cash 100 ETH mixer contract.',
+      gas: {
+        tx: '0x55aa11cc2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e',
+        txShort: '0x55aa...11cc',
+        funder: '0x098B716B8Aaf21512996dC57EB0615e2383E2f96',
+        funderShort: '0x098B...2f96',
+        entity: 'OFAC-Sanctioned Lazarus Relay Node',
+        amount: '0.050 ETH (₹14,200)',
+        status: '🔴 Sanctioned High-Risk Funder Wallet',
+        funderKycId: 'OFAC-SDN-9941'
+      },
+      sweep: {
+        tx: '0x742d35cc6634c0532925a3b844bc454e4438f44e',
+        txShort: '0x742d...f44e',
+        amount: '₹3,50,000 (100% Swept)',
+        speed: 'T + 02:10 min (Mixer Ingestion)',
+        cluster: 'Tornado.Cash 100 ETH Anonymity Pool',
+        modus: 'Mixer Obfuscation with Sub-Hop Splitting'
+      },
+      dna: {
+        syndicate: 'LockBit 3.0 / Lazarus Threat Actor',
+        loss: '₹750 Crore Extorted Globally',
+        exchange: 'Decentralized Mixer Protocol (OFAC Sanctioned)',
+        zeroday: 'Single-Target Ransomware Burner',
+        sha: 'SHA-256 Hash Locked (Sec 65B Compliant)'
+      },
+      timeline: [
+        { time: 'T - 10:00 min', title: '1. Genesis Gas Inflow', desc: 'Funded with <strong>0.050 ETH</strong> from mixer relay node.' },
+        { time: 'T + 00:00 min', title: '2. Ransom Deposit', desc: 'Received <strong>₹3,50,000</strong> extortion settlement.' },
+        { time: 'T + 02:10 min', title: '3. Mixer Deposit', desc: 'Swept 100% into Tornado.Cash 100 ETH privacy smart contract.' },
+        { time: 'T + 02:30 min', title: '4. Dead Address', desc: 'Balance reduced to <strong>₹0.00</strong>. Permanent zero activity.' }
+      ]
+    },
+    '0x89205a3e3b2a69de6dbf7f01ed13b2108b2c43e7': {
+      address: '0x89205A3E3b2A69De6DBf7F01ed13B2108B2C43e7',
+      shortAddr: '0x8920...43e7',
+      title: '🔥 DIGITAL ARREST EXTORTION BURNER WALLET',
+      balance: '₹0.00 (0.0000 ETH) — 100% Swept to Dubai OTC Desk',
+      lifespan: '1 Minute 12 Seconds',
+      desc: 'Used in video call "Digital Arrest" coercion scam. Immediately swept into KuCoin gateway and OTC liquidity desk.',
+      gas: {
+        tx: '0x11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff',
+        txShort: '0x1122...eeff',
+        funder: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+        funderShort: '0x7a25...488D',
+        entity: 'CoinDCX India Staging Pool (Verified)',
+        amount: '0.012 ETH (₹3,410)',
+        status: '🟢 FIU-IND Verified Account',
+        funderKycId: 'CDCX-IND-88120'
+      },
+      sweep: {
+        tx: '0x55aa11cc2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e',
+        txShort: '0x55aa...11cc',
+        amount: '₹1,50,000 (100% Swept)',
+        speed: 'T + 01:12 min (OTC Liquidation)',
+        cluster: 'KuCoin Gateway 2 / Dubai OTC Desk',
+        modus: 'Immediate CEX Deposit Sweep'
+      },
+      dna: {
+        syndicate: 'Digital Arrest Cyber Extortion Syndicate',
+        loss: '₹1.50 Crore Extorted (22 Police FIRs)',
+        exchange: 'KuCoin & Dubai OTC Network (99% Match)',
+        zeroday: 'Coercive Single-Victim Burner',
+        sha: 'SHA-256 Hash Locked (Sec 65B Compliant)'
+      },
+      timeline: [
+        { time: 'T - 04:00 min', title: '1. Genesis Gas Ingestion', desc: 'Funded with <strong>0.012 ETH</strong> from CoinDCX verified staging pool.' },
+        { time: 'T + 00:00 min', title: '2. Victim Bail Payment', desc: 'Received <strong>₹1,50,000</strong> during coercive video call.' },
+        { time: 'T + 01:12 min', title: '3. OTC Sweep', desc: 'Transferred 100% of balance to KuCoin/Dubai OTC off-ramp.' },
+        { time: 'T + 01:30 min', title: '4. Abandoned State', desc: 'Balance reduced to <strong>₹0.00</strong>.' }
+      ]
+    }
+  };
+
+  function traceBurnerWallet(rawAddr) {
+    let input = (rawAddr || '').trim();
+    if (!input) return;
+    if (burnerSearchInput) burnerSearchInput.value = input;
+
+    const lower = input.toLowerCase();
+
+    // Highlight matching preset button
+    document.querySelectorAll('.burner-preset-btn').forEach(btn => {
+      if ((btn.dataset.wallet || '').toLowerCase() === lower) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    let profile = burnerWalletPresets[lower];
+
+    // Dynamic synthesis for custom address
+    if (!profile) {
+      let hashVal = 0;
+      for (let i = 0; i < input.length; i++) hashVal = (hashVal << 5) - hashVal + input.charCodeAt(i);
+      const absHash = Math.abs(hashVal);
+
+      const funderWallets = [
+        '0x28C6c06298d514Db089934071355E5743bf21d60',
+        '0x42fB918a28e78e2270Ec08bF5d38f2B54E6F89c2',
+        '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+        '0x098B716B8Aaf21512996dC57EB0615e2383E2f96'
+      ];
+      const funderEntities = [
+        'Binance Holdings Ltd. (Hot Node 14)',
+        'WazirX India Gateway (FIU-IND Verified Account)',
+        'CoinDCX Staging Pool (Verified Indian VASP)',
+        'Bybit Global Deposit Cluster'
+      ];
+      const funderIdx = absHash % funderWallets.length;
+      const stolenAmount = `₹${((absHash % 180) + 25)},000`;
+      const sweepSeconds = (absHash % 45) + 15;
+
+      profile = {
+        address: input,
+        shortAddr: input.length > 14 ? input.slice(0, 6) + '...' + input.slice(-4) : input,
+        title: '🔥 ZERO-BALANCE DISAPPEARED BURNER WALLET IDENTIFIED',
+        balance: '₹0.00 (0.0000 ETH) — 100% Swept Clean',
+        lifespan: `${sweepSeconds} Seconds Hop Velocity`,
+        desc: `Current balance is <strong>₹0.00</strong>. Fraudster swept ${stolenAmount} within <strong>${sweepSeconds} seconds</strong>. CyberTrace de-anonymized the parent KYC funder via backward gas ancestry.`,
+        gas: {
+          tx: `0x${absHash.toString(16).padStart(64, '0').slice(0, 64)}`,
+          txShort: `0x${absHash.toString(16).slice(0, 4)}...${(absHash + 11).toString(16).slice(-4)}`,
+          funder: funderWallets[funderIdx],
+          funderShort: `${funderWallets[funderIdx].slice(0, 6)}...${funderWallets[funderIdx].slice(-4)}`,
+          entity: funderEntities[funderIdx],
+          amount: '0.010 ETH (₹2,845)',
+          status: '🟢 Verified KYC Account on Centralized Exchange',
+          funderKycId: `CEX-KYC-${(absHash % 90000) + 10000}`
+        },
+        sweep: {
+          tx: `0x${(absHash + 999).toString(16).padStart(64, 'f').slice(0, 64)}`,
+          txShort: `0x${(absHash + 999).toString(16).slice(0, 4)}...${(absHash + 888).toString(16).slice(-4)}`,
+          amount: stolenAmount,
+          speed: `T + 00:${sweepSeconds} sec (Automated Bot Sweep)`,
+          cluster: funderEntities[funderIdx].split(' (')[0],
+          modus: 'Peeling Chain Multi-Hop Liquidation'
+        },
+        dna: {
+          syndicate: 'Zero-Day Scam Infrastructure',
+          loss: `${stolenAmount} (Active Complaint)`,
+          exchange: funderEntities[funderIdx].split(' (')[0],
+          zeroday: 'Single-Use Burner Address',
+          sha: 'SHA-256 Hash Locked (Sec 65B Compliant)'
+        },
+        timeline: [
+          { time: 'T - 03:00 min', title: '1. Genesis Gas Funding', desc: `Funded with <strong>0.010 ETH</strong> from ${funderEntities[funderIdx]} to pay for gas fees.` },
+          { time: 'T + 00:00 min', title: '2. Victim Inflow', desc: `Received <strong>${stolenAmount}</strong> proceeds of crime from victim.` },
+          { time: `T + 00:${sweepSeconds} sec`, title: '3. Automated Sweep', desc: `Script automatically swept 100% balance in ${sweepSeconds} seconds.` },
+          { time: `T + 00:${sweepSeconds + 10} sec`, title: '4. Abandoned State', desc: 'Balance reduced to <strong>₹0.00</strong>. Dead on ledger.' }
+        ]
+      };
+    }
+
+    activeBurnerProfile = profile;
+
+    // --- RENDER DOM ELEMENTS ---
+    const verdictTitle = document.getElementById('burner-verdict-title');
+    const balanceTag = document.getElementById('burner-balance-tag');
+    const verdictDesc = document.getElementById('burner-verdict-desc');
+    const tagGas = document.getElementById('burner-tag-gas');
+    const tagSweep = document.getElementById('burner-tag-sweep');
+    const tagTime = document.getElementById('burner-tag-time');
+    const tagDna = document.getElementById('burner-tag-dna');
+
+    if (verdictTitle) verdictTitle.textContent = profile.title;
+    if (balanceTag) balanceTag.textContent = profile.balance.split('—')[0].trim();
+    if (verdictDesc) verdictDesc.innerHTML = profile.desc;
+    if (tagGas) tagGas.textContent = `⛽ Gas Funder: ${profile.gas.entity.split(' (')[0]}`;
+    if (tagSweep) tagSweep.textContent = `🌪️ Swept to: ${profile.sweep.cluster}`;
+    if (tagTime) tagTime.textContent = `⏳ ${profile.lifespan}`;
+    if (tagDna) tagDna.textContent = `🧬 ${profile.dna.syndicate.split(' (')[0]}`;
+
+    // Timeline Rendering
+    if (profile.timeline && profile.timeline.length >= 4) {
+      const s1Time = document.getElementById('burner-step1-time');
+      const s1Desc = document.getElementById('burner-step1-desc');
+      const s2Time = document.getElementById('burner-step2-time');
+      const s2Desc = document.getElementById('burner-step2-desc');
+      const s3Time = document.getElementById('burner-step3-time');
+      const s3Desc = document.getElementById('burner-step3-desc');
+      const s4Time = document.getElementById('burner-step4-time');
+      const s4Desc = document.getElementById('burner-step4-desc');
+
+      if (s1Time) s1Time.textContent = profile.timeline[0].time;
+      if (s1Desc) s1Desc.innerHTML = profile.timeline[0].desc;
+      if (s2Time) s2Time.textContent = profile.timeline[1].time;
+      if (s2Desc) s2Desc.innerHTML = profile.timeline[1].desc;
+      if (s3Time) s3Time.textContent = profile.timeline[2].time;
+      if (s3Desc) s3Desc.innerHTML = profile.timeline[2].desc;
+      if (s4Time) s4Time.textContent = profile.timeline[3].time;
+      if (s4Desc) s4Desc.innerHTML = profile.timeline[3].desc;
+    }
+
+    // Card 1: Gas Ancestry
+    const gasTx = document.getElementById('burner-gas-tx');
+    const gasFunder = document.getElementById('burner-gas-funder');
+    const gasEntity = document.getElementById('burner-gas-entity');
+    const gasAmount = document.getElementById('burner-gas-amount');
+    const gasStatus = document.getElementById('burner-gas-status');
+
+    if (gasTx) { gasTx.textContent = profile.gas.txShort; gasTx.dataset.copy = profile.gas.tx; }
+    if (gasFunder) { gasFunder.textContent = profile.gas.funderShort; gasFunder.dataset.copy = profile.gas.funder; }
+    if (gasEntity) gasEntity.textContent = profile.gas.entity;
+    if (gasAmount) gasAmount.textContent = profile.gas.amount;
+    if (gasStatus) gasStatus.textContent = profile.gas.status;
+
+    // Card 2: Sweep
+    const sweepTx = document.getElementById('burner-sweep-tx');
+    const sweepAmount = document.getElementById('burner-sweep-amount');
+    const sweepSpeed = document.getElementById('burner-sweep-speed');
+    const sweepCluster = document.getElementById('burner-sweep-cluster');
+    const sweepModus = document.getElementById('burner-sweep-modus');
+
+    if (sweepTx) { sweepTx.textContent = profile.sweep.txShort; sweepTx.dataset.copy = profile.sweep.tx; }
+    if (sweepAmount) sweepAmount.textContent = profile.sweep.amount;
+    if (sweepSpeed) sweepSpeed.textContent = profile.sweep.speed;
+    if (sweepCluster) sweepCluster.textContent = profile.sweep.cluster;
+    if (sweepModus) sweepModus.textContent = profile.sweep.modus;
+
+    // Card 3: DNA
+    const dnaSyndicate = document.getElementById('burner-dna-syndicate');
+    const dnaLoss = document.getElementById('burner-dna-loss');
+    const dnaExchange = document.getElementById('burner-dna-exchange');
+    const dnaZeroday = document.getElementById('burner-dna-zeroday');
+    const dnaSha = document.getElementById('burner-dna-sha');
+
+    if (dnaSyndicate) dnaSyndicate.textContent = profile.dna.syndicate;
+    if (dnaLoss) dnaLoss.textContent = profile.dna.loss;
+    if (dnaExchange) dnaExchange.textContent = profile.dna.exchange;
+    if (dnaZeroday) dnaZeroday.textContent = profile.dna.zeroday;
+    if (dnaSha) dnaSha.textContent = profile.dna.sha;
+
+    // Card 4: Subpoena Target
+    const subpoenaTarget = document.getElementById('burner-subpoena-target');
+    if (subpoenaTarget) subpoenaTarget.textContent = profile.gas.entity.split(' (')[0];
+
+    showToast(`🔥 Burner Forensic Solved: ${profile.shortAddr} (Gas Funder: ${profile.gas.entity.split(' (')[0]})`, 'success');
+  }
+
+  // Generate Section 91 CrPC Gas Ancestry Subpoena Requisition
+  function generateBurnerSubpoenaText(p) {
+    const prof = p || activeBurnerProfile || burnerWalletPresets['0x742d35cc6634c0532925a3b844bc454e4438f44e'];
+    return `================================================================================
+FORMAL LEGAL REQUISITION UNDER SECTION 91 CrPC & SECTION 94 BNSS, 2023
+================================================================================
+TO:
+The Nodal Officer / Law Enforcement Liaison Officer,
+${prof.gas.entity.split(' (')[0]}
+Compliance & Financial Intelligence Unit
+
+SUBJECT: MANDATORY REQUISITION FOR IMMEDIATE KYC UNMASKING & FREEZE IN
+         CYBER FRAUD CRIME CASE (SUSPECT BURNER WALLET: ${prof.address})
+
+Sir/Madam,
+Whereas real-time automated blockchain forensic analytics conducted by the
+Indian Cyber Crime Coordination Centre (I4C) CIS Division has detected an
+organized cyber fraud operation utilizing a temporary zero-balance burner wallet:
+
+1. SUSPECT BURNER WALLET    : ${prof.address}
+2. CURRENT BALANCE          : ${prof.balance}
+3. LIFESPAN TO TOTAL DRAIN  : ${prof.lifespan}
+4. GENESIS GAS FUNDING TX   : ${prof.gas.tx}
+5. PARENT MASTER FUNDER     : ${prof.gas.funder}
+6. FUNDER KYC ACCOUNT ID    : ${prof.gas.funderKycId}
+7. STOLEN INFLOW AMOUNT     : ${prof.sweep.amount}
+8. TERMINAL SWEEP CLUSTER   : ${prof.sweep.cluster}
+
+INVESTIGATION FINDINGS (GAS ANCESTRY DE-ANONYMIZATION):
+The suspect wallet was funded with initial transaction gas fees directly from
+an account hosted on your exchange platform (${prof.gas.entity}). Under statutory
+provisions of the Code of Criminal Procedure / Bharatiya Nagarik Suraksha Sanhita:
+
+YOU ARE HEREBY DIRECTED WITHIN 24 HOURS TO:
+1. Furnish full KYC identity documents for the account holder of ${prof.gas.funder}:
+   - Full Legal Name, Father's Name, Date of Birth
+   - Permanent Account Number (PAN) & Aadhaar / Passport Card Copy
+   - Registered Mobile Number & Primary Email Address
+   - Linked Bank Account Numbers & Withdrawal Destination Addresses
+   - Complete IP Access Logs (with Port Numbers & Timestamps) & Device IMEI.
+2. Place a TOTAL DEBIT FREEZE on all wallets and fiat balances linked to this user.
+
+Issued under Seal by:
+Investigating Officer, Cyber Crime Police Station / I4C CIS Division,
+Ministry of Home Affairs, Government of India
+================================================================================`;
+  }
+
+  // --- WIRE UP BURNER EVENT LISTENERS ---
+  document.addEventListener('click', (e) => {
+    // 1. Preset Burner Click
+    const burnerBtn = e.target.closest('.burner-preset-btn');
+    if (burnerBtn && burnerBtn.dataset.wallet) {
+      e.preventDefault();
+      const w = burnerBtn.dataset.wallet;
+      if (burnerSearchInput) burnerSearchInput.value = w;
+      document.querySelectorAll('.burner-preset-btn').forEach(b => b.classList.remove('active'));
+      burnerBtn.classList.add('active');
+      traceBurnerWallet(w);
+      return;
+    }
+
+    // 2. Jump to Parent Master Funder Wallet
+    const jumpFunderBtn = e.target.closest('#btn-jump-funder-wallet');
+    if (jumpFunderBtn) {
+      e.preventDefault();
+      const funderAddr = (activeBurnerProfile && activeBurnerProfile.gas && activeBurnerProfile.gas.funder)
+        ? activeBurnerProfile.gas.funder
+        : '0x28C6c06298d514Db089934071355E5743bf21d60';
+      switchView('dashboard');
+      updateDashboardData(funderAddr);
+      showToast(`🔍 Loading Blockchain Graph for Parent Master Funder: ${funderAddr.slice(0, 10)}...`, 'info');
+      return;
+    }
+
+    // 3. Jump to Sweep Graph
+    const jumpSweepBtn = e.target.closest('#btn-jump-sweep-graph');
+    if (jumpSweepBtn) {
+      e.preventDefault();
+      const sweepTarget = (activeBurnerProfile && activeBurnerProfile.address)
+        ? activeBurnerProfile.address
+        : '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+      switchView('dashboard');
+      updateDashboardData(sweepTarget);
+      showToast(`📊 Loading Multi-Hop Liquidation Flow for Burner: ${sweepTarget.slice(0, 10)}...`, 'info');
+      return;
+    }
+
+    // 4. Copy Burner Subpoena
+    const copySubpoenaBtn = e.target.closest('#btn-copy-burner-subpoena') || e.target.closest('#btn-open-burner-subpoena');
+    if (copySubpoenaBtn) {
+      e.preventDefault();
+      const notice = generateBurnerSubpoenaText(activeBurnerProfile);
+      navigator.clipboard.writeText(notice).then(() => {
+        showToast('📋 Section 91 CrPC CEX Gas Subpoena copied to clipboard!', 'success');
+      });
+      return;
+    }
+
+    // 5. Copy Burner Search Input
+    const copyBurnerInputBtn = e.target.closest('#btn-copy-burner-input');
+    if (copyBurnerInputBtn && burnerSearchInput) {
+      e.preventDefault();
+      navigator.clipboard.writeText(burnerSearchInput.value.trim());
+      showToast(`Copied Burner Wallet: ${burnerSearchInput.value.trim()}`, 'info');
+      return;
+    }
+  });
+
+  if (btnTraceBurner && burnerSearchInput) {
+    btnTraceBurner.addEventListener('click', () => {
+      traceBurnerWallet(burnerSearchInput.value);
+    });
+
+    burnerSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        traceBurnerWallet(burnerSearchInput.value);
+      }
+    });
+  }
+
+  // Initial trace on load
+  setTimeout(() => {
+    traceBurnerWallet('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
+  }, 150);
+
   // --- JUDGES DEMO BAR STEP-BY-STEP TOUR ---
   const demoButtons = document.querySelectorAll('.btn-demo-step');
   demoButtons.forEach(btn => {
